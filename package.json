@@ -1,0 +1,23 @@
+{
+  "name": "highway",
+  "version": "0.1.0",
+  "description": "Router JS helps you manage your routes and transitions",
+  "license": "MIT",
+  "author": "Anthony Du Pont <bulldog@dogstudio.be>",
+  "main": "./src/index.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "dependencies": {
+    "tiny-emitter": "^2.0.2"
+  },
+  "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.2",
+    "babel-preset-env": "^1.6.1",
+    "chai": "^4.1.2",
+    "mocha": "^4.0.1",
+    "uglifyjs-webpack-plugin": "^1.1.8",
+    "webpack": "^3.10.0"
+  }
+}

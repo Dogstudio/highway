@@ -1,0 +1,8 @@
+# JUNK FILES
+.DS_Store
+
+# FRONT FOLDERS
+node_modules/
+
+# COMPILED FILES
+dist/main.js
