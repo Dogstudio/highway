@@ -7,6 +7,18 @@ const BASE_REGEX   = /(https?:\/\/[\w-.]+)/;
 const PARAM_REGEX  = /\?([\w-_.=&]+)/;
 const ANCHOR_REGEX = /(#.*)$/;
 
+// Options
+const FETCH_OPTS = {
+  method: 'GET',
+  mode: 'same-origin',
+  credentials: 'same-origin',
+  headers: { 'X-Requested-With': 'XMLHttpRequest' }
+};
+
+// Statuses
+const PENDING = 'PENDING';
+const RUNNING = 'RUNNING';
+
 // Events
 const NAVIGATE_START = 'NAVIGATE_START';
 const NAVIGATE_ENDED = 'NAVIGATE_ENDED';
@@ -34,8 +46,9 @@ class RouterCore extends Emitter {
     window.addEventListener('popstate', this.onPopstate);
     window.addEventListener('hashChange', this.onHashchange);
 
-    // URL variable
+    // Router variables
     this.url = window.location.href;
+    this.status = PENDING;
 
     // Delegate variable DOM events
     this.delegate();
@@ -208,6 +221,7 @@ class RouterCore extends Emitter {
    */
   hashChange() {
     //
+    //
   }
 
   /**
@@ -223,10 +237,16 @@ class RouterCore extends Emitter {
       if (url !== this.url) {
         // Update URL
         this.url = url;
+
+        // Fetch view
+        this.fetch();
       }
     } else {
       // Update URL
       this.url = window.location.href;
+
+      // Fetch view
+      this.fetch();
     }
   }
 
@@ -240,18 +260,40 @@ class RouterCore extends Emitter {
       e.preventDefault();
     }
 
+    // Check Router status
+    if (this.status === RUNNING) {
+      return;
+    }
+
     // Get element and attributes
     const el = e.currentTarget;
     const href = el.href;
 
     // Compare URLs
     if (href !== this.url) {
+      // Update status
+      this.status = RUNNING;
+
       // Update URL
       this.url = href;
 
       // Push state to history
       history.pushState(this.state, '', this.url);
+
+      // Fetch view
+      this.fetch(href);
     }
+  }
+
+  /**
+   * Fetch:
+   * Call fetch methods.
+   */
+  fetch() {
+    // Fetch view
+    this.fetchView()
+          .then((view) => { this.fetchViewSuccess(view) })
+          .catch((error) => { this.fetchViewError(error) });
   }
 
   /**
@@ -259,7 +301,20 @@ class RouterCore extends Emitter {
    * Fetch view from URL.
    */
   fetchView() {
-    //
+    // Fetch view
+    return fetch(this.url, FETCH_OPTS).then((response) => {
+      // Update status
+      this.status = PENDING;
+
+      // Check response status
+      if (response.status >= 200 && response.status < 300) {
+        // View fetched with success
+        return Promise.resolve(response.text());
+      }
+
+      // View fetched with errors
+      return Promise.reject(new Error(response.statusText));
+    });
   }
 
   /**
@@ -269,7 +324,7 @@ class RouterCore extends Emitter {
    * @param {String} response - View HTML as string.
    */
   fetchViewSuccess(response) {
-    //
+    console.log(this.url, response);
   }
 
   /**
@@ -279,7 +334,9 @@ class RouterCore extends Emitter {
    * @param {Object} e - Error to throw
    */
   fetchViewError(e) {
-    //
+    if (e) {
+      throw (e);
+    }
   }
 
   /**
