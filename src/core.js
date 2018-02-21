@@ -1,7 +1,6 @@
 // Dependencies
 const Emitter = require('tiny-emitter');
 
-
 // Regex
 const PATH_REGEX   = /https?:\/\/.*?(\/[\w-_.\/]+)/;
 const BASE_REGEX   = /(https?:\/\/[\w-.]+)/;
