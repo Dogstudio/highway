@@ -1,13 +1,15 @@
 // Router
-const Router = require('./core');
+import Router from './router/core';
+
+// Views
+import Home from './home';
 
 // DOM Ready
 (() => {
   // Router
-  window.Router = new Router();
-
-  // Events
-  window.Router.on('NAVIGATE_START', () => console.log('STAAART'));
-  window.Router.on('NAVIGATE_ERROR', () => console.log('ERROR'));
-  window.Router.on('NAVIGATE_ENDED', () => console.log('EEEEND'));
+  window.Router = new Router({
+    views: {
+      'home': Home
+    }
+  });
 })();
