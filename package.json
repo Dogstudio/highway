@@ -16,6 +16,7 @@
     "babel-loader": "^7.1.2",
     "babel-preset-env": "^1.6.1",
     "chai": "^4.1.2",
+    "compression-webpack-plugin": "^1.1.11",
     "mocha": "^4.0.1",
     "uglifyjs-webpack-plugin": "^1.1.8",
     "webpack": "^3.10.0"

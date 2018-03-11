@@ -55,7 +55,7 @@ class RouterCore {
     this.url = window.location.href;
 
     // Fetch view
-    this.fetch().then(page => this.pushView(page));
+    this.fetch().then(page => this.pushPage(page));
   }
 
   /**
@@ -78,7 +78,7 @@ class RouterCore {
       history.pushState(getInfos(this.url), '', this.url);
 
       // Push view in DOM
-      this.pushView(page);
+      this.pushPage(page);
     });
   }
 
@@ -110,11 +110,11 @@ class RouterCore {
   }
 
   /**
-   * Push view in DOM and reset events
+   * Push page in DOM
    * 
    * @param {String} page — Page HTML as a string
    */
-  pushView(page) {
+  pushPage(page) {
     // Check page renderer
     if (!hasRenderer(page, this.renderers)) {
       // Throw error
