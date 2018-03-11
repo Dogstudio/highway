@@ -9,6 +9,7 @@
     "test": "mocha"
   },
   "dependencies": {
+    "gsap": "^1.20.4",
     "tiny-emitter": "^2.0.2"
   },
   "devDependencies": {

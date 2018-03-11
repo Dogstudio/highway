@@ -166,6 +166,33 @@ export function getNamespace(page) {
 }
 
 /**
+ * Get page transition
+ * 
+ * @param  {String} newPage — newPage HTML
+ * @param  {String} oldPage — oldPage HTML
+ * @param  {Object} routes — Routes to use
+ * @return {Object} Page transition
+ * @static
+ */
+export function getTransition(newPage, oldPage, routes) {
+  // Check namespaces
+  if (hasNamespace(newPage) && hasNamespace(oldPage)) {
+    // Get namespaces
+    const newNamespace = getNamespace(newPage);
+    const oldNamespace = getNamespace(oldPage);
+
+    // Construct route
+    const route = `${oldNamespace}:${newNamespace}`;
+
+    // Return corresponding transition or `null`
+    return routes.hasOwnProperty(route) ? routes[route] : null;
+  }
+
+  // Missing namespace
+  return null;
+}
+
+/**
  * Get page's title from page HTML
  * 
  * @param  {String} page — Page HTML
@@ -235,6 +262,18 @@ export function hasNamespace(page) {
  */
 export function hasRenderer(page, renderers) {
   return getRenderer(page, renderers) ? true : false;
+}
+
+/**
+ * Check wether a route has a related transition or not
+ *
+ * @param  {String} page — Page HTML to use
+ * @param  {Object} renderers — List of renderers to check
+ * @return {Boolean} Check status
+ * @static
+ */
+export function hasTransition(newPage, oldPage, routes) {
+  return getTransition(newPage, oldPage, routes) ? true : false;
 }
 
 /**

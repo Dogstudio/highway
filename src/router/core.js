@@ -11,10 +11,11 @@ class RouterCore {
   /**
    * Router constructor
    *
-   * @param { Object } options – Router options
+   * @param { Object } routes – Router routes
+   * @param { Object } renderers – Router renderers
    * @constructor
    */
-  constructor({ renderers }) {
+  constructor({ routes, renderers }) {
     // Create events callbacks
     this._popstate = this.popState.bind(this);
     this._pushState = this.pushState.bind(this);
@@ -24,6 +25,7 @@ class RouterCore {
 
     // Utilities
     this.url = window.location.href;
+    this.routes = routes;
     this.renderers = renderers;
 
     // Events bubbling
@@ -125,7 +127,7 @@ class RouterCore {
     const renderer = getRenderer(page, this.renderers);
 
     // Call page renderer
-    new renderer(page);
+    new renderer(page, this.routes);
   }
 }
 
