@@ -118,19 +118,25 @@ export function getInfos(url) {
 }
 
 /**
- * Get single ES6 class from list of classes with key
+ * Get page renderer
  *
  * @param  {String} page — Page HTML to use
- * @param  {Object} classes — List of ES6 classes
- * @return {Object} Single ES6 class or `null`
+ * @param  {Object} classes — List of renderers
+ * @return {Object} Single renderer or `null`
  * @static
  */
-export function getClass(page, classes) {
-  // Get page namespace
-  const namespace = getNamespace(page);
+export function getRenderer(page, renderers) {
+  // Check namespace
+  if (hasNamespace(page)) {
+    // Get page namespace
+    const namespace = getNamespace(page);
 
-  // Return page related ES6 class or `null`
-  return classes.hasOwnProperty(namespace) ? classes[namespace] : null;
+    // Return page related renderer or `null`
+    return renderers.hasOwnProperty(namespace) ? renderers[namespace] : null;
+  }
+
+  // No namespace provided
+  return null;
 }
 
 /**
@@ -209,15 +215,26 @@ export function hasParam(url, key) {
 }
 
 /**
- * Check wether a page has a related class or not
+ * Check wether a page has a namespace or not
  *
  * @param  {String} page — Page HTML to use
- * @param  {Object} classes — List of ES6 classes to check
  * @return {Boolean} Check status
  * @static
  */
-export function hasClass(page, classes) {
-  return getClass(page, classes) ? true : false;
+export function hasNamespace(page) {
+  return getNamespace(page) ? true : false;
+}
+
+/**
+ * Check wether a page has a related renderer or not
+ *
+ * @param  {String} page — Page HTML to use
+ * @param  {Object} renderers — List of renderers to check
+ * @return {Boolean} Check status
+ * @static
+ */
+export function hasRenderer(page, renderers) {
+  return getRenderer(page, renderers) ? true : false;
 }
 
 /**
@@ -225,7 +242,6 @@ export function hasClass(page, classes) {
  */
 export default {
   getView,
-  getClass,
   getInfos,
   getParam,
   getTitle,
@@ -233,9 +249,11 @@ export default {
   getOrigin,
   getParams,
   getPathname,
+  getRenderer,
   getNamespace,
-  hasClass,
   hasParam,
   hasParams,
-  hasAnchor
+  hasAnchor,
+  hasRenderer,
+  hasNamespace
 };

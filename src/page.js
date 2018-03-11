@@ -1,9 +1,9 @@
 // Router renderer
 import Renderer from './router/renderer';
 
-// Home class
-class Home extends Renderer {
+// Page class
+class Page extends Renderer {
 
 }
 
-export default Home;
+export default Page;

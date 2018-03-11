@@ -1,54 +1,50 @@
-import Helpers from './helpers';
-import Renderer from './renderer';
+// Import helpers
+import {
+  getInfos,
+  getRenderer,
+  hasRenderer
+} from './helpers';
 
+// Core
 class RouterCore {
 
   /**
    * Router constructor
    *
+   * @param { Object } options – Router options
    * @constructor
    */
-  constructor({ views }) {
+  constructor({ renderers }) {
     // Create events callbacks
     this._popstate = this.popState.bind(this);
     this._pushState = this.pushState.bind(this);
 
-    // Delegate `window` events
+    // Window events
     window.addEventListener('popstate', this._popstate);
 
-    // Router views
-    this.views = views;
-
-    // Router URL
+    // Utilities
     this.url = window.location.href;
+    this.renderers = renderers;
 
-    // Delegate DOM events
-    this.delegate();
+    // Events bubbling
+    this.bubble();
   }
 
   /**
    * Delegate events to DOM elements
    */
-  delegate() {
-    // Get all enabled links in document
-    this.$links = document.querySelectorAll('a:not([target="_blank"])');
+  bubble() {
+    document.addEventListener('click', (e) => {
+      if (e.target.tagName === 'A') {
+        if (!e.target.target) {
+          // Prevent defaut behaviour
+          e.preventDefault();
 
-    // Delegate link events
-    for (let i = 0; i < this.$links.length; i++) {
-      // Add event to each enabled link
-      this.$links[i].addEventListener('click', this._pushState);
-    }
-  }
-
-  /**
-   * Undelegate events on DOM elements
-   */
-  undelegate() {
-    // Undelegate link events
-    for (let i = 0; i < this.$links.length; i++) {
-      // Remove event from each enabled link
-      this.$links[i].removeEventListener('click', this._pushState);
-    }
+          // Push state
+          this.pushState(e);
+        }
+      }
+    });
   }
 
   /**
@@ -59,30 +55,31 @@ class RouterCore {
     this.url = window.location.href;
 
     // Fetch view
-    this.fetch().then((page) => this.pushView(page));
+    this.fetch().then(page => this.pushView(page));
   }
 
   /**
    * Push new entries in history
+   * 
+   * @param {Object} e — Event
    */
   pushState(e) {
-    // Prevent default behaviour
-    e.preventDefault();
-
-    // Get element `href`
-    const href = e.target.href;
-
-    // Compare URLs
-    if (href !== this.url) {
-      // Update URL
-      this.url = href;
-
-      // Push state in history
-      history.pushState(Helpers.getInfos(this.url), '', this.url);
-
-      // Fetch view
-      this.fetch(href).then((page) => this.pushView(page));
+    // Check element `href`
+    if (e.target.href === this.url) {
+      return;
     }
+
+    // Update URL
+    this.url = e.target.href;
+
+    // Fetch view
+    this.fetch().then(page => {
+      // Push state in history
+      history.pushState(getInfos(this.url), '', this.url);
+
+      // Push view in DOM
+      this.pushView(page);
+    });
   }
 
   /**
@@ -118,17 +115,17 @@ class RouterCore {
    * @param {String} page — Page HTML as a string
    */
   pushView(page) {
-    // Get class
-    // if (Helpers.hasClass(page, this.views)) {
-      // Call class
-      // new Helpers.getClass(page, this.views)();
-    // }
+    // Check page renderer
+    if (!hasRenderer(page, this.renderers)) {
+      // Throw error
+      throw new Error('Please provide a renderer for this page');
+    }
 
-    // Remove events.
-    this.undelegate();
+    // Get page renderer
+    const renderer = getRenderer(page, this.renderers);
 
-    // Add events.
-    this.delegate();
+    // Call page renderer
+    new renderer(page);
   }
 }
 

@@ -1,15 +1,17 @@
 // Router
 import Router from './router/core';
 
-// Views
+// Renderers
 import Home from './home';
+import Page from './page';
 
 // DOM Ready
 (() => {
   // Router
   window.Router = new Router({
-    views: {
-      'home': Home
+    renderers: {
+      'home': Home,
+      'page': Page
     }
   });
 })();
