@@ -7,14 +7,16 @@ class RouterRenderer {
   /**
    * @arg {object} view — [router-view] Node
    * @arg {string} title — Page title
+   * @arg {string} transition — Page transition
    * @constructor
    */
-  constructor(view, title) {
+  constructor(view, title, transition) {
     // The [router-view] and the page title are the only main information we need
     // since the role of the renderer is to update the required DOM elements with
     // the page informations. In our case the content and title of the document.
     this.view = view;
     this.title = title;
+    this.transition = transition;
 
     if (title && document.title !== title) {
       document.title = title;
@@ -59,7 +61,7 @@ class RouterRenderer {
       };
 
       // You fool you didn't define any transition...
-      if (typeof this.transition === 'undefined') {
+      if (!this.transition) {
         callback();
         return;
       }
@@ -101,7 +103,7 @@ class RouterRenderer {
       };
 
       // You fool you didn't define any transition...
-      if (typeof this.transition === 'undefined') {
+      if (!this.transition) {
         callback();
         return;
       }

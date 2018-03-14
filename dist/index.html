@@ -1,19 +1,37 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Root</title>
+  <title>Index</title>
+  <link rel="stylesheet" href="./main.css" />
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-115758635-1"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){
+      dataLayer.push(arguments);
+    }
+    gtag('js', new Date());
+    gtag('config', 'UA-115758635-1');
+  </script>
 </head>
 <body>
-  <ul>
-    <li><a href="page-1.html">#1</a></li>
-    <li><a href="page-2.html">#2</a></li>
-    <li><a href="page-3.html">#3</a></li>
-    <li><a href="page-4.html">#4</a></li>
-    <li><a href="page-5.html" target="_blank">#5</a></li>
-  </ul>
+  <nav>
+    <ul>
+      <li>Pages:</li>
+      <li><a href="./page-1.html">01</a></li>
+      <li><a href="./page-2.html">02</a></li>
+      <li><a href="./page-3.html">03</a></li>
+      <li><a href="./page-4.html">04</a></li>
+      <li><a href="./page-5.html" target="_blank">05</a></li>
+    </ul>
+  </nav>
   <main router-wrapper>
     <article router-view="home">
-      HOME
+      <section id="section-1"></section>
+      <section id="section-2"></section>
+      <section id="section-3"></section>
+      <section id="section-4"></section>
+      <section id="section-5"></section>
     </article>
   </main>
   <script type="text/javascript" src="./highway.js"></script>

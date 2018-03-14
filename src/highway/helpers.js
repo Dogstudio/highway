@@ -147,6 +147,27 @@ export function getRenderer(page, renderers) {
 }
 
 /**
+ * Get page transition
+ *
+ * @arg    {string} page — Page HTML to use
+ * @arg    {object} transitions — List of transitions
+ * @return {object} Single transition or `null`
+ */
+export function getTransition(page, transitions) {
+  const slug = getSlug(page);
+
+  if (!transitions.hasOwnProperty(slug) || !transitions[slug]) {
+    if (transitions.hasOwnProperty('default')) {
+      return transitions['default'];
+    }
+
+    return null;
+  }
+
+  return transitions[slug];
+}
+
+/**
  * Export all helpers
  */
 export default {
@@ -159,5 +180,6 @@ export default {
   getOrigin,
   getAnchor,
   getPathname,
-  getRenderer
+  getRenderer,
+  getTransition
 };

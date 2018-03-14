@@ -4,8 +4,8 @@ import Renderer from './renderer';
 
 const Highway = {
   Core,
-  Renderer,
-  Helpers
+  Helpers,
+  Renderer
 };
 
 export default Highway;

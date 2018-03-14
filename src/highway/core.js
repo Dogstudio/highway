@@ -21,6 +21,7 @@ class RouterCore extends Emitter {
   /**
    * @arg {object} opts — User options
    * @arg {object} opts.renderers — List of renderers
+   * @arg {object} opts.transitions — List of transitions
    * @extends Emitter
    * @constructor
    */
@@ -29,8 +30,9 @@ class RouterCore extends Emitter {
     // and send custom events all along the script.
     super();
 
-    // All your custom renderers you sent to Highway that extends Highway renderer.
+    // All your custom renderers and transitions you sent to Highway.
     this.renderers = opts.renderers;
+    this.transitions = opts.transitions;
 
     // Some usefull stuffs for later
     this.state = {};
@@ -45,8 +47,9 @@ class RouterCore extends Emitter {
     // Get the page renderer and directly call its `onEnter` and `onEnterCompleted`
     // methods in order to properly initialize the page.
     const view = document.querySelector('[router-view]');
+    const transition = Helpers.getTransition(this.page, this.transitions);
 
-    this.from = new (Helpers.getRenderer(this.page, this.renderers))(view, null);
+    this.from = new (Helpers.getRenderer(this.page, this.renderers))(view, null, transition);
     this.from.onEnter();
     this.from.onEnterCompleted();
 
@@ -69,17 +72,23 @@ class RouterCore extends Emitter {
     document.addEventListener('click', (e) => {
       if (e.target.tagName === 'A') {
         const anchor = Helpers.getAnchor(e.target.href);
+        const pathname = Helpers.getPathname(e.target.href);
 
-        if ((anchor === null || anchor.length === 0) && !e.target.target) {
+        if (!e.target.target) {
           // To run the router properly we have to prevent the default behaviour
           // of link elements to avoir page reloading.
           e.preventDefault();
 
-          const pathname = Helpers.getPathname(e.target.href);
-
           if (!this.navigating && pathname !== this.pathname) {
             // Now push the state!
             this.pushState(e);
+          } else {
+            // If the pathnames are the same there might be an anchor appended to
+            // it so we need to check it and reload the page to use the default
+            // browser behaviour.
+            if (anchor) {
+              window.location.href = e.target.href;
+            }
           }
         }
       }
@@ -90,27 +99,15 @@ class RouterCore extends Emitter {
    * Watch history entry changes
    */
   popState() {
-    // We want to keep the default behavior of the browser for anchors so we need
-    // to quickly check if there is an anchor in the URL.
-    const anchor = Helpers.getAnchor(window.location.href);
-
-    if (anchor) {
-      if (anchor.length !== 0) {
-        return;
-      }
-    }
-
     // We quickly check if the pathname has changed before doing anything else
     // because with anchor the `popstate` event might trigger but the pathname
     // might not change and nothing should happen then.
     const pathname = Helpers.getPathname(window.location.href);
 
-    if (pathname === this.pathname) {
-      return;
+    if (pathname !== this.pathname) {
+      // Call of `beforeFetch` for optimizations
+      this.beforeFetch(window.location.href, false);
     }
-
-    // Call of `beforeFetch` for optimizations
-    this.beforeFetch(window.location.href, false);
   }
 
   /**
@@ -206,8 +203,9 @@ class RouterCore extends Emitter {
     // you should reference a renderer to the router we are getting right now.
     const view = Helpers.getView(page);
     const title = Helpers.getTitle(page);
+    const transition = Helpers.getTransition(page, this.transitions);
 
-    this.to = new (Helpers.getRenderer(page, this.renderers))(view, title);
+    this.to = new (Helpers.getRenderer(page, this.renderers))(view, title, transition);
 
     // An event is emitted and can be used outside of the router to run
     // additionnal code when the navigation starts. It expose the `from` and `to`
@@ -215,7 +213,7 @@ class RouterCore extends Emitter {
     const from = this.from.view;
     const to = this.to.view;
 
-    this.emit('NAVIGATE_START', from, to, this.state);
+    this.emit('NAVIGATE_START', from, to, title, this.state);
 
     // We hide the page we come `from` and since the `hide` method returns a
     // Promise because come transition might occur we need to wait for the 
@@ -228,10 +226,34 @@ class RouterCore extends Emitter {
         // the `to` renderer now that the pages have been swapped successfully.
         this.from = this.to;
 
+        // We might have a redirection to a page pointing to a specifig anchor
+        // on this page so we have to deal with it and check if there is an anchor
+        // present in the URL.
+        if (Helpers.getAnchor(this.state.url)) {
+          // Now scroll to anchor!
+          this.scrollTo(Helpers.getAnchor(this.state.url));
+        }
+
         // Same as the `NAVIGATE_START` event
-        this.emit('NAVIGATE_END', from, to, this.state);
+        this.emit('NAVIGATE_END', from, to, title, this.state);
       });
+
+      // Reset scroll position
+      window.scrollTo(0, 0);
     });
+  }
+
+  /**
+   * Scroll to a given element based on an anchor in the URL
+   * 
+   * @arg {string} id — Anchor ID
+   */
+  scrollTo(id) {
+    const el = document.querySelector(id);
+
+    if (el) {
+      window.scrollTo(el.offsetLeft, el.offsetTop);
+    }
   }
 }
 
