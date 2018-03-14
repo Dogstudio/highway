@@ -37,4 +37,4 @@ const Highway = {
   Renderer
 };
 
-export default Highway;
+module.exports = Highway;

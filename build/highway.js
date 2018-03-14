@@ -1,4 +1,14 @@
-/******/ (function(modules) { // webpackBootstrap
+(function webpackUniversalModuleDefinition(root, factory) {
+	if(typeof exports === 'object' && typeof module === 'object')
+		module.exports = factory();
+	else if(typeof define === 'function' && define.amd)
+		define("Highway", [], factory);
+	else if(typeof exports === 'object')
+		exports["Highway"] = factory();
+	else
+		root["Highway"] = factory();
+})(window, function() {
+return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
 /******/
@@ -76,20 +86,6 @@
 "use strict";
 
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.getOrigin = getOrigin;
-exports.getPathname = getPathname;
-exports.getAnchor = getAnchor;
-exports.getParams = getParams;
-exports.getParam = getParam;
-exports.getInfos = getInfos;
-exports.getView = getView;
-exports.getSlug = getSlug;
-exports.getTitle = getTitle;
-exports.getRenderer = getRenderer;
-exports.getTransition = getTransition;
 /**
  * @license
  * Highway - Dogstudio
@@ -291,7 +287,7 @@ function getTransition(page, transitions) {
 /**
  * Export all helpers
  */
-exports.default = {
+module.exports = {
   getSlug: getSlug,
   getView: getView,
   getInfos: getInfos,
@@ -311,10 +307,6 @@ exports.default = {
 
 "use strict";
 
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
@@ -477,7 +469,7 @@ var RouterRenderer = function () {
   return RouterRenderer;
 }();
 
-exports.default = RouterRenderer;
+module.exports = RouterRenderer;
 
 /***/ }),
 /* 2 */
@@ -557,10 +549,6 @@ module.exports = E;
 
 "use strict";
 
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
@@ -911,7 +899,7 @@ var RouterCore = function (_Emitter) {
   return RouterCore;
 }(_tinyEmitter2.default);
 
-exports.default = RouterCore;
+module.exports = RouterCore;
 
 /***/ }),
 /* 4 */
@@ -919,10 +907,6 @@ exports.default = RouterCore;
 
 "use strict";
 
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
 
 var _core = __webpack_require__(3);
 
@@ -971,7 +955,10 @@ var Highway = {
  * @file Highway object containing all parts of the script.
  * @author Anthony Du Pont <bulldog@dogstudio.co>
  */
-exports.default = Highway;
+
+
+module.exports = Highway;
 
 /***/ })
 /******/ ]);
+});

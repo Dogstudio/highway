@@ -284,4 +284,4 @@ class RouterCore extends Emitter {
   }
 }
 
-export default RouterCore;
+module.exports = RouterCore;

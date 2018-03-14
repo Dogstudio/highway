@@ -139,4 +139,4 @@ class RouterRenderer {
   }
 }
 
-export default RouterRenderer;
+module.exports = RouterRenderer;
