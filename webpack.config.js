@@ -10,9 +10,10 @@ const CompressionPlugin = require('compression-webpack-plugin');
 
 // Configuration
 module.exports = {
+  mode: 'production',
   entry: {
-    main: path.resolve(__dirname, 'src/main.js'),
-    highway: path.resolve(__dirname, 'src/highway/index.js')
+    'highway': path.resolve(__dirname, 'src/index.js'),
+    'highway.min': path.resolve(__dirname, 'src/index.js')
   },
   output: {
     path: path.resolve(__dirname, 'dist'),
@@ -22,7 +23,7 @@ module.exports = {
     rules: [
       {
         test: /\.js$/,
-        exclude: /(node_modules|bower_components)/,
+        exclude: /node_modules/,
         use: {
           loader: 'babel-loader',
           options: {
@@ -32,11 +33,16 @@ module.exports = {
       }
     ]
   },
+  optimization: {
+    minimizer: [
+      new UglifyJsPlugin({
+        include: /\.min.js$/
+      })
+    ]
+  },
   plugins: [
-    new UglifyJsPlugin(),
     new CompressionPlugin({
-      test: /\.jsx?/,
-      algorithm: 'gzip'
+      test: /\.min.js$/
     })
   ]
 };

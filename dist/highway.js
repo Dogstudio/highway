@@ -1,1 +1,977 @@
-!function(t){var e={};function n(r){if(e[r])return e[r].exports;var o=e[r]={i:r,l:!1,exports:{}};return t[r].call(o.exports,o,o.exports,n),o.l=!0,o.exports}n.m=t,n.c=e,n.d=function(t,e,r){n.o(t,e)||Object.defineProperty(t,e,{configurable:!1,enumerable:!0,get:r})},n.n=function(t){var e=t&&t.__esModule?function(){return t.default}:function(){return t};return n.d(e,"a",e),e},n.o=function(t,e){return Object.prototype.hasOwnProperty.call(t,e)},n.p="",n(n.s=0)}([function(t,e,n){"use strict";Object.defineProperty(e,"__esModule",{value:!0});var r=a(n(2)),o=a(n(1)),i=a(n(4));function a(t){return t&&t.__esModule?t:{default:t}}var u={Core:r.default,Helpers:o.default,Renderer:i.default};e.default=u},function(t,e,n){"use strict";Object.defineProperty(e,"__esModule",{value:!0}),e.getOrigin=f,e.getPathname=l,e.getAnchor=c,e.getParams=h,e.getParam=p,e.getInfos=d,e.getView=v,e.getSlug=g,e.getTitle=m,e.getRenderer=w,e.getTransition=y;var r=/<title>(.+)<\/title>/,o=/\?([\w_\-.=&]+)/,i=/(#.*)$/,a=/(https?:\/\/[\w\-.]+)/,u=/https?:\/\/.*?(\/[\w_\-./]+)/,s=document.createElement("div");function f(t){var e=t.match(a);return e?e[1]:null}function l(t){var e=t.match(u);return e?e[1]:null}function c(t){var e=t.match(i);return e?e[1]:null}function h(t){var e=t.match(o);if(!e)return null;for(var n=e[1].split("&"),r={},i=0;i<n.length;i++){var a=n[i].split("="),u=a[0]||null,s=a[1]||null;u&&s&&(r[u]=s)}return r}function p(t,e){var n=h(t);return n.hasOwnProperty(e)?n[e]:null}function d(t){return{url:t,anchor:c(t),origin:f(t),params:h(t),pathname:l(t)}}function v(t){return s.innerHTML=t,s.querySelector("[router-view]")}function g(t){return v(t).getAttribute("router-view")}function m(t){var e=t.match(r);return e?e[1]:""}function w(t,e){var n=g(t);return e.hasOwnProperty(n)?e[n]:null}function y(t,e){var n=g(t);return e.hasOwnProperty(n)&&e[n]?e[n]:e.hasOwnProperty("default")?e.default:null}e.default={getSlug:g,getView:v,getInfos:d,getTitle:m,getParam:p,getParams:h,getOrigin:f,getAnchor:c,getPathname:l,getRenderer:w,getTransition:y}},function(t,e,n){"use strict";Object.defineProperty(e,"__esModule",{value:!0});var r=function(){function t(t,e){for(var n=0;n<e.length;n++){var r=e[n];r.enumerable=r.enumerable||!1,r.configurable=!0,"value"in r&&(r.writable=!0),Object.defineProperty(t,r.key,r)}}return function(e,n,r){return n&&t(e.prototype,n),r&&t(e,r),e}}(),o=a(n(3)),i=a(n(1));function a(t){return t&&t.__esModule?t:{default:t}}var u={mode:"same-origin",method:"GET",headers:{"X-Requested-With":"XMLHttpRequest"},credentials:"same-origin"},s=function(t){function e(t){!function(t,e){if(!(t instanceof e))throw new TypeError("Cannot call a class as a function")}(this,e);var n=function(t,e){if(!t)throw new ReferenceError("this hasn't been initialised - super() hasn't been called");return!e||"object"!=typeof e&&"function"!=typeof e?t:e}(this,(e.__proto__||Object.getPrototypeOf(e)).call(this));n.renderers=t.renderers,n.transitions=t.transitions,n.state={},n.cache={},n.navigating=!1,n.page=document.documentElement.outerHTML,n.pathname=i.default.getPathname(window.location.href),n.cache[n.pathname]=n.page;var r=document.querySelector("[router-view]"),o=i.default.getTransition(n.page,n.transitions);return n.from=new(i.default.getRenderer(n.page,n.renderers))(r,null,o),n.from.onEnter(),n.from.onEnterCompleted(),window.addEventListener("popstate",n.popState.bind(n)),n.bubble(),n}return function(t,e){if("function"!=typeof e&&null!==e)throw new TypeError("Super expression must either be null or a function, not "+typeof e);t.prototype=Object.create(e&&e.prototype,{constructor:{value:t,enumerable:!1,writable:!0,configurable:!0}}),e&&(Object.setPrototypeOf?Object.setPrototypeOf(t,e):t.__proto__=e)}(e,o.default),r(e,[{key:"bubble",value:function(){var t=this;document.addEventListener("click",function(e){if("A"===e.target.tagName){var n=i.default.getAnchor(e.target.href),r=i.default.getPathname(e.target.href);e.target.target||(e.preventDefault(),t.navigating||r===t.pathname?n&&(window.location.href=e.target.href):t.pushState(e))}})}},{key:"popState",value:function(){i.default.getPathname(window.location.href)!==this.pathname&&this.beforeFetch(window.location.href,!1)}},{key:"pushState",value:function(t){this.beforeFetch(t.target.href,!0)}},{key:"beforeFetch",value:function(t,e){var n=this;if(this.state=i.default.getInfos(t),this.pathname=i.default.getPathname(t),this.cache.hasOwnProperty(this.pathname))return this.push(this.cache[this.pathname]),void(e&&window.history.pushState(this.state,"",this.state.url));this.fetch().then(function(t){e&&window.history.pushState(n.state,"",n.state.url),n.push(t)})}},{key:"fetch",value:function(t){function e(){return t.apply(this,arguments)}return e.toString=function(){return t.toString()},e}(function(){var t=this;return this.navigating=!0,fetch(this.state.url,u).then(function(e){if(e.status>=200&&e.status<300)return e.text();throw t.emit("NAVIGATE_ERROR"),new Error(e.statusText)})})},{key:"push",value:function(t){var e=this;this.cache[this.pathname]=t;var n=i.default.getView(t),r=i.default.getTitle(t),o=i.default.getTransition(t,this.transitions);this.to=new(i.default.getRenderer(t,this.renderers))(n,r,o);var a=this.from.view,u=this.to.view;this.emit("NAVIGATE_START",a,u,r,this.state),this.from.hide().then(function(){e.to.show().then(function(){e.navigating=!1,e.from=e.to,i.default.getAnchor(e.state.url)&&e.scrollTo(i.default.getAnchor(e.state.url)),e.emit("NAVIGATE_END",a,u,r,e.state)}),window.scrollTo(0,0)})}},{key:"scrollTo",value:function(t){var e=document.querySelector(t);e&&window.scrollTo(e.offsetLeft,e.offsetTop)}}]),e}();e.default=s},function(t,e){function n(){}n.prototype={on:function(t,e,n){var r=this.e||(this.e={});return(r[t]||(r[t]=[])).push({fn:e,ctx:n}),this},once:function(t,e,n){var r=this;function o(){r.off(t,o),e.apply(n,arguments)}return o._=e,this.on(t,o,n)},emit:function(t){for(var e=[].slice.call(arguments,1),n=((this.e||(this.e={}))[t]||[]).slice(),r=0,o=n.length;r<o;r++)n[r].fn.apply(n[r].ctx,e);return this},off:function(t,e){var n=this.e||(this.e={}),r=n[t],o=[];if(r&&e)for(var i=0,a=r.length;i<a;i++)r[i].fn!==e&&r[i].fn._!==e&&o.push(r[i]);return o.length?n[t]=o:delete n[t],this}},t.exports=n},function(t,e,n){"use strict";Object.defineProperty(e,"__esModule",{value:!0});var r=function(){function t(t,e){for(var n=0;n<e.length;n++){var r=e[n];r.enumerable=r.enumerable||!1,r.configurable=!0,"value"in r&&(r.writable=!0),Object.defineProperty(t,r.key,r)}}return function(e,n,r){return n&&t(e.prototype,n),r&&t(e,r),e}}();var o=function(){function t(e,n,r){!function(t,e){if(!(t instanceof e))throw new TypeError("Cannot call a class as a function")}(this,t),this.view=e,this.title=n,this.transition=r,n&&document.title!==n&&(document.title=n),this.wrapper=null}return r(t,[{key:"show",value:function(){var t=this;return new Promise(function(e){t.wrapper=document.querySelector("[router-wrapper]"),t.wrapper.appendChild(t.view),t.onEnter&&t.onEnter();var n=function(){t.onEnterCompleted&&t.onEnterCompleted(),e()};t.transition?t.transition.in(t.view,n):n()})}},{key:"hide",value:function(){var t=this;return new Promise(function(e){t.wrapper=t.view.parentNode,t.onLeave&&t.onLeave();var n=function(){t.wrapper.removeChild(t.view),t.onLeaveCompleted&&t.onLeaveCompleted(),e()};t.transition?t.transition.out(t.view,n):n()})}}]),t}();e.default=o}]);
+/******/ (function(modules) { // webpackBootstrap
+/******/ 	// The module cache
+/******/ 	var installedModules = {};
+/******/
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+/******/
+/******/ 		// Check if module is in cache
+/******/ 		if(installedModules[moduleId]) {
+/******/ 			return installedModules[moduleId].exports;
+/******/ 		}
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = installedModules[moduleId] = {
+/******/ 			i: moduleId,
+/******/ 			l: false,
+/******/ 			exports: {}
+/******/ 		};
+/******/
+/******/ 		// Execute the module function
+/******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
+/******/
+/******/ 		// Flag the module as loaded
+/******/ 		module.l = true;
+/******/
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+/******/
+/******/
+/******/ 	// expose the modules object (__webpack_modules__)
+/******/ 	__webpack_require__.m = modules;
+/******/
+/******/ 	// expose the module cache
+/******/ 	__webpack_require__.c = installedModules;
+/******/
+/******/ 	// define getter function for harmony exports
+/******/ 	__webpack_require__.d = function(exports, name, getter) {
+/******/ 		if(!__webpack_require__.o(exports, name)) {
+/******/ 			Object.defineProperty(exports, name, {
+/******/ 				configurable: false,
+/******/ 				enumerable: true,
+/******/ 				get: getter
+/******/ 			});
+/******/ 		}
+/******/ 	};
+/******/
+/******/ 	// define __esModule on exports
+/******/ 	__webpack_require__.r = function(exports) {
+/******/ 		Object.defineProperty(exports, '__esModule', { value: true });
+/******/ 	};
+/******/
+/******/ 	// getDefaultExport function for compatibility with non-harmony modules
+/******/ 	__webpack_require__.n = function(module) {
+/******/ 		var getter = module && module.__esModule ?
+/******/ 			function getDefault() { return module['default']; } :
+/******/ 			function getModuleExports() { return module; };
+/******/ 		__webpack_require__.d(getter, 'a', getter);
+/******/ 		return getter;
+/******/ 	};
+/******/
+/******/ 	// Object.prototype.hasOwnProperty.call
+/******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
+/******/
+/******/ 	// __webpack_public_path__
+/******/ 	__webpack_require__.p = "";
+/******/
+/******/
+/******/ 	// Load entry module and return exports
+/******/ 	return __webpack_require__(__webpack_require__.s = 4);
+/******/ })
+/************************************************************************/
+/******/ ([
+/* 0 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.getOrigin = getOrigin;
+exports.getPathname = getPathname;
+exports.getAnchor = getAnchor;
+exports.getParams = getParams;
+exports.getParam = getParam;
+exports.getInfos = getInfos;
+exports.getView = getView;
+exports.getSlug = getSlug;
+exports.getTitle = getTitle;
+exports.getRenderer = getRenderer;
+exports.getTransition = getTransition;
+/**
+ * @license
+ * Highway - Dogstudio
+ *
+ * Copyright 2018 Dogstudio.
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ */
+
+/**
+ * @file Highway helper methods used all acrosse the script.
+ * @author Anthony Du Pont <bulldog@dogstudio.co>
+ */
+var TITLE_REGEX = /<title>(.+)<\/title>/;
+var PARAM_REGEX = /\?([\w_\-.=&]+)/;
+var ANCHOR_REGEX = /(#.*)$/;
+var ORIGIN_REGEX = /(https?:\/\/[\w\-.]+)/;
+var PATHNAME_REGEX = /https?:\/\/.*?(\/[\w_\-./]+)/;
+
+// We create a fake DOM element that will contain our page HTML and let us
+// select DOM nodes properly. This element is only used in Javascript.
+var FRAGMENT = document.createElement('div');
+
+/**
+ * Get origin of an URL
+ *
+ * @arg    {string} url — URL to match
+ * @return {string} Origin of URL or `null`
+ */
+function getOrigin(url) {
+  var match = url.match(ORIGIN_REGEX);
+  return match ? match[1] : null;
+}
+
+/**
+ * Get pathname of an URL
+ *
+ * @arg    {string} url — URL to match
+ * @return {string} Pathname of URL or `null`
+ */
+function getPathname(url) {
+  var match = url.match(PATHNAME_REGEX);
+  return match ? match[1] : null;
+}
+
+/**
+ * Get anchor in an URL
+ *
+ * @arg    {string} url — URL to match
+ * @return {string} Anchor in URL or `null`
+ */
+function getAnchor(url) {
+  var match = url.match(ANCHOR_REGEX);
+  return match ? match[1] : null;
+}
+
+/**
+ * Get search in URL.
+ *
+ * @arg    {string} url — URL to match
+ * @return {object} Search in URL formatted as an object or `null`
+ */
+function getParams(url) {
+  var match = url.match(PARAM_REGEX);
+
+  if (!match) {
+    return null;
+  }
+
+  var search = match[1].split('&');
+  var object = {};
+
+  for (var i = 0; i < search.length; i++) {
+    var part = search[i].split('=');
+    var key = part[0] || null;
+    var value = part[1] || null;
+
+    if (key && value) {
+      object[key] = value;
+    }
+  }
+
+  return object;
+}
+
+/**
+ * Get a parameter from an URL
+ *
+ * @arg    {string} url — URL to use
+ * @arg    {string} key — Parameter key to get
+ * @return {string} Parameter value or `null`
+ */
+function getParam(url, key) {
+  var params = getParams(url);
+  return params.hasOwnProperty(key) ? params[key] : null;
+}
+
+/**
+ * Get infos of an URL.
+ *
+ * @arg    {string} url — URL to use
+ * @return {object} All informations of an URL.
+ */
+function getInfos(url) {
+  return {
+    url: url,
+    anchor: getAnchor(url),
+    origin: getOrigin(url),
+    params: getParams(url),
+    pathname: getPathname(url)
+  };
+}
+
+/**
+ * Get view element from page HTML
+ * 
+ * @arg    {string} page — Page HTML
+ * @return {object} View element
+ */
+function getView(page) {
+  // This is the trick to transform our page HTML from string to DOM element by
+  // using our fake container we created before and by updating its inner HTML.
+  FRAGMENT.innerHTML = page;
+
+  // Now we can select our view with ease and return it.
+  return FRAGMENT.querySelector('[router-view]');
+}
+
+/**
+ * Get view's slug from view element
+ * 
+ * @arg    {string} page — Page HTML
+ * @return {string} Page slug
+ */
+function getSlug(page) {
+  return getView(page).getAttribute('router-view');
+}
+
+/**
+ * Get page's title from page HTML
+ * 
+ * @arg    {string} page — Page HTML
+ * @return {string} Page title
+ */
+function getTitle(page) {
+  var match = page.match(TITLE_REGEX);
+  return match ? match[1] : '';
+}
+
+/**
+ * Get page renderer
+ *
+ * @arg    {string} page — Page HTML to use
+ * @arg    {object} renderers — List of renderers
+ * @return {object} Single renderer or `null`
+ */
+function getRenderer(page, renderers) {
+  var slug = getSlug(page);
+  return renderers.hasOwnProperty(slug) ? renderers[slug] : null;
+}
+
+/**
+ * Get page transition
+ *
+ * @arg    {string} page — Page HTML to use
+ * @arg    {object} transitions — List of transitions
+ * @return {object} Single transition or `null`
+ */
+function getTransition(page, transitions) {
+  var slug = getSlug(page);
+
+  if (!transitions.hasOwnProperty(slug) || !transitions[slug]) {
+    if (transitions.hasOwnProperty('default')) {
+      return transitions['default'];
+    }
+
+    return null;
+  }
+
+  return transitions[slug];
+}
+
+/**
+ * Export all helpers
+ */
+exports.default = {
+  getSlug: getSlug,
+  getView: getView,
+  getInfos: getInfos,
+  getTitle: getTitle,
+  getParam: getParam,
+  getParams: getParams,
+  getOrigin: getOrigin,
+  getAnchor: getAnchor,
+  getPathname: getPathname,
+  getRenderer: getRenderer,
+  getTransition: getTransition
+};
+
+/***/ }),
+/* 1 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+/**
+ * @license
+ * Highway - Dogstudio
+ *
+ * Copyright 2018 Dogstudio.
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ */
+
+/**
+ * @file Highway default renderer that handle DOM stuffs.
+ * @author Anthony Du Pont <bulldog@dogstudio.co>
+ */
+var RouterRenderer = function () {
+
+  /**
+   * @arg {object} view — [router-view] Node
+   * @arg {string} title — Page title
+   * @arg {string} transition — Page transition
+   * @constructor
+   */
+  function RouterRenderer(view, title, transition) {
+    _classCallCheck(this, RouterRenderer);
+
+    // The [router-view] and the page title are the only main information we need
+    // since the role of the renderer is to update the required DOM elements with
+    // the page informations. In our case the content and title of the document.
+    this.view = view;
+    this.title = title;
+    this.transition = transition;
+
+    if (title && document.title !== title) {
+      document.title = title;
+    }
+
+    // The [router-wrapper] is the main container of the router and the ancestor of our 
+    // [router-view] that let us now where to remove of append our view in the DOM.
+    // Everything outside of the [router-wrapper] is invisible for the router and
+    // it should only contain the [router-view] and nothing else.
+    this.wrapper = null;
+  }
+
+  /**
+   * Add the view in DOM and play an `in` transition if one is defined.
+   * 
+   * @return {object} Promise
+   */
+
+
+  _createClass(RouterRenderer, [{
+    key: 'show',
+    value: function show() {
+      var _this = this;
+
+      return new Promise(function (resolve) {
+        _this.wrapper = document.querySelector('[router-wrapper]');
+
+        // Before doing anything crazy you need to know your view doesn't exists
+        // in the [router-wrapper] so it is appended to it right now!
+        _this.wrapper.appendChild(_this.view);
+
+        // The `onEnter` method if set in your custom renderer is called everytime
+        // the view is appended to the DOM. This let you do some crazy stuffs at
+        // this right moment.
+        if (_this.onEnter) {
+          _this.onEnter();
+        }
+
+        // Use of a callback method to optimize lines of code.
+        var callback = function callback() {
+          // The `onEnterCompleted` method if set in your custom renderer is called 
+          // everytime a transition is over if set. Otherwise it's called right after
+          // the `onEnter` method.
+          if (_this.onEnterCompleted) {
+            _this.onEnterCompleted();
+          }
+          resolve();
+        };
+
+        // You fool you didn't define any transition...
+        if (!_this.transition) {
+          callback();
+          return;
+        }
+
+        // The transition is set in your custom renderer with a getter called
+        // `transition` that should return the transition object you want to 
+        // apply to you view. We call the `in` step of this one right now!
+        _this.transition.in(_this.view, callback);
+      });
+    }
+
+    /**
+     * Play an `out` transition if one is defined and remove the view from DOM.
+     * 
+     * @return {object} Promise
+     */
+
+  }, {
+    key: 'hide',
+    value: function hide() {
+      var _this2 = this;
+
+      return new Promise(function (resolve) {
+        _this2.wrapper = _this2.view.parentNode;
+
+        // The `onLeave` method if set in your custom renderer is called everytime
+        // before a view will be removed from the DOM. This let you do some stuffs
+        // right before the view isn't available anymore.
+        if (_this2.onLeave) {
+          _this2.onLeave();
+        }
+
+        // Use of a callback method to optimize lines of code.
+        var callback = function callback() {
+          // It's time to say goodbye to the view... Farewell my friend.
+          _this2.wrapper.removeChild(_this2.view);
+
+          // The `onLeaveCompleted` method if set in your custom renderer is called 
+          // everytime a view is completely removed from the DOM.
+          if (_this2.onLeaveCompleted) {
+            _this2.onLeaveCompleted();
+          }
+          resolve();
+        };
+
+        // You fool you didn't define any transition...
+        if (!_this2.transition) {
+          callback();
+          return;
+        }
+
+        // We call the `out` step of your transition right now!
+        _this2.transition.out(_this2.view, callback);
+      });
+    }
+  }]);
+
+  return RouterRenderer;
+}();
+
+exports.default = RouterRenderer;
+
+/***/ }),
+/* 2 */
+/***/ (function(module, exports) {
+
+function E () {
+  // Keep this empty so it's easier to inherit from
+  // (via https://github.com/lipsmack from https://github.com/scottcorgan/tiny-emitter/issues/3)
+}
+
+E.prototype = {
+  on: function (name, callback, ctx) {
+    var e = this.e || (this.e = {});
+
+    (e[name] || (e[name] = [])).push({
+      fn: callback,
+      ctx: ctx
+    });
+
+    return this;
+  },
+
+  once: function (name, callback, ctx) {
+    var self = this;
+    function listener () {
+      self.off(name, listener);
+      callback.apply(ctx, arguments);
+    };
+
+    listener._ = callback
+    return this.on(name, listener, ctx);
+  },
+
+  emit: function (name) {
+    var data = [].slice.call(arguments, 1);
+    var evtArr = ((this.e || (this.e = {}))[name] || []).slice();
+    var i = 0;
+    var len = evtArr.length;
+
+    for (i; i < len; i++) {
+      evtArr[i].fn.apply(evtArr[i].ctx, data);
+    }
+
+    return this;
+  },
+
+  off: function (name, callback) {
+    var e = this.e || (this.e = {});
+    var evts = e[name];
+    var liveEvents = [];
+
+    if (evts && callback) {
+      for (var i = 0, len = evts.length; i < len; i++) {
+        if (evts[i].fn !== callback && evts[i].fn._ !== callback)
+          liveEvents.push(evts[i]);
+      }
+    }
+
+    // Remove event from queue to prevent memory leak
+    // Suggested by https://github.com/lazd
+    // Ref: https://github.com/scottcorgan/tiny-emitter/commit/c6ebfaa9bc973b33d110a84a307742b7cf94c953#commitcomment-5024910
+
+    (liveEvents.length)
+      ? e[name] = liveEvents
+      : delete e[name];
+
+    return this;
+  }
+};
+
+module.exports = E;
+
+
+/***/ }),
+/* 3 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _tinyEmitter = __webpack_require__(2);
+
+var _tinyEmitter2 = _interopRequireDefault(_tinyEmitter);
+
+var _helpers = __webpack_require__(0);
+
+var _helpers2 = _interopRequireDefault(_helpers);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /**
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * @license
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * Highway - Dogstudio
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                *
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * Copyright 2018 Dogstudio.
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                *
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * Permission is hereby granted, free of charge, to any person obtaining a copy
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * of this software and associated documentation files (the "Software"), to deal
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * in the Software without restriction, including without limitation the rights
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * copies of the Software, and to permit persons to whom the Software is
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * furnished to do so, subject to the following conditions:
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * The above copyright notice and this permission notice shall be included in
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * all copies or substantial portions of the Software.
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * THE SOFTWARE.
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                */
+
+/**
+ * @file Highway core that handle all history stuffs.
+ * @author Anthony Du Pont <bulldog@dogstudio.co>
+ */
+
+
+// Fetch API options used for every HTTP request sent by Highway. It makes
+// sure the HTTP requests URL are only on the same origin and that credentials
+// are also only sent on same origin. An extra `X-Requested-With` header is
+// available if needed in your scripts.
+var FETCH_OPTS = {
+  mode: 'same-origin',
+  method: 'GET',
+  headers: {
+    'X-Requested-With': 'XMLHttpRequest'
+  },
+  credentials: 'same-origin'
+};
+
+var RouterCore = function (_Emitter) {
+  _inherits(RouterCore, _Emitter);
+
+  /**
+   * @arg {object} opts — User options
+   * @arg {object} opts.renderers — List of renderers
+   * @arg {object} opts.transitions — List of transitions
+   * @extends Emitter
+   * @constructor
+   */
+  function RouterCore(opts) {
+    _classCallCheck(this, RouterCore);
+
+    // All your custom renderers and transitions you sent to Highway.
+    var _this = _possibleConstructorReturn(this, (RouterCore.__proto__ || Object.getPrototypeOf(RouterCore)).call(this));
+    // Extends the Emitter constructor in order to be able to use its features
+    // and send custom events all along the script.
+
+
+    _this.renderers = opts.renderers;
+    _this.transitions = opts.transitions;
+
+    // Some usefull stuffs for later
+    _this.state = {};
+    _this.cache = {};
+    _this.navigating = false;
+
+    // Cache the page we land on for further HTTP request optimization.
+    _this.page = document.documentElement.outerHTML;
+    _this.pathname = _helpers2.default.getPathname(window.location.href);
+    _this.cache[_this.pathname] = _this.page;
+
+    // Get the page renderer and directly call its `onEnter` and `onEnterCompleted`
+    // methods in order to properly initialize the page.
+    var view = document.querySelector('[router-view]');
+    var transition = _helpers2.default.getTransition(_this.page, _this.transitions);
+
+    _this.from = new (_helpers2.default.getRenderer(_this.page, _this.renderers))(view, null, transition);
+    _this.from.onEnter();
+    _this.from.onEnterCompleted();
+
+    // Listen the `popstate` on the window to run the router each time an 
+    // history entry changes. Basically everytime the backward/forward arrows
+    // are triggered by the user.
+    window.addEventListener('popstate', _this.popState.bind(_this));
+
+    // Event bubbling
+    _this.bubble();
+    return _this;
+  }
+
+  /**
+   * Bubble `click` event
+   */
+
+
+  _createClass(RouterCore, [{
+    key: 'bubble',
+    value: function bubble() {
+      var _this2 = this;
+
+      // Use the bubbling principle from document to all each children and catch
+      // only the link elements without target and not pointing to an anchor on
+      // the page.
+      document.addEventListener('click', function (e) {
+        if (e.target.tagName === 'A') {
+          var anchor = _helpers2.default.getAnchor(e.target.href);
+          var pathname = _helpers2.default.getPathname(e.target.href);
+
+          if (!e.target.target) {
+            // To run the router properly we have to prevent the default behaviour
+            // of link elements to avoir page reloading.
+            e.preventDefault();
+
+            if (!_this2.navigating && pathname !== _this2.pathname) {
+              // Now push the state!
+              _this2.pushState(e);
+            } else {
+              // If the pathnames are the same there might be an anchor appended to
+              // it so we need to check it and reload the page to use the default
+              // browser behaviour.
+              if (anchor) {
+                window.location.href = e.target.href;
+              }
+            }
+          }
+        }
+      });
+    }
+
+    /**
+     * Watch history entry changes
+     */
+
+  }, {
+    key: 'popState',
+    value: function popState() {
+      // We quickly check if the pathname has changed before doing anything else
+      // because with anchor the `popstate` event might trigger but the pathname
+      // might not change and nothing should happen then.
+      var pathname = _helpers2.default.getPathname(window.location.href);
+
+      if (pathname !== this.pathname) {
+        // Call of `beforeFetch` for optimizations
+        this.beforeFetch(window.location.href, false);
+      }
+    }
+
+    /**
+     * Update DOM on `click` event
+     * 
+     * @arg {object} event — `click` event from link elements
+     */
+
+  }, {
+    key: 'pushState',
+    value: function pushState(event) {
+      // Call of `beforeFetch` for optimizations
+      this.beforeFetch(event.target.href, true);
+    }
+
+    /**
+     * Do some tests before HTTP requests to optimize pipeline.
+     * 
+     * @arg {string} url – URL to use
+     * @arg {boolean} history — Push entry in history if `true`
+     */
+
+  }, {
+    key: 'beforeFetch',
+    value: function beforeFetch(url, history) {
+      var _this3 = this;
+
+      // Using the `getInfos` from the Helpers we can get all the information from
+      // a given URL we can use in our script (origin, pathname, parameters,...).
+      this.state = _helpers2.default.getInfos(url);
+      this.pathname = _helpers2.default.getPathname(url);
+
+      // We need to check if the state URL is available in the cache to avoid
+      // useless HTTP request and get the page HTML from the cache if possible.
+      if (this.cache.hasOwnProperty(this.pathname)) {
+        // Now push the page!
+        this.push(this.cache[this.pathname]);
+
+        // We push a new entry in the history in order to be able to navigate
+        // with the backward and forward buttons from the browser.
+        if (history) {
+          window.history.pushState(this.state, '', this.state.url);
+        }
+
+        // And stop there.
+        return;
+      }
+
+      // Get the page URL from the state previously pushed in the history.
+      this.fetch().then(function (page) {
+        // We push a new entry in the history in order to be able to navigate
+        // with the backward and forward buttons from the browser.
+        if (history) {
+          window.history.pushState(_this3.state, '', _this3.state.url);
+        }
+
+        // Now push the page!
+        _this3.push(page);
+      });
+    }
+
+    /**
+     * Fetch the page from URL
+     * 
+     * @return {string} Fetch response
+     * @return {object} Fetch Promise
+     */
+
+  }, {
+    key: 'fetch',
+    value: function (_fetch) {
+      function fetch() {
+        return _fetch.apply(this, arguments);
+      }
+
+      fetch.toString = function () {
+        return _fetch.toString();
+      };
+
+      return fetch;
+    }(function () {
+      var _this4 = this;
+
+      // Use of a boolean to avoid repetitive fetch calls by super excited users
+      // that could lead to some serious issues.
+      this.navigating = true;
+
+      return fetch(this.state.url, FETCH_OPTS).then(function (response) {
+        // Check the HTTP code
+        // 200+: Success of the HTTP request
+        if (response.status >= 200 && response.status < 300) {
+          // The HTTP response is the page HTML as a string
+          return response.text();
+        }
+
+        // An extra event is emitted if an error has occured that can be used
+        // outside of the router to let you deal with the mess that happened.
+        _this4.emit('NAVIGATE_ERROR');
+
+        // !200+: Error of the HTTP request
+        throw new Error(response.statusText);
+      });
+    })
+
+    /**
+     * Push page in DOM
+     * 
+     * @arg {string} page — Page HTML
+     * @arg {boolean} history — Push entry in history if `true`
+     */
+
+  }, {
+    key: 'push',
+    value: function push(page) {
+      var _this5 = this;
+
+      // Cache the page for HTTP request optimization
+      this.cache[this.pathname] = page;
+
+      // The page we get is the one we want to go `to` and like every type of page
+      // you should reference a renderer to the router we are getting right now.
+      var view = _helpers2.default.getView(page);
+      var title = _helpers2.default.getTitle(page);
+      var transition = _helpers2.default.getTransition(page, this.transitions);
+
+      this.to = new (_helpers2.default.getRenderer(page, this.renderers))(view, title, transition);
+
+      // An event is emitted and can be used outside of the router to run
+      // additionnal code when the navigation starts. It expose the `from` and `to`
+      // [router-view] elements to the user and the router state.
+      var from = this.from.view;
+      var to = this.to.view;
+
+      this.emit('NAVIGATE_START', from, to, title, this.state);
+
+      // We hide the page we come `from` and since the `hide` method returns a
+      // Promise because come transition might occur we need to wait for the 
+      // Promise resolution before calling the `show` method of the page we go `to`.
+      this.from.hide().then(function () {
+        _this5.to.show().then(function () {
+          _this5.navigating = false;
+
+          // We prepare the next navigation by replacing the `from` renderer by
+          // the `to` renderer now that the pages have been swapped successfully.
+          _this5.from = _this5.to;
+
+          // We might have a redirection to a page pointing to a specifig anchor
+          // on this page so we have to deal with it and check if there is an anchor
+          // present in the URL.
+          if (_helpers2.default.getAnchor(_this5.state.url)) {
+            // Now scroll to anchor!
+            _this5.scrollTo(_helpers2.default.getAnchor(_this5.state.url));
+          }
+
+          // Same as the `NAVIGATE_START` event
+          _this5.emit('NAVIGATE_END', from, to, title, _this5.state);
+        });
+
+        // Reset scroll position
+        window.scrollTo(0, 0);
+      });
+    }
+
+    /**
+     * Scroll to a given element based on an anchor in the URL
+     * 
+     * @arg {string} id — Anchor ID
+     */
+
+  }, {
+    key: 'scrollTo',
+    value: function scrollTo(id) {
+      var el = document.querySelector(id);
+
+      if (el) {
+        window.scrollTo(el.offsetLeft, el.offsetTop);
+      }
+    }
+  }]);
+
+  return RouterCore;
+}(_tinyEmitter2.default);
+
+exports.default = RouterCore;
+
+/***/ }),
+/* 4 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _core = __webpack_require__(3);
+
+var _core2 = _interopRequireDefault(_core);
+
+var _helpers = __webpack_require__(0);
+
+var _helpers2 = _interopRequireDefault(_helpers);
+
+var _renderer = __webpack_require__(1);
+
+var _renderer2 = _interopRequireDefault(_renderer);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var Highway = {
+  Core: _core2.default,
+  Helpers: _helpers2.default,
+  Renderer: _renderer2.default
+}; /**
+    * @license
+    * Highway - Dogstudio
+    *
+    * Copyright 2018 Dogstudio.
+    *
+    * Permission is hereby granted, free of charge, to any person obtaining a copy
+    * of this software and associated documentation files (the "Software"), to deal
+    * in the Software without restriction, including without limitation the rights
+    * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    * copies of the Software, and to permit persons to whom the Software is
+    * furnished to do so, subject to the following conditions:
+   
+    * The above copyright notice and this permission notice shall be included in
+    * all copies or substantial portions of the Software.
+   
+    * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+    * THE SOFTWARE.
+    */
+
+/**
+ * @file Highway object containing all parts of the script.
+ * @author Anthony Du Pont <bulldog@dogstudio.co>
+ */
+exports.default = Highway;
+
+/***/ })
+/******/ ]);
