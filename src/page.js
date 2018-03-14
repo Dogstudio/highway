@@ -1,9 +1,12 @@
-// Router renderer
-import Renderer from './router/renderer';
+// Highway
+import Highway from './highway';
 
 // Page class
-class Page extends Renderer {
-
+class Page extends Highway.Renderer {
+  onEnter() { }
+  onLeave() { }
+  onEnterCompleted() { }
+  onLeaveCompleted() { }
 }
 
 export default Page;

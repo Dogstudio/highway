@@ -3,27 +3,23 @@ import { TweenLite } from 'gsap';
 
 // Fade transition
 const Fade = {
-  in: (DOM) => {
-    return new Promise(resolve => {
-      TweenLite.fromTo(DOM, 1,
-        { alpha: 0 },
-        {
-          alpha: 1,
-          onComplete: resolve
-        }
-      );
-    });
+  in: (view, done) => {
+    TweenLite.fromTo(view, 1,
+      { alpha: 0 },
+      {
+        alpha: 1,
+        onComplete: done
+      }
+    );
   },
-  out: (DOM) => {
-    return new Promise(resolve => {
-      TweenLite.fromTo(DOM, 1,
-        { alpha: 1 },
-        {
-          alpha: 0,
-          onComplete: resolve
-        }
-      );
-    });
+  out: (view, done) => {
+    TweenLite.fromTo(view, 1,
+      { alpha: 1 },
+      {
+        alpha: 0,
+        onComplete: done
+      }
+    );
   }
 }
 

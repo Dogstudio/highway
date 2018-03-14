@@ -1,5 +1,5 @@
 // Webpack
-const webpack = require('webpack');
+require('webpack');
 
 // Modules
 const path = require('path');
@@ -10,10 +10,13 @@ const CompressionPlugin = require('compression-webpack-plugin');
 
 // Configuration
 module.exports = {
-  entry : path.resolve(__dirname, 'src/main.js'),
+  entry: {
+    main: path.resolve(__dirname, 'src/main.js'),
+    highway: path.resolve(__dirname, 'src/highway/index.js')
+  },
   output: {
     path: path.resolve(__dirname, 'dist'),
-    filename: 'main.js'
+    filename: '[name].js'
   },
   module: {
     rules: [
