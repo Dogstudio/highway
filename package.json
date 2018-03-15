@@ -19,7 +19,8 @@
     "clean": "rm -rf build/",
     "build": "npm run clean && webpack",
     "watch": "npm run clean && webpack --watch",
-    "test": "mocha"
+    "test": "nyc --reporter=html --reporter=text mocha --require babel-core/register",
+    "coverage": "nyc report --reporter=text-lcov | coveralls"
   },
   "repository": {
     "type": "git",
@@ -42,10 +43,17 @@
     "babel-preset-env": "^1.6.1",
     "chai": "^4.1.2",
     "compression-webpack-plugin": "^1.1.11",
+    "coveralls": "^3.0.0",
     "mocha": "^5.0.4",
+    "nyc": "^11.6.0",
     "tiny-emitter": "^2.0.2",
     "uglifyjs-webpack-plugin": "^1.2.3",
     "webpack": "^4.1.1",
     "webpack-cli": "^2.0.12"
+  },
+  "babel": {
+    "presets": [
+      "env"
+    ]
   }
 }
