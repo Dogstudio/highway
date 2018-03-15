@@ -1,10 +1,13 @@
 {
   "name": "@dogstudio/highway",
   "license": "MIT",
-  "version": "0.9.9",
+  "version": "0.9.11",
   "description": "Highway helps you manage your page transitions",
-  "main": "./src/index.js",
-  "files": ["dist/"],
+  "main": "dist/highway.js",
+  "unpkg": "dist/highway.min.js",
+  "files": [
+    "dist"
+  ],
   "contributors": [
     {
       "name": "Anthony Du Pont",

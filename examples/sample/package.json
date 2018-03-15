@@ -1,8 +1,8 @@
 {
   "name": "@dogstudio/highway",
   "license": "MIT",
-  "version": "0.9.9",
-  "main": "./src/index.js",
+  "version": "0.9.11",
+  "main": "dist/index.js",
   "scripts": {
     "build": "webpack",
     "watch": "webpack --watch",
@@ -16,6 +16,6 @@
     "webpack-cli": "^2.0.12"
   },
   "dependencies": {
-    "@dogstudio/highway": "^0.9.7"
+    "@dogstudio/highway": "^0.9.11"
   }
 }
