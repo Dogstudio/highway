@@ -16,7 +16,7 @@
     }
   ],
   "scripts": {
-    "clean": "rm -rf build/",
+    "clean": "rm -rf dist/",
     "build": "npm run clean && webpack",
     "watch": "npm run clean && webpack --watch",
     "test": "nyc --reporter=html --reporter=text mocha --require babel-core/register",
