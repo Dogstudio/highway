@@ -2,9 +2,9 @@
 # yarn lockfile v1
 
 
-"@dogstudio/highway@^0.9.3":
-  version "0.9.4"
-  resolved "https://registry.yarnpkg.com/@dogstudio/highway/-/highway-0.9.4.tgz#7a11343f026941d3522175bcf034d6a2a2618c08"
+"@dogstudio/highway@^0.9.5":
+  version "0.9.5"
+  resolved "https://registry.yarnpkg.com/@dogstudio/highway/-/highway-0.9.5.tgz#5ba44c9fad0cf7fcdaaaa10e6d8c7d095a47fb46"
 
 "@sindresorhus/is@^0.7.0":
   version "0.7.0"
@@ -841,10 +841,6 @@ babylon@^7.0.0-beta.30:
 balanced-match@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/balanced-match/-/balanced-match-1.0.0.tgz#89b4d199ab2bee49de164ea02b89ce462d71b767"
-
-barba.js@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/barba.js/-/barba.js-1.0.0.tgz#3c1d7358f0d3f87719cb1bdb775be417c9273f7d"
 
 base64-js@^1.0.2:
   version "1.2.3"

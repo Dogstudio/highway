@@ -16,7 +16,6 @@
     "webpack-cli": "^2.0.12"
   },
   "dependencies": {
-    "@dogstudio/highway": "^0.9.3",
-    "barba.js": "^1.0.0"
+    "@dogstudio/highway": "^0.9.5"
   }
 }
