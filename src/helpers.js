@@ -84,12 +84,10 @@ function getParams(url) {
 
   for (let i = 0; i < search.length; i++) {
     const part = search[i].split('=');
-    const key = part[0] || null;
-    const value = part[1] || null;
+    const { 0: key } = part;
+    const { 1: value } = part;
 
-    if (key && value) {
-      object[key] = value;
-    }
+    object[key] = value;
   }
 
   return object;
