@@ -9,8 +9,8 @@ notifications:
     on_success: change
     on_failure: always
 script:
-  - npm run build
-  - npm test
+  - cd $TRAVIS_BUILD_DIR/examples/sample && yarn && npm run build
+  - cd $TRAVIS_BUILD_DIR && yarn && npm run build && npm test
 cache:
   directories:
     - "node_modules"
