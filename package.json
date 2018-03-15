@@ -5,8 +5,7 @@
   "description": "Highway helps you manage your page transitions",
   "main": "./src/index.js",
   "files": [
-    "dist/**",
-    "!dist"
+    "dist/**"
   ],
   "contributors": [
     {
