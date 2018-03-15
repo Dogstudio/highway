@@ -1,9 +1,9 @@
 ## Highway
 
-[![Build Status](https://travis-ci.org/Dogstudio/highway.svg?branch=master)](https://travis-ci.org/Dogstudio/highway)
-[![npm version](https://badge.fury.io/js/%40dogstudio%2Fhighway.svg)](https://badge.fury.io/js/%40dogstudio%2Fhighway)
-[![npm](https://img.shields.io/npm/dt/express.svg)](https://www.npmjs.com/package/@dogstudio/highway)
-[![Coverage Status](https://coveralls.io/repos/github/Dogstudio/highway/badge.svg?branch=master)](https://coveralls.io/github/Dogstudio/highway?branch=master)
+[![Travis](https://img.shields.io/travis/Dogstudio/highway.svg)](https://travis-ci.org/Dogstudio/highway)
+[![npm](https://img.shields.io/npm/v/@dogstudio/highway.svg)](https://www.npmjs.com/package/@dogstudio/highway)
+[![npm](https://img.shields.io/npm/dt/@dogstudio/highway.svg)](https://www.npmjs.com/package/@dogstudio/highway)
+[![Coveralls github](https://img.shields.io/coveralls/github/Dogstudio/highway.svg)](https://coveralls.io/github/Dogstudio/highway)
 [![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/Dogstudio/highway/issues)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
