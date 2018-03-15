@@ -26,7 +26,8 @@
     "router",
     "javascript",
     "transitions",
-    "animations"
+    "animations",
+    "library"
   ],
   "bugs": {
     "url": "https://github.com/Dogstudio/highway/issues"
