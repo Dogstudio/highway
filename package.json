@@ -4,6 +4,10 @@
   "version": "0.9.3",
   "description": "Highway helps you manage your page transitions",
   "main": "./src/index.js",
+  "files": [
+    "!build",
+    "build/**"
+  ],
   "contributors": [
     {
       "name": "Anthony Du Pont",
