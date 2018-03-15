@@ -20,6 +20,7 @@ describe('Helpers', () => {
       const url = '/foo/bar';
 
       // Assertion
+      // eslint-disable-next-line
       expect(Helpers.getOrigin(url)).to.be.null;
     });
   });
@@ -38,6 +39,7 @@ describe('Helpers', () => {
       const url = 'http://bar.com';
 
       // Assertion
+      // eslint-disable-next-line
       expect(Helpers.getPathname(url)).to.be.null;
     });
   });
@@ -56,6 +58,7 @@ describe('Helpers', () => {
       const url = 'http://bar.com/foo';
 
       // Assertion
+      // eslint-disable-next-line
       expect(Helpers.getAnchor(url)).to.be.null;
     });
   });
@@ -74,6 +77,7 @@ describe('Helpers', () => {
       const url = 'http://bar.com/foo';
 
       // Assertion
+      // eslint-disable-next-line
       expect(Helpers.getParams(url)).to.be.null;
     });
   });
@@ -92,6 +96,7 @@ describe('Helpers', () => {
       const url = 'http://bar.com/foo?bar=foo';
 
       // Assertion
+      // eslint-disable-next-line
       expect(Helpers.getParam(url, 'foo')).to.be.null;
     });
   });
@@ -113,6 +118,15 @@ describe('Helpers', () => {
 
       // Assertion
       expect(Helpers.getTitle(html)).to.be.equal('Hello');
+    });
+
+    it('Should return the nothing if no title a given HTML', () => {
+      // Fake HTML
+      const html = '<div>Hello</div>';
+
+      // Assertion
+      // eslint-disable-next-line
+      expect(Helpers.getTitle(html)).to.be.empty;
     });
   });
 });
