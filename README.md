@@ -3,7 +3,6 @@
 [![Travis](https://img.shields.io/travis/Dogstudio/highway.svg)](https://travis-ci.org/Dogstudio/highway)
 [![npm](https://img.shields.io/npm/v/@dogstudio/highway.svg)](https://www.npmjs.com/package/@dogstudio/highway)
 [![npm](https://img.shields.io/npm/dt/@dogstudio/highway.svg)](https://www.npmjs.com/package/@dogstudio/highway)
-[![Libraries.io for GitHub](https://img.shields.io/librariesio/github/Dogstudio/highway.svg)](https://github.com/Dogstudio/highway)
 [![Coveralls github](https://img.shields.io/coveralls/github/Dogstudio/highway.svg)](https://coveralls.io/github/Dogstudio/highway)
 [![GitHub issues](https://img.shields.io/github/issues-raw/Dogstudio/highway.svg)](https://github.com/Dogstudio/highway/issues)
 [![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/Dogstudio/highway/issues)
