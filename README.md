@@ -6,7 +6,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 <p align="center">
- :tada::tada::tada::tada::tada::tada::tada::tada::tada::tada::dog::tada::tada::tada::tada::tada::tada::tada::tada::tada::tada:
+ <img src="https://i.imgur.com/AOEVomM.png" alt="Banner" />
 </p>
 
 **Highway** is a *modern*, *flexible* and *lightweight* library that will let you create **AJAX navigations** with beautiful **transitions** on your websites. It's been a while we were trying to build this kind of library to fits our needs at **[Dogstudio](https://www.dogstudio.co)** and that hopefully will fit yours now we're releasing it!
