@@ -2,9 +2,9 @@
 # yarn lockfile v1
 
 
-"@dogstudio/highway@^0.9.5":
-  version "0.9.5"
-  resolved "https://registry.yarnpkg.com/@dogstudio/highway/-/highway-0.9.5.tgz#5ba44c9fad0cf7fcdaaaa10e6d8c7d095a47fb46"
+"@dogstudio/highway@^0.9.6":
+  version "0.9.6"
+  resolved "https://registry.yarnpkg.com/@dogstudio/highway/-/highway-0.9.6.tgz#7bd281dbb483205c68af13443aca170898c5d675"
 
 "@sindresorhus/is@^0.7.0":
   version "0.7.0"
