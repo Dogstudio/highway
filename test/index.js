@@ -2,9 +2,7 @@
 const { expect } = require('chai');
 
 // Helpers
-const Core = require('../src/core.js');
 const Helpers = require('../src/helpers.js');
-const Renderer = require('../src/renderer.js');
 
 // Helpers assertions
 describe('Helpers', () => {
