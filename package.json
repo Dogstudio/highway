@@ -1,5 +1,5 @@
 {
-  "name": "@username/highway",
+  "name": "dogstudio/highway",
   "license": "MIT",
   "version": "0.9.0",
   "description": "Highway helps you manage your page transitions",
