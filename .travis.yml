@@ -6,7 +6,7 @@ notifications:
   slack:
     rooms:
       - secure: 1pcifq/fGezynf60K7+3sAdr8EYAWMQqYqDhFPy9IKvAaTpuYexDH62B3jzIeb96g11ElOwC8QgEyDTcG/WMjdbDdr1lGTLiKQvnpTbgCKqcb68oUayI+8pyPxx91hlTyQ+ROHCmG2wmgLmS/hSXTTqXmRvP3XuX/ULO+MURQOFMMiY8w+QbdUt8eXLzrbvMkzsf3s2PPASB92xctmP8TngrUHI6a6NddsVPwhvJJFpcifXS2MoZ9RQ3TbRoz4IZ5pEIo0KWSrXiEGULZOvH6Onk1b2gjYCNy53A1/pdDFRK29CDXx2ABRz0pvqte/GF69oKw7eGaJcBuKkUmBsRRUO+RBQT5dbo8PQHQLvXQqWSktSH1dfbvAgx/cNoSGY/b9NoPPuln0D6JObhnBK+lAsZvhW+UNTBaKVEGiLGKdsalyfBwJbf/AQb9VVRx/otCxn1cgcdVvf9V8+hbqgHDizqE7XwyTB+O+6g5aSuL7J8Ds7n3giS18FQPV00h7OoQg0jJYyMlx4u+pGKiCzRWYUHr0TswXgA0Xhjri0//87J2Zdrlk/t0lkTO3Zm0TEYC++sEqV6wBHxmOzOflFLsb54evnj81c/Njz39e3ExR1fBhOjcOJarAf6y8m47eS2jcGr06vNoTL63mIB6UjVkDHujngDT7B8MIv150cqlx4=
-    on_success: always
+    on_success: change
     on_failure: always
 script:
   - npm run build

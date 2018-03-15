@@ -37,6 +37,4 @@ const Highway = {
   Renderer
 };
 
-console.log('Hello');
-
 module.exports = Highway;
