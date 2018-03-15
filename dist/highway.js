@@ -121,10 +121,6 @@ var ANCHOR_REGEX = /(#.*)$/;
 var ORIGIN_REGEX = /(https?:\/\/[\w\-.]+)/;
 var PATHNAME_REGEX = /https?:\/\/.*?(\/[\w_\-./]+)/;
 
-// We create a fake DOM element that will contain our page HTML and let us
-// select DOM nodes properly. This element is only used in Javascript.
-var FRAGMENT = document.createElement('div');
-
 /**
  * Get origin of an URL
  *
@@ -222,6 +218,10 @@ function getInfos(url) {
  * @return {object} View element
  */
 function getView(page) {
+  // We create a fake DOM element that will contain our page HTML and let us
+  // select DOM nodes properly. This element is only used in Javascript.
+  var FRAGMENT = document.createElement('div');
+
   // This is the trick to transform our page HTML from string to DOM element by
   // using our fake container we created before and by updating its inner HTML.
   FRAGMENT.innerHTML = page;

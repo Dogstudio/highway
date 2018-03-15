@@ -1,6 +1,6 @@
 {
-  "name": "highway",
-  "version": "1.0.0",
+  "name": "@dogstudio/highway",
+  "version": "0.9.4",
   "main": "./src/index.js",
   "scripts": {
     "build": "webpack",
@@ -11,9 +11,11 @@
     "babel-core": "^6.26.0",
     "babel-loader": "^7.1.2",
     "babel-preset-env": "^1.6.1",
-    "webpack": "^4.1.1"
+    "webpack": "^4.1.1",
+    "webpack-cli": "^2.0.12"
   },
   "dependencies": {
-    "@dogstudio/highway": "^0.9.3"
+    "@dogstudio/highway": "^0.9.3",
+    "barba.js": "^1.0.0"
   }
 }
