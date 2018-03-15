@@ -23,4 +23,4 @@
 
 ## License
 
-See the [LICENSE](https://github.com/Anthodpnt/Highway/blob/master/LICENSE.md) file for license rights and limitations (MIT).
+See the [LICENSE](https://github.com/Dogstudio/highway/blob/master/LICENSE) file for license rights and limitations (MIT).
