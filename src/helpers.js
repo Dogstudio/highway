@@ -181,6 +181,10 @@ function getRenderer(page, renderers) {
  * @return {object} Single transition or `null`
  */
 function getTransition(page, transitions) {
+  if (typeof transitions === 'undefined') {
+    return null;
+  }
+
   const slug = getSlug(page);
 
   if (!transitions.hasOwnProperty(slug) || !transitions[slug]) {

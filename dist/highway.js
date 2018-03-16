@@ -172,12 +172,11 @@ function getParams(url) {
 
   for (var i = 0; i < search.length; i++) {
     var part = search[i].split('=');
-    var key = part[0] || null;
-    var value = part[1] || null;
+    var key = part[0];
+    var value = part[1];
 
-    if (key && value) {
-      object[key] = value;
-    }
+
+    object[key] = value;
   }
 
   return object;
@@ -271,6 +270,10 @@ function getRenderer(page, renderers) {
  * @return {object} Single transition or `null`
  */
 function getTransition(page, transitions) {
+  if (typeof transitions === 'undefined') {
+    return null;
+  }
+
   var slug = getSlug(page);
 
   if (!transitions.hasOwnProperty(slug) || !transitions[slug]) {
