@@ -154,6 +154,10 @@ class RouterCore extends Emitter {
    * @arg {boolean} history — Push entry in history if `true`
    */
   beforeFetch(url, history) {
+    // Use of a boolean to avoid repetitive fetch calls by super excited users
+    // that could lead to some serious issues.
+    this.navigating = true;
+
     // Using the `getInfos` from the Helpers we can get all the information from
     // a given URL we can use in our script (origin, pathname, parameters,...).
     this.state = Helpers.getInfos(url);
@@ -195,10 +199,6 @@ class RouterCore extends Emitter {
    * @return {object} Fetch Promise
    */
   fetch() {
-    // Use of a boolean to avoid repetitive fetch calls by super excited users
-    // that could lead to some serious issues.
-    this.navigating = true;
-
     return fetch(this.state.url, FETCH_OPTS).then((response) => {
       // Check the HTTP code
       // 200+: Success of the HTTP request

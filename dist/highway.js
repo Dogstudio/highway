@@ -746,6 +746,10 @@ var RouterCore = function (_Emitter) {
     value: function beforeFetch(url, history) {
       var _this3 = this;
 
+      // Use of a boolean to avoid repetitive fetch calls by super excited users
+      // that could lead to some serious issues.
+      this.navigating = true;
+
       // Using the `getInfos` from the Helpers we can get all the information from
       // a given URL we can use in our script (origin, pathname, parameters,...).
       this.state = _helpers2.default.getInfos(url);
@@ -801,10 +805,6 @@ var RouterCore = function (_Emitter) {
       return fetch;
     }(function () {
       var _this4 = this;
-
-      // Use of a boolean to avoid repetitive fetch calls by super excited users
-      // that could lead to some serious issues.
-      this.navigating = true;
 
       return fetch(this.state.url, FETCH_OPTS).then(function (response) {
         // Check the HTTP code
