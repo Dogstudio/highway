@@ -17,6 +17,7 @@
 
 - [Basic Setup](https://github.com/Dogstudio/highway/tree/master/examples/basic-setup)
 - [Basic Transition](https://github.com/Dogstudio/highway/tree/master/examples/basic-transition)
+- [Basic CSS Transition](https://github.com/Dogstudio/highway/tree/master/examples/basic-css-transition)
 
 ## Roadmap
 
