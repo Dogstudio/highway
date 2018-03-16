@@ -13,6 +13,11 @@
 
 **Highway** is a *modern*, *flexible* and *lightweight* library that will let you create **AJAX navigations** with beautiful **transitions** on your websites. It's been a while we were trying to build this kind of library to fits our needs at [**Dogstudio**](https://www.dogstudio.co) and that hopefully will fit yours now we're releasing it!
 
+## Examples
+
+- [Basic Setup](https://github.com/Dogstudio/highway/tree/master/examples/basic-setup)
+- [Basic Transition](https://github.com/Dogstudio/highway/tree/master/examples/basic-transition)
+
 ## Roadmap
 
 - [ ] Documentation
