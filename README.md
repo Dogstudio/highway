@@ -108,7 +108,7 @@ class Home extends Highway.renderer {
 // Don`t forget to export your renderer
 export default Home;
 ```
-Besides the required methods from **Highway** present in the `Highway.renderer` you have access to **optional** ones that are called all along the process of the navigation. Here is the list of these **optional** methods:
+Besides the required methods from **Highway** present in the `Highway.Renderer` you have access to **optional** ones that are called all along the process of the navigation. Here is the list of these **optional** methods:
 
 - `onEnter`: Called when the transition `in` starts & the `router-view` is added to `router-wrapper`.
 - `onLeave`: Called when the transition `out` starts.
@@ -159,7 +159,7 @@ Transitions in **Highway** are really simple, these are objects with two methods
 - `in`: The `in` method should contain the transition to show a `[router-view]`.
 - `out`: The `out` method should contain the transition to hide a `[router-view]`.
 
-Each one get two parameters you can call how you want but here are good defaults:
+Each one get two parameters you can call howewer you want but here are good defaults:
 
 - `view`: The `[router-view]` you will show/hide.
 - `done`: The callback method **you have to** call once the `in` and `out` transitions are over.
@@ -200,7 +200,7 @@ const H = new Highway.Core({
 });
 ```
 
-Finally you might want to use the same transition for all the pages across your website. This is possible by adding a `default` key to your transitions list. When you do so for each page **Highway** will look for a transition in the list related to your `router-view` name and fallback to the `default` one if none is found.
+Finally you might want to use the same transition for all the pages across your website. This is possible by adding a `default` key to your transitions list. When you do so, for each page, **Highway** will look for a transition in the list related to your `router-view` name and fallback to the `default` one if none is found.
 
 ```javascript
 // [...]
@@ -222,7 +222,7 @@ Last but not least, **Highway** extends [**tiny-emitter**](https://github.com/sc
 
 - `NAVIGATE_START`: Trigger when a navigation starts.
 - `NAVIGATE_END`: Trigger when a navigation ends.
-- `NAVIGATE_ERROR`: Trigger when a error occurs in navigation process.
+- `NAVIGATE_ERROR`: Trigger when an error occurs in navigation process.
 
 For the `NAVIGATE_START` and `NAVIGATE_END` events, some parameters are sent with the event in this order:
 
