@@ -20,18 +20,17 @@ import Page from './renderers/page';
   // order to extend Highway's capabilities.
   // More informations: https://github.com/Dogstudio/highway
   //
-  // In this example we select all the navigation links and listen to the `NAVIGATE_START`
-  // event from Highway that occurs when a navigation starts and we update the
-  // active item in the menu based on the `state` of Highway.
-  const links = document.querySelectorAll('nav a');
-
+  // In this example we listen to the `NAVIGATE_START` event from Highway that
+  // occurs when a navigation starts and send a new `pageview` to Google Analytics
+  // based on the `state` of Highway.
   H.on('NAVIGATE_START', (from, to, title, state) => {
-    for (const link of links) {
-      link.classList.remove('is-active');
-
-      if (link.href === state.url) {
-        link.classList.add('is-active');
-      }
+    if (typeof gtag !== 'undefined') {
+      // eslint-disable-next-line
+      gtag('config', 'GA_TRACKING_ID', {
+        'page_path': state.pathname,
+        'page_title': title,
+        'page_location': state.url
+      });
     }
   });
 })();
