@@ -25,8 +25,8 @@
 
 - [ ] Documentation
 - [ ] Github Page
-- [ ] More Examples
 - [ ] More Unit Tests
+- [ ] More Examples
 
 ## License
 
