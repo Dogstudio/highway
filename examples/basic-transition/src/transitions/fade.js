@@ -1,3 +1,6 @@
+// Import Highway
+import Highway from '@dogstudio/highway';
+
 // This example uses `Greensock` an animation library
 import { TweenMax } from 'gsap';
 
@@ -5,10 +8,10 @@ import { TweenMax } from 'gsap';
 // - `in`: The transition part to show your view.
 // - `out`: The transition part to hide you view.
 //
-// Each method receives two parameters, the `view` and a callback method called
-// `done` you will always have to call when the method is over.
-const Fade = {
-  in: (view, done) => {
+// Each method receives a callback method called `done` you will always have to
+// call when the a transition is over.
+class Fade extends Highway.Transition {
+  in(view, done) {
     TweenMax.fromTo(view, 1,
       { alpha: 0 },
       {
@@ -16,8 +19,9 @@ const Fade = {
         onComplete: done
       }
     );
-  },
-  out: (view, done) => {
+  }
+
+  out(view, done) {
     TweenMax.fromTo(view, 1,
       { alpha: 1 },
       {
@@ -26,7 +30,7 @@ const Fade = {
       }
     );
   }
-};
+}
 
 // Don't forget to export in some way your custom transition.
 export default Fade;

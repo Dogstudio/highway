@@ -1,33 +1,8 @@
 /**
- * @license
- * Highway - Dogstudio
- *
- * Copyright 2018 Dogstudio.
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
-
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
-
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
- */
-
-/**
  * @file Highway default renderer that handle DOM stuffs.
  * @author Anthony Du Pont <bulldog@dogstudio.co>
  */
-class RouterRenderer {
+class HighwayRenderer {
 
   /**
    * @arg {object} view — [router-view] Node
@@ -41,7 +16,7 @@ class RouterRenderer {
     // the page informations. In our case the content and title of the document.
     this.view = view;
     this.title = title;
-    this.transition = transition;
+    this.transition = new transition(view); // eslint-disable-line
 
     if (title && document.title !== title) {
       document.title = title;
@@ -75,7 +50,7 @@ class RouterRenderer {
       }
 
       // Use of a callback method to optimize lines of code.
-      const callback = () => {
+      const done = () => {
         // The `onEnterCompleted` method if set in your custom renderer is called 
         // everytime a transition is over if set. Otherwise it's called right after
         // the `onEnter` method.
@@ -87,14 +62,14 @@ class RouterRenderer {
 
       // You fool you didn't define any transition...
       if (!this.transition) {
-        callback();
+        done();
         return;
       }
 
       // The transition is set in your custom renderer with a getter called
       // `transition` that should return the transition object you want to 
       // apply to you view. We call the `in` step of this one right now!
-      this.transition.in(this.view, callback);
+      this.transition.show().then(done);
     });
   }
 
@@ -115,7 +90,7 @@ class RouterRenderer {
       }
 
       // Use of a callback method to optimize lines of code.
-      const callback = () => {
+      const done = () => {
         // It's time to say goodbye to the view... Farewell my friend.
         this.wrapper.removeChild(this.view);
 
@@ -129,14 +104,14 @@ class RouterRenderer {
 
       // You fool you didn't define any transition...
       if (!this.transition) {
-        callback();
+        done();
         return;
       }
 
       // We call the `out` step of your transition right now!
-      this.transition.out(this.view, callback);
+      this.transition.hide().then(done);
     });
   }
 }
 
-module.exports = RouterRenderer;
+module.exports = HighwayRenderer;

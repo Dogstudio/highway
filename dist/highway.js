@@ -76,7 +76,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 4);
+/******/ 	return __webpack_require__(__webpack_require__.s = 5);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -85,31 +85,6 @@ return /******/ (function(modules) { // webpackBootstrap
 
 "use strict";
 
-
-/**
- * @license
- * Highway - Dogstudio
- *
- * Copyright 2018 Dogstudio.
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
-
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
-
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
- */
 
 /**
  * @file Highway helper methods used all acrosse the script.
@@ -316,35 +291,88 @@ var _createClass = function () { function defineProperties(target, props) { for 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 /**
- * @license
- * Highway - Dogstudio
- *
- * Copyright 2018 Dogstudio.
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
-
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
-
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
+ * @file Highway default transition that handle DOM animations.
+ * @author Anthony Du Pont <bulldog@dogstudio.co>
  */
+var HighwayTransition = function () {
+
+  /**
+   * @arg {object} view — [router-view] Node
+   * @constructor
+   */
+  function HighwayTransition(view) {
+    _classCallCheck(this, HighwayTransition);
+
+    // The [router-view] is the only main information we need since the role of
+    // the transition is to show/hide the required DOM elements.
+    this.view = view;
+  }
+
+  /**
+   * Add the view in DOM and play an `in` transition if one is defined.
+   * 
+   * @return {object} Promise
+   */
+
+
+  _createClass(HighwayTransition, [{
+    key: 'show',
+    value: function show() {
+      var _this = this;
+
+      return new Promise(function (resolve) {
+        if (_this.in && typeof _this.in === 'function') {
+          // The `in` method in encapsulated in the `show` method make transition
+          // code easier to write. This way you don't have to define any Promise
+          // in your transition code and focus on the transition itself.
+          _this.in(_this.view, resolve);
+        }
+      });
+    }
+
+    /**
+     * Play an `out` transition if one is defined and remove the view from DOM.
+     * 
+     * @return {object} Promise
+     */
+
+  }, {
+    key: 'hide',
+    value: function hide() {
+      var _this2 = this;
+
+      return new Promise(function (resolve) {
+        if (_this2.out && typeof _this2.out === 'function') {
+          // The `out` method in encapsulated in the `hide` method make transition
+          // code easier to write. This way you don't have to define any Promise
+          // in your transition code and focus on the transition itself.
+          _this2.out(_this2.view, resolve);
+        }
+      });
+    }
+  }]);
+
+  return HighwayTransition;
+}();
+
+module.exports = HighwayTransition;
+
+/***/ }),
+/* 2 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 /**
  * @file Highway default renderer that handle DOM stuffs.
  * @author Anthony Du Pont <bulldog@dogstudio.co>
  */
-var RouterRenderer = function () {
+var HighwayRenderer = function () {
 
   /**
    * @arg {object} view — [router-view] Node
@@ -352,15 +380,15 @@ var RouterRenderer = function () {
    * @arg {string} transition — Page transition
    * @constructor
    */
-  function RouterRenderer(view, title, transition) {
-    _classCallCheck(this, RouterRenderer);
+  function HighwayRenderer(view, title, transition) {
+    _classCallCheck(this, HighwayRenderer);
 
     // The [router-view] and the page title are the only main information we need
     // since the role of the renderer is to update the required DOM elements with
     // the page informations. In our case the content and title of the document.
     this.view = view;
     this.title = title;
-    this.transition = transition;
+    this.transition = new transition(view); // eslint-disable-line
 
     if (title && document.title !== title) {
       document.title = title;
@@ -380,7 +408,7 @@ var RouterRenderer = function () {
    */
 
 
-  _createClass(RouterRenderer, [{
+  _createClass(HighwayRenderer, [{
     key: 'show',
     value: function show() {
       var _this = this;
@@ -400,7 +428,7 @@ var RouterRenderer = function () {
         }
 
         // Use of a callback method to optimize lines of code.
-        var callback = function callback() {
+        var done = function done() {
           // The `onEnterCompleted` method if set in your custom renderer is called 
           // everytime a transition is over if set. Otherwise it's called right after
           // the `onEnter` method.
@@ -412,14 +440,14 @@ var RouterRenderer = function () {
 
         // You fool you didn't define any transition...
         if (!_this.transition) {
-          callback();
+          done();
           return;
         }
 
         // The transition is set in your custom renderer with a getter called
         // `transition` that should return the transition object you want to 
         // apply to you view. We call the `in` step of this one right now!
-        _this.transition.in(_this.view, callback);
+        _this.transition.show().then(done);
       });
     }
 
@@ -445,7 +473,7 @@ var RouterRenderer = function () {
         }
 
         // Use of a callback method to optimize lines of code.
-        var callback = function callback() {
+        var done = function done() {
           // It's time to say goodbye to the view... Farewell my friend.
           _this2.wrapper.removeChild(_this2.view);
 
@@ -459,23 +487,23 @@ var RouterRenderer = function () {
 
         // You fool you didn't define any transition...
         if (!_this2.transition) {
-          callback();
+          done();
           return;
         }
 
         // We call the `out` step of your transition right now!
-        _this2.transition.out(_this2.view, callback);
+        _this2.transition.hide().then(done);
       });
     }
   }]);
 
-  return RouterRenderer;
+  return HighwayRenderer;
 }();
 
-module.exports = RouterRenderer;
+module.exports = HighwayRenderer;
 
 /***/ }),
-/* 2 */
+/* 3 */
 /***/ (function(module, exports) {
 
 function E () {
@@ -547,7 +575,7 @@ module.exports = E;
 
 
 /***/ }),
-/* 3 */
+/* 4 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -555,7 +583,7 @@ module.exports = E;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _tinyEmitter = __webpack_require__(2);
+var _tinyEmitter = __webpack_require__(3);
 
 var _tinyEmitter2 = _interopRequireDefault(_tinyEmitter);
 
@@ -570,34 +598,9 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /**
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * @license
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * Highway - Dogstudio
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                *
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * Copyright 2018 Dogstudio.
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                *
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * Permission is hereby granted, free of charge, to any person obtaining a copy
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * of this software and associated documentation files (the "Software"), to deal
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * in the Software without restriction, including without limitation the rights
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * copies of the Software, and to permit persons to whom the Software is
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * furnished to do so, subject to the following conditions:
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * The above copyright notice and this permission notice shall be included in
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * all copies or substantial portions of the Software.
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * THE SOFTWARE.
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * @file Highway core that handle all history stuffs.
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * @author Anthony Du Pont <bulldog@dogstudio.co>
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 */
-
-/**
- * @file Highway core that handle all history stuffs.
- * @author Anthony Du Pont <bulldog@dogstudio.co>
- */
 
 
 // Fetch API options used for every HTTP request sent by Highway. It makes
@@ -613,8 +616,8 @@ var FETCH_OPTS = {
   credentials: 'same-origin'
 };
 
-var RouterCore = function (_Emitter) {
-  _inherits(RouterCore, _Emitter);
+var HighwayCore = function (_Emitter) {
+  _inherits(HighwayCore, _Emitter);
 
   /**
    * @arg {object} opts — User options
@@ -623,11 +626,11 @@ var RouterCore = function (_Emitter) {
    * @extends Emitter
    * @constructor
    */
-  function RouterCore(opts) {
-    _classCallCheck(this, RouterCore);
+  function HighwayCore(opts) {
+    _classCallCheck(this, HighwayCore);
 
     // All your custom renderers and transitions you sent to Highway.
-    var _this = _possibleConstructorReturn(this, (RouterCore.__proto__ || Object.getPrototypeOf(RouterCore)).call(this));
+    var _this = _possibleConstructorReturn(this, (HighwayCore.__proto__ || Object.getPrototypeOf(HighwayCore)).call(this));
     // Extends the Emitter constructor in order to be able to use its features
     // and send custom events all along the script.
 
@@ -669,7 +672,7 @@ var RouterCore = function (_Emitter) {
    */
 
 
-  _createClass(RouterCore, [{
+  _createClass(HighwayCore, [{
     key: 'bubble',
     value: function bubble() {
       var _this2 = this;
@@ -899,19 +902,19 @@ var RouterCore = function (_Emitter) {
     }
   }]);
 
-  return RouterCore;
+  return HighwayCore;
 }(_tinyEmitter2.default);
 
-module.exports = RouterCore;
+module.exports = HighwayCore;
 
 /***/ }),
-/* 4 */
+/* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var _core = __webpack_require__(3);
+var _core = __webpack_require__(4);
 
 var _core2 = _interopRequireDefault(_core);
 
@@ -919,46 +922,26 @@ var _helpers = __webpack_require__(0);
 
 var _helpers2 = _interopRequireDefault(_helpers);
 
-var _renderer = __webpack_require__(1);
+var _renderer = __webpack_require__(2);
 
 var _renderer2 = _interopRequireDefault(_renderer);
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+var _transition = __webpack_require__(1);
 
-var Highway = {
-  Core: _core2.default,
-  Helpers: _helpers2.default,
-  Renderer: _renderer2.default
-}; /**
-    * @license
-    * Highway - Dogstudio
-    *
-    * Copyright 2018 Dogstudio.
-    *
-    * Permission is hereby granted, free of charge, to any person obtaining a copy
-    * of this software and associated documentation files (the "Software"), to deal
-    * in the Software without restriction, including without limitation the rights
-    * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    * copies of the Software, and to permit persons to whom the Software is
-    * furnished to do so, subject to the following conditions:
-   
-    * The above copyright notice and this permission notice shall be included in
-    * all copies or substantial portions of the Software.
-   
-    * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-    * THE SOFTWARE.
-    */
+var _transition2 = _interopRequireDefault(_transition);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
  * @file Highway object containing all parts of the script.
  * @author Anthony Du Pont <bulldog@dogstudio.co>
  */
-
+var Highway = {
+  Core: _core2.default,
+  Helpers: _helpers2.default,
+  Renderer: _renderer2.default,
+  Transition: _transition2.default
+};
 
 module.exports = Highway;
 

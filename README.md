@@ -154,7 +154,7 @@ const H = new Highway.Core({
 OK so now you have your custom renderers but you are sad because there are no transitions between your pages...  
 Don't be afraid, let's now see how to create our first transition!
 
-Transitions in **Highway** are really simple, these are objects with two methods:
+Transitions in **Highway** are really simple, you need to extend `Highway.Transition` and provide two required methods:
 
 - `in`: The `in` method should contain the transition to show a `[router-view]`.
 - `out`: The `out` method should contain the transition to hide a `[router-view]`.
@@ -166,14 +166,18 @@ Each one get two parameters you can call howewer you want but here are good defa
 
 **transition.js**
 ```javascript
-const Transition = {
-  in: (view, done) => {
-    // [...]
-  },
-  out: (view, done) => {
+// Import Highway
+import Highway from '@dogstudio/highway';
+
+class Transition extends Highway.Transition {
+  in(view, done) {
     // [...]
   }
-};
+
+  out(view, done) {
+    // [...]
+  }
+}
 
 // Don't forget to export your transition
 export default Transition;
