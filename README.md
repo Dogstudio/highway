@@ -188,7 +188,7 @@ const H = new Highway.Core({
 });
 ```
 
-Last but not least, you might want to use the same transition for all the pages across your website. This is possible by adding a `default` key to your transitions list. When you do so for each page **Highway** will look for a transition in the list related to your `router-view` name and fallback to the `default` one if none is found.
+Finally you might want to use the same transition for all the pages across your website. This is possible by adding a `default` key to your transitions list. When you do so for each page **Highway** will look for a transition in the list related to your `router-view` name and fallback to the `default` one if none is found.
 
 ```javascript
 // [...]
@@ -204,13 +204,46 @@ const H = new Highway.Core({
 
 Check out the [**examples**](https://github.com/Dogstudio/highway#examples) for more details about transitions in **Highway**.
 
+## Events
+
+Last but not least, **Highway** extends [**tiny-emitter**](https://github.com/scottcorgan/tiny-emitter) to send events along the navigation process you can listen to in order to extend its capabilities. There are three events available for you:
+
+- `NAVIGATE_START`: Trigger when a navigation starts.
+- `NAVIGATE_END`: Trigger when a navigation ends.
+- `NAVIGATE_ERROR`: Trigger when a error occurs in navigation process.
+
+For the `NAVIGATE_START` and `NAVIGATE_END` events, some parameters are sent with the event in this order:
+
+- `from`: The `router-view` from the page you come from.
+- `to`: The `router-view` from the page you go to.
+- `title`: The document title of the page you go to.
+- `state`: The state of **Highway** that contains all the informations about the URL of the page you go to.
+
+```javascript
+// [...]
+H.on('NAVIGATE_START', (from, to, title, state) => {
+  // [...]
+});
+
+H.on('NAVIGATE_END', (from, to, title, state) => {
+  // [...]
+});
+
+H.on('NAVIGATE_ERROR', () => {
+  // [...]
+});
+// [...]
+```
+
+Check out the [**Basic Menu Active**](https://github.com/Dogstudio/highway/tree/master/examples/basic-menu-active) example for more details about events handling in **Highway**.
+
 ## Examples
 
-- [Basic Setup](https://github.com/Dogstudio/highway/tree/master/examples/basic-setup)
-- [Basic Transition](https://github.com/Dogstudio/highway/tree/master/examples/basic-transition)
-- [Basic CSS Transition](https://github.com/Dogstudio/highway/tree/master/examples/basic-css-transition)
-- [Basic Menu Active](https://github.com/Dogstudio/highway/tree/master/examples/basic-menu-active)
-- [Basic Google Analytics Events](https://github.com/Dogstudio/highway/tree/master/examples/basic-google-analytics)
+- [**Basic Setup**](https://github.com/Dogstudio/highway/tree/master/examples/basic-setup)
+- [**Basic Transition**](https://github.com/Dogstudio/highway/tree/master/examples/basic-transition)
+- [**Basic CSS Transition**](https://github.com/Dogstudio/highway/tree/master/examples/basic-css-transition)
+- [**Basic Menu Active**](https://github.com/Dogstudio/highway/tree/master/examples/basic-menu-active)
+- [**Basic Google Analytics Events**](https://github.com/Dogstudio/highway/tree/master/examples/basic-google-analytics)
 
 ## Roadmap
 
@@ -221,4 +254,4 @@ Check out the [**examples**](https://github.com/Dogstudio/highway#examples) for 
 
 ## License
 
-See the [LICENSE](https://github.com/Dogstudio/highway/blob/master/LICENSE) file for license rights and limitations (MIT).
+See the [**LICENSE**](https://github.com/Dogstudio/highway/blob/master/LICENSE) file for license rights and limitations (MIT).
