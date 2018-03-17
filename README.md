@@ -40,7 +40,7 @@ npm install --save @dogstudio/highway
 
 ## Usage
 
-Now you have installed **Highway** it's time to dive into how you can now use it... And you know what? It's pretty simple.  
+Now you have installed **Highway** it's time to dive into how you can use it... And you know what? It's pretty simple.  
 First let's *import* **Highway**:
 
 ```javascript
@@ -68,7 +68,7 @@ You are now ready to create some beautiful and creative transitions between your
 
 ## Renderers
 
-Everytime you create a page you need to relate it to a **renderer**. This way **Highway** knows how to deal with this page's transitions. Luckily we have done **almost** all the work for you, great isn't it? However you have a part play in this and here is how you can setup properly your renderers.
+Everytime you create a page you need to relate it to a **renderer**. This way **Highway** knows how to deal with this page's transitions. Luckily we have done **almost** all the work for you, great isn't it? However you have a part to play in this and here is how you can setup properly your renderers.
 
 ### HTML
 
