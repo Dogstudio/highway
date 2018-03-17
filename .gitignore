@@ -5,6 +5,3 @@
 # FRONT FOLDERS
 node_modules/
 coverage/
-
-# SAMPLE EXAMPLE
-examples/sample
