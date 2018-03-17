@@ -26,7 +26,7 @@
 
 ## Installation
 
-You can install Highway the way you want between these two methods:
+You can install **Highway** the way you want between these two methods:
 
 **With YARN:**
 ```
