@@ -94,7 +94,7 @@ Everything outside of the `router-wrapper` will stay the same all along the user
 
 ### Javascript
 
-On the Javascript-side it again pretty simple... What you need to do is to create a custom renderer for your page that will extend `Highway.Renderer` and enable all the required methods in order to make you custom renderer work.
+On the Javascript-side it's again pretty simple... What you need to do is to create a custom renderer for your page that will extend `Highway.Renderer` and enable all the required methods in order to make you custom renderer work.
 
 **home.js**
 ```javascript
