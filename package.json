@@ -1,7 +1,7 @@
 {
   "name": "@dogstudio/highway",
   "license": "MIT",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Highway helps you manage your page transitions",
   "main": "dist/highway.js",
   "unpkg": "dist/highway.min.js",
