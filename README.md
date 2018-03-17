@@ -294,7 +294,7 @@ const H = new Highway.Core({
 ## History
 #### 1.1.0 (2018-03-17)
 
-- Introduce [**modes**](https://github.com/Dogstudio/highway/tree/master/examples/modes)
+- Introduce [**modes**](https://github.com/Dogstudio/highway#modes)
 
 #### 1.0.1 (2018-03-17)
 
