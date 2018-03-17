@@ -24,8 +24,8 @@
 ## Roadmap
 
 - [ ] Documentation
-- [ ] Examples
 - [ ] Github Page
+- [ ] More Examples
 - [ ] More Unit Tests
 
 ## License
