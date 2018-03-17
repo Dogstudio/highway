@@ -8,7 +8,6 @@
 [![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/Dogstudio/highway/issues)
 [![license](https://img.shields.io/github/license/Dogstudio/highway.svg)](https://github.com/Dogstudio/highway/blob/master/LICENSE)
 
-
 <p align="center"><img src="https://i.imgur.com/AOEVomM.png" alt="Banner" /></p>
 
 **Highway** is a *modern*, *flexible* and *lightweight* library that will let you create **AJAX navigations** with beautiful **transitions** on your websites. It's been a while we were trying to build this kind of library to fits our needs at [**Dogstudio**](https://www.dogstudio.co) and that hopefully will fit yours now we're releasing it!
@@ -39,7 +38,9 @@ or *require* it if you prefer:
 ```javascript
 const Highway = require('@dogstudio/highway');
 ```
-Now **Highway** is available you need to create an instance of `Highway.Core` and give it your [**renderers**]() and [**transitions**]().
+
+Now **Highway** is available you need to create an instance of `Highway.Core` and give it your [**renderers**](https://github.com/Dogstudio/highway#renderers) and [**transitions**](https://github.com/Dogstudio/highway#transitions).
+
 ```javascript
 const H = new Highway.Core({
   renderers: {
@@ -91,6 +92,9 @@ import Highway from '@dogstudio/highway';
 class Home extends Highway.renderer {
   [...]
 }
+
+// Don`t forget to export your renderer
+export default Home;
 ```
 Besides the required methods from **Highway** present in the `Highway.renderer` you have access to **optional** ones that are called all along the process of the navigation. Here is the list of these **optional** methods:
 
@@ -114,7 +118,9 @@ class Home extends Highway.renderer {
 // Don`t forget to export your renderer
 export default Home;
 ```
-Now your custom renderer is created you need to add it to the renderers list of `Highway.Core`... Remember the name you gave to you `router-view`, it's now time to use it to relate your renderer in Javascript to you `router-view` in HTML.
+
+Now your custom renderer is created you need to add it to the renderers list of `Highway.Core`...  
+Remember the name you gave to you `router-view`, it's now time to relate it to your renderer.
 
 ```javascript
 // Import Renderers
@@ -130,6 +136,73 @@ const H = new Highway.Core({
   }
 });
 ```
+
+## Transitions
+
+OK so now you have your custom renderers but you are sad because there are no transitions between your pages...  
+Don't be afraid, let's now see how to create our first transition!
+
+Transitions in **Highway** are really simple, these are objects with two methods:
+
+- `in`: The `in` method should contain the transition to show a `[router-view]`.
+- `out`: The `out` method should contain the transition to hide a `[router-view]`.
+
+Each one get two parameters you can call how you want but here are good defaults:
+
+- `view`: The `[router-view]` you will show/hide.
+- `done`: The callback method **you have to** call once the `in` and `out` transitions are over.
+
+**transition.js**
+```javascript
+const Transition = {
+  in: (view, done) => {
+    // [...]
+  },
+  out: (view, done) => {
+    // [...]
+  }
+};
+
+// Don't forget to export your transition
+export default Transition;
+```
+
+Now your transition is created you need to add it to the transitions list of `Highway.Core`...  
+Remember the name you gave to you `router-view`, it's now time to relate it to your transition.
+
+```javascript
+// Import Renderers
+import Home from 'path/to/home.js';
+
+// Import Transitions
+import Transition from 'path/to/transition.js';
+
+// Relate you transition to your [router-view] name
+const H = new Highway.Core({
+  renderers: {
+    home: Home
+  },
+  transitions: {
+    home: Transition
+  }
+});
+```
+
+Last but not least, you might want to use the same transition for all the pages across your website. This is possible by adding a `default` key to your transitions list. When you do so for each page **Highway** will look for a transition in the list related to your `router-view` name and fallback to the `default` one if none is found.
+
+```javascript
+// [...]
+const H = new Highway.Core({
+  renderers: {
+    home: Home
+  },
+  transitions: {
+    default: Transition
+  }
+});
+```
+
+Check out the [**examples**](https://github.com/Dogstudio/highway#examples) for more details about transitions in **Highway**.
 
 ## Examples
 
