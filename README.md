@@ -253,6 +253,29 @@ H.on('NAVIGATE_ERROR', () => {
 
 Check out the [**Basic Menu Active**](https://github.com/Dogstudio/highway/tree/master/examples/basic-menu-active) example for more details about events handling in **Highway**.
 
+## Modes
+
+**Highway** gives you the opportunity to choose between three transitions modes. These modes are available to let you run your transitions the way you need to create beautiful and creative navigations.
+
+- `out-in`: Will run the `out` transition **then** the `in` transition (*default*).
+- `in-out`: Will run the `in` transition **then** the `out` transition.
+- `both`: Will run the `in` and `out` transition at **the same time**.
+
+In order to tell **Highway** which mode you want to use, just tell it in its options.
+
+```javascript
+// [...]
+const H = new Highway.Core({
+  mode: 'both',
+  renderers: {
+    home: Home
+  },
+  transitions: {
+    default: Transition
+  }
+});
+```
+
 ## Examples
 
 - [**Basic Setup**](https://github.com/Dogstudio/highway/tree/master/examples/basic-setup)
@@ -268,6 +291,10 @@ Check out the [**Basic Menu Active**](https://github.com/Dogstudio/highway/tree/
 - [ ] More Examples
 
 ## History
+#### 1.1.0 (2018-03-17)
+
+- Introduce [**modes**](https://github.com/Dogstudio/highway/tree/master/examples/modes)
+
 #### 1.0.1 (2018-03-17)
 
 - Create `Highway.Transition` to use Promises instead of callbacks for transitions

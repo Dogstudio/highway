@@ -37,6 +37,7 @@ class HighwayCore extends Emitter {
     this.transitions = opts.transitions;
 
     // Some usefull stuffs for later
+    this.mode = opts.mode || 'out-in';
     this.state = {};
     this.cache = {};
     this.navigating = false;
@@ -217,11 +218,13 @@ class HighwayCore extends Emitter {
 
     this.emit('NAVIGATE_START', from, to, title, this.state);
 
-    // We hide the page we come `from` and since the `hide` method returns a
-    // Promise because come transition might occur we need to wait for the 
-    // Promise resolution before calling the `show` method of the page we go `to`.
-    this.from.hide().then(() => {
-      this.to.show().then(() => {
+    // We select the right method based on the mode provided in the options.
+    // If no mode is provided then the `out-in` method is chosen.
+    const method = Helpers.camelize(this.mode);
+
+    if (typeof this[method] === 'function') {
+      // Now we call the pipeline!
+      this[method]().then(() => {
         this.navigating = false;
 
         // We prepare the next navigation by replacing the `from` renderer by
@@ -239,7 +242,48 @@ class HighwayCore extends Emitter {
         // Same as the `NAVIGATE_START` event
         this.emit('NAVIGATE_END', from, to, title, this.state);
       });
+    }
+  }
 
+  /**
+   * Run `out` transition then `in` transition
+   * 
+   * @return {Promise} `out-in` Promise
+   */
+  outIn() {
+    // Call `out` transition
+    return this.from.hide().then(() => {
+      // Reset scroll position
+      window.scrollTo(0, 0);
+    }).then(() => {
+      // Call `in` transition
+      this.to.show();
+    });
+  }
+
+  /**
+   * Run `in` transition then `out` transition
+   * 
+   * @return {Promise} `in-out` Promise
+   */
+  inOut() {
+    // Call the `in` transition
+    return this.to.show().then(() => {
+      // Reset scroll position
+      window.scrollTo(0, 0);
+    }).then(() => {
+      // Call the `out` transition
+      this.from.hide();
+    });
+  }
+
+  /**
+   * Run both `in` and `out` transition at the same time.
+   * 
+   * @return {Promise} `both` Promise
+   */
+  both() {
+    return Promise.all([this.to.show(), this.from.hide()]).then(() => {
       // Reset scroll position
       window.scrollTo(0, 0);
     });

@@ -95,6 +95,7 @@ var PARAM_REGEX = /\?([\w_\-.=&]+)/;
 var ANCHOR_REGEX = /(#.*)$/;
 var ORIGIN_REGEX = /(https?:\/\/[\w\-.]+)/;
 var PATHNAME_REGEX = /https?:\/\/.*?(\/[\w_\-./]+)/;
+var CAMELCASE_REGEX = /[-_](\w)/g;
 
 /**
  * Get origin of an URL
@@ -263,6 +264,18 @@ function getTransition(page, transitions) {
 }
 
 /**
+ * Converts string to camelCase
+ *
+ * @arg    {String} string - String to parse
+ * @return {String} Parsed string
+ */
+function camelize(string) {
+  return string.replace(CAMELCASE_REGEX, function (_, c) {
+    return c ? c.toUpperCase() : '';
+  });
+}
+
+/**
  * Export all helpers
  */
 module.exports = {
@@ -276,7 +289,8 @@ module.exports = {
   getAnchor: getAnchor,
   getPathname: getPathname,
   getRenderer: getRenderer,
-  getTransition: getTransition
+  getTransition: getTransition,
+  camelize: camelize
 };
 
 /***/ }),
@@ -639,6 +653,7 @@ var HighwayCore = function (_Emitter) {
     _this.transitions = opts.transitions;
 
     // Some usefull stuffs for later
+    _this.mode = opts.mode || 'out-in';
     _this.state = {};
     _this.cache = {};
     _this.navigating = false;
@@ -857,11 +872,13 @@ var HighwayCore = function (_Emitter) {
 
       this.emit('NAVIGATE_START', from, to, title, this.state);
 
-      // We hide the page we come `from` and since the `hide` method returns a
-      // Promise because come transition might occur we need to wait for the 
-      // Promise resolution before calling the `show` method of the page we go `to`.
-      this.from.hide().then(function () {
-        _this5.to.show().then(function () {
+      // We select the right method based on the mode provided in the options.
+      // If no mode is provided then the `out-in` method is chosen.
+      var method = _helpers2.default.camelize(this.mode);
+
+      if (typeof this[method] === 'function') {
+        // Now we call the pipeline!
+        this[method]().then(function () {
           _this5.navigating = false;
 
           // We prepare the next navigation by replacing the `from` renderer by
@@ -879,7 +896,61 @@ var HighwayCore = function (_Emitter) {
           // Same as the `NAVIGATE_START` event
           _this5.emit('NAVIGATE_END', from, to, title, _this5.state);
         });
+      }
+    }
 
+    /**
+     * Run `out` transition then `in` transition
+     * 
+     * @return {Promise} `out-in` Promise
+     */
+
+  }, {
+    key: 'outIn',
+    value: function outIn() {
+      var _this6 = this;
+
+      // Call `out` transition
+      return this.from.hide().then(function () {
+        // Reset scroll position
+        window.scrollTo(0, 0);
+      }).then(function () {
+        // Call `in` transition
+        _this6.to.show();
+      });
+    }
+
+    /**
+     * Run `in` transition then `out` transition
+     * 
+     * @return {Promise} `in-out` Promise
+     */
+
+  }, {
+    key: 'inOut',
+    value: function inOut() {
+      var _this7 = this;
+
+      // Call the `in` transition
+      return this.to.show().then(function () {
+        // Reset scroll position
+        window.scrollTo(0, 0);
+      }).then(function () {
+        // Call the `out` transition
+        _this7.from.hide();
+      });
+    }
+
+    /**
+     * Run both `in` and `out` transition at the same time.
+     * 
+     * @return {Promise} `both` Promise
+     */
+
+  }, {
+    key: 'both',
+    value: function both() {
+      return Promise.all([this.to.show(), this.from.hide()]).then(function () {
         // Reset scroll position
         window.scrollTo(0, 0);
       });

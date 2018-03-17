@@ -129,4 +129,22 @@ describe('Helpers', () => {
       expect(Helpers.getTitle(html)).to.be.empty;
     });
   });
+
+  describe('Helpers.camelize', () => {
+    it('Should return the `outIn` from `out-int`', () => {
+      // String to camelize
+      const string = 'out-in';
+
+      // Assertion
+      expect(Helpers.camelize(string)).to.be.equal('outIn');
+    });
+
+    it('Should return the `both` from `both`', () => {
+      // String to camelize
+      const string = 'both';
+
+      // Assertion
+      expect(Helpers.camelize(string)).to.be.equal('both');
+    });
+  });
 });

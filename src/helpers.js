@@ -7,6 +7,7 @@ const PARAM_REGEX = /\?([\w_\-.=&]+)/;
 const ANCHOR_REGEX = /(#.*)$/;
 const ORIGIN_REGEX = /(https?:\/\/[\w\-.]+)/;
 const PATHNAME_REGEX = /https?:\/\/.*?(\/[\w_\-./]+)/;
+const CAMELCASE_REGEX = /[-_](\w)/g;
 
 /**
  * Get origin of an URL
@@ -174,6 +175,18 @@ function getTransition(page, transitions) {
 }
 
 /**
+ * Converts string to camelCase
+ *
+ * @arg    {String} string - String to parse
+ * @return {String} Parsed string
+ */
+function camelize(string) {
+  return string.replace(CAMELCASE_REGEX, (_, c) => {
+    return c ? c.toUpperCase() : '';
+  });
+}
+
+/**
  * Export all helpers
  */
 module.exports = {
@@ -187,5 +200,6 @@ module.exports = {
   getAnchor,
   getPathname,
   getRenderer,
-  getTransition
+  getTransition,
+  camelize
 };
