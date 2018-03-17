@@ -19,6 +19,7 @@
 - [**Renderers**](https://github.com/Dogstudio/highway#renderers)
 - [**Transitions**](https://github.com/Dogstudio/highway#transitions)
 - [**Events**](https://github.com/Dogstudio/highway#events)
+- [**Modes**](https://github.com/Dogstudio/highway#modes)
 - [**Examples**](https://github.com/Dogstudio/highway#examples)
 - [**Roadmap**](https://github.com/Dogstudio/highway#roadmap)
 - [**History**](https://github.com/Dogstudio/highway#history)
