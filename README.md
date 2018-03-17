@@ -40,7 +40,7 @@ npm install --save @dogstudio/highway
 
 ## Usage
 
-Now you have installed Highway it's time to dive into how you can now use it... And you know what? It's pretty simple.  
+Now you have installed **Highway** it's time to dive into how you can now use it... And you know what? It's pretty simple.  
 First let's *import* **Highway**:
 
 ```javascript
