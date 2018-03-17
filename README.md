@@ -270,7 +270,7 @@ Check out the [**Basic Menu Active**](https://github.com/Dogstudio/highway/tree/
 ## History
 #### 1.0.1 (2018-03-17)
 
-- Create `Highway.Transition` to use Promises
+- Create `Highway.Transition` to use Promises instead of callbacks for transitions
 
 #### 1.0.0 (2018-03-17)
 
