@@ -13,6 +13,46 @@
 
 **Highway** is a *modern*, *flexible* and *lightweight* library that will let you create **AJAX navigations** with beautiful **transitions** on your websites. It's been a while we were trying to build this kind of library to fits our needs at [**Dogstudio**](https://www.dogstudio.co) and that hopefully will fit yours now we're releasing it!
 
+## Installation
+
+You can install Highway the way you want between these two methods:
+
+**With YARN:**
+```
+yarn add @dogstudio/highway
+```
+
+**With NPM:**
+```
+npm install --save @dogstudio/highway
+```
+
+## Usage
+
+Now you have installed Highway it's time to dive into how you can now use it... And you know what? It's pretty simple.  
+First let's *import* Highway:
+
+```javascript
+import Highway from '@dogstudio/highway';
+```
+or *require* it if you prefer:
+```javascript
+const Highway = require('@dogstudio/highway');
+```
+Now Highway is available you need to create an instance of `Highway.Core` and give it your [**renderers**]() and [**transitions**]().
+```javascript
+const H = new Highway.Core({
+  renderers: {
+    [...]
+  },
+  transitions: {
+    [...]
+  }
+});
+```
+**And voilà**!  
+You are now ready to create some beautiful and creative transitions between your pages.
+
 ## Examples
 
 - [Basic Setup](https://github.com/Dogstudio/highway/tree/master/examples/basic-setup)
