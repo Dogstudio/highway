@@ -18,6 +18,8 @@
 - [Basic Setup](https://github.com/Dogstudio/highway/tree/master/examples/basic-setup)
 - [Basic Transition](https://github.com/Dogstudio/highway/tree/master/examples/basic-transition)
 - [Basic CSS Transition](https://github.com/Dogstudio/highway/tree/master/examples/basic-css-transition)
+- [Basic Menu Active](https://github.com/Dogstudio/highway/tree/master/examples/basic-menu-active)
+- [Basic Google Analytics Events](https://github.com/Dogstudio/highway/tree/master/examples/basic-google-analytics)
 
 ## Roadmap
 
