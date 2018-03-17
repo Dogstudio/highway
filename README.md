@@ -292,6 +292,10 @@ const H = new Highway.Core({
 - [ ] More Examples
 
 ## History
+#### 1.1.1 (2018-03-17)
+
+- Fix documentation
+
 #### 1.1.0 (2018-03-17)
 
 - Introduce [**modes**](https://github.com/Dogstudio/highway#modes)
