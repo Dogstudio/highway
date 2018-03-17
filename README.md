@@ -30,7 +30,7 @@ npm install --save @dogstudio/highway
 ## Usage
 
 Now you have installed Highway it's time to dive into how you can now use it... And you know what? It's pretty simple.  
-First let's *import* Highway:
+First let's *import* **Highway**:
 
 ```javascript
 import Highway from '@dogstudio/highway';
@@ -39,7 +39,7 @@ or *require* it if you prefer:
 ```javascript
 const Highway = require('@dogstudio/highway');
 ```
-Now Highway is available you need to create an instance of `Highway.Core` and give it your [**renderers**]() and [**transitions**]().
+Now **Highway** is available you need to create an instance of `Highway.Core` and give it your [**renderers**]() and [**transitions**]().
 ```javascript
 const H = new Highway.Core({
   renderers: {
@@ -52,6 +52,84 @@ const H = new Highway.Core({
 ```
 **And voilà**!  
 You are now ready to create some beautiful and creative transitions between your pages.
+
+## Renderers
+
+Everytime you create a page you need to relate it to a **renderer**. This way **Highway** knows how to deal with this page's transitions. Luckily we have done **almost** all the work for you, great isn't it? However you have a part play in this and here is how you can setup properly your renderers.
+
+### HTML
+
+About your HTML this is actually pretty simple... All you have to do is to put somewhere in you page the `router-wrapper` that will contain and **only** contain the `router-view` to which you are going to give a name. The name you are going to give to your `router-view` will be used later to identify it and relate it to the correct renderer in Javascript.
+
+Finally what you need to understand is that **Highway** will only change the `router-view` presents in the `router-wrapper`.
+Everything outside of the `router-wrapper` will stay the same all along the user's navigation.
+
+**index.html**
+```html
+<!-- [...] -->
+<body>
+  <!-- [...] -->
+  <main router-wrapper>
+    <article router-view="home">
+      <!-- [...] -->
+    </article>
+  </main>
+  <!-- [...] -->
+</body>
+<!-- [...] -->
+```
+
+### Javascript
+
+On the Javascript-side it again pretty simple... What you need to do is to create a custom renderer for your page that will extend `Highway.Renderer` and enable all the required methods in order to make you custom renderer work.
+
+**home.js**
+```javascript
+// Import Highway
+import Highway from '@dogstudio/highway';
+
+class Home extends Highway.renderer {
+  [...]
+}
+```
+Besides the required methods from **Highway** present in the `Highway.renderer` you have access to **optional** ones that are called all along the process of the navigation. Here is the list of these **optional** methods:
+
+- `onEnter`: Called when the transition `in` starts & the `router-view` is added to `router-wrapper`.
+- `onLeave`: Called when the transition `out` starts.
+- `onEnterCompleted`: Called when the transition `in` is over.
+- `onLeaveCompleted`: Called when the transition `out` is over & the `router-view` is removed from `router-wrapper`.
+
+**home.js**
+```javascript
+// Import Highway
+import Highway from '@dogstudio/highway';
+
+class Home extends Highway.renderer {
+  onEnter() { }
+  onLeave() { }
+  onEnterCompleted() { }
+  onLeaveCompleted() { }
+}
+
+// Don`t forget to export your renderer
+export default Home;
+```
+Now your custom renderer is created you need to add it to the renderers list of `Highway.Core`... Remember the name you gave to you `router-view`, it's now time to use it to relate your renderer in Javascript to you `router-view` in HTML.
+
+```javascript
+// Import Renderers
+import Home from 'path/to/home.js';
+
+// Relate you renderer to your [router-view] name
+const H = new Highway.Core({
+  renderers: {
+    home: Home
+  },
+  transitions: {
+    [...]
+  }
+});
+```
 
 ## Examples
 
