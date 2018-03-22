@@ -15,12 +15,12 @@ import Fade from './transitions/fade';
   // More informations: https://github.com/Dogstudio/highway
   new Highway.Core({
     renderers: {
-      'home': Home,
-      'page': Page
+      home: Home,
+      page: Page
     },
     transitions: {
-      'home': Fade,
-      'page': Fade
+      home: Fade,
+      page: Fade
     }
   });
 
