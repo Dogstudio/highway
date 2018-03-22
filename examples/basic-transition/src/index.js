@@ -1,12 +1,12 @@
 // Import Highway
-import Highway from '../../../dist/highway.js';
+import Highway from 'dist/highway.js';
 
 // Import Renderers
-import Home from './renderers/home';
-import Page from './renderers/page';
+import Home from 'renderers/home';
+import Page from 'renderers/page';
 
 // Import Transitions
-import Fade from './transitions/fade';
+import Fade from 'transitions/fade';
 
 (() => {
   // Instanciate `Highway.Core` and send your custom renderers and transitions
@@ -14,7 +14,9 @@ import Fade from './transitions/fade';
   // you define in your HTML.
   // More informations: https://github.com/Dogstudio/highway
   new Highway.Core({
+    mode: 'both',
     renderers: {
+      home: Home,
       page: Page
     },
     transitions: {

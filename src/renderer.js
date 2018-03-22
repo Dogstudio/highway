@@ -19,7 +19,7 @@ class HighwayRenderer {
     this.view = view;
     this.page = Helpers.getDOM(page);
     this.title = Helpers.getTitle(page);
-    this.transition = new transition(view); // eslint-disable-line
+    this.transition = transition ? new transition(view) : null; // eslint-disable-line
 
     if (this.title && document.title !== this.title) {
       document.title = this.title;

@@ -223,11 +223,7 @@ class HighwayCore extends Emitter {
     // An event is emitted and can be used outside of the router to run
     // additionnal code when the navigation starts. It expose the `from` and `to`
     // [router-view] elements to the user and the router state.
-    const to = this.to.view;
-    const from = this.from.view;
-    const title = this.to.title; // eslint-disable-line
-
-    this.emit('NAVIGATE_START', from, to, title, this.state);
+    this.emit('NAVIGATE_START', this.from, this.to, this.state);
 
     // We select the right method based on the mode provided in the options.
     // If no mode is provided then the `out-in` method is chosen.
@@ -237,6 +233,9 @@ class HighwayCore extends Emitter {
       // Now we call the pipeline!
       this[method]().then(() => {
         this.navigating = false;
+
+        // Same as the `NAVIGATE_START` event
+        this.emit('NAVIGATE_END', this.from, this.to, this.state);
 
         // We prepare the next navigation by replacing the `from` renderer by
         // the `to` renderer now that the pages have been swapped successfully.
@@ -249,9 +248,6 @@ class HighwayCore extends Emitter {
           // Now scroll to anchor!
           this.scrollTo(Helpers.getAnchor(this.state.url));
         }
-
-        // Same as the `NAVIGATE_START` event
-        this.emit('NAVIGATE_END', from, to, title, this.state);
       });
     }
   }
@@ -262,11 +258,17 @@ class HighwayCore extends Emitter {
    * @return {Promise} `out-in` Promise
    */
   outIn() {
+    // Same as the `NAVIGATE_START` event
+    this.emit('NAVIGATE_OUT', this.from, this.to, this.state);
+
     // Call `out` transition
     return this.from.hide().then(() => {
       // Reset scroll position
       window.scrollTo(0, 0);
     }).then(() => {
+      // Same as the `NAVIGATE_START` event
+      this.emit('NAVIGATE_IN', this.from, this.to, this.state);
+
       // Call `in` transition
       this.to.show();
     });
@@ -278,11 +280,17 @@ class HighwayCore extends Emitter {
    * @return {Promise} `in-out` Promise
    */
   inOut() {
+    // Same as the `NAVIGATE_START` event
+    this.emit('NAVIGATE_IN', this.from, this.to, this.state);
+
     // Call the `in` transition
     return this.to.show().then(() => {
       // Reset scroll position
       window.scrollTo(0, 0);
     }).then(() => {
+      // Same as the `NAVIGATE_START` event
+      this.emit('NAVIGATE_OUT', this.from, this.to, this.state);
+
       // Call the `out` transition
       this.from.hide();
     });
@@ -294,6 +302,10 @@ class HighwayCore extends Emitter {
    * @return {Promise} `both` Promise
    */
   both() {
+    // Same as the `NAVIGATE_START` event
+    this.emit('NAVIGATE_IN', this.from, this.to, this.state);
+    this.emit('NAVIGATE_OUT', this.from, this.to, this.state);
+
     return Promise.all([this.to.show(), this.from.hide()]).then(() => {
       // Reset scroll position
       window.scrollTo(0, 0);

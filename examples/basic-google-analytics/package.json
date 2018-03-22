@@ -1,7 +1,7 @@
 {
   "name": "@dogstudio/highway",
   "license": "MIT",
-  "version": "1.1.1",
+  "version": "1.2.0",
   "main": "dist/index.js",
   "scripts": {
     "build": "webpack",
@@ -14,8 +14,5 @@
     "babel-preset-env": "^1.6.1",
     "webpack": "^4.1.1",
     "webpack-cli": "^2.0.12"
-  },
-  "dependencies": {
-    "@dogstudio/highway": "^1.1.1"
   }
 }

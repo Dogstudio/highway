@@ -1,5 +1,5 @@
 // Import Highway
-import Highway from '../../../../dist/highway.js';
+import Highway from 'dist/highway';
 
 // This example uses `Greensock` an animation library
 import { TweenMax } from 'gsap';

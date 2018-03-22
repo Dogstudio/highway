@@ -1,9 +1,9 @@
 // Import Highway
-import Highway from '@dogstudio/highway';
+import Highway from 'dist/highway';
 
 // Import Renderers
-import Home from './renderers/home';
-import Page from './renderers/page';
+import Home from 'renderers/home';
+import Page from 'renderers/page';
 
 (() => {
   // Instanciate `Highway.Core` and send your custom renderers through the options.
@@ -25,7 +25,7 @@ import Page from './renderers/page';
   // active item in the menu based on the `state` of Highway.
   const links = document.querySelectorAll('nav a');
 
-  H.on('NAVIGATE_START', (from, to, title, state) => {
+  H.on('NAVIGATE_START', (from, to, state) => {
     for (const link of links) {
       link.classList.remove('is-active');
 

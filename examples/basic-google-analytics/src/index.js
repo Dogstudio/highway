@@ -1,9 +1,9 @@
 // Import Highway
-import Highway from '@dogstudio/highway';
+import Highway from 'dist/highway';
 
 // Import Renderers
-import Home from './renderers/home';
-import Page from './renderers/page';
+import Home from 'renderers/home';
+import Page from 'renderers/page';
 
 (() => {
   // Instanciate `Highway.Core` and send your custom renderers through the options.
@@ -23,12 +23,12 @@ import Page from './renderers/page';
   // In this example we listen to the `NAVIGATE_START` event from Highway that
   // occurs when a navigation starts and send a new `pageview` to Google Analytics
   // based on the `state` of Highway.
-  H.on('NAVIGATE_START', (from, to, title, state) => {
+  H.on('NAVIGATE_START', (from, to, state) => {
     if (typeof gtag !== 'undefined') {
       // eslint-disable-next-line
       gtag('config', 'GA_TRACKING_ID', {
         'page_path': state.pathname,
-        'page_title': title,
+        'page_title': to.title,
         'page_location': state.url
       });
     }

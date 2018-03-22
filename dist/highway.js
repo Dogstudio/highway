@@ -342,7 +342,7 @@ var HighwayRenderer = function () {
     this.view = view;
     this.page = _helpers2.default.getDOM(page);
     this.title = _helpers2.default.getTitle(page);
-    this.transition = new transition(view); // eslint-disable-line
+    this.transition = transition ? new transition(view) : null; // eslint-disable-line
 
     if (this.title && document.title !== this.title) {
       document.title = this.title;
@@ -898,11 +898,7 @@ var HighwayCore = function (_Emitter) {
       // An event is emitted and can be used outside of the router to run
       // additionnal code when the navigation starts. It expose the `from` and `to`
       // [router-view] elements to the user and the router state.
-      var to = this.to.view;
-      var from = this.from.view;
-      var title = this.to.title; // eslint-disable-line
-
-      this.emit('NAVIGATE_START', from, to, title, this.state);
+      this.emit('NAVIGATE_START', this.from, this.to, this.state);
 
       // We select the right method based on the mode provided in the options.
       // If no mode is provided then the `out-in` method is chosen.
@@ -912,6 +908,9 @@ var HighwayCore = function (_Emitter) {
         // Now we call the pipeline!
         this[method]().then(function () {
           _this5.navigating = false;
+
+          // Same as the `NAVIGATE_START` event
+          _this5.emit('NAVIGATE_END', _this5.from, _this5.to, _this5.state);
 
           // We prepare the next navigation by replacing the `from` renderer by
           // the `to` renderer now that the pages have been swapped successfully.
@@ -924,9 +923,6 @@ var HighwayCore = function (_Emitter) {
             // Now scroll to anchor!
             _this5.scrollTo(_helpers2.default.getAnchor(_this5.state.url));
           }
-
-          // Same as the `NAVIGATE_START` event
-          _this5.emit('NAVIGATE_END', from, to, title, _this5.state);
         });
       }
     }
@@ -942,11 +938,17 @@ var HighwayCore = function (_Emitter) {
     value: function outIn() {
       var _this6 = this;
 
+      // Same as the `NAVIGATE_START` event
+      this.emit('NAVIGATE_OUT', this.from, this.to, this.state);
+
       // Call `out` transition
       return this.from.hide().then(function () {
         // Reset scroll position
         window.scrollTo(0, 0);
       }).then(function () {
+        // Same as the `NAVIGATE_START` event
+        _this6.emit('NAVIGATE_IN', _this6.from, _this6.to, _this6.state);
+
         // Call `in` transition
         _this6.to.show();
       });
@@ -963,11 +965,17 @@ var HighwayCore = function (_Emitter) {
     value: function inOut() {
       var _this7 = this;
 
+      // Same as the `NAVIGATE_START` event
+      this.emit('NAVIGATE_IN', this.from, this.to, this.state);
+
       // Call the `in` transition
       return this.to.show().then(function () {
         // Reset scroll position
         window.scrollTo(0, 0);
       }).then(function () {
+        // Same as the `NAVIGATE_START` event
+        _this7.emit('NAVIGATE_OUT', _this7.from, _this7.to, _this7.state);
+
         // Call the `out` transition
         _this7.from.hide();
       });
@@ -982,6 +990,10 @@ var HighwayCore = function (_Emitter) {
   }, {
     key: 'both',
     value: function both() {
+      // Same as the `NAVIGATE_START` event
+      this.emit('NAVIGATE_IN', this.from, this.to, this.state);
+      this.emit('NAVIGATE_OUT', this.from, this.to, this.state);
+
       return Promise.all([this.to.show(), this.from.hide()]).then(function () {
         // Reset scroll position
         window.scrollTo(0, 0);
