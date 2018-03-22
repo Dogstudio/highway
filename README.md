@@ -102,7 +102,7 @@ On the Javascript-side it's again pretty simple... What you need to do is to cre
 // Import Highway
 import Highway from '@dogstudio/highway';
 
-class Home extends Highway.renderer {
+class Home extends Highway.Renderer {
   [...]
 }
 
@@ -121,7 +121,7 @@ Besides the required methods from **Highway** present in the `Highway.Renderer` 
 // Import Highway
 import Highway from '@dogstudio/highway';
 
-class Home extends Highway.renderer {
+class Home extends Highway.Renderer {
   onEnter() { }
   onLeave() { }
   onEnterCompleted() { }
@@ -292,6 +292,10 @@ const H = new Highway.Core({
 - [ ] More Examples
 
 ## History
+#### 1.1.2 (2018-03-22)
+
+- Fix documentation
+
 #### 1.1.1 (2018-03-17)
 
 - Fix documentation

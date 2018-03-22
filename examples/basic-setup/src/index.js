@@ -11,8 +11,8 @@ import Page from './renderers/page';
   // More informations: https://github.com/Dogstudio/highway
   new Highway.Core({
     renderers: {
-      'home': Home,
-      'page': Page
+      home: Home,
+      page: Page
     }
   });
 })();
