@@ -1,12 +1,12 @@
 // Import Highway
-import Highway from '@dogstudio/highway';
+import Highway from 'dist/highway';
 
 // Import Renderers
-import Home from './renderers/home';
-import Page from './renderers/page';
+import Home from 'renderers/home';
+import Page from 'renderers/page';
 
 // Import Transitions
-import Fade from './transitions/fade';
+import Fade from 'transitions/fade';
 
 (() => {
   // Instanciate `Highway.Core` and send your custom renderers and transitions

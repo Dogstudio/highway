@@ -1,5 +1,5 @@
 // Import Highway
-import Highway from '@dogstudio/highway';
+import Highway from 'dist/highway';
 
 // To create your custom transition you need to provide two required methods:
 // - `in`: The transition part to show your view.
