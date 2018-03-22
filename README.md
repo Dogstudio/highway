@@ -324,7 +324,7 @@ const H = new Highway.Core({
 - [ ] More Examples
 
 ## History
-#### 1.2.0 (2018-03-22)
+#### 1.2.0 (2018-03-23)
 
 - Add `NAVIGATE_IN` and `NAVIGATE_OUT` events
 - Add more variables available in `Highway.Renderer`
