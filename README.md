@@ -64,19 +64,35 @@ const H = new Highway.Core({
   }
 });
 ```
+
+Finally, in order to work properly **Highway** needs a basic HTML structure. All you have to do is to put somewhere in your pages the `router-wrapper` that will contain and **only** contain the `router-view`. You need to understand that **Highway** will only change the `router-view` presents in the `router-wrapper`. Everything outside of the `router-wrapper` will stay the same all along the user's navigation.
+
+```html
+<!-- [...] -->
+<body>
+  <!-- [...] -->
+  <main router-wrapper>
+    <article router-view>
+      <!-- [...] -->
+    </article>
+  </main>
+  <!-- [...] -->
+</body>
+<!-- [...] -->
+```
+
 **And voilà**!  
 You are now ready to create some beautiful and creative transitions between your pages.
 
 ## Renderers
 
-Everytime you create a page you need to relate it to a **renderer**. This way **Highway** knows how to deal with this page's transitions. Luckily we have done **almost** all the work for you, great isn't it? However you have a part to play in this and here is how you can setup properly your renderers.
+Everytime you create a page that needs its own Javascript to work you need to relate it to a custom **renderer**. This way **Highway** will be able to call the page's Javascript during the transition. Luckily we have done **almost** all the work for you, great isn't it? However you have a part to play in this and here is how you can setup properly your custom renderers.
+
+**Note:** If your page doesn't have any Javascript related to it you don't need to create a custom renderer for it.
 
 ### HTML
 
-About your HTML this is actually pretty simple... All you have to do is to put somewhere in you page the `router-wrapper` that will contain and **only** contain the `router-view` to which you are going to give a name. The name you are going to give to your `router-view` will be used later to identify it and relate it to the correct renderer in Javascript.
-
-Finally what you need to understand is that **Highway** will only change the `router-view` presents in the `router-wrapper`.
-Everything outside of the `router-wrapper` will stay the same all along the user's navigation.
+About your HTML this is actually pretty simple... Remember the `router-view` you added to your DOM? You are going to name it and the name you are going to give to your `router-view` will be used later to identify it and relate it to the correct custom renderer in Javascript.
 
 **index.html**
 ```html
@@ -109,12 +125,19 @@ class Home extends Highway.Renderer {
 // Don`t forget to export your renderer
 export default Home;
 ```
+
 Besides the required methods from **Highway** present in the `Highway.Renderer` you have access to **optional** ones that are called all along the process of the navigation. Here is the list of these **optional** methods:
 
 - `onEnter`: Called when the transition `in` starts & the `router-view` is added to `router-wrapper`.
 - `onLeave`: Called when the transition `out` starts.
 - `onEnterCompleted`: Called when the transition `in` is over.
 - `onLeaveCompleted`: Called when the transition `out` is over & the `router-view` is removed from `router-wrapper`.
+
+`Highway.Renderer` also gives you access to useful variables you will be able to use in your own code:
+
+- `this.page`: The full DOM of the page related to the renderer.
+- `this.view`: The `[router-view]` of the page related to the renderer.
+- `this.title`: The `document.title` of the page related to the renderer.
 
 **home.js**
 ```javascript
@@ -133,7 +156,7 @@ export default Home;
 ```
 
 Now your custom renderer is created you need to add it to the renderers list of `Highway.Core`...  
-Remember the name you gave to you `router-view`, it's now time to relate it to your renderer.
+Remember the name you gave to you `router-view`, it's now time to relate it to your custom renderer.
 
 ```javascript
 // Import Renderers
@@ -227,22 +250,31 @@ Last but not least, **Highway** extends [**tiny-emitter**](https://github.com/sc
 
 - `NAVIGATE_START`: Trigger when a navigation starts.
 - `NAVIGATE_END`: Trigger when a navigation ends.
+- `NAVIGATE_IN`: Trigger when the `in` transition starts.
+- `NAVIGATE_OUT`: Trigger when the `out` transition starts.
 - `NAVIGATE_ERROR`: Trigger when an error occurs in navigation process.
 
-For the `NAVIGATE_START` and `NAVIGATE_END` events, some parameters are sent with the event in this order:
+All events except `NAVIGATE_ERROR` give you access to some parameters in this order:
 
-- `from`: The `router-view` from the page you come from.
-- `to`: The `router-view` from the page you go to.
-- `title`: The document title of the page you go to.
+- `from`: The renderer of the page you come from.
+- `to`: The renderer of the page you go to.
 - `state`: The state of **Highway** that contains all the informations about the URL of the page you go to.
 
 ```javascript
 // [...]
-H.on('NAVIGATE_START', (from, to, title, state) => {
+H.on('NAVIGATE_START', (from, to, state) => {
   // [...]
 });
 
-H.on('NAVIGATE_END', (from, to, title, state) => {
+H.on('NAVIGATE_END', (from, to, state) => {
+  // [...]
+});
+
+H.on('NAVIGATE_IN', (from, to, state) => {
+  // [...]
+});
+
+H.on('NAVIGATE_OUT', (from, to, state) => {
   // [...]
 });
 
