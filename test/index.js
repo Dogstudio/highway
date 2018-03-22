@@ -1,45 +1,11 @@
 // Dependencies
 const { expect } = require('chai');
-const express = require('express');
-const puppeteer = require('puppeteer');
-
-// Globals
-let APP = null;
-let PAGE = null;
-let SERVER = null;
-let BROWSER = null;
 
 // Helpers
 const Helpers = require('../src/helpers.js');
 
 // Helpers assertions
 describe('Helpers', () => {
-  before((done) => {
-    // Start Express server
-    APP = express();
-
-    // Serve static files
-    APP.use(express.static(__dirname));
-
-    // Listen port
-    SERVER = APP.listen(3000, () => {
-      // Start Puppeteer
-      puppeteer.launch({ headless: false }).then(browser => {
-        // Save browser
-        BROWSER = browser;
-
-        // Create page
-        BROWSER.newPage().then(page => {
-          // Save page
-          PAGE = page;
-
-          // Go to Express server
-          PAGE.goto('http://localhost:3000').then(() => done());
-        });
-      });
-    });
-  });
-
   describe('Helpers.getOrigin', () => {
     it('Should return `http://bar.com` from `http://bar.com/foo/bar` URL.', () => {
       // Fake URL
@@ -147,14 +113,11 @@ describe('Helpers', () => {
 
   describe('Helpers.getTitle', () => {
     it('Should return the `title` value from a given HTML', () => {
-      // Get HTML
-      // PAGE.evaluate(() => {
-      //   // Get HTML
-      //   const html = document.documentElement.outerHTML;
+      // Fake HTML
+      const html = '<title>Hello</title>';
 
-      //   // Assertion
-      //   expect(Helpers.getTitle(html)).to.be.equal('Puppeteer');
-      // });
+      // Assertion
+      expect(Helpers.getTitle(html)).to.be.equal('Hello');
     });
 
     it('Should return the nothing if no title a given HTML', () => {
@@ -183,13 +146,5 @@ describe('Helpers', () => {
       // Assertion
       expect(Helpers.camelize(string)).to.be.equal('both');
     });
-  });
-
-  after((done) => {
-    // Close Express server
-    SERVER.close();
-
-    // Close Puppeteer server
-    BROWSER.close().then(() => done());
   });
 });
