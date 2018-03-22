@@ -324,6 +324,13 @@ const H = new Highway.Core({
 - [ ] More Examples
 
 ## History
+#### 1.2.0 (2018-03-22)
+
+- Add `NAVIGATE_IN` and `NAVIGATE_OUT` events
+- Add more variables available in `Highway.Renderer`
+- Improve renderers (see documentation)
+- Improve documentation
+
 #### 1.1.2 (2018-03-22)
 
 - Fix documentation
@@ -334,11 +341,11 @@ const H = new Highway.Core({
 
 #### 1.1.0 (2018-03-17)
 
-- Introduce [**modes**](https://github.com/Dogstudio/highway#modes)
+- Add [**modes**](https://github.com/Dogstudio/highway#modes)
 
 #### 1.0.1 (2018-03-17)
 
-- Create `Highway.Transition` to use Promises instead of callbacks for transitions
+- Add `Highway.Transition`
 
 #### 1.0.0 (2018-03-17)
 
