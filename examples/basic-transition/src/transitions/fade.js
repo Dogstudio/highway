@@ -1,5 +1,5 @@
 // Import Highway
-import Highway from '@dogstudio/highway';
+import Highway from '../../../../dist/highway.js';
 
 // This example uses `Greensock` an animation library
 import { TweenMax } from 'gsap';

@@ -98,12 +98,12 @@ function getInfos(url) {
 }
 
 /**
- * Get view element from page HTML
+ * Get page's DOM from page HTML
  * 
  * @arg    {string} page — Page HTML
- * @return {object} View element
+ * @return {string} Page DOM
  */
-function getView(page) {
+function getDOM(page) {
   // We create a fake DOM element that will contain our page HTML and let us
   // select DOM nodes properly. This element is only used in Javascript.
   const FRAGMENT = document.createElement('div');
@@ -112,8 +112,18 @@ function getView(page) {
   // using our fake container we created before and by updating its inner HTML.
   FRAGMENT.innerHTML = page;
 
-  // Now we can select our view with ease and return it.
-  return FRAGMENT.querySelector('[router-view]');
+  // Now we can return the DOM.
+  return FRAGMENT;
+}
+
+/**
+ * Get view element from page HTML
+ * 
+ * @arg    {string} page — Page HTML
+ * @return {object} View element
+ */
+function getView(page) {
+  return getDOM(page).querySelector('[router-view]');
 }
 
 /**
@@ -125,6 +135,7 @@ function getView(page) {
 function getSlug(page) {
   return getView(page).getAttribute('router-view');
 }
+
 
 /**
  * Get page's title from page HTML
@@ -190,6 +201,7 @@ function camelize(string) {
  * Export all helpers
  */
 module.exports = {
+  getDOM,
   getSlug,
   getView,
   getInfos,

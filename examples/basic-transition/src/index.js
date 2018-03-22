@@ -1,5 +1,5 @@
 // Import Highway
-import Highway from '@dogstudio/highway';
+import Highway from '../../../dist/highway.js';
 
 // Import Renderers
 import Home from './renderers/home';
@@ -15,7 +15,6 @@ import Fade from './transitions/fade';
   // More informations: https://github.com/Dogstudio/highway
   new Highway.Core({
     renderers: {
-      'home': Home,
       'page': Page
     },
     transitions: {

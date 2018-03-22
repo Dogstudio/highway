@@ -2,24 +2,27 @@
  * @file Highway default renderer that handle DOM stuffs.
  * @author Anthony Du Pont <bulldog@dogstudio.co>
  */
+import Helpers from './helpers';
+
 class HighwayRenderer {
 
   /**
-   * @arg {object} view — [router-view] Node
-   * @arg {string} title — Page title
+   * @arg {string} page — Page HTML
+   * @arg {object} view — Page view Node
    * @arg {string} transition — Page transition
    * @constructor
    */
-  constructor(view, title, transition) {
+  constructor(page, view, transition) {
     // The [router-view] and the page title are the only main information we need
     // since the role of the renderer is to update the required DOM elements with
     // the page informations. In our case the content and title of the document.
     this.view = view;
-    this.title = title;
+    this.page = Helpers.getDOM(page);
+    this.title = Helpers.getTitle(page);
     this.transition = new transition(view); // eslint-disable-line
 
-    if (title && document.title !== title) {
-      document.title = title;
+    if (this.title && document.title !== this.title) {
+      document.title = this.title;
     }
 
     // The [router-wrapper] is the main container of the router and the ancestor of our 

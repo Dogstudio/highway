@@ -187,12 +187,12 @@ function getInfos(url) {
 }
 
 /**
- * Get view element from page HTML
+ * Get page's DOM from page HTML
  * 
  * @arg    {string} page — Page HTML
- * @return {object} View element
+ * @return {string} Page DOM
  */
-function getView(page) {
+function getDOM(page) {
   // We create a fake DOM element that will contain our page HTML and let us
   // select DOM nodes properly. This element is only used in Javascript.
   var FRAGMENT = document.createElement('div');
@@ -201,8 +201,18 @@ function getView(page) {
   // using our fake container we created before and by updating its inner HTML.
   FRAGMENT.innerHTML = page;
 
-  // Now we can select our view with ease and return it.
-  return FRAGMENT.querySelector('[router-view]');
+  // Now we can return the DOM.
+  return FRAGMENT;
+}
+
+/**
+ * Get view element from page HTML
+ * 
+ * @arg    {string} page — Page HTML
+ * @return {object} View element
+ */
+function getView(page) {
+  return getDOM(page).querySelector('[router-view]');
 }
 
 /**
@@ -279,6 +289,7 @@ function camelize(string) {
  * Export all helpers
  */
 module.exports = {
+  getDOM: getDOM,
   getSlug: getSlug,
   getView: getView,
   getInfos: getInfos,
@@ -300,112 +311,41 @@ module.exports = {
 "use strict";
 
 
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }(); /**
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * @file Highway default renderer that handle DOM stuffs.
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * @author Anthony Du Pont <bulldog@dogstudio.co>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      */
+
+
+var _helpers = __webpack_require__(0);
+
+var _helpers2 = _interopRequireDefault(_helpers);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-/**
- * @file Highway default transition that handle DOM animations.
- * @author Anthony Du Pont <bulldog@dogstudio.co>
- */
-var HighwayTransition = function () {
-
-  /**
-   * @arg {object} view — [router-view] Node
-   * @constructor
-   */
-  function HighwayTransition(view) {
-    _classCallCheck(this, HighwayTransition);
-
-    // The [router-view] is the only main information we need since the role of
-    // the transition is to show/hide the required DOM elements.
-    this.view = view;
-  }
-
-  /**
-   * Add the view in DOM and play an `in` transition if one is defined.
-   * 
-   * @return {object} Promise
-   */
-
-
-  _createClass(HighwayTransition, [{
-    key: 'show',
-    value: function show() {
-      var _this = this;
-
-      return new Promise(function (resolve) {
-        if (_this.in && typeof _this.in === 'function') {
-          // The `in` method in encapsulated in the `show` method make transition
-          // code easier to write. This way you don't have to define any Promise
-          // in your transition code and focus on the transition itself.
-          _this.in(_this.view, resolve);
-        }
-      });
-    }
-
-    /**
-     * Play an `out` transition if one is defined and remove the view from DOM.
-     * 
-     * @return {object} Promise
-     */
-
-  }, {
-    key: 'hide',
-    value: function hide() {
-      var _this2 = this;
-
-      return new Promise(function (resolve) {
-        if (_this2.out && typeof _this2.out === 'function') {
-          // The `out` method in encapsulated in the `hide` method make transition
-          // code easier to write. This way you don't have to define any Promise
-          // in your transition code and focus on the transition itself.
-          _this2.out(_this2.view, resolve);
-        }
-      });
-    }
-  }]);
-
-  return HighwayTransition;
-}();
-
-module.exports = HighwayTransition;
-
-/***/ }),
-/* 2 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-/**
- * @file Highway default renderer that handle DOM stuffs.
- * @author Anthony Du Pont <bulldog@dogstudio.co>
- */
 var HighwayRenderer = function () {
 
   /**
-   * @arg {object} view — [router-view] Node
-   * @arg {string} title — Page title
+   * @arg {string} page — Page HTML
+   * @arg {object} view — Page view Node
    * @arg {string} transition — Page transition
    * @constructor
    */
-  function HighwayRenderer(view, title, transition) {
+  function HighwayRenderer(page, view, transition) {
     _classCallCheck(this, HighwayRenderer);
 
     // The [router-view] and the page title are the only main information we need
     // since the role of the renderer is to update the required DOM elements with
     // the page informations. In our case the content and title of the document.
     this.view = view;
-    this.title = title;
+    this.page = _helpers2.default.getDOM(page);
+    this.title = _helpers2.default.getTitle(page);
     this.transition = new transition(view); // eslint-disable-line
 
-    if (title && document.title !== title) {
-      document.title = title;
+    if (this.title && document.title !== this.title) {
+      document.title = this.title;
     }
 
     // The [router-wrapper] is the main container of the router and the ancestor of our 
@@ -517,6 +457,84 @@ var HighwayRenderer = function () {
 module.exports = HighwayRenderer;
 
 /***/ }),
+/* 2 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+/**
+ * @file Highway default transition that handle DOM animations.
+ * @author Anthony Du Pont <bulldog@dogstudio.co>
+ */
+var HighwayTransition = function () {
+
+  /**
+   * @arg {object} view — [router-view] Node
+   * @constructor
+   */
+  function HighwayTransition(view) {
+    _classCallCheck(this, HighwayTransition);
+
+    // The [router-view] is the only main information we need since the role of
+    // the transition is to show/hide the required DOM elements.
+    this.view = view;
+  }
+
+  /**
+   * Add the view in DOM and play an `in` transition if one is defined.
+   * 
+   * @return {object} Promise
+   */
+
+
+  _createClass(HighwayTransition, [{
+    key: 'show',
+    value: function show() {
+      var _this = this;
+
+      return new Promise(function (resolve) {
+        if (_this.in && typeof _this.in === 'function') {
+          // The `in` method in encapsulated in the `show` method make transition
+          // code easier to write. This way you don't have to define any Promise
+          // in your transition code and focus on the transition itself.
+          _this.in(_this.view, resolve);
+        }
+      });
+    }
+
+    /**
+     * Play an `out` transition if one is defined and remove the view from DOM.
+     * 
+     * @return {object} Promise
+     */
+
+  }, {
+    key: 'hide',
+    value: function hide() {
+      var _this2 = this;
+
+      return new Promise(function (resolve) {
+        if (_this2.out && typeof _this2.out === 'function') {
+          // The `out` method in encapsulated in the `hide` method make transition
+          // code easier to write. This way you don't have to define any Promise
+          // in your transition code and focus on the transition itself.
+          _this2.out(_this2.view, resolve);
+        }
+      });
+    }
+  }]);
+
+  return HighwayTransition;
+}();
+
+module.exports = HighwayTransition;
+
+/***/ }),
 /* 3 */
 /***/ (function(module, exports) {
 
@@ -605,6 +623,10 @@ var _helpers = __webpack_require__(0);
 
 var _helpers2 = _interopRequireDefault(_helpers);
 
+var _renderer = __webpack_require__(1);
+
+var _renderer2 = _interopRequireDefault(_renderer);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -668,9 +690,18 @@ var HighwayCore = function (_Emitter) {
     var view = document.querySelector('[router-view]');
     var transition = _helpers2.default.getTransition(_this.page, _this.transitions);
 
-    _this.from = new (_helpers2.default.getRenderer(_this.page, _this.renderers))(view, null, transition);
-    _this.from.onEnter();
-    _this.from.onEnterCompleted();
+    _this.from = _helpers2.default.getRenderer(_this.page, _this.renderers) || _renderer2.default;
+    _this.from = new _this.from(_this.page, view, transition); // eslint-disable-line
+
+    // We check the `onEnter` and `onEnterCompleted` methods and we call them 
+    // respectively if they are set
+    if (_this.from.onEnter) {
+      _this.from.onEnter();
+    }
+
+    if (_this.from.onEnterCompleted) {
+      _this.from.onEnterCompleted();
+    }
 
     // Listen the `popstate` on the window to run the router each time an 
     // history entry changes. Basically everytime the backward/forward arrows
@@ -859,16 +890,17 @@ var HighwayCore = function (_Emitter) {
       // The page we get is the one we want to go `to` and like every type of page
       // you should reference a renderer to the router we are getting right now.
       var view = _helpers2.default.getView(page);
-      var title = _helpers2.default.getTitle(page);
       var transition = _helpers2.default.getTransition(page, this.transitions);
 
-      this.to = new (_helpers2.default.getRenderer(page, this.renderers))(view, title, transition);
+      this.to = _helpers2.default.getRenderer(page, this.renderers) || _renderer2.default;
+      this.to = new this.to(page, view, transition); // eslint-disable-line
 
       // An event is emitted and can be used outside of the router to run
       // additionnal code when the navigation starts. It expose the `from` and `to`
       // [router-view] elements to the user and the router state.
-      var from = this.from.view;
       var to = this.to.view;
+      var from = this.from.view;
+      var title = this.to.title; // eslint-disable-line
 
       this.emit('NAVIGATE_START', from, to, title, this.state);
 
@@ -993,11 +1025,11 @@ var _helpers = __webpack_require__(0);
 
 var _helpers2 = _interopRequireDefault(_helpers);
 
-var _renderer = __webpack_require__(2);
+var _renderer = __webpack_require__(1);
 
 var _renderer2 = _interopRequireDefault(_renderer);
 
-var _transition = __webpack_require__(1);
+var _transition = __webpack_require__(2);
 
 var _transition2 = _interopRequireDefault(_transition);
 

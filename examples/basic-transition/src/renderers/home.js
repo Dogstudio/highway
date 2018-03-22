@@ -1,5 +1,5 @@
 // Import Highway
-import Highway from '@dogstudio/highway';
+import Highway from '../../../../dist/highway.js';
 
 // To create your custom renderer you have to extend the `Highway.Renderer` to
 // access all the required methods and to be able to call the "state" methods

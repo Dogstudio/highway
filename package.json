@@ -1,7 +1,7 @@
 {
   "name": "@dogstudio/highway",
   "license": "MIT",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "Highway helps you manage your page transitions",
   "main": "dist/highway.js",
   "unpkg": "dist/highway.min.js",
@@ -38,14 +38,17 @@
     "url": "https://github.com/Dogstudio/highway/issues"
   },
   "devDependencies": {
+    "ava": "^1.0.0-beta.3",
     "babel-core": "^6.26.0",
     "babel-loader": "^7.1.4",
     "babel-preset-env": "^1.6.1",
     "chai": "^4.1.2",
     "compression-webpack-plugin": "^1.1.11",
     "coveralls": "^3.0.0",
+    "express": "^4.16.3",
     "mocha": "^5.0.4",
     "nyc": "^11.6.0",
+    "puppeteer": "^1.2.0",
     "tiny-emitter": "^2.0.2",
     "uglifyjs-webpack-plugin": "^1.2.3",
     "webpack": "^4.1.1",

@@ -4,6 +4,7 @@
  */
 import Emitter from 'tiny-emitter';
 import Helpers from './helpers';
+import Renderer from './renderer';
 
 // Fetch API options used for every HTTP request sent by Highway. It makes
 // sure the HTTP requests URL are only on the same origin and that credentials
@@ -52,9 +53,18 @@ class HighwayCore extends Emitter {
     const view = document.querySelector('[router-view]');
     const transition = Helpers.getTransition(this.page, this.transitions);
 
-    this.from = new (Helpers.getRenderer(this.page, this.renderers))(view, null, transition);
-    this.from.onEnter();
-    this.from.onEnterCompleted();
+    this.from = Helpers.getRenderer(this.page, this.renderers) || Renderer;
+    this.from = new this.from(this.page, view, transition); // eslint-disable-line
+
+    // We check the `onEnter` and `onEnterCompleted` methods and we call them 
+    // respectively if they are set
+    if (this.from.onEnter) {
+      this.from.onEnter();
+    }
+
+    if (this.from.onEnterCompleted) {
+      this.from.onEnterCompleted();
+    }
 
     // Listen the `popstate` on the window to run the router each time an 
     // history entry changes. Basically everytime the backward/forward arrows
@@ -205,16 +215,17 @@ class HighwayCore extends Emitter {
     // The page we get is the one we want to go `to` and like every type of page
     // you should reference a renderer to the router we are getting right now.
     const view = Helpers.getView(page);
-    const title = Helpers.getTitle(page);
     const transition = Helpers.getTransition(page, this.transitions);
 
-    this.to = new (Helpers.getRenderer(page, this.renderers))(view, title, transition);
+    this.to = Helpers.getRenderer(page, this.renderers) || Renderer;
+    this.to = new this.to(page, view, transition); // eslint-disable-line
 
     // An event is emitted and can be used outside of the router to run
     // additionnal code when the navigation starts. It expose the `from` and `to`
     // [router-view] elements to the user and the router state.
-    const from = this.from.view;
     const to = this.to.view;
+    const from = this.from.view;
+    const title = this.to.title; // eslint-disable-line
 
     this.emit('NAVIGATE_START', from, to, title, this.state);
 
