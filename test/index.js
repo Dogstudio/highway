@@ -111,25 +111,6 @@ describe('Helpers', () => {
     });
   });
 
-  describe('Helpers.getTitle', () => {
-    it('Should return the `title` value from a given HTML', () => {
-      // Fake HTML
-      const html = '<title>Hello</title>';
-
-      // Assertion
-      expect(Helpers.getTitle(html)).to.be.equal('Hello');
-    });
-
-    it('Should return the nothing if no title a given HTML', () => {
-      // Fake HTML
-      const html = '<div>Hello</div>';
-
-      // Assertion
-      // eslint-disable-next-line
-      expect(Helpers.getTitle(html)).to.be.empty;
-    });
-  });
-
   describe('Helpers.camelize', () => {
     it('Should return the `outIn` from `out-int`', () => {
       // String to camelize
