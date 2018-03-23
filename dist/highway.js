@@ -90,7 +90,6 @@ return /******/ (function(modules) { // webpackBootstrap
  * @file Highway helper methods used all acrosse the script.
  * @author Anthony Du Pont <bulldog@dogstudio.co>
  */
-var TITLE_REGEX = /<title>(.+)<\/title>/;
 var PARAM_REGEX = /\?([\w_\-.=&]+)/;
 var ANCHOR_REGEX = /(#.*)$/;
 var ORIGIN_REGEX = /(https?:\/\/[\w\-.]+)/;
@@ -193,16 +192,12 @@ function getInfos(url) {
  * @return {string} Page DOM
  */
 function getDOM(page) {
-  // We create a fake DOM element that will contain our page HTML and let us
-  // select DOM nodes properly. This element is only used in Javascript.
-  var FRAGMENT = document.createElement('div');
-
-  // This is the trick to transform our page HTML from string to DOM element by
-  // using our fake container we created before and by updating its inner HTML.
-  FRAGMENT.innerHTML = page;
+  // We create instance of the DOM parser in order to parse our string and 
+  // return the DOM properly.
+  var parser = new DOMParser();
 
   // Now we can return the DOM.
-  return FRAGMENT;
+  return parser.parseFromString(page, 'text/html');
 }
 
 /**
@@ -223,17 +218,6 @@ function getView(page) {
  */
 function getSlug(page) {
   return getView(page).getAttribute('router-view');
-}
-
-/**
- * Get page's title from page HTML
- * 
- * @arg    {string} page — Page HTML
- * @return {string} Page title
- */
-function getTitle(page) {
-  var match = page.match(TITLE_REGEX);
-  return match ? match[1] : '';
 }
 
 /**
@@ -293,7 +277,6 @@ module.exports = {
   getSlug: getSlug,
   getView: getView,
   getInfos: getInfos,
-  getTitle: getTitle,
   getParam: getParam,
   getParams: getParams,
   getOrigin: getOrigin,
@@ -341,12 +324,13 @@ var HighwayRenderer = function () {
     // the page informations. In our case the content and title of the document.
     this.view = view;
     this.page = _helpers2.default.getDOM(page);
-    this.title = _helpers2.default.getTitle(page);
+    this.title = this.page.title;
     this.transition = transition ? new transition(view) : null; // eslint-disable-line
 
-    if (this.title && document.title !== this.title) {
-      document.title = this.title;
-    }
+    // We are getting the `html` and `body` tags class attribute value to make
+    // sure we always have the correct classnames in our DOM.
+    this.bodyClass = this.page.body.className;
+    this.HTMLClass = this.page.documentElement.className;
 
     // The [router-wrapper] is the main container of the router and the ancestor of our 
     // [router-view] that let us now where to remove of append our view in the DOM.
@@ -369,6 +353,22 @@ var HighwayRenderer = function () {
 
       return new Promise(function (resolve) {
         _this.wrapper = document.querySelector('[router-wrapper]');
+
+        // Now we update all the informations in the DOM we need!
+        // We update the class attribute on the `html` tag
+        if (_this.HTMLClass && _this.HTMLClass !== document.documentElement.className) {
+          document.documentElement.className = _this.HTMLClass;
+        }
+
+        // We update the class attribute on the `body` tag
+        if (_this.bodyClass && _this.bodyClass !== document.body.className) {
+          document.body.className = _this.bodyClass;
+        }
+
+        // We update the document title
+        if (_this.title && document.title !== _this.title) {
+          document.title = _this.title;
+        }
 
         // Before doing anything crazy you need to know your view doesn't exists
         // in the [router-wrapper] so it is appended to it right now!
@@ -794,6 +794,10 @@ var HighwayCore = function (_Emitter) {
     key: 'beforeFetch',
     value: function beforeFetch(url, history) {
       var _this3 = this;
+
+      // We trigger an event when a link is clicked to let you know do whatever
+      // you want at this point of the process.
+      this.emit('NAVIGATE_CALL');
 
       // Use of a boolean to avoid repetitive fetch calls by super excited users
       // that could lead to some serious issues.

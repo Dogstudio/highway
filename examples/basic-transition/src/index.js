@@ -14,7 +14,6 @@ import Fade from 'transitions/fade';
   // you define in your HTML.
   // More informations: https://github.com/Dogstudio/highway
   new Highway.Core({
-    mode: 'both',
     renderers: {
       home: Home,
       page: Page

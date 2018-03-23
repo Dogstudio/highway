@@ -140,6 +140,10 @@ class HighwayCore extends Emitter {
    * @arg {boolean} history — Push entry in history if `true`
    */
   beforeFetch(url, history) {
+    // We trigger an event when a link is clicked to let you know do whatever
+    // you want at this point of the process.
+    this.emit('NAVIGATE_CALL');
+
     // Use of a boolean to avoid repetitive fetch calls by super excited users
     // that could lead to some serious issues.
     this.navigating = true;

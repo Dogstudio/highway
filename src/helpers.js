@@ -2,7 +2,6 @@
  * @file Highway helper methods used all acrosse the script.
  * @author Anthony Du Pont <bulldog@dogstudio.co>
  */
-const TITLE_REGEX = /<title>(.+)<\/title>/;
 const PARAM_REGEX = /\?([\w_\-.=&]+)/;
 const ANCHOR_REGEX = /(#.*)$/;
 const ORIGIN_REGEX = /(https?:\/\/[\w\-.]+)/;
@@ -104,16 +103,12 @@ function getInfos(url) {
  * @return {string} Page DOM
  */
 function getDOM(page) {
-  // We create a fake DOM element that will contain our page HTML and let us
-  // select DOM nodes properly. This element is only used in Javascript.
-  const FRAGMENT = document.createElement('div');
-
-  // This is the trick to transform our page HTML from string to DOM element by
-  // using our fake container we created before and by updating its inner HTML.
-  FRAGMENT.innerHTML = page;
+  // We create instance of the DOM parser in order to parse our string and 
+  // return the DOM properly.
+  const parser = new DOMParser();
 
   // Now we can return the DOM.
-  return FRAGMENT;
+  return parser.parseFromString(page, 'text/html');
 }
 
 /**
@@ -134,18 +129,6 @@ function getView(page) {
  */
 function getSlug(page) {
   return getView(page).getAttribute('router-view');
-}
-
-
-/**
- * Get page's title from page HTML
- * 
- * @arg    {string} page — Page HTML
- * @return {string} Page title
- */
-function getTitle(page) {
-  const match = page.match(TITLE_REGEX);
-  return match ? match[1] : '';
 }
 
 /**
@@ -205,7 +188,6 @@ module.exports = {
   getSlug,
   getView,
   getInfos,
-  getTitle,
   getParam,
   getParams,
   getOrigin,

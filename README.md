@@ -248,13 +248,14 @@ Check out the [**examples**](https://github.com/Dogstudio/highway#examples) for 
 
 Last but not least, **Highway** extends [**tiny-emitter**](https://github.com/scottcorgan/tiny-emitter) to send events along the navigation process you can listen to in order to extend its capabilities. There are three events available for you:
 
+- `NAVIGATE_CALL`: Trigger right after a link or an history button of the browser is clicked.
 - `NAVIGATE_START`: Trigger when a navigation starts.
 - `NAVIGATE_END`: Trigger when a navigation ends.
 - `NAVIGATE_IN`: Trigger when the `in` transition starts.
 - `NAVIGATE_OUT`: Trigger when the `out` transition starts.
 - `NAVIGATE_ERROR`: Trigger when an error occurs in navigation process.
 
-All events except `NAVIGATE_ERROR` give you access to some parameters in this order:
+All events except `NAVIGATE_CALL` and `NAVIGATE_ERROR` give you access to some parameters in this order:
 
 - `from`: The renderer of the page you come from.
 - `to`: The renderer of the page you go to.
@@ -262,11 +263,15 @@ All events except `NAVIGATE_ERROR` give you access to some parameters in this or
 
 ```javascript
 // [...]
+H.on('NAVIGATE_CALL', () => {
+  // [...]
+});
+
 H.on('NAVIGATE_START', (from, to, state) => {
   // [...]
 });
 
-H.on('NAVIGATE_END', (from, to, state) => {
+H.on('NAVIGATE_OUT', (from, to, state) => {
   // [...]
 });
 
@@ -274,7 +279,7 @@ H.on('NAVIGATE_IN', (from, to, state) => {
   // [...]
 });
 
-H.on('NAVIGATE_OUT', (from, to, state) => {
+H.on('NAVIGATE_END', (from, to, state) => {
   // [...]
 });
 
@@ -324,6 +329,12 @@ const H = new Highway.Core({
 - [ ] More Examples
 
 ## History
+#### 1.2.1 (2018-03-24)
+
+- Add `NAVIGATE_CALL` event
+- Improve renderers that now update the `html` and `body` classname properly
+- Improve documentation
+
 #### 1.2.0 (2018-03-23)
 
 - Add `NAVIGATE_IN` and `NAVIGATE_OUT` events

@@ -18,12 +18,13 @@ class HighwayRenderer {
     // the page informations. In our case the content and title of the document.
     this.view = view;
     this.page = Helpers.getDOM(page);
-    this.title = Helpers.getTitle(page);
+    this.title = this.page.title;
     this.transition = transition ? new transition(view) : null; // eslint-disable-line
 
-    if (this.title && document.title !== this.title) {
-      document.title = this.title;
-    }
+    // We are getting the `html` and `body` tags class attribute value to make
+    // sure we always have the correct classnames in our DOM.
+    this.bodyClass = this.page.body.className;
+    this.HTMLClass = this.page.documentElement.className;
 
     // The [router-wrapper] is the main container of the router and the ancestor of our 
     // [router-view] that let us now where to remove of append our view in the DOM.
@@ -40,6 +41,22 @@ class HighwayRenderer {
   show() {
     return new Promise(resolve => {
       this.wrapper = document.querySelector('[router-wrapper]');
+
+      // Now we update all the informations in the DOM we need!
+      // We update the class attribute on the `html` tag
+      if (this.HTMLClass && this.HTMLClass !== document.documentElement.className) {
+        document.documentElement.className = this.HTMLClass;
+      }
+
+      // We update the class attribute on the `body` tag
+      if (this.bodyClass && this.bodyClass !== document.body.className) {
+        document.body.className = this.bodyClass;
+      }
+
+      // We update the document title
+      if (this.title && document.title !== this.title) {
+        document.title = this.title;
+      }
 
       // Before doing anything crazy you need to know your view doesn't exists
       // in the [router-wrapper] so it is appended to it right now!
