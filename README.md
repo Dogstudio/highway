@@ -325,6 +325,10 @@ Check out the [**Basic Menu Active**](https://github.com/Dogstudio/highway/tree/
 
 - Add `Highway.Transition`
 
+#### 0.0.x
+
+- First release
+
 ## License
 
 See the [**LICENSE**](https://github.com/Dogstudio/highway/blob/master/LICENSE) file for license rights and limitations (MIT).
