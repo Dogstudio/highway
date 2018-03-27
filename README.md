@@ -307,6 +307,7 @@ Check out the [**Basic Menu Active**](https://github.com/Dogstudio/highway/tree/
 #### 1.3.x
 
 - Remove **modes** that weren't convincing
+- Improve transitions
 
 #### 1.2.x
 
@@ -322,7 +323,6 @@ Check out the [**Basic Menu Active**](https://github.com/Dogstudio/highway/tree/
 
 #### 1.0.x
 
-- First release
 - Add `Highway.Transition`
 
 ## License
