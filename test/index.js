@@ -2,7 +2,7 @@
 const { expect } = require('chai');
 
 // Helpers
-const Helpers = require('../src/helpers.js');
+const { Helpers } = require('../dist/highway.js');
 
 // Helpers assertions
 describe('Helpers', () => {

@@ -19,7 +19,7 @@
     "clean": "rm -rf dist/",
     "build": "npm run clean && webpack",
     "watch": "npm run clean && webpack --watch",
-    "test": "nyc --reporter=html --reporter=text mocha --require babel-core/register",
+    "test": "nyc --reporter=html --reporter=text mocha --compilers js:babel-core/register",
     "coverage": "nyc report --reporter=text-lcov | coveralls"
   },
   "repository": {
@@ -53,5 +53,8 @@
     "uglifyjs-webpack-plugin": "^1.2.3",
     "webpack": "^4.1.1",
     "webpack-cli": "^2.0.12"
+  },
+  "dependencies": {
+    "babel-polyfill": "^6.26.0"
   }
 }
