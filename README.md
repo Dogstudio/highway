@@ -19,10 +19,9 @@
 - [**Renderers**](https://github.com/Dogstudio/highway#renderers)
 - [**Transitions**](https://github.com/Dogstudio/highway#transitions)
 - [**Events**](https://github.com/Dogstudio/highway#events)
-- [**Modes**](https://github.com/Dogstudio/highway#modes)
 - [**Examples**](https://github.com/Dogstudio/highway#examples)
 - [**Roadmap**](https://github.com/Dogstudio/highway#roadmap)
-- [**History**](https://github.com/Dogstudio/highway#history)
+- [**Releases**](https://github.com/Dogstudio/highway#releases)
 - [**License**](https://github.com/Dogstudio/highway#license)
 
 ## Installation
@@ -291,29 +290,6 @@ H.on('NAVIGATE_ERROR', () => {
 
 Check out the [**Basic Menu Active**](https://github.com/Dogstudio/highway/tree/master/examples/basic-menu-active) example for more details about events handling in **Highway**.
 
-## Modes
-
-**Highway** gives you the opportunity to choose between three transitions modes. These modes are available to let you run your transitions the way you need to create beautiful and creative navigations.
-
-- `out-in`: Will run the `out` transition **then** the `in` transition (*default*).
-- `in-out`: Will run the `in` transition **then** the `out` transition.
-- `both`: Will run the `in` and `out` transition at **the same time**.
-
-In order to tell **Highway** which mode you want to use, just tell it in its options.
-
-```javascript
-// [...]
-const H = new Highway.Core({
-  mode: 'both',
-  renderers: {
-    home: Home
-  },
-  transitions: {
-    default: Transition
-  }
-});
-```
-
 ## Examples
 
 - [**Basic Setup**](https://github.com/Dogstudio/highway/tree/master/examples/basic-setup)
@@ -324,43 +300,30 @@ const H = new Highway.Core({
 
 ## Roadmap
 
-- [ ] Github Page
 - [ ] More Unit Tests
 - [ ] More Examples
 
-## History
-#### 1.2.1 (2018-03-24)
+## Releases
+#### 1.3.x
 
-- Add `NAVIGATE_CALL` event
-- Improve renderers that now update the `html` and `body` classname properly
-- Improve documentation
+- Remove **modes** that weren't convincing
 
-#### 1.2.0 (2018-03-23)
+#### 1.2.x
 
-- Add `NAVIGATE_IN` and `NAVIGATE_OUT` events
+- Add `NAVIGATE_CALL`, `NAVIGATE_IN`, `NAVIGATE_OUT` events
 - Add more variables available in `Highway.Renderer`
-- Improve renderers (see documentation)
+- Improve renderers
 - Improve documentation
 
-#### 1.1.2 (2018-03-22)
+#### 1.1.x
 
-- Fix documentation
+- Add **modes**
+- Improve documentation
 
-#### 1.1.1 (2018-03-17)
-
-- Fix documentation
-
-#### 1.1.0 (2018-03-17)
-
-- Add [**modes**](https://github.com/Dogstudio/highway#modes)
-
-#### 1.0.1 (2018-03-17)
-
-- Add `Highway.Transition`
-
-#### 1.0.0 (2018-03-17)
+#### 1.0.x
 
 - First release
+- Add `Highway.Transition`
 
 ## License
 
