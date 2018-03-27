@@ -14,4 +14,4 @@ const Highway = {
   Transition
 };
 
-module.exports = Highway;
+export default Highway;

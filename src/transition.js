@@ -47,4 +47,4 @@ class HighwayTransition {
   }
 }
 
-module.exports = HighwayTransition;
+export default HighwayTransition;

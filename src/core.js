@@ -273,4 +273,4 @@ class HighwayCore extends Emitter {
   }
 }
 
-module.exports = HighwayCore;
+export default HighwayCore;

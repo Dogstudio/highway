@@ -171,7 +171,7 @@ function getTransition(page, transitions) {
 /**
  * Export all helpers
  */
-module.exports = {
+export default {
   getDOM,
   getSlug,
   getView,

@@ -134,4 +134,4 @@ class HighwayRenderer {
   }
 }
 
-module.exports = HighwayRenderer;
+export default HighwayRenderer;
