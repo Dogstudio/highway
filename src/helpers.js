@@ -169,18 +169,6 @@ function getTransition(page, transitions) {
 }
 
 /**
- * Converts string to camelCase
- *
- * @arg    {String} string - String to parse
- * @return {String} Parsed string
- */
-function camelize(string) {
-  return string.replace(CAMELCASE_REGEX, (_, c) => {
-    return c ? c.toUpperCase() : '';
-  });
-}
-
-/**
  * Export all helpers
  */
 module.exports = {
@@ -194,6 +182,5 @@ module.exports = {
   getAnchor,
   getPathname,
   getRenderer,
-  getTransition,
-  camelize
+  getTransition
 };

@@ -10,7 +10,7 @@
 
 <p align="center"><img src="https://i.imgur.com/AOEVomM.png" alt="Banner" /></p>
 
-**Highway** is a *modern*, *flexible* and *lightweight* library that will let you create **AJAX navigations** with beautiful **transitions** on your websites. It's been a while we were trying to build this kind of library to fits our needs at [**Dogstudio**](https://www.dogstudio.co) and that hopefully will fit yours now we're releasing it!
+**Highway** is a *robust*, *modern* and *flexible* library that will let you create **AJAX navigations** with beautiful **transitions** on your websites. It's been a while we were trying to build this kind of library to fits our needs at [**Dogstudio**](https://www.dogstudio.co) and that hopefully will fit yours now we're releasing it!
 
 ## Table of Content
 
@@ -247,34 +247,25 @@ Check out the [**examples**](https://github.com/Dogstudio/highway#examples) for 
 
 Last but not least, **Highway** extends [**tiny-emitter**](https://github.com/scottcorgan/tiny-emitter) to send events along the navigation process you can listen to in order to extend its capabilities. There are three events available for you:
 
-- `NAVIGATE_CALL`: Trigger right after a link or an history button of the browser is clicked.
-- `NAVIGATE_START`: Trigger when a navigation starts.
-- `NAVIGATE_END`: Trigger when a navigation ends.
+- `NAVIGATE_OUT`: Trigger when a click is clicked and the `out` transition starts.
 - `NAVIGATE_IN`: Trigger when the `in` transition starts.
-- `NAVIGATE_OUT`: Trigger when the `out` transition starts.
+- `NAVIGATE_END`: Trigger when a navigation ends.
 - `NAVIGATE_ERROR`: Trigger when an error occurs in navigation process.
 
-All events except `NAVIGATE_CALL` and `NAVIGATE_ERROR` give you access to some parameters in this order:
+All events give you access to some parameters named:
 
 - `from`: The renderer of the page you come from.
 - `to`: The renderer of the page you go to.
 - `state`: The state of **Highway** that contains all the informations about the URL of the page you go to.
+- `error`: The error that occured during the navigation related to the HTTP request.
 
 ```javascript
 // [...]
-H.on('NAVIGATE_CALL', () => {
+H.on('NAVIGATE_IN', (to, state) => {
   // [...]
 });
 
-H.on('NAVIGATE_START', (from, to, state) => {
-  // [...]
-});
-
-H.on('NAVIGATE_OUT', (from, to, state) => {
-  // [...]
-});
-
-H.on('NAVIGATE_IN', (from, to, state) => {
+H.on('NAVIGATE_OUT', (from, state) => {
   // [...]
 });
 
@@ -282,7 +273,7 @@ H.on('NAVIGATE_END', (from, to, state) => {
   // [...]
 });
 
-H.on('NAVIGATE_ERROR', () => {
+H.on('NAVIGATE_ERROR', (error) => {
   // [...]
 });
 // [...]
@@ -296,6 +287,7 @@ Check out the [**Basic Menu Active**](https://github.com/Dogstudio/highway/tree/
 - [**Basic Transition**](https://github.com/Dogstudio/highway/tree/master/examples/basic-transition)
 - [**Basic CSS Transition**](https://github.com/Dogstudio/highway/tree/master/examples/basic-css-transition)
 - [**Basic Menu Active**](https://github.com/Dogstudio/highway/tree/master/examples/basic-menu-active)
+- [**Basic Anchor**](https://github.com/Dogstudio/highway/tree/master/examples/basic-anchor)
 - [**Basic Google Analytics Events**](https://github.com/Dogstudio/highway/tree/master/examples/basic-google-analytics)
 
 ## Roadmap
@@ -306,7 +298,9 @@ Check out the [**Basic Menu Active**](https://github.com/Dogstudio/highway/tree/
 ## Releases
 #### 1.3.x
 
+- Add the `Basic Anchor` example
 - Remove **modes** that weren't convincing
+- Improve events
 - Improve transitions
 
 #### 1.2.x

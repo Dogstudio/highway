@@ -41,6 +41,8 @@ class HighwayCore extends Emitter {
     this.mode = opts.mode || 'out-in';
     this.state = {};
     this.cache = {};
+    this.empty = false;
+    this.loading = false;
     this.navigating = false;
 
     // Cache the page we land on for further HTTP request optimization.
@@ -140,12 +142,9 @@ class HighwayCore extends Emitter {
    * @arg {boolean} history — Push entry in history if `true`
    */
   beforeFetch(url, history) {
-    // We trigger an event when a link is clicked to let you know do whatever
-    // you want at this point of the process.
-    this.emit('NAVIGATE_CALL');
-
     // Use of a boolean to avoid repetitive fetch calls by super excited users
     // that could lead to some serious issues.
+    this.loading = true;
     this.navigating = true;
 
     // Using the `getInfos` from the Helpers we can get all the information from
@@ -153,33 +152,32 @@ class HighwayCore extends Emitter {
     this.state = Helpers.getInfos(url);
     this.pathname = Helpers.getPathname(url);
 
+    // We trigger an event when a link is clicked to let you know do whatever
+    // you want at this point of the process.
+    this.emit('NAVIGATE_OUT', this.from, this.state);
+
+    // We start the transition `out` of our renderer and to some check to avoid
+    // to start the `in` transition if the fetch call is still running.
+    this.from.hide().then(() => {
+      this.empty = true;
+
+      if (!this.loading) {
+        this.complete();
+      }
+    });
+
     // We need to check if the state URL is available in the cache to avoid
     // useless HTTP request and get the page HTML from the cache if possible.
     if (this.cache.hasOwnProperty(this.pathname)) {
       // Now push the page!
-      this.push(this.cache[this.pathname]);
-
-      // We push a new entry in the history in order to be able to navigate
-      // with the backward and forward buttons from the browser.
-      if (history) {
-        window.history.pushState(this.state, '', this.state.url);
-      }
+      this.beforePush(this.cache[this.pathname], history);
 
       // And stop there.
       return;
     }
 
     // Get the page URL from the state previously pushed in the history.
-    this.fetch().then(page => {
-      // We push a new entry in the history in order to be able to navigate
-      // with the backward and forward buttons from the browser.
-      if (history) {
-        window.history.pushState(this.state, '', this.state.url);
-      }
-
-      // Now push the page!
-      this.push(page);
-    });
+    this.fetch().then(page => this.beforePush(page, history));
   }
 
   /**
@@ -199,11 +197,28 @@ class HighwayCore extends Emitter {
 
       // An extra event is emitted if an error has occured that can be used
       // outside of the router to let you deal with the mess that happened.
-      this.emit('NAVIGATE_ERROR');
+      this.emit('NAVIGATE_ERROR', response);
 
       // !200+: Error of the HTTP request
       throw new Error(response.statusText);
     });
+  }
+
+  /**
+   * Get a page from URL or from cache successfully
+   * 
+   * @arg {string} page - Page HTML as a string
+   * @arg {string} history - Push entry in history if `true`
+   */
+  beforePush(page, history) {
+    // We push a new entry in the history in order to be able to navigate
+    // with the backward and forward buttons from the browser.
+    if (history) {
+      window.history.pushState(this.state, '', this.state.url);
+    }
+
+    // Now push the page!
+    this.push(page);
   }
 
   /**
@@ -213,6 +228,9 @@ class HighwayCore extends Emitter {
    * @arg {boolean} history — Push entry in history if `true`
    */
   push(page) {
+    // Fetch is not loading anymore...
+    this.loading = false;
+
     // Cache the page for HTTP request optimization
     this.cache[this.pathname] = page;
 
@@ -224,109 +242,34 @@ class HighwayCore extends Emitter {
     this.to = Helpers.getRenderer(page, this.renderers) || Renderer;
     this.to = new this.to(page, view, transition); // eslint-disable-line
 
-    // An event is emitted and can be used outside of the router to run
-    // additionnal code when the navigation starts. It expose the `from` and `to`
-    // [router-view] elements to the user and the router state.
-    this.emit('NAVIGATE_START', this.from, this.to, this.state);
-
-    // We select the right method based on the mode provided in the options.
-    // If no mode is provided then the `out-in` method is chosen.
-    const method = Helpers.camelize(this.mode);
-
-    if (typeof this[method] === 'function') {
-      // Now we call the pipeline!
-      this[method]().then(() => {
-        this.navigating = false;
-
-        // Same as the `NAVIGATE_START` event
-        this.emit('NAVIGATE_END', this.from, this.to, this.state);
-
-        // We prepare the next navigation by replacing the `from` renderer by
-        // the `to` renderer now that the pages have been swapped successfully.
-        this.from = this.to;
-
-        // We might have a redirection to a page pointing to a specifig anchor
-        // on this page so we have to deal with it and check if there is an anchor
-        // present in the URL.
-        if (Helpers.getAnchor(this.state.url)) {
-          // Now scroll to anchor!
-          this.scrollTo(Helpers.getAnchor(this.state.url));
-        }
-      });
+    if (this.empty) {
+      this.complete();
     }
   }
 
   /**
-   * Run `out` transition then `in` transition
-   * 
-   * @return {Promise} `out-in` Promise
+   * Complete the process
    */
-  outIn() {
-    // Same as the `NAVIGATE_START` event
-    this.emit('NAVIGATE_OUT', this.from, this.to, this.state);
+  complete() {
+    // We trigger an event when the new content is displayed.
+    this.emit('NAVIGATE_IN', this.to, this.state);
 
-    // Call `out` transition
-    return this.from.hide().then(() => {
-      // Reset scroll position
-      window.scrollTo(0, 0);
-    }).then(() => {
+    // We reset the scroll position
+    window.scrollTo(0, 0);
+
+    // Now we show our content!
+    this.to.show().then(() => {
+      // We reset our state variables
+      this.empty = false;
+      this.navigating = false;
+
       // Same as the `NAVIGATE_START` event
-      this.emit('NAVIGATE_IN', this.from, this.to, this.state);
+      this.emit('NAVIGATE_END', this.from, this.to, this.state);
 
-      // Call `in` transition
-      this.to.show();
+      // We prepare the next navigation by replacing the `from` renderer by
+      // the `to` renderer now that the pages have been swapped successfully.
+      this.from = this.to;
     });
-  }
-
-  /**
-   * Run `in` transition then `out` transition
-   * 
-   * @return {Promise} `in-out` Promise
-   */
-  inOut() {
-    // Same as the `NAVIGATE_START` event
-    this.emit('NAVIGATE_IN', this.from, this.to, this.state);
-
-    // Call the `in` transition
-    return this.to.show().then(() => {
-      // Reset scroll position
-      window.scrollTo(0, 0);
-    }).then(() => {
-      // Same as the `NAVIGATE_START` event
-      this.emit('NAVIGATE_OUT', this.from, this.to, this.state);
-
-      // Call the `out` transition
-      this.from.hide();
-    });
-  }
-
-  /**
-   * Run both `in` and `out` transition at the same time.
-   * 
-   * @return {Promise} `both` Promise
-   */
-  both() {
-    // Same as the `NAVIGATE_START` event
-    this.emit('NAVIGATE_IN', this.from, this.to, this.state);
-    this.emit('NAVIGATE_OUT', this.from, this.to, this.state);
-
-    return Promise.all([this.to.show(), this.from.hide()]).then(() => {
-      // Reset scroll position
-      window.scrollTo(0, 0);
-    });
-  }
-
-  /**
-   * Scroll to a given element based on an anchor in the URL
-   * 
-   * @arg {string} id — Anchor ID
-   */
-  scrollTo(id) {
-    const el = document.querySelector(id);
-
-    if (el) {
-      window.scrollTo(el.offsetLeft, el.offsetTop);
-    }
   }
 }
 

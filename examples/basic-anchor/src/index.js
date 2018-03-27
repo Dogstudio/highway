@@ -20,17 +20,16 @@ import Page from 'renderers/page';
   // order to extend Highway's capabilities.
   // More informations: https://github.com/Dogstudio/highway
   //
-  // In this example we listen to the `NAVIGATE_END` event from Highway that
-  // occurs when a navigation ends and send a new `pageview` to Google Analytics
-  // based on the `state` of Highway.
+  // In this example welisten to the `NAVIGATE_END` event from Highway that occurs 
+  // when a navigation ends and we scroll to the an anchor if one is found in the
+  // `state` of Highway.
   H.on('NAVIGATE_END', (from, to, state) => {
-    if (typeof gtag !== 'undefined') {
-      // eslint-disable-next-line
-      gtag('config', 'GA_TRACKING_ID', {
-        'page_path': state.pathname,
-        'page_title': to.title,
-        'page_location': state.url
-      });
+    if (state.anchor) {
+      const el = document.getElementById(state.anchor);
+
+      if (el) {
+        window.scrollTo(el.offsetLeft, el.offsetTop);
+      }
     }
   });
 })();

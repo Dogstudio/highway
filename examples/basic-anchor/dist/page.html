@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Page - Basic Anchor</title>
+</head>
+<body>
+  <nav>
+    <ul>
+      <li><a href="./#hello">Home</a></li>
+      <li><a href="./page.html">Page</a></li>
+    </ul>
+  </nav>
+  <main router-wrapper>
+    <article router-view="page">
+      <h1>Page</h1>
+      <p>This is a page of your website.</p>
+    </article>
+  </main>
+  <script type="application/javascript" src="./index.js"></script>
+</body>
+</html>

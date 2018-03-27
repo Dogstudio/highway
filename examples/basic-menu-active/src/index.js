@@ -20,12 +20,12 @@ import Page from 'renderers/page';
   // order to extend Highway's capabilities.
   // More informations: https://github.com/Dogstudio/highway
   //
-  // In this example we select all the navigation links and listen to the `NAVIGATE_START`
+  // In this example we select all the navigation links and listen to the `NAVIGATE_OUT`
   // event from Highway that occurs when a navigation starts and we update the
   // active item in the menu based on the `state` of Highway.
   const links = document.querySelectorAll('nav a');
 
-  H.on('NAVIGATE_START', (from, to, state) => {
+  H.on('NAVIGATE_OUT', (from, state) => {
     for (const link of links) {
       link.classList.remove('is-active');
 
