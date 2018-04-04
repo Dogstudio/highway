@@ -6,6 +6,7 @@ import { expect } from 'chai';
 
 // Highway
 import Helpers from '../src/helpers';
+import Renderer from '../src/renderer';
 
 // DOM Parser
 const PARSER = new window.DOMParser();
@@ -99,5 +100,12 @@ describe('Highway.Helpers', () => {
     expect(Helpers.getTransition('foo', d)).to.be.equal('bar');
     expect(Helpers.getTransition('foo', e)).to.be.equal('foo');
     expect(Helpers.getTransition('foo', f)).to.be.equal('bar');
+  });
+
+  it('Should be an instance of `Renderer`', () => {
+    const view = document.createElement('div');
+    const page = document.createElement('div');
+
+    expect(new Renderer({ view, page })).to.be.instanceof(Renderer);
   });
 });
