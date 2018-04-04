@@ -282,6 +282,7 @@ class Renderer {
     });
   }
 }
+
 // CONCATENATED MODULE: ./src/helpers.js
 /**
  * @file Highway helper methods used all acrosse the script.
@@ -432,6 +433,7 @@ class helpers_Helpers {
     return transitions[slug];
   }
 }
+
 // CONCATENATED MODULE: ./src/core.js
 /**
  * @file Highway core that handle all history stuffs.
@@ -524,7 +526,7 @@ class core_Core extends tiny_emitter_default.a {
     // Use the bubbling principle from document to all children and catch
     // only the link elements without target and that are not pointing to an anchor
     // on the page.
-    document.addEventListener('click', event => {
+    document.addEventListener('click', (event) => {
       if (event.target.tagName === 'A') {
         // We get the anchor and the pathname of the link that the user clicked
         // in order to compare it with the current state and handle the `click`
@@ -540,6 +542,7 @@ class core_Core extends tiny_emitter_default.a {
           if (!this.navigating && pathname !== this.state.pathname) {
             // Now push the state!
             this.pushState(event);
+
           } else {
             // If the pathnames are the same there might be an anchor appended to
             // it so we need to check it and reload the page to use the default
@@ -679,6 +682,7 @@ class core_Core extends tiny_emitter_default.a {
     this.From = this.To;
   }
 }
+
 // CONCATENATED MODULE: ./src/transition.js
 /**
  * @file Highway default transition that handle DOM animations.
@@ -729,6 +733,7 @@ class Transition {
     });
   }
 }
+
 // CONCATENATED MODULE: ./src/index.js
 /**
  * @file Highway object containing all parts of the script.
@@ -745,6 +750,7 @@ class Transition {
   Renderer: Renderer,
   Transition: Transition
 });
+
 
 /***/ })
 /******/ ]);
