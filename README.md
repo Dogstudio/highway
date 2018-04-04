@@ -9,7 +9,7 @@
 
 <p align="center"><img src="https://i.imgur.com/AOEVomM.png" alt="Banner" /></p>
 
-**Highway** is a *robust*, *modern* and *flexible* library that will let you create **AJAX navigations** with beautiful **transitions** on your websites. It's been a while we were trying to build this kind of library to fits our needs at [**Dogstudio**](https://www.dogstudio.co) and that hopefully will fit yours now we're releasing it!
+**Highway** is a *lightweight (**1.95ko** gzipped)*, *robust*, *modern* and *flexible* library that will let you create **AJAX navigations** with beautiful **transitions** on your websites. It's been a while we were trying to build this kind of library to fits our needs at [**Dogstudio**](https://www.dogstudio.co) and that hopefully will fit yours now we're releasing it!
 
 ## Table of Content
 
@@ -19,6 +19,7 @@
 - [**Transitions**](https://github.com/Dogstudio/highway#transitions)
 - [**Events**](https://github.com/Dogstudio/highway#events)
 - [**Examples**](https://github.com/Dogstudio/highway#examples)
+- [**Support**](https://github.com/Dogstudio/highway#support)
 - [**Roadmap**](https://github.com/Dogstudio/highway#roadmap)
 - [**Releases**](https://github.com/Dogstudio/highway#releases)
 - [**License**](https://github.com/Dogstudio/highway#license)
@@ -44,10 +45,6 @@ First let's *import* **Highway**:
 
 ```javascript
 import Highway from '@dogstudio/highway';
-```
-or *require* it if you prefer:
-```javascript
-const Highway = require('@dogstudio/highway');
 ```
 
 Now **Highway** is available you need to create an instance of `Highway.Core` and give it your [**renderers**](https://github.com/Dogstudio/highway#renderers) and [**transitions**](https://github.com/Dogstudio/highway#transitions).
@@ -109,7 +106,7 @@ About your HTML this is actually pretty simple... Remember the `router-view` you
 
 ### Javascript
 
-On the Javascript-side it's again pretty simple... What you need to do is to create a custom renderer for your page that will extend `Highway.Renderer` and enable all the required methods in order to make you custom renderer work.
+On the Javascript-side it's again pretty simple... What you need to do is to create a custom renderer for your page that will extend `Highway.Renderer` and enable all the required methods in order to make your custom renderer work.
 
 **home.js**
 ```javascript
@@ -135,7 +132,6 @@ Besides the required methods from **Highway** present in the `Highway.Renderer` 
 
 - `this.page`: The full DOM of the page related to the renderer.
 - `this.view`: The `[router-view]` of the page related to the renderer.
-- `this.title`: The `document.title` of the page related to the renderer.
 
 **home.js**
 ```javascript
@@ -154,7 +150,7 @@ export default Home;
 ```
 
 Now your custom renderer is created you need to add it to the renderers list of `Highway.Core`...  
-Remember the name you gave to you `router-view`, it's now time to relate it to your custom renderer.
+Remember the name you gave to your `router-view`, it's now time to relate it to your custom renderer.
 
 ```javascript
 // Import Renderers
@@ -181,7 +177,7 @@ Transitions in **Highway** are really simple, you need to extend `Highway.Transi
 - `in`: The `in` method should contain the transition to show a `[router-view]`.
 - `out`: The `out` method should contain the transition to hide a `[router-view]`.
 
-Each one get two parameters you can call howewer you want but here are good defaults:
+Each one get two parameters you can name howewer you want but here are good defaults:
 
 - `view`: The `[router-view]` you will show/hide.
 - `done`: The callback method **you have to** call once the `in` and `out` transitions are over.
@@ -289,9 +285,21 @@ Check out the [**Basic Menu Active**](https://github.com/Dogstudio/highway/tree/
 - [**Basic Anchor**](https://github.com/Dogstudio/highway/tree/master/examples/basic-anchor)
 - [**Basic Google Analytics Events**](https://github.com/Dogstudio/highway/tree/master/examples/basic-google-analytics)
 
+## Support
+
+Note that **Highway** uses modern features because we wanted it to be *modern*. This means some browser might not support some of these modern features and you'll have to add a polyfill to your projects like [**babel-polyfill**](https://babeljs.io/docs/usage/polyfill/) or transpile your code to ES5 using tools like [**Webpack**](https://webpack.js.org/). This is a non-exhaustive list of modern features used in **Highway**:
+
+- Classes
+- Object/Array Destructuring
+- Maps
+- Promises
+- Async...Await Functions
+- Fetch API
+- ...
+
 ## Roadmap
 
-- [ ] More Unit Tests
+- [ ] Unit Tests
 - [ ] More Examples
 
 ## Releases
@@ -299,6 +307,7 @@ Check out the [**Basic Menu Active**](https://github.com/Dogstudio/highway/tree/
 
 - Add the `Basic Anchor` example
 - Remove **modes** that weren't convincing
+- Improve code and weight with ES2016+ features
 - Improve events
 - Improve transitions
 
