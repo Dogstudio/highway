@@ -74,11 +74,15 @@ describe('Highway.Helpers', () => {
   });
 
   it('Should always return a renderer', () => {
-    const a = {};
-    const b = { 'foo': {} };
+    const a = undefined;
+    const b = null;
+    const c = {};
+    const d = { 'foo': {} };
 
     expect(Helpers.getRenderer('foo', a)).to.be.instanceof(Object);
     expect(Helpers.getRenderer('foo', b)).to.be.instanceof(Object);
+    expect(Helpers.getRenderer('foo', c)).to.be.instanceof(Object);
+    expect(Helpers.getRenderer('foo', d)).to.be.instanceof(Object);
   });
 
   it('Should return a transition or `null`', () => {
