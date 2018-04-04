@@ -293,7 +293,7 @@ class Renderer {
 
 
 // Constants
-const PARSER = new DOMParser();
+const PARSER = new window.DOMParser();
 
 // Highway Helpers
 class helpers_Helpers {

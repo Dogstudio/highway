@@ -7,7 +7,7 @@
 import Renderer from './renderer';
 
 // Constants
-const PARSER = new DOMParser();
+const PARSER = new window.DOMParser();
 
 // Highway Helpers
 export default class Helpers {

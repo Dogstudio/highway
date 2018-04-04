@@ -18,7 +18,8 @@
   "scripts": {
     "clean": "rm -rf dist/",
     "build": "npm run clean && webpack",
-    "watch": "npm run clean && webpack --watch"
+    "watch": "npm run clean && webpack --watch",
+    "test": "mocha --require jsdom-global/register --require babel-core/register"
   },
   "repository": {
     "type": "git",
@@ -37,8 +38,13 @@
   },
   "devDependencies": {
     "babel-core": "^6.26.0",
+    "babel-polyfill": "^6.26.0",
     "babel-preset-env": "^1.6.1",
+    "chai": "^4.1.2",
     "compression-webpack-plugin": "^1.1.11",
+    "jsdom": "^11.7.0",
+    "jsdom-global": "^3.0.2",
+    "mocha": "^5.0.5",
     "uglifyjs-webpack-plugin": "^1.2.3",
     "webpack": "^4.1.1",
     "webpack-cli": "^2.0.12"
