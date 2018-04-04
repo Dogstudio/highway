@@ -7,11 +7,9 @@ import Helpers from './helpers';
 import Renderer from './renderer';
 import Transition from './transition';
 
-const Highway = {
+export default {
   Core,
   Helpers,
   Renderer,
   Transition
 };
-
-export default Highway;

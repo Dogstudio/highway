@@ -162,227 +162,64 @@ __webpack_require__.r(__webpack_exports__);
 var tiny_emitter = __webpack_require__(0);
 var tiny_emitter_default = /*#__PURE__*/__webpack_require__.n(tiny_emitter);
 
-// CONCATENATED MODULE: ./src/helpers.js
-/**
- * @file Highway helper methods used all acrosse the script.
- * @author Anthony Du Pont <bulldog@dogstudio.co>
- */
-const PARAM_REGEX = /\?([\w_\-.=&]+)/;
-const ANCHOR_REGEX = /(#.*)$/;
-const ORIGIN_REGEX = /(https?:\/\/[\w\-.]+)/;
-const PATHNAME_REGEX = /https?:\/\/.*?(\/[\w_\-./]+)/;
-const CAMELCASE_REGEX = /[-_](\w)/g;
-
-/**
- * Get origin of an URL
- *
- * @arg    {string} url — URL to match
- * @return {string} Origin of URL or `null`
- */
-function getOrigin(url) {
-  const match = url.match(ORIGIN_REGEX);
-  return match ? match[1] : null;
-}
-
-/**
- * Get pathname of an URL
- *
- * @arg    {string} url — URL to match
- * @return {string} Pathname of URL or `null`
- */
-function getPathname(url) {
-  const match = url.match(PATHNAME_REGEX);
-  return match ? match[1] : null;
-}
-
-/**
- * Get anchor in an URL
- *
- * @arg    {string} url — URL to match
- * @return {string} Anchor in URL or `null`
- */
-function getAnchor(url) {
-  const match = url.match(ANCHOR_REGEX);
-  return match ? match[1] : null;
-}
-
-/**
- * Get search in URL.
- *
- * @arg    {string} url — URL to match
- * @return {object} Search in URL formatted as an object or `null`
- */
-function getParams(url) {
-  const match = url.match(PARAM_REGEX);
-
-  if (!match) {
-    return null;
-  }
-
-  const search = match[1].split('&');
-  const object = {};
-
-  for (let i = 0; i < search.length; i++) {
-    const part = search[i].split('=');
-    const { 0: key } = part;
-    const { 1: value } = part;
-
-    object[key] = value;
-  }
-
-  return object;
-}
-
-/**
- * Get a parameter from an URL
- *
- * @arg    {string} url — URL to use
- * @arg    {string} key — Parameter key to get
- * @return {string} Parameter value or `null`
- */
-function getParam(url, key) {
-  const params = getParams(url);
-  return params.hasOwnProperty(key) ? params[key] : null;
-}
-
-/**
- * Get infos of an URL.
- *
- * @arg    {string} url — URL to use
- * @return {object} All informations of an URL.
- */
-function getInfos(url) {
-  return {
-    url: url,
-    anchor: getAnchor(url),
-    origin: getOrigin(url),
-    params: getParams(url),
-    pathname: getPathname(url)
-  };
-}
-
-/**
- * Get page's DOM from page HTML
- * 
- * @arg    {string} page — Page HTML
- * @return {string} Page DOM
- */
-function getDOM(page) {
-  // We create instance of the DOM parser in order to parse our string and 
-  // return the DOM properly.
-  const parser = new DOMParser();
-
-  // Now we can return the DOM.
-  return parser.parseFromString(page, 'text/html');
-}
-
-/**
- * Get view element from page HTML
- * 
- * @arg    {string} page — Page HTML
- * @return {object} View element
- */
-function getView(page) {
-  return getDOM(page).querySelector('[router-view]');
-}
-
-/**
- * Get view's slug from view element
- * 
- * @arg    {string} page — Page HTML
- * @return {string} Page slug
- */
-function getSlug(page) {
-  return getView(page).getAttribute('router-view');
-}
-
-/**
- * Get page renderer
- *
- * @arg    {string} page — Page HTML to use
- * @arg    {object} renderers — List of renderers
- * @return {object} Single renderer or `null`
- */
-function getRenderer(page, renderers) {
-  const slug = getSlug(page);
-  return renderers.hasOwnProperty(slug) ? renderers[slug] : null;
-}
-
-/**
- * Get page transition
- *
- * @arg    {string} page — Page HTML to use
- * @arg    {object} transitions — List of transitions
- * @return {object} Single transition or `null`
- */
-function getTransition(page, transitions) {
-  if (typeof transitions === 'undefined') {
-    return null;
-  }
-
-  const slug = getSlug(page);
-
-  if (!transitions.hasOwnProperty(slug) || !transitions[slug]) {
-    if (transitions.hasOwnProperty('default')) {
-      return transitions['default'];
-    }
-
-    return null;
-  }
-
-  return transitions[slug];
-}
-
-/**
- * Export all helpers
- */
-/* harmony default export */ var helpers = ({
-  getDOM,
-  getSlug,
-  getView,
-  getInfos,
-  getParam,
-  getParams,
-  getOrigin,
-  getAnchor,
-  getPathname,
-  getRenderer,
-  getTransition
-});
 // CONCATENATED MODULE: ./src/renderer.js
 /**
  * @file Highway default renderer that handle DOM stuffs.
  * @author Anthony Du Pont <bulldog@dogstudio.co>
  */
 
-
-class renderer_HighwayRenderer {
+class Renderer {
 
   /**
-   * @arg {string} page — Page HTML
-   * @arg {object} view — Page view Node
-   * @arg {string} transition — Page transition
+   * @arg {object} props — Set of properties (slug, page, view,...)
    * @constructor
    */
-  constructor(page, view, transition) {
-    // The [router-view] and the page title are the only main information we need
-    // since the role of the renderer is to update the required DOM elements with
-    // the page informations. In our case the content and title of the document.
-    this.view = view;
-    this.page = helpers.getDOM(page);
-    this.title = this.page.title;
-    this.transition = transition ? new transition(view) : null; // eslint-disable-line
+  constructor(props) {
+    // We extract our properties.
+    this.view = props.view;
+    this.page = props.page.cloneNode(true);
 
-    // We are getting the `html` and `body` tags class attribute value to make
-    // sure we always have the correct classnames in our DOM.
-    this.bodyClass = this.page.body.className;
-    this.HTMLClass = this.page.documentElement.className;
+    // We get our transition we will use later to show/hide our view.
+    this.Transition = props.transition ? new props.transition(props.view) : null;
+  }
 
-    // The [router-wrapper] is the main container of the router and the ancestor of our 
-    // [router-view] that let us now where to remove of append our view in the DOM.
-    // Everything outside of the [router-wrapper] is invisible for the router and
-    // it should only contain the [router-view] and nothing else.
-    this.wrapper = null;
+  /**
+   * Renderer initialization.
+   */
+  init() {
+    // We call the `onEnter` and `onEnterCompleted` methods of the renderer on
+    // initialization if they exists.
+    this.onEnter && this.onEnter();
+    this.onEnterCompleted && this.onEnterCompleted();
+  }
+
+  /**
+   * Add view in DOM.
+   */
+  add() {
+    // We update the `[router-wrapper]`.
+    this.wrapper = document.querySelector('[router-wrapper]');
+
+    // Before doing anything crazy you need to know your view doesn't exists
+    // in the [router-wrapper] so it is appended to it right now!
+    this.wrapper.appendChild(this.view);
+
+    // Now we update all the informations in the DOM we need!
+    // We update the class attribute on the `html` and `body` tag and the title
+    document.title = this.page.title;
+    document.body.className = this.page.body.className;
+    document.documentElement.className = this.page.documentElement.className;
+  }
+
+  /**
+   * Remove view in DOM.
+   */
+  remove() {
+    // We update the `[router-wrapper]`.
+    this.wrapper = this.view.parentNode;
+
+    // It's time to say goodbye to the view... Farewell my friend.
+    this.wrapper.removeChild(this.view);
   }
 
   /**
@@ -391,57 +228,28 @@ class renderer_HighwayRenderer {
    * @return {object} Promise
    */
   show() {
-    return new Promise(resolve => {
-      this.wrapper = document.querySelector('[router-wrapper]');
+    return new Promise(async resolve => {
+      // Add view in DOM.
+      this.add();
 
-      // Now we update all the informations in the DOM we need!
-      // We update the class attribute on the `html` tag
-      if (this.HTMLClass && this.HTMLClass !== document.documentElement.className) {
-        document.documentElement.className = this.HTMLClass;
-      }
-
-      // We update the class attribute on the `body` tag
-      if (this.bodyClass && this.bodyClass !== document.body.className) {
-        document.body.className = this.bodyClass;
-      }
-
-      // We update the document title
-      if (this.title && document.title !== this.title) {
-        document.title = this.title;
-      }
-
-      // Before doing anything crazy you need to know your view doesn't exists
-      // in the [router-wrapper] so it is appended to it right now!
-      this.wrapper.appendChild(this.view);
-
-      // The `onEnter` method if set in your custom renderer is called everytime
-      // the view is appended to the DOM. This let you do some crazy stuffs at
-      // this right moment.
-      if (this.onEnter) {
-        this.onEnter();
-      }
-
-      // Use of a callback method to optimize lines of code.
-      const done = () => {
-        // The `onEnterCompleted` method if set in your custom renderer is called 
-        // everytime a transition is over if set. Otherwise it's called right after
-        // the `onEnter` method.
-        if (this.onEnterCompleted) {
-          this.onEnterCompleted();
-        }
-        resolve();
-      };
-
-      // You fool you didn't define any transition...
-      if (!this.transition) {
-        done();
-        return;
-      }
+      // The `onEnter` method if set is called everytime the view is appended
+      // to the DOM. This let you do some crazy stuffs at this right moment.
+      this.onEnter && this.onEnter();
 
       // The transition is set in your custom renderer with a getter called
       // `transition` that should return the transition object you want to 
       // apply to you view. We call the `in` step of this one right now!
-      this.transition.show().then(done);
+      if (this.Transition) {
+        await this.Transition.show();
+      }
+
+      // The `onEnterCompleted` method if set in your custom renderer is called 
+      // everytime a transition is over if set. Otherwise it's called right after
+      // the `onEnter` method.
+      this.onEnterCompleted && this.onEnterCompleted();
+
+      // We resolve the Promise.
+      resolve();
     });
   }
 
@@ -451,42 +259,179 @@ class renderer_HighwayRenderer {
    * @return {object} Promise
    */
   hide() {
-    return new Promise(resolve => {
-      this.wrapper = this.view.parentNode;
-
+    return new Promise(async resolve => {
       // The `onLeave` method if set in your custom renderer is called everytime
       // before a view will be removed from the DOM. This let you do some stuffs
       // right before the view isn't available anymore.
-      if (this.onLeave) {
-        this.onLeave();
-      }
-
-      // Use of a callback method to optimize lines of code.
-      const done = () => {
-        // It's time to say goodbye to the view... Farewell my friend.
-        this.wrapper.removeChild(this.view);
-
-        // The `onLeaveCompleted` method if set in your custom renderer is called 
-        // everytime a view is completely removed from the DOM.
-        if (this.onLeaveCompleted) {
-          this.onLeaveCompleted();
-        }
-        resolve();
-      };
-
-      // You fool you didn't define any transition...
-      if (!this.transition) {
-        done();
-        return;
-      }
+      this.onLeave && this.onLeave();
 
       // We call the `out` step of your transition right now!
-      this.transition.hide().then(done);
+      if (this.Transition) {
+        await this.Transition.hide();
+      }
+
+      // Remove view from DOM.
+      this.remove();
+
+      // The `onLeaveCompleted` method if set in your custom renderer is called 
+      // everytime a view is completely removed from the DOM.
+      this.onLeaveCompleted && this.onLeaveCompleted();
+
+      // Resolve Promise
+      resolve();
     });
   }
 }
+// CONCATENATED MODULE: ./src/helpers.js
+/**
+ * @file Highway helper methods used all acrosse the script.
+ * @author Anthony Du Pont <bulldog@dogstudio.co>
+ */
 
-/* harmony default export */ var renderer = (renderer_HighwayRenderer);
+// Dependencies
+
+
+// Constants
+const PARSER = new DOMParser();
+
+// Highway Helpers
+class helpers_Helpers {
+
+  /**
+   * Get origin of an URL
+   *
+   * @arg    {string} url — URL to match
+   * @return {string} Origin of URL or `null`
+   * @static
+   */
+  static getOrigin(url) {
+    const match = url.match(/(https?:\/\/[\w\-.]+)/);
+    return match ? match[1] : null;
+  }
+
+  /**
+   * Get pathname of an URL
+   *
+   * @arg    {string} url — URL to match
+   * @return {string} Pathname of URL or `null`
+   * @static
+   */
+  static getPathname(url) {
+    const match = url.match(/https?:\/\/.*?(\/[\w_\-./]+)/);
+    return match ? match[1] : null;
+  }
+
+  /**
+   * Get anchor in an URL
+   *
+   * @arg    {string} url — URL to match
+   * @return {string} Anchor in URL or `null`
+   * @static
+   */
+  static getAnchor(url) {
+    const match = url.match(/(#.*)$/);
+    return match ? match[1] : null;
+  }
+
+  /**
+   * Get search in URL.
+   *
+   * @arg    {string} url — URL to match
+   * @return {object} Search in URL formatted as an object or `null`
+   * @static
+   */
+  static getParams(url) {
+    const match = url.match(/\?([\w_\-.=&]+)/);
+
+    if (!match) {
+      return null;
+    }
+
+    const search = match[1].split('&');
+    const object = {};
+
+    for (let i = 0; i < search.length; i++) {
+      const part = search[i].split('=');
+      const { 0: key } = part;
+      const { 1: value } = part;
+
+      object[key] = value;
+    }
+
+    return object;
+  }
+
+  /**
+   * Get page's DOM from page HTML
+   * 
+   * @arg    {string} page — Page HTML
+   * @return {string} Page DOM
+   * @static
+   */
+  static getDOM(page) {
+    return typeof page === 'string' ? PARSER.parseFromString(page, 'text/html') : page;
+  }
+
+  /**
+   * Get view element from page DOM
+   * 
+   * @arg    {string} page — Page DOM
+   * @return {object} View element or `null`
+   * @static
+   */
+  static getView(page) {
+    return page.querySelector('[router-view]');
+  }
+
+  /**
+   * Get view's slug from view element
+   * 
+   * @arg    {string} view — [router-view] DOM
+   * @return {string} Page slug or `null`
+   * @static
+   */
+  static getSlug(view) {
+    return view.getAttribute('router-view');
+  }
+
+  /**
+   * Get page renderer
+   *
+   * @arg    {string} slug — Renderer's slug
+   * @arg    {object} renderers — List of renderers
+   * @return {object} Single renderer or default one
+   * @static
+   */
+  static getRenderer(slug, renderers) {
+    if (typeof renderers === 'undefined' || !renderers) {
+      return Renderer;
+    }
+    return slug in renderers ? renderers[slug] : Renderer;
+  }
+
+  /**
+   * Get page transition
+   *
+   * @arg    {string} slug — Transition slug
+   * @arg    {object} transitions — List of transitions
+   * @return {object} Single transition or `null`
+   * @static
+   */
+  static getTransition(slug, transitions) {
+    if (typeof transitions === 'undefined' || !transitions) {
+      return null;
+    }
+
+    if (!(slug in transitions)) {
+      if ('default' in transitions) {
+        return transitions['default'];
+      }
+      return null;
+    }
+
+    return transitions[slug];
+  }
+}
 // CONCATENATED MODULE: ./src/core.js
 /**
  * @file Highway core that handle all history stuffs.
@@ -495,21 +440,7 @@ class renderer_HighwayRenderer {
 
 
 
-
-// Fetch API options used for every HTTP request sent by Highway. It makes
-// sure the HTTP requests URL are only on the same origin and that credentials
-// are also only sent on same origin. An extra `X-Requested-With` header is
-// available if needed in your scripts.
-const core_FETCH_OPTS = {
-  mode: 'same-origin',
-  method: 'GET',
-  headers: {
-    'X-Requested-With': 'XMLHttpRequest'
-  },
-  credentials: 'same-origin'
-};
-
-class core_HighwayCore extends tiny_emitter_default.a {
+class core_Core extends tiny_emitter_default.a {
 
   /**
    * @arg {object} opts — User options
@@ -518,45 +449,28 @@ class core_HighwayCore extends tiny_emitter_default.a {
    * @extends Emitter
    * @constructor
    */
-  constructor(opts) {
+  constructor({ renderers, transitions } = {}) {
     // Extends the Emitter constructor in order to be able to use its features
     // and send custom events all along the script.
     super();
 
     // All your custom renderers and transitions you sent to Highway.
-    this.renderers = opts.renderers;
-    this.transitions = opts.transitions;
+    this.renderers = renderers;
+    this.transitions = transitions;
 
-    // Some usefull stuffs for later
-    this.mode = opts.mode || 'out-in';
-    this.state = {};
-    this.cache = {};
-    this.empty = false;
-    this.loading = false;
+    // Properties & state.
+    this.state = this.getState(window.location.href);
+    this.props = this.getProps(document);
+
+    // Cache.
+    this.cache = new Map();
+
+    // Status variables.
     this.navigating = false;
 
-    // Cache the page we land on for further HTTP request optimization.
-    this.page = document.documentElement.outerHTML;
-    this.pathname = helpers.getPathname(window.location.href);
-    this.cache[this.pathname] = this.page;
-
-    // Get the page renderer and directly call its `onEnter` and `onEnterCompleted`
-    // methods in order to properly initialize the page.
-    const view = document.querySelector('[router-view]');
-    const transition = helpers.getTransition(this.page, this.transitions);
-
-    this.from = helpers.getRenderer(this.page, this.renderers) || renderer;
-    this.from = new this.from(this.page, view, transition); // eslint-disable-line
-
-    // We check the `onEnter` and `onEnterCompleted` methods and we call them 
-    // respectively if they are set
-    if (this.from.onEnter) {
-      this.from.onEnter();
-    }
-
-    if (this.from.onEnterCompleted) {
-      this.from.onEnterCompleted();
-    }
+    // Get the page renderer and properly initialize it.
+    this.From = new (helpers_Helpers.getRenderer(this.props.slug, this.renderers))(this.props);
+    this.From.init();
 
     // Listen the `popstate` on the window to run the router each time an 
     // history entry changes. Basically everytime the backward/forward arrows
@@ -568,31 +482,70 @@ class core_HighwayCore extends tiny_emitter_default.a {
   }
 
   /**
-   * Bubble `click` event
+   * Get all required properties for a context.
+   * 
+   * @arg    {string|object} context – DOM context
+   * @return {object} Properties
+   */
+  getProps(context) {
+    const page = helpers_Helpers.getDOM(context);
+    const view = helpers_Helpers.getView(page);
+    const slug = helpers_Helpers.getSlug(view);
+    const transition = helpers_Helpers.getTransition(slug, this.transitions);
+
+    return {
+      page,
+      view,
+      slug,
+      transition
+    };
+  }
+
+  /**
+   * Get state of an URL.
+   *
+   * @arg    {string} location — Window location
+   * @return {object} State
+   */
+  getState(location) {
+    return {
+      url: location,
+      anchor: helpers_Helpers.getAnchor(location),
+      origin: helpers_Helpers.getOrigin(location),
+      params: helpers_Helpers.getParams(location),
+      pathname: helpers_Helpers.getPathname(location)
+    };
+  }
+
+  /**
+   * Bubble `click` event.
    */
   bubble() {
-    // Use the bubbling principle from document to all each children and catch
-    // only the link elements without target and not pointing to an anchor on
-    // the page.
-    document.addEventListener('click', e => {
-      if (e.target.tagName === 'A') {
-        const anchor = helpers.getAnchor(e.target.href);
-        const pathname = helpers.getPathname(e.target.href);
+    // Use the bubbling principle from document to all children and catch
+    // only the link elements without target and that are not pointing to an anchor
+    // on the page.
+    document.addEventListener('click', event => {
+      if (event.target.tagName === 'A') {
+        // We get the anchor and the pathname of the link that the user clicked
+        // in order to compare it with the current state and handle the `click`
+        // event appropriately.
+        const anchor = helpers_Helpers.getAnchor(event.target.href);
+        const pathname = helpers_Helpers.getPathname(event.target.href);
 
-        if (!e.target.target) {
+        if (!event.target.target) {
           // To run the router properly we have to prevent the default behaviour
           // of link elements to avoir page reloading.
-          e.preventDefault();
+          event.preventDefault();
 
-          if (!this.navigating && pathname !== this.pathname) {
+          if (!this.navigating && pathname !== this.state.pathname) {
             // Now push the state!
-            this.pushState(e);
+            this.pushState(event);
           } else {
             // If the pathnames are the same there might be an anchor appended to
             // it so we need to check it and reload the page to use the default
             // browser behaviour.
             if (anchor) {
-              window.location.href = e.target.href;
+              window.location.href = event.target.href;
             }
           }
         }
@@ -601,178 +554,141 @@ class core_HighwayCore extends tiny_emitter_default.a {
   }
 
   /**
-   * Watch history entry changes
+   * Watch history entry changes.
    */
   popState() {
-    // We quickly check if the pathname has changed before doing anything else
-    // because with anchor the `popstate` event might trigger but the pathname
-    // might not change and nothing should happen then.
-    const pathname = helpers.getPathname(window.location.href);
+    // We update the state based on the clicked link `href` property.
+    const state = this.getState(window.location.href);
 
-    if (pathname !== this.pathname) {
-      // Call of `beforeFetch` for optimizations
-      this.beforeFetch(window.location.href, false);
+    if (state.pathname !== this.state.pathname) {
+      // Update state with the one returne by the browser history. Basically
+      // this is the state that was previously pushed by `history.pushState`.
+      this.state = state;
+
+      // Call `beforeFetch` for optimizations.
+      this.beforeFetch();
     }
   }
 
   /**
-   * Update DOM on `click` event
+   * Update DOM on `click` event.
    * 
    * @arg {object} event — `click` event from link elements
    */
   pushState(event) {
-    // Call of `beforeFetch` for optimizations
-    this.beforeFetch(event.target.href, true);
+    // We update the state based on the clicked link `href` property.
+    this.state = this.getState(event.target.href);
+
+    // We push a new entry in the history in order to be able to navigate
+    // with the backward and forward buttons from the browser.
+    window.history.pushState(this.state, '', this.state.url);
+
+    // Call `beforeFetch` for optimizations.
+    this.beforeFetch();
   }
 
   /**
    * Do some tests before HTTP requests to optimize pipeline.
-   * 
-   * @arg {string} url – URL to use
-   * @arg {boolean} history — Push entry in history if `true`
    */
-  beforeFetch(url, history) {
+  async beforeFetch() {
     // Use of a boolean to avoid repetitive fetch calls by super excited users
     // that could lead to some serious issues.
-    this.loading = true;
     this.navigating = true;
-
-    // Using the `getInfos` from the Helpers we can get all the information from
-    // a given URL we can use in our script (origin, pathname, parameters,...).
-    this.state = helpers.getInfos(url);
-    this.pathname = helpers.getPathname(url);
 
     // We trigger an event when a link is clicked to let you know do whatever
     // you want at this point of the process.
-    this.emit('NAVIGATE_OUT', this.from, this.state);
+    this.emit('NAVIGATE_OUT', this.From, this.state);
 
-    // We start the transition `out` of our renderer and to some check to avoid
-    // to start the `in` transition if the fetch call is still running.
-    this.from.hide().then(() => {
-      this.empty = true;
+    // We pause the script and wait for the `from` renderer to be completely
+    // hidden and removed from the DOM.
+    await this.From.hide();
 
-      if (!this.loading) {
-        this.complete();
-      }
-    });
+    // We check cache to avoid unecessary HTTP requests.
+    if (!this.cache.has(this.state.pathname)) {
+      // We pause the script and wait for the new page to be fetched
+      const page = await this.fetch();
 
-    // We need to check if the state URL is available in the cache to avoid
-    // useless HTTP request and get the page HTML from the cache if possible.
-    if (this.cache.hasOwnProperty(this.pathname)) {
-      // Now push the page!
-      this.beforePush(this.cache[this.pathname], history);
+      // Update properties with fetched page.
+      this.props = this.getProps(page);
 
-      // And stop there.
-      return;
+      // Cache page
+      this.cache.set(this.state.pathname, this.props);
+    } else {
+      // Now we can update the properties from cache.
+      this.props = this.cache.get(this.state.pathname);
     }
 
-    // Get the page URL from the state previously pushed in the history.
-    this.fetch().then(page => this.beforePush(page, history));
+    // Call `afterFetch` to push the page in the DOM.
+    this.afterFetch();
   }
 
   /**
    * Fetch the page from URL
    * 
    * @return {string} Fetch response
-   * @return {object} Fetch Promise
    */
-  fetch() {
-    return fetch(this.state.url, core_FETCH_OPTS).then(response => {
-      // Check the HTTP code
-      // 200+: Success of the HTTP request
-      if (response.status >= 200 && response.status < 300) {
-        // The HTTP response is the page HTML as a string
-        return response.text();
-      }
-
-      // An extra event is emitted if an error has occured that can be used
-      // outside of the router to let you deal with the mess that happened.
-      this.emit('NAVIGATE_ERROR', response);
-
-      // !200+: Error of the HTTP request
-      throw new Error(response.statusText);
+  async fetch() {
+    const response = await fetch(this.state.url, {
+      mode: 'same-origin',
+      method: 'GET',
+      headers: {
+        'X-Requested-With': 'Highway'
+      },
+      credentials: 'same-origin'
     });
-  }
 
-  /**
-   * Get a page from URL or from cache successfully
-   * 
-   * @arg {string} page - Page HTML as a string
-   * @arg {string} history - Push entry in history if `true`
-   */
-  beforePush(page, history) {
-    // We push a new entry in the history in order to be able to navigate
-    // with the backward and forward buttons from the browser.
-    if (history) {
-      window.history.pushState(this.state, '', this.state.url);
+    // Check the HTTP code.
+    // 200+: Success of the HTTP request.
+    if (response.status >= 200 && response.status < 300) {
+      // The HTTP response is the page HTML as a string.
+      return response.text();
     }
 
-    // Now push the page!
-    this.push(page);
+    // An extra event is emitted if an error has occured that can be used
+    // outside of the router to let you deal with the mess that happened.
+    this.emit('NAVIGATE_ERROR', response);
+
+    // !200+: Error of the HTTP request
+    throw new Error(response.statusText);
   }
 
   /**
    * Push page in DOM
-   * 
-   * @arg {string} page — Page HTML
-   * @arg {boolean} history — Push entry in history if `true`
    */
-  push(page) {
-    // Fetch is not loading anymore...
-    this.loading = false;
-
-    // Cache the page for HTTP request optimization
-    this.cache[this.pathname] = page;
-
-    // The page we get is the one we want to go `to` and like every type of page
-    // you should reference a renderer to the router we are getting right now.
-    const view = helpers.getView(page);
-    const transition = helpers.getTransition(page, this.transitions);
-
-    this.to = helpers.getRenderer(page, this.renderers) || renderer;
-    this.to = new this.to(page, view, transition); // eslint-disable-line
-
-    if (this.empty) {
-      this.complete();
-    }
-  }
-
-  /**
-   * Complete the process
-   */
-  complete() {
-    // We trigger an event when the new content is displayed.
-    this.emit('NAVIGATE_IN', this.to, this.state);
-
-    // We reset the scroll position
+  async afterFetch() {
+    // We reset the scroll position.
     window.scrollTo(0, 0);
 
+    // The page we get is the one we want to go `to`.
+    this.To = new (helpers_Helpers.getRenderer(this.props.slug, this.renderers))(this.props);
+
+    // We trigger an event when the new content is added to the DOM.
+    this.emit('NAVIGATE_IN', this.To, this.state);
+
     // Now we show our content!
-    this.to.show().then(() => {
-      // We reset our state variables
-      this.empty = false;
-      this.navigating = false;
+    await this.To.show();
 
-      // Same as the `NAVIGATE_START` event
-      this.emit('NAVIGATE_END', this.from, this.to, this.state);
+    // We reset our status variables.
+    this.navigating = false;
 
-      // We prepare the next navigation by replacing the `from` renderer by
-      // the `to` renderer now that the pages have been swapped successfully.
-      this.from = this.to;
-    });
+    // And we emit an event you can listen to.
+    this.emit('NAVIGATE_END', this.From, this.To, this.state);
+
+    // We prepare the next navigation by replacing the `from` renderer by
+    // the `to` renderer now that the pages have been swapped successfully.
+    this.From = this.To;
   }
 }
-
-/* harmony default export */ var core = (core_HighwayCore);
 // CONCATENATED MODULE: ./src/transition.js
 /**
  * @file Highway default transition that handle DOM animations.
  * @author Anthony Du Pont <bulldog@dogstudio.co>
  */
-class HighwayTransition {
+
+class Transition {
 
   /**
-   * @arg {object} view — [router-view] Node
+   * @arg {object} view — [router-view] node
    * @constructor
    */
   constructor(view) {
@@ -813,8 +729,6 @@ class HighwayTransition {
     });
   }
 }
-
-/* harmony default export */ var src_transition = (HighwayTransition);
 // CONCATENATED MODULE: ./src/index.js
 /**
  * @file Highway object containing all parts of the script.
@@ -825,14 +739,12 @@ class HighwayTransition {
 
 
 
-const src_Highway = {
-  Core: core,
-  Helpers: helpers,
-  Renderer: renderer,
-  Transition: src_transition
-};
-
-/* harmony default export */ var src = __webpack_exports__["default"] = (src_Highway);
+/* harmony default export */ var src = __webpack_exports__["default"] = ({
+  Core: core_Core,
+  Helpers: helpers_Helpers,
+  Renderer: Renderer,
+  Transition: Transition
+});
 
 /***/ })
 /******/ ]);

@@ -2,35 +2,59 @@
  * @file Highway default renderer that handle DOM stuffs.
  * @author Anthony Du Pont <bulldog@dogstudio.co>
  */
-import Helpers from './helpers';
 
-class HighwayRenderer {
+export default class Renderer {
 
   /**
-   * @arg {string} page — Page HTML
-   * @arg {object} view — Page view Node
-   * @arg {string} transition — Page transition
+   * @arg {object} props — Set of properties (slug, page, view,...)
    * @constructor
    */
-  constructor(page, view, transition) {
-    // The [router-view] and the page title are the only main information we need
-    // since the role of the renderer is to update the required DOM elements with
-    // the page informations. In our case the content and title of the document.
-    this.view = view;
-    this.page = Helpers.getDOM(page);
-    this.title = this.page.title;
-    this.transition = transition ? new transition(view) : null; // eslint-disable-line
+  constructor(props) {
+    // We extract our properties.
+    this.view = props.view;
+    this.page = props.page.cloneNode(true);
 
-    // We are getting the `html` and `body` tags class attribute value to make
-    // sure we always have the correct classnames in our DOM.
-    this.bodyClass = this.page.body.className;
-    this.HTMLClass = this.page.documentElement.className;
+    // We get our transition we will use later to show/hide our view.
+    this.Transition = props.transition ? new props.transition(props.view) : null;
+  }
 
-    // The [router-wrapper] is the main container of the router and the ancestor of our 
-    // [router-view] that let us now where to remove of append our view in the DOM.
-    // Everything outside of the [router-wrapper] is invisible for the router and
-    // it should only contain the [router-view] and nothing else.
-    this.wrapper = null;
+  /**
+   * Renderer initialization.
+   */
+  init() {
+    // We call the `onEnter` and `onEnterCompleted` methods of the renderer on
+    // initialization if they exists.
+    this.onEnter && this.onEnter();
+    this.onEnterCompleted && this.onEnterCompleted();
+  }
+
+  /**
+   * Add view in DOM.
+   */
+  add() {
+    // We update the `[router-wrapper]`.
+    this.wrapper = document.querySelector('[router-wrapper]');
+
+    // Before doing anything crazy you need to know your view doesn't exists
+    // in the [router-wrapper] so it is appended to it right now!
+    this.wrapper.appendChild(this.view);
+
+    // Now we update all the informations in the DOM we need!
+    // We update the class attribute on the `html` and `body` tag and the title
+    document.title = this.page.title;
+    document.body.className = this.page.body.className;
+    document.documentElement.className = this.page.documentElement.className;
+  }
+
+  /**
+   * Remove view in DOM.
+   */
+  remove() {
+    // We update the `[router-wrapper]`.
+    this.wrapper = this.view.parentNode;
+
+    // It's time to say goodbye to the view... Farewell my friend.
+    this.wrapper.removeChild(this.view);
   }
 
   /**
@@ -39,57 +63,28 @@ class HighwayRenderer {
    * @return {object} Promise
    */
   show() {
-    return new Promise(resolve => {
-      this.wrapper = document.querySelector('[router-wrapper]');
+    return new Promise(async resolve => {
+      // Add view in DOM.
+      this.add();
 
-      // Now we update all the informations in the DOM we need!
-      // We update the class attribute on the `html` tag
-      if (this.HTMLClass && this.HTMLClass !== document.documentElement.className) {
-        document.documentElement.className = this.HTMLClass;
-      }
-
-      // We update the class attribute on the `body` tag
-      if (this.bodyClass && this.bodyClass !== document.body.className) {
-        document.body.className = this.bodyClass;
-      }
-
-      // We update the document title
-      if (this.title && document.title !== this.title) {
-        document.title = this.title;
-      }
-
-      // Before doing anything crazy you need to know your view doesn't exists
-      // in the [router-wrapper] so it is appended to it right now!
-      this.wrapper.appendChild(this.view);
-
-      // The `onEnter` method if set in your custom renderer is called everytime
-      // the view is appended to the DOM. This let you do some crazy stuffs at
-      // this right moment.
-      if (this.onEnter) {
-        this.onEnter();
-      }
-
-      // Use of a callback method to optimize lines of code.
-      const done = () => {
-        // The `onEnterCompleted` method if set in your custom renderer is called 
-        // everytime a transition is over if set. Otherwise it's called right after
-        // the `onEnter` method.
-        if (this.onEnterCompleted) {
-          this.onEnterCompleted();
-        }
-        resolve();
-      };
-
-      // You fool you didn't define any transition...
-      if (!this.transition) {
-        done();
-        return;
-      }
+      // The `onEnter` method if set is called everytime the view is appended
+      // to the DOM. This let you do some crazy stuffs at this right moment.
+      this.onEnter && this.onEnter();
 
       // The transition is set in your custom renderer with a getter called
       // `transition` that should return the transition object you want to 
       // apply to you view. We call the `in` step of this one right now!
-      this.transition.show().then(done);
+      if (this.Transition) {
+        await this.Transition.show();
+      }
+
+      // The `onEnterCompleted` method if set in your custom renderer is called 
+      // everytime a transition is over if set. Otherwise it's called right after
+      // the `onEnter` method.
+      this.onEnterCompleted && this.onEnterCompleted();
+
+      // We resolve the Promise.
+      resolve();
     });
   }
 
@@ -99,39 +94,26 @@ class HighwayRenderer {
    * @return {object} Promise
    */
   hide() {
-    return new Promise(resolve => {
-      this.wrapper = this.view.parentNode;
-
+    return new Promise(async resolve => {
       // The `onLeave` method if set in your custom renderer is called everytime
       // before a view will be removed from the DOM. This let you do some stuffs
       // right before the view isn't available anymore.
-      if (this.onLeave) {
-        this.onLeave();
-      }
-
-      // Use of a callback method to optimize lines of code.
-      const done = () => {
-        // It's time to say goodbye to the view... Farewell my friend.
-        this.wrapper.removeChild(this.view);
-
-        // The `onLeaveCompleted` method if set in your custom renderer is called 
-        // everytime a view is completely removed from the DOM.
-        if (this.onLeaveCompleted) {
-          this.onLeaveCompleted();
-        }
-        resolve();
-      };
-
-      // You fool you didn't define any transition...
-      if (!this.transition) {
-        done();
-        return;
-      }
+      this.onLeave && this.onLeave();
 
       // We call the `out` step of your transition right now!
-      this.transition.hide().then(done);
+      if (this.Transition) {
+        await this.Transition.hide();
+      }
+
+      // Remove view from DOM.
+      this.remove();
+
+      // The `onLeaveCompleted` method if set in your custom renderer is called 
+      // everytime a view is completely removed from the DOM.
+      this.onLeaveCompleted && this.onLeaveCompleted();
+
+      // Resolve Promise
+      resolve();
     });
   }
 }
-
-export default HighwayRenderer;

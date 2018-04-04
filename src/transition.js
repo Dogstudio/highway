@@ -2,10 +2,11 @@
  * @file Highway default transition that handle DOM animations.
  * @author Anthony Du Pont <bulldog@dogstudio.co>
  */
-class HighwayTransition {
+
+export default class Transition {
 
   /**
-   * @arg {object} view — [router-view] Node
+   * @arg {object} view — [router-view] node
    * @constructor
    */
   constructor(view) {
@@ -46,5 +47,3 @@ class HighwayTransition {
     });
   }
 }
-
-export default HighwayTransition;

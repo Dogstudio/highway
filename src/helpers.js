@@ -2,185 +2,148 @@
  * @file Highway helper methods used all acrosse the script.
  * @author Anthony Du Pont <bulldog@dogstudio.co>
  */
-const PARAM_REGEX = /\?([\w_\-.=&]+)/;
-const ANCHOR_REGEX = /(#.*)$/;
-const ORIGIN_REGEX = /(https?:\/\/[\w\-.]+)/;
-const PATHNAME_REGEX = /https?:\/\/.*?(\/[\w_\-./]+)/;
-const CAMELCASE_REGEX = /[-_](\w)/g;
 
-/**
- * Get origin of an URL
- *
- * @arg    {string} url — URL to match
- * @return {string} Origin of URL or `null`
- */
-function getOrigin(url) {
-  const match = url.match(ORIGIN_REGEX);
-  return match ? match[1] : null;
-}
+// Dependencies
+import Renderer from './renderer';
 
-/**
- * Get pathname of an URL
- *
- * @arg    {string} url — URL to match
- * @return {string} Pathname of URL or `null`
- */
-function getPathname(url) {
-  const match = url.match(PATHNAME_REGEX);
-  return match ? match[1] : null;
-}
+// Constants
+const PARSER = new DOMParser();
 
-/**
- * Get anchor in an URL
- *
- * @arg    {string} url — URL to match
- * @return {string} Anchor in URL or `null`
- */
-function getAnchor(url) {
-  const match = url.match(ANCHOR_REGEX);
-  return match ? match[1] : null;
-}
+// Highway Helpers
+export default class Helpers {
 
-/**
- * Get search in URL.
- *
- * @arg    {string} url — URL to match
- * @return {object} Search in URL formatted as an object or `null`
- */
-function getParams(url) {
-  const match = url.match(PARAM_REGEX);
-
-  if (!match) {
-    return null;
+  /**
+   * Get origin of an URL
+   *
+   * @arg    {string} url — URL to match
+   * @return {string} Origin of URL or `null`
+   * @static
+   */
+  static getOrigin(url) {
+    const match = url.match(/(https?:\/\/[\w\-.]+)/);
+    return match ? match[1] : null;
   }
 
-  const search = match[1].split('&');
-  const object = {};
-
-  for (let i = 0; i < search.length; i++) {
-    const part = search[i].split('=');
-    const { 0: key } = part;
-    const { 1: value } = part;
-
-    object[key] = value;
+  /**
+   * Get pathname of an URL
+   *
+   * @arg    {string} url — URL to match
+   * @return {string} Pathname of URL or `null`
+   * @static
+   */
+  static getPathname(url) {
+    const match = url.match(/https?:\/\/.*?(\/[\w_\-./]+)/);
+    return match ? match[1] : null;
   }
 
-  return object;
-}
-
-/**
- * Get a parameter from an URL
- *
- * @arg    {string} url — URL to use
- * @arg    {string} key — Parameter key to get
- * @return {string} Parameter value or `null`
- */
-function getParam(url, key) {
-  const params = getParams(url);
-  return params.hasOwnProperty(key) ? params[key] : null;
-}
-
-/**
- * Get infos of an URL.
- *
- * @arg    {string} url — URL to use
- * @return {object} All informations of an URL.
- */
-function getInfos(url) {
-  return {
-    url: url,
-    anchor: getAnchor(url),
-    origin: getOrigin(url),
-    params: getParams(url),
-    pathname: getPathname(url)
-  };
-}
-
-/**
- * Get page's DOM from page HTML
- * 
- * @arg    {string} page — Page HTML
- * @return {string} Page DOM
- */
-function getDOM(page) {
-  // We create instance of the DOM parser in order to parse our string and 
-  // return the DOM properly.
-  const parser = new DOMParser();
-
-  // Now we can return the DOM.
-  return parser.parseFromString(page, 'text/html');
-}
-
-/**
- * Get view element from page HTML
- * 
- * @arg    {string} page — Page HTML
- * @return {object} View element
- */
-function getView(page) {
-  return getDOM(page).querySelector('[router-view]');
-}
-
-/**
- * Get view's slug from view element
- * 
- * @arg    {string} page — Page HTML
- * @return {string} Page slug
- */
-function getSlug(page) {
-  return getView(page).getAttribute('router-view');
-}
-
-/**
- * Get page renderer
- *
- * @arg    {string} page — Page HTML to use
- * @arg    {object} renderers — List of renderers
- * @return {object} Single renderer or `null`
- */
-function getRenderer(page, renderers) {
-  const slug = getSlug(page);
-  return renderers.hasOwnProperty(slug) ? renderers[slug] : null;
-}
-
-/**
- * Get page transition
- *
- * @arg    {string} page — Page HTML to use
- * @arg    {object} transitions — List of transitions
- * @return {object} Single transition or `null`
- */
-function getTransition(page, transitions) {
-  if (typeof transitions === 'undefined') {
-    return null;
+  /**
+   * Get anchor in an URL
+   *
+   * @arg    {string} url — URL to match
+   * @return {string} Anchor in URL or `null`
+   * @static
+   */
+  static getAnchor(url) {
+    const match = url.match(/(#.*)$/);
+    return match ? match[1] : null;
   }
 
-  const slug = getSlug(page);
+  /**
+   * Get search in URL.
+   *
+   * @arg    {string} url — URL to match
+   * @return {object} Search in URL formatted as an object or `null`
+   * @static
+   */
+  static getParams(url) {
+    const match = url.match(/\?([\w_\-.=&]+)/);
 
-  if (!transitions.hasOwnProperty(slug) || !transitions[slug]) {
-    if (transitions.hasOwnProperty('default')) {
-      return transitions['default'];
+    if (!match) {
+      return null;
     }
 
-    return null;
+    const search = match[1].split('&');
+    const object = {};
+
+    for (let i = 0; i < search.length; i++) {
+      const part = search[i].split('=');
+      const { 0: key } = part;
+      const { 1: value } = part;
+
+      object[key] = value;
+    }
+
+    return object;
   }
 
-  return transitions[slug];
-}
+  /**
+   * Get page's DOM from page HTML
+   * 
+   * @arg    {string} page — Page HTML
+   * @return {string} Page DOM
+   * @static
+   */
+  static getDOM(page) {
+    return typeof page === 'string' ? PARSER.parseFromString(page, 'text/html') : page;
+  }
 
-/**
- * Export all helpers
- */
-export default {
-  getDOM,
-  getSlug,
-  getView,
-  getInfos,
-  getParam,
-  getParams,
-  getOrigin,
-  getAnchor,
-  getPathname,
-  getRenderer,
-  getTransition
-};
+  /**
+   * Get view element from page DOM
+   * 
+   * @arg    {string} page — Page DOM
+   * @return {object} View element or `null`
+   * @static
+   */
+  static getView(page) {
+    return page.querySelector('[router-view]');
+  }
+
+  /**
+   * Get view's slug from view element
+   * 
+   * @arg    {string} view — [router-view] DOM
+   * @return {string} Page slug or `null`
+   * @static
+   */
+  static getSlug(view) {
+    return view.getAttribute('router-view');
+  }
+
+  /**
+   * Get page renderer
+   *
+   * @arg    {string} slug — Renderer's slug
+   * @arg    {object} renderers — List of renderers
+   * @return {object} Single renderer or default one
+   * @static
+   */
+  static getRenderer(slug, renderers) {
+    if (typeof renderers === 'undefined' || !renderers) {
+      return Renderer;
+    }
+    return slug in renderers ? renderers[slug] : Renderer;
+  }
+
+  /**
+   * Get page transition
+   *
+   * @arg    {string} slug — Transition slug
+   * @arg    {object} transitions — List of transitions
+   * @return {object} Single transition or `null`
+   * @static
+   */
+  static getTransition(slug, transitions) {
+    if (typeof transitions === 'undefined' || !transitions) {
+      return null;
+    }
+
+    if (!(slug in transitions)) {
+      if ('default' in transitions) {
+        return transitions['default'];
+      }
+      return null;
+    }
+
+    return transitions[slug];
+  }
+}

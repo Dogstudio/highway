@@ -11,6 +11,7 @@ class Fade extends Highway.Transition {
   in(view, done) {
     // Add a classname to trigger the animation
     view.classList.add('fade-in');
+    view.classList.remove('fade-out');
 
     // Wait for the animation to end
     view.addEventListener('animationend', done);
@@ -19,6 +20,7 @@ class Fade extends Highway.Transition {
   out(view, done) {
     // Add a classname to trigger the animation
     view.classList.add('fade-out');
+    view.classList.remove('fade-in');
 
     // Wait for the animation to end
     view.addEventListener('animationend', done);

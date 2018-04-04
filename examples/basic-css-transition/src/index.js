@@ -1,10 +1,6 @@
 // Import Highway
 import Highway from 'dist/highway';
 
-// Import Renderers
-import Home from 'renderers/home';
-import Page from 'renderers/page';
-
 // Import Transitions
 import Fade from 'transitions/fade';
 
@@ -14,22 +10,8 @@ import Fade from 'transitions/fade';
   // you define in your HTML.
   // More informations: https://github.com/Dogstudio/highway
   new Highway.Core({
-    renderers: {
-      home: Home,
-      page: Page
-    },
     transitions: {
-      home: Fade,
-      page: Fade
+      default: Fade
     }
   });
-
-  // Note: If you want you can set a `default` transition that will be applied
-  // to all you views except if you override if for a specific view.
-  //
-  // Usage:
-  //
-  // transitions: {
-  //   'default': Fade
-  // }
 })();

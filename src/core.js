@@ -4,22 +4,8 @@
  */
 import Emitter from 'tiny-emitter';
 import Helpers from './helpers';
-import Renderer from './renderer';
 
-// Fetch API options used for every HTTP request sent by Highway. It makes
-// sure the HTTP requests URL are only on the same origin and that credentials
-// are also only sent on same origin. An extra `X-Requested-With` header is
-// available if needed in your scripts.
-const FETCH_OPTS = {
-  mode: 'same-origin',
-  method: 'GET',
-  headers: {
-    'X-Requested-With': 'XMLHttpRequest'
-  },
-  credentials: 'same-origin'
-};
-
-class HighwayCore extends Emitter {
+export default class Core extends Emitter {
 
   /**
    * @arg {object} opts — User options
@@ -28,45 +14,28 @@ class HighwayCore extends Emitter {
    * @extends Emitter
    * @constructor
    */
-  constructor(opts) {
+  constructor({ renderers, transitions } = {}) {
     // Extends the Emitter constructor in order to be able to use its features
     // and send custom events all along the script.
     super();
 
     // All your custom renderers and transitions you sent to Highway.
-    this.renderers = opts.renderers;
-    this.transitions = opts.transitions;
+    this.renderers = renderers;
+    this.transitions = transitions;
 
-    // Some usefull stuffs for later
-    this.mode = opts.mode || 'out-in';
-    this.state = {};
-    this.cache = {};
-    this.empty = false;
-    this.loading = false;
+    // Properties & state.
+    this.state = this.getState(window.location.href);
+    this.props = this.getProps(document);
+
+    // Cache.
+    this.cache = new Map();
+
+    // Status variables.
     this.navigating = false;
 
-    // Cache the page we land on for further HTTP request optimization.
-    this.page = document.documentElement.outerHTML;
-    this.pathname = Helpers.getPathname(window.location.href);
-    this.cache[this.pathname] = this.page;
-
-    // Get the page renderer and directly call its `onEnter` and `onEnterCompleted`
-    // methods in order to properly initialize the page.
-    const view = document.querySelector('[router-view]');
-    const transition = Helpers.getTransition(this.page, this.transitions);
-
-    this.from = Helpers.getRenderer(this.page, this.renderers) || Renderer;
-    this.from = new this.from(this.page, view, transition); // eslint-disable-line
-
-    // We check the `onEnter` and `onEnterCompleted` methods and we call them 
-    // respectively if they are set
-    if (this.from.onEnter) {
-      this.from.onEnter();
-    }
-
-    if (this.from.onEnterCompleted) {
-      this.from.onEnterCompleted();
-    }
+    // Get the page renderer and properly initialize it.
+    this.From = new (Helpers.getRenderer(this.props.slug, this.renderers))(this.props);
+    this.From.init();
 
     // Listen the `popstate` on the window to run the router each time an 
     // history entry changes. Basically everytime the backward/forward arrows
@@ -78,31 +47,71 @@ class HighwayCore extends Emitter {
   }
 
   /**
-   * Bubble `click` event
+   * Get all required properties for a context.
+   * 
+   * @arg    {string|object} context – DOM context
+   * @return {object} Properties
+   */
+  getProps(context) {
+    const page = Helpers.getDOM(context);
+    const view = Helpers.getView(page);
+    const slug = Helpers.getSlug(view);
+    const transition = Helpers.getTransition(slug, this.transitions);
+
+    return {
+      page,
+      view,
+      slug,
+      transition
+    };
+  }
+
+  /**
+   * Get state of an URL.
+   *
+   * @arg    {string} location — Window location
+   * @return {object} State
+   */
+  getState(location) {
+    return {
+      url: location,
+      anchor: Helpers.getAnchor(location),
+      origin: Helpers.getOrigin(location),
+      params: Helpers.getParams(location),
+      pathname: Helpers.getPathname(location)
+    };
+  }
+
+  /**
+   * Bubble `click` event.
    */
   bubble() {
-    // Use the bubbling principle from document to all each children and catch
-    // only the link elements without target and not pointing to an anchor on
-    // the page.
-    document.addEventListener('click', (e) => {
-      if (e.target.tagName === 'A') {
-        const anchor = Helpers.getAnchor(e.target.href);
-        const pathname = Helpers.getPathname(e.target.href);
+    // Use the bubbling principle from document to all children and catch
+    // only the link elements without target and that are not pointing to an anchor
+    // on the page.
+    document.addEventListener('click', (event) => {
+      if (event.target.tagName === 'A') {
+        // We get the anchor and the pathname of the link that the user clicked
+        // in order to compare it with the current state and handle the `click`
+        // event appropriately.
+        const anchor = Helpers.getAnchor(event.target.href);
+        const pathname = Helpers.getPathname(event.target.href);
 
-        if (!e.target.target) {
+        if (!event.target.target) {
           // To run the router properly we have to prevent the default behaviour
           // of link elements to avoir page reloading.
-          e.preventDefault();
+          event.preventDefault();
 
-          if (!this.navigating && pathname !== this.pathname) {
+          if (!this.navigating && pathname !== this.state.pathname) {
             // Now push the state!
-            this.pushState(e);
+            this.pushState(event);
+
           } else {
             // If the pathnames are the same there might be an anchor appended to
             // it so we need to check it and reload the page to use the default
             // browser behaviour.
             if (anchor) {
-              window.location.href = e.target.href;
+              window.location.href = event.target.href;
             }
           }
         }
@@ -111,166 +120,128 @@ class HighwayCore extends Emitter {
   }
 
   /**
-   * Watch history entry changes
+   * Watch history entry changes.
    */
   popState() {
-    // We quickly check if the pathname has changed before doing anything else
-    // because with anchor the `popstate` event might trigger but the pathname
-    // might not change and nothing should happen then.
-    const pathname = Helpers.getPathname(window.location.href);
+    // We update the state based on the clicked link `href` property.
+    const state = this.getState(window.location.href);
 
-    if (pathname !== this.pathname) {
-      // Call of `beforeFetch` for optimizations
-      this.beforeFetch(window.location.href, false);
+    if (state.pathname !== this.state.pathname) {
+      // Update state with the one returne by the browser history. Basically
+      // this is the state that was previously pushed by `history.pushState`.
+      this.state = state;
+
+      // Call `beforeFetch` for optimizations.
+      this.beforeFetch();
     }
   }
 
   /**
-   * Update DOM on `click` event
+   * Update DOM on `click` event.
    * 
    * @arg {object} event — `click` event from link elements
    */
   pushState(event) {
-    // Call of `beforeFetch` for optimizations
-    this.beforeFetch(event.target.href, true);
+    // We update the state based on the clicked link `href` property.
+    this.state = this.getState(event.target.href);
+
+    // We push a new entry in the history in order to be able to navigate
+    // with the backward and forward buttons from the browser.
+    window.history.pushState(this.state, '', this.state.url);
+
+    // Call `beforeFetch` for optimizations.
+    this.beforeFetch();
   }
 
   /**
    * Do some tests before HTTP requests to optimize pipeline.
-   * 
-   * @arg {string} url – URL to use
-   * @arg {boolean} history — Push entry in history if `true`
    */
-  beforeFetch(url, history) {
+  async beforeFetch() {
     // Use of a boolean to avoid repetitive fetch calls by super excited users
     // that could lead to some serious issues.
-    this.loading = true;
     this.navigating = true;
-
-    // Using the `getInfos` from the Helpers we can get all the information from
-    // a given URL we can use in our script (origin, pathname, parameters,...).
-    this.state = Helpers.getInfos(url);
-    this.pathname = Helpers.getPathname(url);
 
     // We trigger an event when a link is clicked to let you know do whatever
     // you want at this point of the process.
-    this.emit('NAVIGATE_OUT', this.from, this.state);
+    this.emit('NAVIGATE_OUT', this.From, this.state);
 
-    // We start the transition `out` of our renderer and to some check to avoid
-    // to start the `in` transition if the fetch call is still running.
-    this.from.hide().then(() => {
-      this.empty = true;
+    // We pause the script and wait for the `from` renderer to be completely
+    // hidden and removed from the DOM.
+    await this.From.hide();
 
-      if (!this.loading) {
-        this.complete();
-      }
-    });
+    // We check cache to avoid unecessary HTTP requests.
+    if (!this.cache.has(this.state.pathname)) {
+      // We pause the script and wait for the new page to be fetched
+      const page = await this.fetch();
 
-    // We need to check if the state URL is available in the cache to avoid
-    // useless HTTP request and get the page HTML from the cache if possible.
-    if (this.cache.hasOwnProperty(this.pathname)) {
-      // Now push the page!
-      this.beforePush(this.cache[this.pathname], history);
+      // Update properties with fetched page.
+      this.props = this.getProps(page);
 
-      // And stop there.
-      return;
+      // Cache page
+      this.cache.set(this.state.pathname, this.props);
+    } else {
+      // Now we can update the properties from cache.
+      this.props = this.cache.get(this.state.pathname);
     }
 
-    // Get the page URL from the state previously pushed in the history.
-    this.fetch().then(page => this.beforePush(page, history));
+    // Call `afterFetch` to push the page in the DOM.
+    this.afterFetch();
   }
 
   /**
    * Fetch the page from URL
    * 
    * @return {string} Fetch response
-   * @return {object} Fetch Promise
    */
-  fetch() {
-    return fetch(this.state.url, FETCH_OPTS).then((response) => {
-      // Check the HTTP code
-      // 200+: Success of the HTTP request
-      if (response.status >= 200 && response.status < 300) {
-        // The HTTP response is the page HTML as a string
-        return response.text();
-      }
-
-      // An extra event is emitted if an error has occured that can be used
-      // outside of the router to let you deal with the mess that happened.
-      this.emit('NAVIGATE_ERROR', response);
-
-      // !200+: Error of the HTTP request
-      throw new Error(response.statusText);
+  async fetch() {
+    const response = await fetch(this.state.url, {
+      mode: 'same-origin',
+      method: 'GET',
+      headers: {
+        'X-Requested-With': 'Highway'
+      },
+      credentials: 'same-origin'
     });
-  }
 
-  /**
-   * Get a page from URL or from cache successfully
-   * 
-   * @arg {string} page - Page HTML as a string
-   * @arg {string} history - Push entry in history if `true`
-   */
-  beforePush(page, history) {
-    // We push a new entry in the history in order to be able to navigate
-    // with the backward and forward buttons from the browser.
-    if (history) {
-      window.history.pushState(this.state, '', this.state.url);
+    // Check the HTTP code.
+    // 200+: Success of the HTTP request.
+    if (response.status >= 200 && response.status < 300) {
+      // The HTTP response is the page HTML as a string.
+      return response.text();
     }
 
-    // Now push the page!
-    this.push(page);
+    // An extra event is emitted if an error has occured that can be used
+    // outside of the router to let you deal with the mess that happened.
+    this.emit('NAVIGATE_ERROR', response);
+
+    // !200+: Error of the HTTP request
+    throw new Error(response.statusText);
   }
 
   /**
    * Push page in DOM
-   * 
-   * @arg {string} page — Page HTML
-   * @arg {boolean} history — Push entry in history if `true`
    */
-  push(page) {
-    // Fetch is not loading anymore...
-    this.loading = false;
-
-    // Cache the page for HTTP request optimization
-    this.cache[this.pathname] = page;
-
-    // The page we get is the one we want to go `to` and like every type of page
-    // you should reference a renderer to the router we are getting right now.
-    const view = Helpers.getView(page);
-    const transition = Helpers.getTransition(page, this.transitions);
-
-    this.to = Helpers.getRenderer(page, this.renderers) || Renderer;
-    this.to = new this.to(page, view, transition); // eslint-disable-line
-
-    if (this.empty) {
-      this.complete();
-    }
-  }
-
-  /**
-   * Complete the process
-   */
-  complete() {
-    // We trigger an event when the new content is displayed.
-    this.emit('NAVIGATE_IN', this.to, this.state);
-
-    // We reset the scroll position
+  async afterFetch() {
+    // We reset the scroll position.
     window.scrollTo(0, 0);
 
+    // The page we get is the one we want to go `to`.
+    this.To = new (Helpers.getRenderer(this.props.slug, this.renderers))(this.props);
+
+    // We trigger an event when the new content is added to the DOM.
+    this.emit('NAVIGATE_IN', this.To, this.state);
+
     // Now we show our content!
-    this.to.show().then(() => {
-      // We reset our state variables
-      this.empty = false;
-      this.navigating = false;
+    await this.To.show();
 
-      // Same as the `NAVIGATE_START` event
-      this.emit('NAVIGATE_END', this.from, this.to, this.state);
+    // We reset our status variables.
+    this.navigating = false;
 
-      // We prepare the next navigation by replacing the `from` renderer by
-      // the `to` renderer now that the pages have been swapped successfully.
-      this.from = this.to;
-    });
+    // And we emit an event you can listen to.
+    this.emit('NAVIGATE_END', this.From, this.To, this.state);
+
+    // We prepare the next navigation by replacing the `from` renderer by
+    // the `to` renderer now that the pages have been swapped successfully.
+    this.From = this.To;
   }
 }
-
-export default HighwayCore;
