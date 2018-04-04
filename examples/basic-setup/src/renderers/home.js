@@ -9,10 +9,18 @@ import Highway from 'dist/highway';
 // - `onEnterCompleted`: Trigger when a transition `in` is over.
 // - `onLeaveCompleted`: Trigger when the view is removed from the DOM.
 class Home extends Highway.Renderer {
-  onEnter() { }
-  onLeave() { }
-  onEnterCompleted() { }
-  onLeaveCompleted() { }
+  onEnter() {
+    //
+  }
+  onLeave() {
+    //
+  }
+  onEnterCompleted() {
+    //
+  }
+  onLeaveCompleted() {
+    //
+  }
 }
 
 // Don't forget to export in some way your custom renderer.
