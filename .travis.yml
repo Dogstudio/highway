@@ -1,7 +1,8 @@
 env:
   global:
     - CC_TEST_REPORTER_ID=b5f28fe88e4d8cf11e4b35ddb68c65b55678fd440a514a991ab48c27bdcf51f2
-language: node_js
+language:
+  - node_js
 node_js:
   - "node"
 notifications:
