@@ -29,4 +29,10 @@ describe('Highway.Core', () => {
   it('Should be an instance of `Highway.Core`', () => {
     expect(Core).to.be.instanceof(Highway.Core);
   });
+
+  it('Should `click` on link `click` event', () => {
+    const a = document.createElement('a');
+    a.click();
+    expect(Core).to.be.instanceof(Highway.Core);
+  });
 });
