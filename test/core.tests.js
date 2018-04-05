@@ -5,14 +5,18 @@ import 'babel-polyfill';
 import sinon from 'sinon';
 import chai from 'chai';
 import chaiAsPromised from 'chai-as-promised';
-import Highway from '../src/index';
-import Home from './dom/home';
 
 // Plugins
 chai.use(chaiAsPromised);
 
 // Interface
 const { expect } = chai;
+
+// Highway
+import Highway from '../src/index';
+
+// DOM
+import Home from './dom/home';
 
 // Update Document
 global.document = Home.page;

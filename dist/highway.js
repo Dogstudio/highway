@@ -485,8 +485,8 @@ class core_Core extends tiny_emitter_default.a {
     // are triggered by the user.
     window.addEventListener('popstate', this.popState.bind(this));
 
-    // Event bubbling
-    this.bubble();
+    // Event binding
+    this.bind();
   }
 
   /**
@@ -526,40 +526,60 @@ class core_Core extends tiny_emitter_default.a {
   }
 
   /**
-   * Bubble `click` event.
+   * Bind `click` event on links.
    */
-  bubble() {
-    // Use the bubbling principle from document to all children and catch
-    // only the link elements without target and that are not pointing to an anchor
-    // on the page.
-    document.addEventListener('click', (event) => {
-      if (event.target.tagName === 'A') {
-        // We get the anchor and the pathname of the link that the user clicked
-        // in order to compare it with the current state and handle the `click`
-        // event appropriately.
-        const anchor = helpers_Helpers.getAnchor(event.target.href);
-        const pathname = helpers_Helpers.getPathname(event.target.href);
+  bind() {
+    // We get all the links from the document except the ones with a `target`
+    // attribute.
+    this.links = document.querySelectorAll('a:not([target]');
 
-        if (!event.target.target) {
-          // To run the router properly we have to prevent the default behaviour
-          // of link elements to avoir page reloading.
-          event.preventDefault();
+    // We then loop over each one of them to bind the `click` event.
+    for (const link of this.links) {
+      link.addEventListener('click', this.click.bind(this));
+    }
+  }
 
-          if (!this.navigating && pathname !== this.state.pathname) {
-            // Now push the state!
-            this.pushState(event);
+  /**
+   * Unbind `click` event on links.
+   */
+  unbind() {
+    // We then loop over each one of them to unbind the `click` event.
+    for (const link of this.links) {
+      link.removeEventListener('click', this.click.bind(this));
+    }
+  }
 
-          } else {
-            // If the pathnames are the same there might be an anchor appended to
-            // it so we need to check it and reload the page to use the default
-            // browser behaviour.
-            if (anchor) {
-              window.location.href = event.target.href;
-            }
-          }
-        }
+  /**
+   * Click method called on `click` event.
+   * 
+   * @arg {object} event - `click` event
+   */
+  click(event) {
+    // To run the router properly we have to prevent the default behaviour
+    // of link elements to avoir page reloading.
+    event.preventDefault();
+
+    // Now get the URL of the target element!
+    const { href } = event.currentTarget;
+
+    // We get the anchor and the pathname of the link that the user clicked
+    // in order to compare it with the current state and handle the `click`
+    // event appropriately.
+    const anchor = helpers_Helpers.getAnchor(href);
+    const pathname = helpers_Helpers.getPathname(href);
+
+    if (!this.navigating && pathname !== this.state.pathname) {
+      // Now push the state!
+      this.pushState(event);
+
+    } else {
+      // If the pathnames are the same there might be an anchor appended to
+      // it so we need to check it and reload the page to use the default
+      // browser behaviour.
+      if (anchor) {
+        window.location.href = href;
       }
-    });
+    }
   }
 
   /**
@@ -607,6 +627,9 @@ class core_Core extends tiny_emitter_default.a {
     // We trigger an event when a link is clicked to let you know do whatever
     // you want at this point of the process.
     this.emit('NAVIGATE_OUT', this.From, this.state);
+
+    // Unbind events
+    this.unbind();
 
     // We pause the script and wait for the `from` renderer to be completely
     // hidden and removed from the DOM.
@@ -673,6 +696,9 @@ class core_Core extends tiny_emitter_default.a {
 
     // We trigger an event when the new content is added to the DOM.
     this.emit('NAVIGATE_IN', this.To, this.state);
+
+    // Bind events
+    this.bind();
 
     // Now we show our content!
     await this.To.show();

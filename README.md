@@ -9,7 +9,7 @@
 
 <p align="center"><img src="https://i.imgur.com/AOEVomM.png" alt="Banner" /></p>
 
-**Highway** is a *lightweight (**1.95ko** gzipped)*, *robust*, *modern* and *flexible* library that will let you create **AJAX navigations** with beautiful **transitions** on your websites. It's been a while we were trying to build this kind of library to fits our needs at [**Dogstudio**](https://www.dogstudio.co) and that hopefully will fit yours now we're releasing it!
+**Highway** is a *lightweight (**2ko** gzipped)*, *robust*, *modern* and *flexible* library that will let you create **AJAX navigations** with beautiful **transitions** on your websites. It's been a while we were trying to build this kind of library to fits our needs at [**Dogstudio**](https://www.dogstudio.co) and that hopefully will fit yours now we're releasing it!
 
 ## Table of Content
 
