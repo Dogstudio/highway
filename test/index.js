@@ -112,7 +112,10 @@ describe('Highway.Renderer', () => {
     expect(RENDERER).to.be.instanceof(Renderer);
   });
 
-  it('Should have a `init` method', () => {
-    expect(RENDERER).to.not.respondTo('onEnter');
+  it('Should process methods be `undefined` by default', () => {
+    expect(RENDERER.onEnter && RENDERER.onEnter()).to.be.undefined;
+    expect(RENDERER.onLeave && RENDERER.onLeave()).to.be.undefined;
+    expect(RENDERER.onEnterCompleted && RENDERER.onEnterCompleted()).to.be.undefined;
+    expect(RENDERER.onLeaveCompleted && RENDERER.onLeaveCompleted()).to.be.undefined;
   });
 });
