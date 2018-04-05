@@ -114,8 +114,6 @@ describe('Highway.Renderer', () => {
 
   it('Should process methods be `undefined` by default', () => {
     expect(RENDERER.onEnter).to.be.undefined;
-    expect(RENDERER.onLeave).to.be.undefined;
-    expect(RENDERER.onEnterCompleted).to.be.undefined;
-    expect(RENDERER.onLeaveCompleted).to.be.undefined;
+    expect(RENDERER.onEnter()).to.not.be.instanceof(Function);
   });
 });
