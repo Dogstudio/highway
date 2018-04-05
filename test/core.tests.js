@@ -24,6 +24,9 @@ global.document = Home.page;
 // Core instance
 const Core = new Highway.Core();
 
+// Fake link
+const link = document.createElement('a');
+
 // Assertions
 describe('Highway.Core', () => {
   it('Should be an instance of `Highway.Core`', () => {
@@ -31,19 +34,33 @@ describe('Highway.Core', () => {
   });
 
   it('Should `bind` and `unbind` the `click` event on links', () => {
-    const a = document.createElement('a');
+    document.body.appendChild(link);
 
-    document.body.appendChild(a);
-
-    sinon.spy(a, 'addEventListener');
-    sinon.spy(a, 'removeEventListener');
+    sinon.spy(link, 'addEventListener');
+    sinon.spy(link, 'removeEventListener');
 
     Core.bind();
 
-    expect(a.addEventListener.calledOnce).to.be.true;
+    expect(link.addEventListener.calledOnce).to.be.true;
 
     Core.unbind();
 
-    expect(a.removeEventListener.calledOnce).to.be.true;
+    expect(link.removeEventListener.calledOnce).to.be.true;
+
+    document.body.removeChild(link);
+  });
+
+  it('Should call `click` method on `click` event on links', () => {
+    document.body.appendChild(link);
+
+    Core.click = sinon.spy();
+    Core.bind();
+
+    link.href = 'http://bar.com/foo';
+    link.click();
+
+    expect(Core.click.calledOnce).to.be.true;
+
+    document.body.removeChild(link);
   });
 });
