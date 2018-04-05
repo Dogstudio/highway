@@ -19,7 +19,7 @@
     "clean": "rm -rf dist/",
     "build": "npm run clean && webpack",
     "watch": "npm run clean && webpack --watch",
-    "test": "nyc --reporter=lcov mocha --require jsdom-global/register --require babel-core/register"
+    "test": "nyc --reporter=lcov mocha test/*.tests.js --require jsdom-global/register --require babel-core/register"
   },
   "repository": {
     "type": "git",
@@ -41,7 +41,6 @@
     "babel-polyfill": "^6.26.0",
     "babel-preset-env": "^1.6.1",
     "chai": "^4.1.2",
-    "chai-as-promised": "^7.1.1",
     "compression-webpack-plugin": "^1.1.11",
     "jsdom": "^11.7.0",
     "jsdom-global": "^3.0.2",
