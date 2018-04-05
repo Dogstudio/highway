@@ -17,6 +17,7 @@ import Highway from '../src/index';
 
 // DOM
 import Home from './dom/home';
+import Page from './dom/page';
 
 // Update Document
 global.document = Home.page;
@@ -25,6 +26,7 @@ global.document = Home.page;
 describe('Highway.Renderer', () => {
   it('Should be an instance of `Renderer`', () => {
     expect(Home).to.be.instanceof(Highway.Renderer);
+    expect(Page).to.be.instanceof(Highway.Renderer);
   });
 
   it('Should call `onEnter` and `onEnterCompleted` on `init`', () => {
@@ -48,38 +50,38 @@ describe('Highway.Renderer', () => {
   });
 
   it('Should add `[router-view]` to the document on `add`', () => {
-    Home.add();
+    Page.add();
 
-    const a = Home.wrapper;
-    const b = Home.wrapper.querySelector('[router-view]');
+    const a = Page.wrapper;
+    const b = Page.wrapper.querySelector('[router-view]');
 
     expect(a).to.be.instanceof(Object);
     expect(b).to.be.instanceof(Object);
   });
 
   it('Should update the document on `update`', () => {
-    Home.update();
+    Page.update();
 
     const a = document.title;
     const b = document.body.className;
     const c = document.documentElement.className;
 
-    expect(a).to.equal('Home');
+    expect(a).to.equal('Page');
     expect(b).to.equal('bar');
     expect(c).to.equal('foo');
   });
 
   it('Should call `add`, `update`, `onEnter` and `onEnterCompleted` on `show`', () => {
-    Home.add = sinon.spy();
-    Home.update = sinon.spy();
-    Home.onEnter = sinon.spy();
-    Home.onEnterCompleted = sinon.spy();
+    Page.add = sinon.spy();
+    Page.update = sinon.spy();
+    Page.onEnter = sinon.spy();
+    Page.onEnterCompleted = sinon.spy();
 
-    Home.show().then(() => {
-      expect(Home.add.calledOnce).to.equal(true);
-      expect(Home.update.calledOnce).to.equal(true);
-      expect(Home.onEnter.calledOnce).to.equal(true);
-      expect(Home.onEnterCompleted.calledOnce).to.equal(true);
+    Page.show().then(() => {
+      expect(Page.add.calledOnce).to.equal(true);
+      expect(Page.update.calledOnce).to.equal(true);
+      expect(Page.onEnter.calledOnce).to.equal(true);
+      expect(Page.onEnterCompleted.calledOnce).to.equal(true);
     });
   });
 

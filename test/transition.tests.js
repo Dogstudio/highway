@@ -18,26 +18,26 @@ import Highway from '../src/index';
 // DOM
 import Home from './dom/home';
 
-// Update Document
-global.document = Home.page;
+// Transition
+const Transition = new Highway.Transition(Home.page);
 
 // Assertions
 describe('Highway.Transition', () => {
   it('Should be an instance of `Transition`', () => {
-    expect(Home.Transition).to.be.instanceof(Highway.Transition);
+    expect(Transition).to.be.instanceof(Highway.Transition);
   });
 
   it('Should call `in` on `show`', () => {
-    Home.Transition.in = sinon.spy();
-    Home.Transition.show().then(() => {
-      expect(Home.Transition.in.calledOnce).to.equal(true);
+    Transition.in = sinon.spy();
+    Transition.show().then(() => {
+      expect(Transition.in.calledOnce).to.equal(true);
     });
   });
 
   it('Should call `out` on `hide`', () => {
-    Home.Transition.out = sinon.spy();
-    Home.Transition.hide().then(() => {
-      expect(Home.Transition.out.calledOnce).to.equal(true);
+    Transition.out = sinon.spy();
+    Transition.hide().then(() => {
+      expect(Transition.out.calledOnce).to.equal(true);
     });
   });
 });
