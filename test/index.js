@@ -111,9 +111,4 @@ describe('Highway.Renderer', () => {
   it('Should be an instance of `Renderer`', () => {
     expect(RENDERER).to.be.instanceof(Renderer);
   });
-
-  it('Should process methods be `undefined` by default', () => {
-    RENDERER.onEnter = () => true;
-    expect(RENDERER.onEnter).to.be.ok;
-  });
 });
