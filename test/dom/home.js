@@ -3,13 +3,13 @@ import Highway from '../../src/index';
 
 // Fake HTML.
 const HTML = `
-<html>
+<html class="foo">
   <head>
     <title>Home</title>
   </head>
-  <body>
+  <body class="bar">
     <main router-wrapper>
-      <article router-view="home"></article>
+      <article router-view="page"></article>
     </main>
   </body>
 </html>`;

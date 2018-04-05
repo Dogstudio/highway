@@ -17,7 +17,6 @@ import Highway from '../src/index';
 
 // DOM
 import Home from './dom/home';
-import Page from './dom/page';
 
 // Update Document
 global.document = Home.page;
@@ -26,13 +25,12 @@ global.document = Home.page;
 describe('Highway.Transition', () => {
   it('Should be an instance of `Transition`', () => {
     expect(Home.Transition).to.be.instanceof(Highway.Transition);
-    expect(Page.Transition).to.be.instanceof(Highway.Transition);
   });
 
   it('Should call `in` on `show`', () => {
-    Page.Transition.in = sinon.spy();
-    Page.Transition.show().then(() => {
-      expect(Page.Transition.in.calledOnce).to.equal(true);
+    Home.Transition.in = sinon.spy();
+    Home.Transition.show().then(() => {
+      expect(Home.Transition.in.calledOnce).to.equal(true);
     });
   });
 
