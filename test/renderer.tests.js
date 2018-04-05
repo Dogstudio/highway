@@ -24,7 +24,7 @@ global.document = Home.page;
 
 // Assertions
 describe('Highway.Renderer', () => {
-  it('Should be an instance of `Renderer`', () => {
+  it('Should be an instance of `Highway.Renderer`', () => {
     expect(Home).to.be.instanceof(Highway.Renderer);
     expect(Page).to.be.instanceof(Highway.Renderer);
   });

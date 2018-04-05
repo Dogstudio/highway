@@ -18,12 +18,12 @@ import Highway from '../src/index';
 // DOM
 import Home from './dom/home';
 
-// Transition
+// Transition instance
 const Transition = new Highway.Transition(Home.page);
 
 // Assertions
 describe('Highway.Transition', () => {
-  it('Should be an instance of `Transition`', () => {
+  it('Should be an instance of `Highway.Transition`', () => {
     expect(Transition).to.be.instanceof(Highway.Transition);
   });
 
