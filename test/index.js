@@ -33,6 +33,11 @@ const RENDERER = new Highway.Renderer({
   view: VIEW
 });
 
+// Transition
+const TRANSITION = new Highway.Transition({
+  view: VIEW
+});
+
 // Assertions
 describe('Highway.Helpers', () => {
   it('Should return URL origin or `null`', () => {
@@ -195,6 +200,28 @@ describe('Highway.Renderer', () => {
       expect(RENDERER.remove.calledOnce).to.equal(true);
       expect(RENDERER.onLeave.calledOnce).to.equal(true);
       expect(RENDERER.onLeaveCompleted.calledOnce).to.equal(true);
+    });
+  });
+});
+
+describe('Highway.Transition', () => {
+  it('Should be an instance of `Transition`', () => {
+    expect(TRANSITION).to.be.instanceof(Highway.Transition);
+  });
+
+  it('Should call `in` on `show`', () => {
+    TRANSITION.in = sinon.spy();
+
+    TRANSITION.show().then(() => {
+      expect(RENDERER.in.calledOnce).to.equal(true);
+    });
+  });
+
+  it('Should call `out` on `hide`', () => {
+    TRANSITION.out = sinon.spy();
+
+    TRANSITION.hide().then(() => {
+      expect(RENDERER.out.calledOnce).to.equal(true);
     });
   });
 });

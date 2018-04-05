@@ -22,12 +22,10 @@ export default class Transition {
    */
   show() {
     return new Promise(resolve => {
-      if (this.in && typeof this.in === 'function') {
-        // The `in` method in encapsulated in the `show` method make transition
-        // code easier to write. This way you don't have to define any Promise
-        // in your transition code and focus on the transition itself.
-        this.in(this.view, resolve);
-      }
+      // The `in` method in encapsulated in the `show` method make transition
+      // code easier to write. This way you don't have to define any Promise
+      // in your transition code and focus on the transition itself.
+      this.in && this.in(this.view, resolve);
     });
   }
 
@@ -38,12 +36,10 @@ export default class Transition {
    */
   hide() {
     return new Promise(resolve => {
-      if (this.out && typeof this.out === 'function') {
-        // The `out` method in encapsulated in the `hide` method make transition
-        // code easier to write. This way you don't have to define any Promise
-        // in your transition code and focus on the transition itself.
-        this.out(this.view, resolve);
-      }
+      // The `out` method in encapsulated in the `hide` method make transition
+      // code easier to write. This way you don't have to define any Promise
+      // in your transition code and focus on the transition itself.
+      this.out && this.out(this.view, resolve);
     });
   }
 }
