@@ -112,7 +112,10 @@ describe('Highway.Renderer', () => {
     expect(RENDERER).to.be.instanceof(Renderer);
   });
 
-  it('Should be an instance of `Function`', () => {
-    expect(RENDERER.init).to.be.instanceof(Function);
+  it('Expect process methods to be `null`', () => {
+    expect(RENDERER.onEnter).to.be.null;
+    expect(RENDERER.onLeave).to.be.null;
+    expect(RENDERER.onEnterCompleted).to.be.null;
+    expect(RENDERER.onLeaveCompleted).to.be.null;
   });
 });
