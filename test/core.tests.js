@@ -30,29 +30,21 @@ describe('Highway.Core', () => {
     expect(Core).to.be.instanceof(Highway.Core);
   });
 
-  it('Should `bind` the `click` event on links', () => {
+  it('Should `bind` and `unbind` the `click` event on links', () => {
     const a = document.createElement('a');
+    const b = document.createElement('a');
 
     document.body.appendChild(a);
+    document.body.appendChild(b);
 
     sinon.spy(a, 'addEventListener');
-
-    Core.bind();
-
-    expect(a.addEventListener.calledOnce).to.be.true;
-  });
-
-  it('Should `unbind` the `click` event on links', () => {
-    const a = document.createElement('a');
-
-    document.body.appendChild(a);
-
-    sinon.spy(a, 'removeEventListener');
+    sinon.spy(b, 'removeEventListener');
 
     Core.bind();
     Core.unbind();
 
-    expect(a.removeEventListener.calledOnce).to.be.true;
+    expect(a.addEventListener.calledOnce).to.be.true;
+    expect(b.removeEventListener.calledOnce).to.be.true;
   });
 
   it('Should call `click` method on `click` event on links', () => {
