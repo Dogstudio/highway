@@ -173,19 +173,29 @@ describe('Highway.Renderer', () => {
     expect(c).to.be.empty;
   });
 
-  it('Should call `add` and `update` on `show`', () => {
+  it('Should call `add`, `update`, `onEnter` and `onEnterCompleted` on `show`', () => {
     RENDERER.add = sinon.spy();
     RENDERER.update = sinon.spy();
     RENDERER.onEnter = sinon.spy();
     RENDERER.onEnterCompleted = sinon.spy();
-
-    expect(RENDERER.show).to.be.instanceof(Object);
 
     RENDERER.show().then(() => {
       expect(RENDERER.add.calledOnce).to.equal(true);
       expect(RENDERER.update.calledOnce).to.equal(true);
       expect(RENDERER.onEnter.calledOnce).to.equal(true);
       expect(RENDERER.onEnterCompleted.calledOnce).to.equal(true);
+    });
+  });
+
+  it('Should call `remove`, `onLeave` and `onLeaveCompleted` on `hide`', () => {
+    RENDERER.remove = sinon.spy();
+    RENDERER.onLeave = sinon.spy();
+    RENDERER.onLeaveCompleted = sinon.spy();
+
+    RENDERER.hide().then(() => {
+      expect(RENDERER.remove.calledOnce).to.equal(true);
+      expect(RENDERER.onLeave.calledOnce).to.equal(true);
+      expect(RENDERER.onLeaveCompleted.calledOnce).to.equal(true);
     });
   });
 });
