@@ -135,24 +135,35 @@ describe('Highway.Renderer', () => {
     expect(RENDERER.onEnterCompleted.calledOnce).to.equal(true);
   });
 
-  it('Should update the document on `remove`', () => {
+  it('Should remove `[router-view]` from the document on `remove`', () => {
     RENDERER.remove();
 
-    const view = RENDERER.wrapper.querySelector('[router-view]');
+    const a = RENDERER.wrapper;
+    const b = RENDERER.wrapper.querySelector('[router-view]');
 
-    expect(RENDERER.wrapper).to.be.instanceof(Object);
-    expect(view).to.be.null;
+    expect(a).to.be.instanceof(Object);
+    expect(b).to.be.null;
   });
 
-  it('Should update the document on `add`', () => {
+  it('Should add `[router-view]` to the document on `add`', () => {
     RENDERER.add();
 
-    const view = RENDERER.wrapper.querySelector('[router-view]');
+    const a = RENDERER.wrapper;
+    const b = RENDERER.wrapper.querySelector('[router-view]');
 
-    expect(RENDERER.wrapper).to.be.instanceof(Object);
-    expect(view).to.be.instanceof(Object);
-    expect(document.title).to.equal('Highway');
-    expect(document.body.className).to.be.empty;
-    expect(document.documentElement.className).to.be.empty;
+    expect(a).to.be.instanceof(Object);
+    expect(b).to.be.instanceof(Object);
+  });
+
+  it('Should update the document on `update`', () => {
+    RENDERER.update();
+
+    const a = document.title;
+    const b = document.body.className;
+    const c = document.documentElement.className;
+
+    expect(a).to.equal('Highway');
+    expect(b).to.be.empty;
+    expect(c).to.be.empty;
   });
 });
