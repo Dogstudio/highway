@@ -113,11 +113,9 @@ describe('Highway.Renderer', () => {
   });
 
   it('Should process methods be `undefined` by default', () => {
-    expect(RENDERER.onEnter).to.be.undefined;
-
-    // Fake Method
-    RENDERER.onEnter = () => true;
-
-    expect(RENDERER.onEnter()).to.be.true;
+    expect(RENDERER.onEnter).to.not.be.ok;
+    expect(RENDERER.onLeave).to.not.be.ok;
+    expect(RENDERER.onEnterCompleted).to.not.be.ok;
+    expect(RENDERER.onLeaveCompleted).to.not.be.ok;
   });
 });
