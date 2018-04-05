@@ -9,28 +9,23 @@ import { expect } from 'chai';
 import Helpers from '../src/helpers';
 import Renderer from '../src/renderer';
 
+// DOM
+import HTML from './page';
+
 // DOM Parser
 const PARSER = new window.DOMParser();
 
-// Fake HTML
-const HTML = `<html>
-  <head>
-    <title>Hello</title>
-  </head>
-  <body>
-    <main router-wrapper>
-      <article router-view="home"></article>
-    </main>
-  </body>
-</html>`;
+// DOM Elements
+const DOM = PARSER.parseFromString(HTML, 'text/html');
+const VIEW = DOM.querySelector('[router-view]');
 
-// Fake Page
-const PAGE = PARSER.parseFromString(HTML, 'text/html');
+// Update Document
+global.document = DOM;
 
-// Fake Renderer
+// Renderer
 const RENDERER = new Renderer({
-  page: PAGE,
-  view: PAGE.querySelector('[router-view]')
+  page: DOM,
+  view: VIEW
 });
 
 // Assertions
@@ -138,5 +133,23 @@ describe('Highway.Renderer', () => {
 
     expect(RENDERER.onEnter.calledOnce).to.equal(true);
     expect(RENDERER.onEnterCompleted.calledOnce).to.equal(true);
+  });
+
+  it('Should update the document on `remove`', () => {
+    RENDERER.remove();
+
+    const view = RENDERER.wrapper.querySelector('[router-view]');
+
+    expect(RENDERER.wrapper).to.be.instanceof(Object);
+    expect(view).to.be.null;
+  });
+
+  it('Should update the document on `add`', () => {
+    RENDERER.add();
+
+    const view = RENDERER.wrapper.querySelector('[router-view]');
+
+    expect(RENDERER.wrapper).to.be.instanceof(Object);
+    expect(view).to.be.instanceof(Object);
   });
 });

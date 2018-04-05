@@ -38,12 +38,6 @@ export default class Renderer {
     // Before doing anything crazy you need to know your view doesn't exists
     // in the [router-wrapper] so it is appended to it right now!
     this.wrapper.appendChild(this.view);
-
-    // Now we update all the informations in the DOM we need!
-    // We update the class attribute on the `html` and `body` tag and the title
-    document.title = this.page.title;
-    document.body.className = this.page.body.className;
-    document.documentElement.className = this.page.documentElement.className;
   }
 
   /**
@@ -58,6 +52,17 @@ export default class Renderer {
   }
 
   /**
+   * Update document informations
+   */
+  update() {
+    // Now we update all the informations in the DOM we need!
+    // We update the class attribute on the `html` and `body` tag and the title
+    document.title = this.page.title;
+    document.body.className = this.page.body.className;
+    document.documentElement.className = this.page.documentElement.className;
+  }
+
+  /**
    * Add the view in DOM and play an `in` transition if one is defined.
    * 
    * @return {object} Promise
@@ -66,6 +71,7 @@ export default class Renderer {
     return new Promise(async resolve => {
       // Add view in DOM.
       this.add();
+      this.update();
 
       // The `onEnter` method if set is called everytime the view is appended
       // to the DOM. This let you do some crazy stuffs at this right moment.
