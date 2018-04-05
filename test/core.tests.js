@@ -30,7 +30,7 @@ describe('Highway.Core', () => {
     expect(Core).to.be.instanceof(Highway.Core);
   });
 
-  it('Should `bind` and `unbind` the `click` event on links', () => {
+  it('Should add and remove `click` event on links', () => {
     const a = document.createElement('a');
     const b = document.createElement('a');
 
@@ -58,6 +58,7 @@ describe('Highway.Core', () => {
     sinon.spy(b, 'click');
 
     Core.bind();
+    Core.pushState = sinon.spy();
 
     a.href = 'http://bar.com/foo';
     b.href = 'http://bar.com/foo#anchor';
@@ -67,5 +68,6 @@ describe('Highway.Core', () => {
 
     expect(a.click.calledOnce).to.be.true;
     expect(b.click.calledOnce).to.be.true;
+    expect(Core.pushState.called).to.be.true;
   });
 });
