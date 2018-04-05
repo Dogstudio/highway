@@ -176,10 +176,14 @@ describe('Highway.Renderer', () => {
   it('Should call `add` and `update` on `show`', () => {
     RENDERER.add = sinon.spy();
     RENDERER.update = sinon.spy();
+    RENDERER.onEnter = sinon.spy();
+    RENDERER.onEnterCompleted = sinon.spy();
 
     RENDERER.show().then(() => {
       expect(RENDERER.add.calledOnce).to.equal(true);
       expect(RENDERER.update.calledOnce).to.equal(true);
+      expect(RENDERER.onEnter.calledOnce).to.equal(true);
+      expect(RENDERER.onEnterCompleted.calledOnce).to.equal(true);
     });
   });
 });
