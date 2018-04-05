@@ -162,15 +162,15 @@ export default class Core extends Emitter {
    * @arg {object} event — `click` event from link elements
    */
   pushState(event) {
+    // Call `beforeFetch` for optimizations.
+    this.beforeFetch();
+
     // We update the state based on the clicked link `href` property.
     this.state = this.getState(event.target.href);
 
     // We push a new entry in the history in order to be able to navigate
     // with the backward and forward buttons from the browser.
-    window.history.pushState(this.state, '', this.state.url);
-
-    // Call `beforeFetch` for optimizations.
-    this.beforeFetch();
+    this.state.pathname && window.history.pushState(this.state, '', this.state.url);
   }
 
   /**
