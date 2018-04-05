@@ -30,9 +30,20 @@ describe('Highway.Core', () => {
     expect(Core).to.be.instanceof(Highway.Core);
   });
 
-  it('Should `click` on link `click` event', () => {
+  it('Should `bind` and `unbind` the `click` event on links', () => {
     const a = document.createElement('a');
-    a.click();
-    expect(Core).to.be.instanceof(Highway.Core);
+
+    document.body.appendChild(a);
+
+    sinon.spy(a, 'addEventListener');
+    sinon.spy(a, 'removeEventListener');
+
+    Core.bind();
+
+    expect(a.addEventListener.calledOnce).to.be.true;
+
+    Core.unbind();
+
+    expect(a.removeEventListener.calledOnce).to.be.true;
   });
 });
