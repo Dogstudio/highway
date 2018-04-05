@@ -54,7 +54,9 @@ describe('Highway.Core', () => {
     document.body.appendChild(a);
     document.body.appendChild(b);
 
-    Core.click = sinon.spy();
+    sinon.spy(a, 'click');
+    sinon.spy(b, 'click');
+
     Core.bind();
 
     a.href = 'http://bar.com/foo';
@@ -63,6 +65,7 @@ describe('Highway.Core', () => {
     a.click();
     b.click();
 
-    expect(Core.click.called).to.be.true;
+    expect(a.click.calledOnce).to.be.true;
+    expect(b.click.calledOnce).to.be.true;
   });
 });
