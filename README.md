@@ -3,9 +3,9 @@
 [![Travis](https://img.shields.io/travis/Dogstudio/highway.svg)](https://travis-ci.org/Dogstudio/highway)
 [![npm](https://img.shields.io/npm/v/@dogstudio/highway.svg)](https://www.npmjs.com/package/@dogstudio/highway)
 [![npm](https://img.shields.io/npm/dt/@dogstudio/highway.svg)](https://www.npmjs.com/package/@dogstudio/highway)
+[![Test Coverage](https://api.codeclimate.com/v1/badges/230e0c2e5e924edfe341/test_coverage)](https://codeclimate.com/github/Dogstudio/highway/test_coverage)
+[![Maintainability](https://api.codeclimate.com/v1/badges/230e0c2e5e924edfe341/maintainability)](https://codeclimate.com/github/Dogstudio/highway/maintainability)
 [![GitHub issues](https://img.shields.io/github/issues-raw/Dogstudio/highway.svg)](https://github.com/Dogstudio/highway/issues)
-[![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/Dogstudio/highway/issues)
-[![license](https://img.shields.io/github/license/Dogstudio/highway.svg)](https://github.com/Dogstudio/highway/blob/master/LICENSE)
 
 <p align="center"><img src="https://i.imgur.com/AOEVomM.png" alt="Banner" /></p>
 
