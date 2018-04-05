@@ -35,8 +35,8 @@ describe('Highway.Renderer', () => {
 
     Home.init();
 
-    expect(Home.onEnter.calledOnce).to.equal(true);
-    expect(Home.onEnterCompleted.calledOnce).to.equal(true);
+    expect(Home.onEnter.called).to.equal(true);
+    expect(Home.onEnterCompleted.called).to.equal(true);
   });
 
   it('Should remove `[router-view]` from the document on `remove`', () => {
@@ -78,10 +78,10 @@ describe('Highway.Renderer', () => {
     Page.onEnterCompleted = sinon.spy();
 
     Page.show().then(() => {
-      expect(Page.add.calledOnce).to.equal(true);
-      expect(Page.update.calledOnce).to.equal(true);
-      expect(Page.onEnter.calledOnce).to.equal(true);
-      expect(Page.onEnterCompleted.calledOnce).to.equal(true);
+      expect(Page.add.called).to.equal(true);
+      expect(Page.update.called).to.equal(true);
+      expect(Page.onEnter.called).to.equal(true);
+      expect(Page.onEnterCompleted.called).to.equal(true);
     });
   });
 
