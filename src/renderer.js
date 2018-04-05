@@ -24,7 +24,9 @@ export default class Renderer {
   init() {
     // We call the `onEnter` and `onEnterCompleted` methods of the renderer on
     // initialization if they exists.
-    this.onEnter && this.onEnter();
+    if (this.onEnter) {
+      this.onEnter();
+    }
     this.onEnterCompleted && this.onEnterCompleted();
   }
 
