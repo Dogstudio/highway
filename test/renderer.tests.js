@@ -31,17 +31,12 @@ describe('Highway.Renderer', () => {
 
   it('Should call `onEnter` and `onEnterCompleted` on `init`', () => {
     Home.onEnter = sinon.spy();
-    Page.onEnter = sinon.spy();
     Home.onEnterCompleted = sinon.spy();
-    Page.onEnterCompleted = sinon.spy();
 
     Home.init();
-    Page.init();
 
     expect(Home.onEnter.calledOnce).to.equal(true);
-    expect(Page.onEnter.calledOnce).to.equal(true);
     expect(Home.onEnterCompleted.calledOnce).to.equal(true);
-    expect(Page.onEnterCompleted.calledOnce).to.equal(true);
   });
 
   it('Should remove `[router-view]` from the document on `remove`', () => {
