@@ -151,5 +151,8 @@ describe('Highway.Renderer', () => {
 
     expect(RENDERER.wrapper).to.be.instanceof(Object);
     expect(view).to.be.instanceof(Object);
+    expect(document.title).to.equal('Highway');
+    expect(document.body.className).to.be.empty;
+    expect(document.documentElement.className).to.be.empty;
   });
 });
