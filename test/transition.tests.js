@@ -3,7 +3,14 @@ import 'babel-polyfill';
 
 // Dependencies
 import sinon from 'sinon';
-import { expect } from 'chai';
+import chai from 'chai';
+import chaiAsPromised from 'chai-as-promised';
+
+// Plugins
+chai.use(chaiAsPromised);
+
+// Interface
+const { expect } = chai;
 
 // Highway
 import Highway from '../src/index';
