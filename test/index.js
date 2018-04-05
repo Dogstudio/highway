@@ -8,8 +8,12 @@ import { expect } from 'chai';
 import Helpers from '../src/helpers';
 import Renderer from '../src/renderer';
 
-// DOM Parser
+// Constants
 const PARSER = new window.DOMParser();
+const RENDERER = new Renderer({
+  page: document.createElement('div'),
+  view: document.createElement('div')
+});
 
 // Assertions
 describe('Highway.Helpers', () => {
@@ -101,11 +105,14 @@ describe('Highway.Helpers', () => {
     expect(Helpers.getTransition('foo', e)).to.be.equal('foo');
     expect(Helpers.getTransition('foo', f)).to.be.equal('bar');
   });
+});
 
+describe('Highway.Renderer', () => {
   it('Should be an instance of `Renderer`', () => {
-    const view = document.createElement('div');
-    const page = document.createElement('div');
+    expect(RENDERER).to.be.instanceof(Renderer);
+  });
 
-    expect(new Renderer({ view, page })).to.be.instanceof(Renderer);
+  it('Should be an instance of `Function`', () => {
+    expect(RENDERER.init).to.be.instanceof(Function);
   });
 });
