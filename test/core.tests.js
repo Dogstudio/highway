@@ -24,43 +24,53 @@ global.document = Home.page;
 // Core instance
 const Core = new Highway.Core();
 
-// Fake link
-const link = document.createElement('a');
-
 // Assertions
 describe('Highway.Core', () => {
   it('Should be an instance of `Highway.Core`', () => {
     expect(Core).to.be.instanceof(Highway.Core);
   });
 
-  it('Should `bind` and `unbind` the `click` event on links', () => {
-    document.body.appendChild(link);
+  it('Should `bind` the `click` event on links', () => {
+    const a = document.createElement('a');
 
-    sinon.spy(link, 'addEventListener');
-    sinon.spy(link, 'removeEventListener');
+    document.body.appendChild(a);
+
+    sinon.spy(a, 'addEventListener');
 
     Core.bind();
 
-    expect(link.addEventListener.calledOnce).to.be.true;
+    expect(a.addEventListener.calledOnce).to.be.true;
+  });
 
+  it('Should `unbind` the `click` event on links', () => {
+    const a = document.createElement('a');
+
+    document.body.appendChild(a);
+
+    sinon.spy(a, 'removeEventListener');
+
+    Core.bind();
     Core.unbind();
 
-    expect(link.removeEventListener.calledOnce).to.be.true;
-
-    document.body.removeChild(link);
+    expect(a.removeEventListener.calledOnce).to.be.true;
   });
 
   it('Should call `click` method on `click` event on links', () => {
-    document.body.appendChild(link);
+    const a = document.createElement('a');
+    const b = document.createElement('a');
+
+    document.body.appendChild(a);
+    document.body.appendChild(b);
 
     Core.click = sinon.spy();
     Core.bind();
 
-    link.href = 'http://bar.com/foo';
-    link.click();
+    a.href = 'http://bar.com/foo';
+    b.href = 'http://bar.com/foo#anchor';
 
-    expect(Core.click.calledOnce).to.be.true;
+    a.click();
+    b.click();
 
-    document.body.removeChild(link);
+    expect(Core.click.called).to.be.true;
   });
 });
