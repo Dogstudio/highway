@@ -3,7 +3,13 @@ import 'babel-polyfill';
 
 // Dependencies
 import sinon from 'sinon';
-import { expect } from 'chai';
+import chai from 'chai';
+import chaiAsPromised from 'chai-as-promised';
+
+chai.use(chaiAsPromised);
+
+// Interface
+const { expect } = chai;
 
 // Highway
 import Helpers from '../src/helpers';
@@ -165,5 +171,15 @@ describe('Highway.Renderer', () => {
     expect(a).to.equal('Highway');
     expect(b).to.be.empty;
     expect(c).to.be.empty;
+  });
+
+  it('Should call `add` and `update` on `show`', () => {
+    RENDERER.add = sinon.spy();
+    RENDERER.update = sinon.spy();
+
+    RENDERER.show().then(() => {
+      expect(RENDERER.add.calledOnce).to.equal(true);
+      expect(RENDERER.update.calledOnce).to.equal(true);
+    });
   });
 });
