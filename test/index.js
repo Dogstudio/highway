@@ -113,6 +113,6 @@ describe('Highway.Renderer', () => {
   });
 
   it('Should have a `init` method', () => {
-    expect(RENDERER).to.respondTo('init');
+    expect(RENDERER).to.respondTo('onEnter');
   });
 });
