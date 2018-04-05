@@ -179,6 +179,8 @@ describe('Highway.Renderer', () => {
     RENDERER.onEnter = sinon.spy();
     RENDERER.onEnterCompleted = sinon.spy();
 
+    expect(RENDERER.show).to.be.instanceof(Object);
+
     RENDERER.show().then(() => {
       expect(RENDERER.add.calledOnce).to.equal(true);
       expect(RENDERER.update.calledOnce).to.equal(true);
