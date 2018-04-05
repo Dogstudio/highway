@@ -2,17 +2,35 @@
 import 'babel-polyfill';
 
 // Dependencies
+import sinon from 'sinon';
 import { expect } from 'chai';
 
 // Highway
 import Helpers from '../src/helpers';
 import Renderer from '../src/renderer';
 
-// Constants
+// DOM Parser
 const PARSER = new window.DOMParser();
+
+// Fake HTML
+const HTML = `<html>
+  <head>
+    <title>Hello</title>
+  </head>
+  <body>
+    <main router-wrapper>
+      <article router-view="home"></article>
+    </main>
+  </body>
+</html>`;
+
+// Fake Page
+const PAGE = PARSER.parseFromString(HTML, 'text/html');
+
+// Fake Renderer
 const RENDERER = new Renderer({
-  page: document.createElement('div'),
-  view: document.createElement('div')
+  page: PAGE,
+  view: PAGE.querySelector('[router-view]')
 });
 
 // Assertions
@@ -110,5 +128,15 @@ describe('Highway.Helpers', () => {
 describe('Highway.Renderer', () => {
   it('Should be an instance of `Renderer`', () => {
     expect(RENDERER).to.be.instanceof(Renderer);
+  });
+
+  it('Should call `onEnter` and `onEnterCompleted` on `init`', () => {
+    RENDERER.onEnter = sinon.spy();
+    RENDERER.onEnterCompleted = sinon.spy();
+
+    RENDERER.init();
+
+    expect(RENDERER.onEnter.calledOnce).to.equal(true);
+    expect(RENDERER.onEnterCompleted.calledOnce).to.equal(true);
   });
 });
