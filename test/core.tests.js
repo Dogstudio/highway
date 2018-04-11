@@ -61,4 +61,11 @@ describe('Highway.Core', () => {
     expect(a.click.calledOnce).to.be.true;
     expect(b.click.calledOnce).to.be.true;
   });
+
+  it('Should call `beforeFetch` method on `popState`', () => {
+    Core.beforeFetch = sinon.spy();
+    Core.popState();
+
+    expect(Core.beforeFetch.calledOnce).to.be.true;
+  });
 });
