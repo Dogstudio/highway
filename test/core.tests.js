@@ -26,24 +26,24 @@ const Core = new Highway.Core();
 
 // Assertions
 describe('Highway.Core', () => {
+  const link = document.querySelector('a');
+
   it('Should be an instance of `Highway.Core`', () => {
     expect(Core).to.be.instanceof(Highway.Core);
   });
 
-  it('Should bind/unbind `click` event on links', () => {
-    const a = document.createElement('a');
-    const b = document.createElement('a');
-
-    document.body.appendChild(a);
-    document.body.appendChild(b);
-
-    sinon.spy(a, 'addEventListener');
-    sinon.spy(b, 'removeEventListener');
+  it('Should bind/unbind `click` event on link and call `click` method', () => {
+    sinon.spy(link, 'click');
+    sinon.spy(link, 'addEventListener');
+    sinon.spy(link, 'removeEventListener');
 
     Core.bind();
     Core.unbind();
 
-    expect(a.addEventListener.calledOnce).to.be.true;
-    expect(b.removeEventListener.calledOnce).to.be.true;
+    link.click();
+
+    expect(link.click.calledOnce).to.be.true;
+    expect(link.addEventListener.calledOnce).to.be.true;
+    expect(link.removeEventListener.calledOnce).to.be.true;
   });
 });
