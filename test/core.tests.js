@@ -68,4 +68,13 @@ describe('Highway.Core', () => {
 
     expect(Core.beforeFetch.calledOnce).to.be.true;
   });
+
+  it('Should add an entry in the cache', () => {
+    expect(Core.cache.has('http://bar.com/foo')).to.be.false;
+
+    Core.cache.set('http://bar.com/foo', {});
+
+    expect(Core.cache.has('http://bar.com/foo')).to.be.true;
+    expect(Core.cache.get('http://bar.com/foo')).to.be.instanceof(Object);
+  });
 });
