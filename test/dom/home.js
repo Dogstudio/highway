@@ -9,9 +9,7 @@ const HTML = `
   </head>
   <body>
     <main router-wrapper>
-      <article router-view="home">
-        <a href="#"></a>
-      </article>
+      <article router-view="home"></article>
     </main>
   </body>
 </html>`;
