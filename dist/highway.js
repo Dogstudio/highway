@@ -531,7 +531,7 @@ class core_Core extends tiny_emitter_default.a {
   bind() {
     // We get all the links from the document except the ones with a `target`
     // attribute.
-    this.links = document.querySelectorAll('a:not([target]');
+    this.links = document.querySelectorAll('a:not([target])');
 
     // We then loop over each one of them to bind the `click` event.
     for (const link of this.links) {
@@ -605,15 +605,15 @@ class core_Core extends tiny_emitter_default.a {
    * @arg {object} event — `click` event from link elements
    */
   pushState(event) {
+    // Call `beforeFetch` for optimizations.
+    this.beforeFetch();
+
     // We update the state based on the clicked link `href` property.
     this.state = this.getState(event.target.href);
 
     // We push a new entry in the history in order to be able to navigate
     // with the backward and forward buttons from the browser.
-    window.history.pushState(this.state, '', this.state.url);
-
-    // Call `beforeFetch` for optimizations.
-    this.beforeFetch();
+    this.state.pathname && window.history.pushState(this.state, '', this.state.url);
   }
 
   /**
