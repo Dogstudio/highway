@@ -217,34 +217,28 @@ export default class Core extends Emitter {
    * @return {string} Fetch response
    */
   async fetch() {
-    try {
-      const response = await fetch(this.state.url, {
-        mode: 'same-origin',
-        method: 'GET',
-        headers: {
-          'X-Requested-With': 'Highway'
-        },
-        credentials: 'same-origin'
-      });
+    const response = await fetch(this.state.url, {
+      mode: 'same-origin',
+      method: 'GET',
+      headers: {
+        'X-Requested-With': 'Highway'
+      },
+      credentials: 'same-origin'
+    });
 
-      // Check the HTTP code.
-      // 200+: Success of the HTTP request.
-      if (response.status >= 200 && response.status < 300) {
-        // The HTTP response is the page HTML as a string.
-        return response.text();
-      }
-
-      // !200+: Error of the HTTP request
-      throw new Error(response.statusText);
-
-    } catch (error) {
-      // An extra event is emitted if an error has occured that can be used
-      // outside of the router to let you deal with the mess that happened.
-      this.emit('NAVIGATE_ERROR', error);
-
-      // Stop!
-      throw error;
+    // Check the HTTP code.
+    // 200+: Success of the HTTP request.
+    if (response.status >= 200 && response.status < 300) {
+      // The HTTP response is the page HTML as a string.
+      return response.text();
     }
+
+    // An extra event is emitted if an error has occured that can be used
+    // outside of the router to let you deal with the mess that happened.
+    this.emit('NAVIGATE_ERROR', response);
+
+    // !200+: Error of the HTTP request
+    throw new Error(response.statusText);
   }
 
   /**
