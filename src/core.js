@@ -28,7 +28,7 @@ export default class Core extends Emitter {
     this.props = this.getProps(document);
 
     // Cache.
-    this.cache = new Map();
+    this.cache = {};
 
     // Status variables.
     this.navigating = false;
@@ -193,7 +193,7 @@ export default class Core extends Emitter {
     await this.From.hide();
 
     // We check cache to avoid unecessary HTTP requests.
-    if (!this.cache.has(this.state.pathname)) {
+    if (!(this.state.pathname in this.cache)) {
       // We pause the script and wait for the new page to be fetched
       const page = await this.fetch();
 
@@ -201,10 +201,10 @@ export default class Core extends Emitter {
       this.props = this.getProps(page);
 
       // Cache page
-      this.cache.set(this.state.pathname, this.props);
+      this.cache[this.state.pathname] = this.props;
     } else {
       // Now we can update the properties from cache.
-      this.props = this.cache.get(this.state.pathname);
+      this.props = this.cache[this.state.pathname];
     }
 
     // Call `afterFetch` to push the page in the DOM.
