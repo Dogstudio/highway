@@ -68,4 +68,12 @@ describe('Highway.Core', () => {
 
     expect(Core.beforeFetch.calledOnce).to.be.true;
   });
+
+  it('Should fetch an URL properly', () => {
+    Core.state = {};
+    Core.state.url = 'http://foo.com/bar';
+    Core.fetch().then((response) => {
+      expect(response.url).to.equal('http://foo.com/bar');
+    });
+  });
 });
