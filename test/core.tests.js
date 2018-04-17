@@ -77,15 +77,4 @@ describe('Highway.Core', () => {
       expect(response.url).to.equal('http://foo.com/bar');
     });
   });
-
-  it('Should cache URL properly', () => {
-    Core.state = {};
-    Core.state.pathname = '/bar';
-
-    expect('/bar' in Core.cache).to.be.false;
-
-    Core.cache[Core.state.pathname] = {};
-
-    expect('/bar' in Core.cache).to.be.true;
-  });
 });
