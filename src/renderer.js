@@ -80,9 +80,7 @@ export default class Renderer {
       // The transition is set in your custom renderer with a getter called
       // `transition` that should return the transition object you want to 
       // apply to you view. We call the `in` step of this one right now!
-      if (this.Transition) {
-        await this.Transition.show();
-      }
+      this.Transition && await this.Transition.show();
 
       // The `onEnterCompleted` method if set in your custom renderer is called 
       // everytime a transition is over if set. Otherwise it's called right after
@@ -107,9 +105,7 @@ export default class Renderer {
       this.onLeave && this.onLeave();
 
       // We call the `out` step of your transition right now!
-      if (this.Transition) {
-        await this.Transition.hide();
-      }
+      this.Transition && await this.Transition.hide();
 
       // Remove view from DOM.
       this.remove();

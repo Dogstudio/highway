@@ -136,6 +136,7 @@ export default class Core extends Emitter {
       if (anchor) {
         window.location.href = href;
       }
+
     }
   }
 
@@ -153,6 +154,7 @@ export default class Core extends Emitter {
 
       // Call `beforeFetch` for optimizations.
       this.beforeFetch();
+
     }
   }
 
@@ -202,9 +204,11 @@ export default class Core extends Emitter {
 
       // Cache page
       this.cache.set(this.state.pathname, this.props);
+
     } else {
       // Now we can update the properties from cache.
       this.props = this.cache.get(this.state.pathname);
+
     }
 
     // Call `afterFetch` to push the page in the DOM.
@@ -231,6 +235,7 @@ export default class Core extends Emitter {
     if (response.status >= 200 && response.status < 300) {
       // The HTTP response is the page HTML as a string.
       return response.text();
+
     }
 
     // An extra event is emitted if an error has occured that can be used

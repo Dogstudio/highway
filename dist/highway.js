@@ -245,9 +245,7 @@ class Renderer {
       // The transition is set in your custom renderer with a getter called
       // `transition` that should return the transition object you want to 
       // apply to you view. We call the `in` step of this one right now!
-      if (this.Transition) {
-        await this.Transition.show();
-      }
+      this.Transition && await this.Transition.show();
 
       // The `onEnterCompleted` method if set in your custom renderer is called 
       // everytime a transition is over if set. Otherwise it's called right after
@@ -272,9 +270,7 @@ class Renderer {
       this.onLeave && this.onLeave();
 
       // We call the `out` step of your transition right now!
-      if (this.Transition) {
-        await this.Transition.hide();
-      }
+      this.Transition && await this.Transition.hide();
 
       // Remove view from DOM.
       this.remove();
@@ -579,6 +575,7 @@ class core_Core extends tiny_emitter_default.a {
       if (anchor) {
         window.location.href = href;
       }
+
     }
   }
 
@@ -596,6 +593,7 @@ class core_Core extends tiny_emitter_default.a {
 
       // Call `beforeFetch` for optimizations.
       this.beforeFetch();
+
     }
   }
 
@@ -645,9 +643,11 @@ class core_Core extends tiny_emitter_default.a {
 
       // Cache page
       this.cache.set(this.state.pathname, this.props);
+
     } else {
       // Now we can update the properties from cache.
       this.props = this.cache.get(this.state.pathname);
+
     }
 
     // Call `afterFetch` to push the page in the DOM.
@@ -674,6 +674,7 @@ class core_Core extends tiny_emitter_default.a {
     if (response.status >= 200 && response.status < 300) {
       // The HTTP response is the page HTML as a string.
       return response.text();
+
     }
 
     // An extra event is emitted if an error has occured that can be used
