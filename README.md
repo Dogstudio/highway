@@ -284,6 +284,7 @@ Check out the [**Basic Menu Active**](https://github.com/Dogstudio/highway/tree/
 - [**Basic Menu Active**](https://github.com/Dogstudio/highway/tree/master/examples/basic-menu-active)
 - [**Basic Anchor**](https://github.com/Dogstudio/highway/tree/master/examples/basic-anchor)
 - [**Basic Google Analytics Events**](https://github.com/Dogstudio/highway/tree/master/examples/basic-google-analytics)
+- [**Basic Polyfill**](https://github.com/Dogstudio/highway/tree/master/examples/basic-polyfill)
 
 ## Support
 
@@ -306,6 +307,7 @@ Note that **Highway** uses modern features because we wanted it to be *modern*. 
 #### 1.3.x
 
 - Add the `Basic Anchor` example
+- Add the `Basic Polyfill` example
 - Remove **modes** that weren't convincing
 - Improve code and weight with ES2016+ features
 - Improve events
