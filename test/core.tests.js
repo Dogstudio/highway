@@ -74,15 +74,6 @@ describe('Highway.Core', () => {
     expect(Core.pushState.calledOnce).to.be.true;
   });
 
-  it('Should not call `pushState` method on `click` event', () => {
-    Core.pushState = sinon.spy();
-    Core.state = { pathname: '/foo' };
-
-    b.click();
-
-    // expect(Core.pushState.calledOnce).to.be.false;
-  });
-
   it('Should call `beforeFetch` method on `popState`', () => {
     Core.beforeFetch = sinon.spy();
 
