@@ -37,6 +37,12 @@ describe('Highway.Core', () => {
   document.body.appendChild(a);
   document.body.appendChild(b);
 
+  sinon.spy(a, 'click');
+  sinon.spy(b, 'click');
+
+  sinon.spy(a, 'addEventListener');
+  sinon.spy(b, 'removeEventListener');
+
   before(() => fetchMock.get('/foo', 'bar'));
 
   it('Should be an instance of `Highway.Core`', () => {
@@ -44,9 +50,6 @@ describe('Highway.Core', () => {
   });
 
   it('Should bind/unbind `click` event on links', () => {
-    sinon.spy(a, 'addEventListener');
-    sinon.spy(b, 'removeEventListener');
-
     Core.bind();
     Core.unbind();
 
@@ -55,10 +58,29 @@ describe('Highway.Core', () => {
   });
 
   it('Should call `click` method on `click` event', () => {
-    a.click = sinon.spy();
     a.click();
+    b.click();
 
     expect(a.click.calledOnce).to.be.true;
+    expect(b.click.calledOnce).to.be.true;
+  });
+
+  it('Should call `pushState` method on `click` event', () => {
+    Core.pushState = sinon.spy();
+    Core.state = { pathname: '' };
+
+    a.click();
+
+    expect(Core.pushState.calledOnce).to.be.true;
+  });
+
+  it('Should not call `pushState` method on `click` event', () => {
+    Core.pushState = sinon.spy();
+    Core.state = { pathname: '/foo' };
+
+    b.click();
+
+    // expect(Core.pushState.calledOnce).to.be.false;
   });
 
   it('Should call `beforeFetch` method on `popState`', () => {
