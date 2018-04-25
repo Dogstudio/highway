@@ -54,13 +54,17 @@ describe('Highway.Core', () => {
     expect(b.removeEventListener.calledOnce).to.be.true;
   });
 
-  it('Should call `click` method on `click` event', () => {
+  it('Should call `click` and `pushState` method on `click` event', () => {
+    Core.pushState = sinon.spy();
+    Core.state = { pathname: '' };
+
     sinon.spy(a, 'click');
     sinon.spy(b, 'click');
 
     a.click();
-    b.click();
+    expect(Core.pushState.calledOnce).to.be.true;
 
+    b.click();
     expect(a.click.calledOnce).to.be.true;
     expect(b.click.calledOnce).to.be.true;
   });
@@ -73,6 +77,7 @@ describe('Highway.Core', () => {
 
     expect(Core.beforeFetch.calledOnce).to.be.true;
   });
+
 
   it('Should fetch an URL properly', () => {
     Core.state = { url: '/foo' };
