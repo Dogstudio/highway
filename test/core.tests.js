@@ -5,10 +5,11 @@ import 'isomorphic-fetch';
 // Dependencies
 import sinon from 'sinon';
 import chai from 'chai';
-import chaiAsPromised from 'chai-as-promised';
+import fetchMock from 'fetch-mock';
+import chaiFetchMock from 'chai-fetch-mock';
 
 // Plugins
-chai.use(chaiAsPromised);
+chai.use(chaiFetchMock);
 
 // Interface
 const { expect } = chai;
@@ -35,6 +36,8 @@ describe('Highway.Core', () => {
 
   document.body.appendChild(a);
   document.body.appendChild(b);
+
+  before(() => fetchMock.get('/foo', { foo: 'bar' }));
 
   it('Should be an instance of `Highway.Core`', () => {
     expect(Core).to.be.instanceof(Highway.Core);
@@ -77,4 +80,14 @@ describe('Highway.Core', () => {
   //     expect(response.url).to.equal('http://foo.com/bar');
   //   });
   // });
+
+  it('Should fetch an URL properly', () => {
+    Core.state = { url: '/foo' };
+
+    Core.fetch().then(() => {
+      expect(fetchMock).route('/foo').to.have.been.called;
+    });
+  });
+
+  after(() => fetchMock.restore());
 });
