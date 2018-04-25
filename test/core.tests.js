@@ -23,9 +23,6 @@ import Home from './dom/home';
 // Update Document
 global.document = Home.page;
 
-// Core instance
-const Core = new Highway.Core();
-
 // Assertions
 describe('Highway.Core', () => {
   const a = document.createElement('a');
@@ -37,19 +34,20 @@ describe('Highway.Core', () => {
   document.body.appendChild(a);
   document.body.appendChild(b);
 
-  sinon.spy(a, 'click');
-  sinon.spy(b, 'click');
-
-  sinon.spy(a, 'addEventListener');
-  sinon.spy(b, 'removeEventListener');
-
   before(() => fetchMock.get('/foo', 'bar'));
 
   it('Should be an instance of `Highway.Core`', () => {
+    const Core = new Highway.Core();
+
     expect(Core).to.be.instanceof(Highway.Core);
   });
 
   it('Should bind/unbind `click` event on links', () => {
+    const Core = new Highway.Core();
+
+    sinon.spy(a, 'addEventListener');
+    sinon.spy(b, 'removeEventListener');
+
     Core.bind();
     Core.unbind();
 
@@ -58,6 +56,9 @@ describe('Highway.Core', () => {
   });
 
   it('Should call `click` method on `click` event', () => {
+    sinon.spy(a, 'click');
+    sinon.spy(b, 'click');
+
     a.click();
     b.click();
 
@@ -66,6 +67,8 @@ describe('Highway.Core', () => {
   });
 
   it('Should call `pushState` method on `click` event', () => {
+    const Core = new Highway.Core();
+
     Core.pushState = sinon.spy();
     Core.state = { pathname: '' };
 
@@ -75,6 +78,8 @@ describe('Highway.Core', () => {
   });
 
   it('Should call `beforeFetch` method on `popState`', () => {
+    const Core = new Highway.Core();
+
     Core.beforeFetch = sinon.spy();
 
     Core.state = { pathname: '' };
@@ -83,14 +88,34 @@ describe('Highway.Core', () => {
     expect(Core.beforeFetch.calledOnce).to.be.true;
   });
 
-  it('Should fetch an URL properly', () => {
-    Core.state = { url: '/foo' };
+  it('Should call `beforeFetch` method on `pushState`', () => {
+    const Core = new Highway.Core();
 
-    Core.fetch().then((response) => {
-      expect(response).to.equal('bar');
-      expect(fetchMock).route('/foo').to.have.been.called;
-    });
+    Core.beforeFetch = sinon.spy();
+    Core.pushState({ target: { href: '/foo' }});
+
+    expect(Core.beforeFetch.calledOnce).to.be.true;
   });
+
+  it('Should call `unbind` method on `beforeFetch`', () => {
+    const Core = new Highway.Core();
+
+    Core.unbind = sinon.spy();
+    Core.beforeFetch();
+
+    expect(Core.unbind.calledOnce).to.be.true;
+  });
+
+  // it('Should fetch an URL properly', () => {
+  //   const Core = new Highway.Core();
+
+  //   Core.state = { url: '/foo' };
+
+  //   Core.fetch().then((response) => {
+  //     expect(response).to.equal('bar');
+  //     expect(fetchMock).route('/foo').to.have.been.called;
+  //   });
+  // });
 
   after(() => fetchMock.restore());
 });
