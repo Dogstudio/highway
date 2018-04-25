@@ -4,7 +4,7 @@ env:
 language:
   - node_js
 node_js:
-  - "node"
+  - 9.0.0
 notifications:
   email: false
   slack:
