@@ -65,12 +65,14 @@ describe('Highway.Core', () => {
     expect(b.click.calledOnce).to.be.true;
   });
 
-  // it('Should call `beforeFetch` method on `popState`', () => {
-  //   Core.beforeFetch = sinon.spy();
-  //   Core.popState();
+  it('Should call `beforeFetch` method on `popState`', () => {
+    Core.beforeFetch = sinon.spy();
 
-  //   expect(Core.beforeFetch.calledOnce).to.be.true;
-  // });
+    Core.state = { pathname: '' };
+    Core.popState();
+
+    expect(Core.beforeFetch.calledOnce).to.be.true;
+  });
 
   it('Should fetch an URL properly', () => {
     Core.state = { url: '/foo' };
