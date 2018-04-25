@@ -37,7 +37,7 @@ describe('Highway.Core', () => {
   document.body.appendChild(a);
   document.body.appendChild(b);
 
-  before(() => fetchMock.get('/foo', { foo: 'bar' }));
+  before(() => fetchMock.get('/foo', 'bar'));
 
   it('Should be an instance of `Highway.Core`', () => {
     expect(Core).to.be.instanceof(Highway.Core);
@@ -82,9 +82,10 @@ describe('Highway.Core', () => {
   // });
 
   it('Should fetch an URL properly', () => {
-    //Core.state = { url: '/foo' };
+    Core.state = { url: '/foo' };
 
-    fetch('/foo').then(() => {
+    Core.fetch().then((response) => {
+      expect(response).to.equal('bar');
       expect(fetchMock).route('/foo').to.have.been.called;
     });
   });
