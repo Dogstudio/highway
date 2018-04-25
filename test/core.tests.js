@@ -55,16 +55,21 @@ describe('Highway.Core', () => {
   });
 
   it('Should call `click` and `pushState` method on `click` event', () => {
+    Core.state = {};
+    Core.state.pathname = '';
+
     Core.pushState = sinon.spy();
-    Core.state = { pathname: '' };
 
     sinon.spy(a, 'click');
     sinon.spy(b, 'click');
 
     a.click();
-    expect(Core.pushState.calledOnce).to.be.true;
+
+    Core.state.pathname = '/foo';
 
     b.click();
+
+    expect(Core.pushState.called).to.be.true;
     expect(a.click.calledOnce).to.be.true;
     expect(b.click.calledOnce).to.be.true;
   });
