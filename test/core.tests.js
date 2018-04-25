@@ -82,9 +82,9 @@ describe('Highway.Core', () => {
   // });
 
   it('Should fetch an URL properly', () => {
-    Core.state = { url: '/foo' };
+    //Core.state = { url: '/foo' };
 
-    Core.fetch().then(() => {
+    fetch('/foo').then(() => {
       expect(fetchMock).route('/foo').to.have.been.called;
     });
   });
