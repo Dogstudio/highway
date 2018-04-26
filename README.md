@@ -303,6 +303,14 @@ Note that **Highway** uses modern features because we wanted it to be *modern*. 
 - Fetch API
 - ...
 
+Check out the [**Basic Polyfill**](https://github.com/Dogstudio/highway/tree/master/examples/basic-polyfill) example to know how to polyfill **Highway**. This example is compatible with:
+
+- Google Chrome
+- Safari
+- Firefox
+- Edge
+- IE11
+
 ## Roadmap
 
 - [ ] More Unit Tests
