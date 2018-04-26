@@ -19,6 +19,7 @@
 - [**Transitions**](https://github.com/Dogstudio/highway#transitions)
 - [**Events**](https://github.com/Dogstudio/highway#events)
 - [**Examples**](https://github.com/Dogstudio/highway#examples)
+- [**Demos**](https://github.com/Dogstudio/highway#demos)
 - [**Support**](https://github.com/Dogstudio/highway#support)
 - [**Roadmap**](https://github.com/Dogstudio/highway#roadmap)
 - [**Releases**](https://github.com/Dogstudio/highway#releases)
@@ -286,6 +287,10 @@ Check out the [**Basic Menu Active**](https://github.com/Dogstudio/highway/tree/
 - [**Basic Google Analytics Events**](https://github.com/Dogstudio/highway/tree/master/examples/basic-google-analytics)
 - [**Basic Polyfill**](https://github.com/Dogstudio/highway/tree/master/examples/basic-polyfill)
 
+## Demos
+
+*Take part of our journey and tweet us your most beautiful projects using **Highway** to [@Dogstudio](https://twitter.com/Dogstudio) or [@Anthodpnt](https://twitter.com/Anthodpnt). The most interesting ones will be featured here. Thanks!*
+
 ## Support
 
 Note that **Highway** uses modern features because we wanted it to be *modern*. This means some browser might not support some of these modern features and you'll have to add a polyfill to your projects like [**babel-polyfill**](https://babeljs.io/docs/usage/polyfill/) or transpile your code to ES5 using tools like [**Webpack**](https://webpack.js.org/). This is a non-exhaustive list of modern features used in **Highway**:
@@ -302,16 +307,19 @@ Note that **Highway** uses modern features because we wanted it to be *modern*. 
 
 - [ ] More Unit Tests
 - [ ] More Examples
+- [ ] More Demos
 
 ## Releases
 #### 1.3.x
 
 - Add the `Basic Anchor` example
 - Add the `Basic Polyfill` example
+- Add unit tests
 - Remove **modes** that weren't convincing
 - Improve code and weight with ES2016+ features
 - Improve events
 - Improve transitions
+- Improve documentation
 
 #### 1.2.x
 
