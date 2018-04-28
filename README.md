@@ -328,6 +328,8 @@ Check out the [**Basic Polyfill**](https://github.com/Dogstudio/highway/tree/mas
 - Improve events
 - Improve transitions
 - Improve documentation
+- Fix events
+- Fix helpers
 
 #### 1.2.x
 
