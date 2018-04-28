@@ -84,6 +84,7 @@ describe('Highway.Core', () => {
   it('Should call `beforeFetch` method on `pushState`', () => {
     const Core = new Highway.Core();
 
+    Core.link = a;
     Core.beforeFetch = sinon.spy();
     Core.pushState({ target: { href: '/foo' }});
 
