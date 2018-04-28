@@ -321,7 +321,7 @@ class helpers_Helpers {
    */
   static getPathname(url) {
     const match = url.match(/https?:\/\/.*?(\/[\w_\-./]+)/);
-    return match ? match[1] : null;
+    return match ? match[1] : '/';
   }
 
   /**

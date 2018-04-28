@@ -23,8 +23,8 @@ describe('Highway.Core', () => {
   const a = document.createElement('a');
   const b = document.createElement('a');
 
-  a.href = '/foo';
-  b.href = '/foo#anchor';
+  a.setAttribute('href', '/foo');
+  a.setAttribute('href', '/foo#anchor');
 
   document.body.appendChild(a);
   document.body.appendChild(b);
@@ -79,25 +79,5 @@ describe('Highway.Core', () => {
     Core.popState();
 
     expect(Core.beforeFetch.calledOnce).to.be.true;
-  });
-
-  it('Should call `beforeFetch` method on `pushState`', () => {
-    const Core = new Highway.Core();
-
-    Core.link = a;
-    Core.beforeFetch = sinon.spy();
-    Core.pushState({ target: { href: '/foo' }});
-
-    expect(Core.beforeFetch.calledOnce).to.be.true;
-  });
-
-  it('Should call `unbind` method on `beforeFetch`', () => {
-    const Core = new Highway.Core();
-
-    Core.unbind = sinon.spy();
-    Core.state = { url: 'http://bar.com/foo' };
-    Core.beforeFetch();
-
-    expect(Core.unbind.calledOnce).to.be.true;
   });
 });

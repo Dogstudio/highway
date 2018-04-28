@@ -17,12 +17,14 @@ describe('Highway.Helpers', () => {
     expect(Highway.Helpers.getOrigin(b)).to.be.equal('http://bar.com');
   });
 
-  it('Should return URL pathname or `null`', () => {
+  it('Should return URL pathname or `/`', () => {
     const a = 'http://bar.com';
-    const b = 'http://bar.com/foo';
+    const b = 'http://bar.com/';
+    const c = 'http://bar.com/foo';
 
-    expect(Highway.Helpers.getPathname(a)).to.be.null;
-    expect(Highway.Helpers.getPathname(b)).to.be.equal('/foo');
+    expect(Highway.Helpers.getPathname(a)).to.be.equal('/');
+    expect(Highway.Helpers.getPathname(b)).to.be.equal('/');
+    expect(Highway.Helpers.getPathname(c)).to.be.equal('/foo');
   });
 
   it('Should return URL anchor or `null`', () => {
