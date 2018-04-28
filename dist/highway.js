@@ -466,6 +466,9 @@ class core_Core extends tiny_emitter_default.a {
     this.state = this.getState(window.location.href);
     this.props = this.getProps(document);
 
+    // Link.
+    this.link = null;
+
     // Cache.
     this.cache = new Map();
 
@@ -565,8 +568,11 @@ class core_Core extends tiny_emitter_default.a {
     const pathname = helpers_Helpers.getPathname(href);
 
     if (!this.navigating && pathname !== this.state.pathname) {
+      // Update link
+      this.link = event.currentTarget;
+
       // Now push the state!
-      this.pushState(event);
+      this.pushState();
 
     } else {
       // If the pathnames are the same there might be an anchor appended to
@@ -587,37 +593,32 @@ class core_Core extends tiny_emitter_default.a {
     const state = this.getState(window.location.href);
 
     if (state.pathname !== this.state.pathname) {
-      // Update state with the one returne by the browser history. Basically
-      // this is the state that was previously pushed by `history.pushState`.
-      this.state = state;
-
       // Call `beforeFetch` for optimizations.
-      this.beforeFetch();
-
+      this.beforeFetch(state);
     }
   }
 
   /**
    * Update DOM on `click` event.
-   * 
-   * @arg {object} event — `click` event from link elements
    */
-  pushState(event) {
-    // Call `beforeFetch` for optimizations.
-    this.beforeFetch();
-
+  pushState() {
     // We update the state based on the clicked link `href` property.
-    this.state = this.getState(event.target.href);
+    const state = this.getState(this.link.href);
 
     // We push a new entry in the history in order to be able to navigate
     // with the backward and forward buttons from the browser.
-    this.state.pathname && window.history.pushState(this.state, '', this.state.url);
+    state.pathname && window.history.pushState(state, '', state.url);
+
+    // Call `beforeFetch` for optimizations.
+    this.beforeFetch(state);
   }
 
   /**
    * Do some tests before HTTP requests to optimize pipeline.
+   * 
+   * @arg {object} state - State to save
    */
-  async beforeFetch() {
+  async beforeFetch(state) {
     // Use of a boolean to avoid repetitive fetch calls by super excited users
     // that could lead to some serious issues.
     this.navigating = true;
@@ -632,6 +633,10 @@ class core_Core extends tiny_emitter_default.a {
     // We pause the script and wait for the `from` renderer to be completely
     // hidden and removed from the DOM.
     await this.From.hide();
+
+    // Update state with the one returne by the browser history. Basically
+    // this is the state that was previously pushed by `history.pushState`.
+    this.state = state;
 
     // We check cache to avoid unecessary HTTP requests.
     if (!this.cache.has(this.state.pathname)) {
@@ -674,7 +679,6 @@ class core_Core extends tiny_emitter_default.a {
     if (response.status >= 200 && response.status < 300) {
       // The HTTP response is the page HTML as a string.
       return response.text();
-
     }
 
     // An extra event is emitted if an error has occured that can be used
