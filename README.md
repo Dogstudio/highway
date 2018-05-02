@@ -7,7 +7,7 @@
 [![Maintainability](https://api.codeclimate.com/v1/badges/230e0c2e5e924edfe341/maintainability)](https://codeclimate.com/github/Dogstudio/highway/maintainability)
 [![GitHub issues](https://img.shields.io/github/issues-raw/Dogstudio/highway.svg)](https://github.com/Dogstudio/highway/issues)
 
-<p align="center"><img src="https://i.imgur.com/2mSu3t9.png" alt="Banner" /></p>
+<p align="center"><img src="https://i.imgur.com/SNk3YwV.png" alt="Banner" /></p>
 
 **Highway** is a *lightweight (**2ko** gzipped)*, *robust*, *modern* and *flexible* library that will let you create **AJAX navigations** with beautiful **transitions** on your websites. It's been a while we were trying to build this kind of library to fits our needs at [**Dogstudio**](https://www.dogstudio.co) and that hopefully will fit yours now we're releasing it!
 
