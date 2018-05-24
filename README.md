@@ -4,7 +4,6 @@
 [![npm](https://img.shields.io/npm/v/@dogstudio/highway.svg)](https://www.npmjs.com/package/@dogstudio/highway)
 [![npm](https://img.shields.io/npm/dt/@dogstudio/highway.svg)](https://www.npmjs.com/package/@dogstudio/highway)
 [![Test Coverage](https://api.codeclimate.com/v1/badges/230e0c2e5e924edfe341/test_coverage)](https://codeclimate.com/github/Dogstudio/highway/test_coverage)
-[![Maintainability](https://api.codeclimate.com/v1/badges/230e0c2e5e924edfe341/maintainability)](https://codeclimate.com/github/Dogstudio/highway/maintainability)
 [![GitHub issues](https://img.shields.io/github/issues-raw/Dogstudio/highway.svg)](https://github.com/Dogstudio/highway/issues)
 
 <p align="center"><img src="https://i.imgur.com/SNk3YwV.png" alt="Banner" /></p>
