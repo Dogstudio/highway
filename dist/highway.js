@@ -479,6 +479,9 @@ class core_Core extends tiny_emitter_default.a {
     this.From = new (helpers_Helpers.getRenderer(this.props.slug, this.renderers))(this.props);
     this.From.init();
 
+    // Events
+    this._click = this.click.bind(this);
+
     // Listen the `popstate` on the window to run the router each time an 
     // history entry changes. Basically everytime the backward/forward arrows
     // are triggered by the user.
@@ -534,7 +537,7 @@ class core_Core extends tiny_emitter_default.a {
 
     // We then loop over each one of them to bind the `click` event.
     for (const link of this.links) {
-      link.addEventListener('click', this.click.bind(this));
+      link.addEventListener('click', this._click);
     }
   }
 
@@ -544,7 +547,7 @@ class core_Core extends tiny_emitter_default.a {
   unbind() {
     // We then loop over each one of them to unbind the `click` event.
     for (const link of this.links) {
-      link.removeEventListener('click', this.click.bind(this));
+      link.removeEventListener('click', this._click);
     }
   }
 
@@ -702,11 +705,11 @@ class core_Core extends tiny_emitter_default.a {
     // We trigger an event when the new content is added to the DOM.
     this.emit('NAVIGATE_IN', this.To, this.state);
 
-    // Bind events
-    this.bind();
-
     // Now we show our content!
     await this.To.show();
+
+    // Bind events
+    this.bind();
 
     // We reset our status variables.
     this.navigating = false;
