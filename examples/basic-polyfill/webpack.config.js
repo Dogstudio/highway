@@ -16,10 +16,7 @@ module.exports = {
     rules: [
       {
         test: /\.js$/,
-        include: [
-          path.resolve(__dirname, 'src'),
-          path.resolve(__dirname, 'node_modules/@dogstudio', 'highway')
-        ],
+        exclude: /node_modules/,
         use: {
           loader: 'babel-loader',
           options: {
