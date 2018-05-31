@@ -43,7 +43,7 @@ export default class Core extends Emitter {
     // Events
     this._click = this.click.bind(this);
 
-    // Listen the `popstate` on the window to run the router each time an 
+    // Listen the `popstate` on the window to run the router each time an
     // history entry changes. Basically everytime the backward/forward arrows
     // are triggered by the user.
     window.addEventListener('popstate', this.popState.bind(this));
@@ -54,7 +54,7 @@ export default class Core extends Emitter {
 
   /**
    * Get all required properties for a context.
-   * 
+   *
    * @arg    {string|object} context – DOM context
    * @return {object} Properties
    */
@@ -114,7 +114,7 @@ export default class Core extends Emitter {
 
   /**
    * Click method called on `click` event.
-   * 
+   *
    * @arg {object} event - `click` event
    */
   click(event) {
@@ -179,7 +179,7 @@ export default class Core extends Emitter {
 
   /**
    * Do some tests before HTTP requests to optimize pipeline.
-   * 
+   *
    * @arg {object} state - State to save
    */
   async beforeFetch(state) {
@@ -225,7 +225,7 @@ export default class Core extends Emitter {
 
   /**
    * Fetch the page from URL
-   * 
+   *
    * @return {string} Fetch response
    */
   async fetch() {

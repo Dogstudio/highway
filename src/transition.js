@@ -17,7 +17,7 @@ export default class Transition {
 
   /**
    * Add the view in DOM and play an `in` transition if one is defined.
-   * 
+   *
    * @return {object} Promise
    */
   show() {
@@ -31,7 +31,7 @@ export default class Transition {
 
   /**
    * Play an `out` transition if one is defined and remove the view from DOM.
-   * 
+   *
    * @return {object} Promise
    */
   hide() {

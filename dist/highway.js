@@ -46,17 +46,32 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// define getter function for harmony exports
 /******/ 	__webpack_require__.d = function(exports, name, getter) {
 /******/ 		if(!__webpack_require__.o(exports, name)) {
-/******/ 			Object.defineProperty(exports, name, {
-/******/ 				configurable: false,
-/******/ 				enumerable: true,
-/******/ 				get: getter
-/******/ 			});
+/******/ 			Object.defineProperty(exports, name, { enumerable: true, get: getter });
 /******/ 		}
 /******/ 	};
 /******/
 /******/ 	// define __esModule on exports
 /******/ 	__webpack_require__.r = function(exports) {
+/******/ 		if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
+/******/ 			Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
+/******/ 		}
 /******/ 		Object.defineProperty(exports, '__esModule', { value: true });
+/******/ 	};
+/******/
+/******/ 	// create a fake namespace object
+/******/ 	// mode & 1: value is a module id, require it
+/******/ 	// mode & 2: merge all properties of value into the ns
+/******/ 	// mode & 4: return value when already ns object
+/******/ 	// mode & 8|1: behave like require
+/******/ 	__webpack_require__.t = function(value, mode) {
+/******/ 		if(mode & 1) value = __webpack_require__(value);
+/******/ 		if(mode & 8) return value;
+/******/ 		if((mode & 4) && typeof value === 'object' && value && value.__esModule) return value;
+/******/ 		var ns = Object.create(null);
+/******/ 		__webpack_require__.r(ns);
+/******/ 		Object.defineProperty(ns, 'default', { enumerable: true, value: value });
+/******/ 		if(mode & 2 && typeof value != 'string') for(var key in value) __webpack_require__.d(ns, key, function(key) { return value[key]; }.bind(null, key));
+/******/ 		return ns;
 /******/ 	};
 /******/
 /******/ 	// getDefaultExport function for compatibility with non-harmony modules
@@ -229,7 +244,7 @@ class Renderer {
 
   /**
    * Add the view in DOM and play an `in` transition if one is defined.
-   * 
+   *
    * @return {object} Promise
    */
   show() {
@@ -243,11 +258,11 @@ class Renderer {
       this.onEnter && this.onEnter();
 
       // The transition is set in your custom renderer with a getter called
-      // `transition` that should return the transition object you want to 
+      // `transition` that should return the transition object you want to
       // apply to you view. We call the `in` step of this one right now!
       this.Transition && await this.Transition.show();
 
-      // The `onEnterCompleted` method if set in your custom renderer is called 
+      // The `onEnterCompleted` method if set in your custom renderer is called
       // everytime a transition is over if set. Otherwise it's called right after
       // the `onEnter` method.
       this.onEnterCompleted && this.onEnterCompleted();
@@ -259,7 +274,7 @@ class Renderer {
 
   /**
    * Play an `out` transition if one is defined and remove the view from DOM.
-   * 
+   *
    * @return {object} Promise
    */
   hide() {
@@ -275,7 +290,7 @@ class Renderer {
       // Remove view from DOM.
       this.remove();
 
-      // The `onLeaveCompleted` method if set in your custom renderer is called 
+      // The `onLeaveCompleted` method if set in your custom renderer is called
       // everytime a view is completely removed from the DOM.
       this.onLeaveCompleted && this.onLeaveCompleted();
 
@@ -366,7 +381,7 @@ class helpers_Helpers {
 
   /**
    * Get page's DOM from page HTML
-   * 
+   *
    * @arg    {string} page — Page HTML
    * @return {string} Page DOM
    * @static
@@ -377,7 +392,7 @@ class helpers_Helpers {
 
   /**
    * Get view element from page DOM
-   * 
+   *
    * @arg    {string} page — Page DOM
    * @return {object} View element or `null`
    * @static
@@ -388,7 +403,7 @@ class helpers_Helpers {
 
   /**
    * Get view's slug from view element
-   * 
+   *
    * @arg    {string} view — [router-view] DOM
    * @return {string} Page slug or `null`
    * @static
@@ -482,7 +497,7 @@ class core_Core extends tiny_emitter_default.a {
     // Events
     this._click = this.click.bind(this);
 
-    // Listen the `popstate` on the window to run the router each time an 
+    // Listen the `popstate` on the window to run the router each time an
     // history entry changes. Basically everytime the backward/forward arrows
     // are triggered by the user.
     window.addEventListener('popstate', this.popState.bind(this));
@@ -493,7 +508,7 @@ class core_Core extends tiny_emitter_default.a {
 
   /**
    * Get all required properties for a context.
-   * 
+   *
    * @arg    {string|object} context – DOM context
    * @return {object} Properties
    */
@@ -553,7 +568,7 @@ class core_Core extends tiny_emitter_default.a {
 
   /**
    * Click method called on `click` event.
-   * 
+   *
    * @arg {object} event - `click` event
    */
   click(event) {
@@ -618,7 +633,7 @@ class core_Core extends tiny_emitter_default.a {
 
   /**
    * Do some tests before HTTP requests to optimize pipeline.
-   * 
+   *
    * @arg {object} state - State to save
    */
   async beforeFetch(state) {
@@ -664,7 +679,7 @@ class core_Core extends tiny_emitter_default.a {
 
   /**
    * Fetch the page from URL
-   * 
+   *
    * @return {string} Fetch response
    */
   async fetch() {
@@ -743,7 +758,7 @@ class Transition {
 
   /**
    * Add the view in DOM and play an `in` transition if one is defined.
-   * 
+   *
    * @return {object} Promise
    */
   show() {
@@ -757,7 +772,7 @@ class Transition {
 
   /**
    * Play an `out` transition if one is defined and remove the view from DOM.
-   * 
+   *
    * @return {object} Promise
    */
   hide() {

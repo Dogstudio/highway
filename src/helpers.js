@@ -78,7 +78,7 @@ export default class Helpers {
 
   /**
    * Get page's DOM from page HTML
-   * 
+   *
    * @arg    {string} page — Page HTML
    * @return {string} Page DOM
    * @static
@@ -89,7 +89,7 @@ export default class Helpers {
 
   /**
    * Get view element from page DOM
-   * 
+   *
    * @arg    {string} page — Page DOM
    * @return {object} View element or `null`
    * @static
@@ -100,7 +100,7 @@ export default class Helpers {
 
   /**
    * Get view's slug from view element
-   * 
+   *
    * @arg    {string} view — [router-view] DOM
    * @return {string} Page slug or `null`
    * @static

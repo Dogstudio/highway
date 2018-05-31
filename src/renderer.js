@@ -64,7 +64,7 @@ export default class Renderer {
 
   /**
    * Add the view in DOM and play an `in` transition if one is defined.
-   * 
+   *
    * @return {object} Promise
    */
   show() {
@@ -78,11 +78,11 @@ export default class Renderer {
       this.onEnter && this.onEnter();
 
       // The transition is set in your custom renderer with a getter called
-      // `transition` that should return the transition object you want to 
+      // `transition` that should return the transition object you want to
       // apply to you view. We call the `in` step of this one right now!
       this.Transition && await this.Transition.show();
 
-      // The `onEnterCompleted` method if set in your custom renderer is called 
+      // The `onEnterCompleted` method if set in your custom renderer is called
       // everytime a transition is over if set. Otherwise it's called right after
       // the `onEnter` method.
       this.onEnterCompleted && this.onEnterCompleted();
@@ -94,7 +94,7 @@ export default class Renderer {
 
   /**
    * Play an `out` transition if one is defined and remove the view from DOM.
-   * 
+   *
    * @return {object} Promise
    */
   hide() {
@@ -110,7 +110,7 @@ export default class Renderer {
       // Remove view from DOM.
       this.remove();
 
-      // The `onLeaveCompleted` method if set in your custom renderer is called 
+      // The `onLeaveCompleted` method if set in your custom renderer is called
       // everytime a view is completely removed from the DOM.
       this.onLeaveCompleted && this.onLeaveCompleted();
 

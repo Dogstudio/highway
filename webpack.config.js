@@ -22,6 +22,15 @@ module.exports = {
     libraryTarget: 'umd',
     umdNamedDefine: true
   },
+  module: {
+    rules: [
+      {
+        test: /\.js$/,
+        exclude: /node_modules/,
+        loader: 'eslint-loader'
+      }
+    ]
+  },
   optimization: {
     minimizer: [
       new UglifyJsPlugin({
