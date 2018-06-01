@@ -299,7 +299,7 @@ We want you to focus on your projects instead of spending time on endless config
 
 This gives you the opportunity to use the ES6 version that is **lighter** and supports a majority of modern browsers or the ES5 version that is **heavier** and supports older browsers... Goddamn IE.
 
-Note that since **Highway** uses the Fetch API in order to make HTTP requests you'll have to use the [whatwg-fetch](https://github.com/github/fetch) polyfill for IE... Him again.
+Note that since **Highway** uses the Fetch API in order to make HTTP requests you'll have to use the [**whatwg-fetch**](https://github.com/github/fetch) polyfill for IE... Him again.
 Check out the [**Basic Polyfill**](https://github.com/Dogstudio/highway/tree/master/examples/basic-polyfill) example that uses the both ES5 version of **Highway** and the Fetch API polyfill.
 
 This example supports:
