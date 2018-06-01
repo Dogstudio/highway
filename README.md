@@ -319,37 +319,37 @@ This example supports:
 ## Releases
 #### 1.3.x
 
-- :sparkles: Add ES5 version in `dist/es5` folder
-- Add the `Basic Anchor` example
-- Add the `Basic Polyfill` example
-- Add unit tests
-- Remove **modes** that weren't convincing
-- Improve code and weight with ES2016+ features
-- Improve events
-- Improve transitions
-- Improve documentation
-- Fix events
-- Fix helpers
+- :tada: Add ES5 version in `dist/es5` folder
+- :tada: Add the `Basic Anchor` example
+- :tada: Add the `Basic Polyfill` example
+- :tada: Add unit tests
+- :fire: Remove **modes** that weren't convincing
+- :sparkles: Improve code and weight with ES2016+ features
+- :sparkles: Improve events
+- :sparkles: Improve transitions
+- :sparkles: Improve documentation
+- :bug: Fix events
+- :bug: Fix helpers
 
 #### 1.2.x
 
-- Add `NAVIGATE_CALL`, `NAVIGATE_IN`, `NAVIGATE_OUT` events
-- Add more variables available in `Highway.Renderer`
-- Improve renderers
-- Improve documentation
+- :tada: Add `NAVIGATE_CALL`, `NAVIGATE_IN`, `NAVIGATE_OUT` events
+- :tada: Add more variables available in `Highway.Renderer`
+- :sparkles: Improve renderers
+- :sparkles: Improve documentation
 
 #### 1.1.x
 
-- Add **modes**
-- Improve documentation
+- :tada: Add **modes**
+- :sparkles: Improve documentation
 
 #### 1.0.x
 
-- Add `Highway.Transition`
+- :tada: Add `Highway.Transition`
 
 #### 0.0.x
 
-- First release
+- :rocket: First release
 
 ## License
 
