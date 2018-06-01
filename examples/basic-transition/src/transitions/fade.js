@@ -2,7 +2,7 @@
 import Highway from 'dist/highway';
 
 // This example uses `Greensock` an animation library
-import { TweenMax } from 'gsap';
+import TweenMax from 'gsap';
 
 // To create your custom transition you need to provide two required methods:
 // - `in`: The transition part to show your view.

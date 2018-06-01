@@ -16,7 +16,7 @@ module.exports = {
     'highway.min': path.resolve(__dirname, 'src/index.js')
   },
   output: {
-    path: path.resolve(__dirname, 'dist'),
+    path: path.resolve(__dirname, 'dist', 'es5'),
     filename: '[name].js',
     library: 'Highway',
     libraryTarget: 'umd',
@@ -27,7 +27,29 @@ module.exports = {
       {
         test: /\.js$/,
         exclude: /node_modules/,
-        loader: 'eslint-loader'
+        use: [
+          {
+            loader: 'babel-loader',
+            options: {
+              babelrc: false,
+              cacheDirectory: true,
+              presets: [
+                ['@babel/preset-env', {
+                  targets: {
+                    browsers: [
+                      '> 0.25%',
+                      'edge >= 14',
+                      'not ie <= 10',
+                      'not op_mini all'
+                    ]
+                  },
+                  useBuiltIns: 'usage'
+                }]
+              ]
+            }
+          },
+          'eslint-loader'
+        ]
       }
     ]
   },

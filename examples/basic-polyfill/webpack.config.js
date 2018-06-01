@@ -6,7 +6,7 @@ const path = require('path');
 
 // Configuration
 module.exports = {
-  mode: 'production',
+  mode: 'development',
   entry: path.resolve(__dirname, 'src/index.js'),
   output: {
     path: path.resolve(__dirname, 'dist'),
@@ -16,17 +16,21 @@ module.exports = {
     rules: [
       {
         test: /\.js$/,
-        exclude: /node_modules/,
+        include: [
+          path.resolve(__dirname, 'src')
+        ],
         use: {
           loader: 'babel-loader',
           options: {
+            cacheDirectory: true,
             presets: [
               ['@babel/preset-env', {
                 targets: {
                   browsers: [
-                    'last 2 version',
-                    'safari >= 10',
-                    'not ie <= 10'
+                    '> 0.25%',
+                    'edge >= 14',
+                    'not ie <= 10',
+                    'not op_mini all'
                   ]
                 },
                 useBuiltIns: 'usage'
@@ -38,6 +42,9 @@ module.exports = {
     ]
   },
   resolve: {
+    alias: {
+      'gsap': 'gsap/src/minified/TweenMax.min.js'
+    },
     modules: ['.', 'node_modules'],
     extensions: ['.js']
   }

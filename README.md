@@ -293,23 +293,20 @@ Check out the [**Basic Menu Active**](https://github.com/Dogstudio/highway/tree/
 
 ## Support
 
-Note that **Highway** uses modern features because we wanted it to be *modern*. This means some browser might not support some of these modern features and you'll have to add a polyfill to your projects like [**babel-polyfill**](https://babeljs.io/docs/usage/polyfill/) or transpile your code to ES5 using tools like [**Webpack**](https://webpack.js.org/). This is a non-exhaustive list of modern features used in **Highway**:
+Note that **Highway** uses modern features because we wanted it to be *modern*. This means some browsers might not support some of these modern features so we are providing an ES5 version of **Highway** in order to simplify your life.
+We want you to focus on your projects instead of spending time on endless configurations in order to use **Highway**.
+This gives you the opportunity to use the ES6 version that is **lighter** and supports a majority of modern browsers or the ES5 version that is **heavier** and supports older browsers... Goddamn IE.
 
-- Classes
-- Object/Array Destructuring
-- Maps
-- Promises
-- Async...Await Functions
-- Fetch API
-- ...
+Note that since **Highway** uses the Fetch API in order to make HTTP requests you'll have to use the [whatwg-fetch](https://github.com/github/fetch) polyfill for IE... Him again.
+Check out the [**Basic Polyfill**](https://github.com/Dogstudio/highway/tree/master/examples/basic-polyfill) example that uses the both ES5 version of **Highway** and the Fetch API polyfill.
 
-Check out the [**Basic Polyfill**](https://github.com/Dogstudio/highway/tree/master/examples/basic-polyfill) example to know how to polyfill **Highway**. This example is compatible with:
+This example supports:
 
 - Google Chrome
-- Safari
 - Firefox
 - Edge
-- IE11
+- Safari 6.2+
+- Internet Explorer 10+
 
 ## Roadmap
 
@@ -320,6 +317,7 @@ Check out the [**Basic Polyfill**](https://github.com/Dogstudio/highway/tree/mas
 ## Releases
 #### 1.3.x
 
+- Add ES5 version in `dist/es5` folder
 - Add the `Basic Anchor` example
 - Add the `Basic Polyfill` example
 - Add unit tests

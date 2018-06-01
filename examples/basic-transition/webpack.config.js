@@ -13,6 +13,9 @@ module.exports = {
     filename: 'index.js'
   },
   resolve: {
+    alias: {
+      'gsap': 'gsap/src/minified/TweenMax.min.js'
+    },
     modules: ['.', 'node_modules'],
     extensions: ['.js']
   }

@@ -1,5 +1,5 @@
 // Polyfills
-import 'babel-polyfill';
+import '@babel/polyfill';
 
 // Dependencies
 import { expect } from 'chai';

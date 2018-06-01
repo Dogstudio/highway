@@ -2,7 +2,7 @@
 import 'whatwg-fetch';
 
 // Import Highway
-import Highway from 'dist/highway.js';
+import Highway from 'dist/es5/highway';
 
 // Import Renderers
 import Home from 'renderers/home';

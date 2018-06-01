@@ -1,5 +1,5 @@
 // Polyfills
-import 'babel-polyfill';
+import '@babel/polyfill';
 import 'isomorphic-fetch';
 
 // Dependencies
