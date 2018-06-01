@@ -294,7 +294,9 @@ Check out the [**Basic Menu Active**](https://github.com/Dogstudio/highway/tree/
 ## Support
 
 Note that **Highway** uses modern features because we wanted it to be *modern*. This means some browsers might not support some of these modern features so we are providing an ES5 version of **Highway** in order to simplify your life.
+
 We want you to focus on your projects instead of spending time on endless configurations in order to use **Highway**.
+
 This gives you the opportunity to use the ES6 version that is **lighter** and supports a majority of modern browsers or the ES5 version that is **heavier** and supports older browsers... Goddamn IE.
 
 Note that since **Highway** uses the Fetch API in order to make HTTP requests you'll have to use the [whatwg-fetch](https://github.com/github/fetch) polyfill for IE... Him again.
@@ -317,7 +319,7 @@ This example supports:
 ## Releases
 #### 1.3.x
 
-- Add ES5 version in `dist/es5` folder
+- :sparkles: Add ES5 version in `dist/es5` folder
 - Add the `Basic Anchor` example
 - Add the `Basic Polyfill` example
 - Add unit tests
