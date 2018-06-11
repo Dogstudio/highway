@@ -1020,8 +1020,8 @@ function () {
 
 
   _createClass(Renderer, [{
-    key: "init",
-    value: function init() {
+    key: "setup",
+    value: function setup() {
       // We call the `onEnter` and `onEnterCompleted` methods of the renderer on
       // initialization if they exists.
       this.onEnter && this.onEnter();
@@ -4100,11 +4100,11 @@ function (_Emitter) {
 
     _this.cache = new Map(); // Status variables.
 
-    _this.navigating = false; // Get the page renderer and properly initialize it.
+    _this.navigating = false; // Get the page renderer and properly setup it.
 
     _this.From = new (_helpers.default.getRenderer(_this.props.slug, _this.renderers))(_this.props);
 
-    _this.From.init(); // Events
+    _this.From.setup(); // Events
 
 
     _this._click = _this.click.bind(_assertThisInitialized(_assertThisInitialized(_this))); // Listen the `popstate` on the window to run the router each time an

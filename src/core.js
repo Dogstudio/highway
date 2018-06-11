@@ -36,9 +36,9 @@ export default class Core extends Emitter {
     // Status variables.
     this.navigating = false;
 
-    // Get the page renderer and properly initialize it.
+    // Get the page renderer and properly setup it.
     this.From = new (Helpers.getRenderer(this.props.slug, this.renderers))(this.props);
-    this.From.init();
+    this.From.setup();
 
     // Events
     this._click = this.click.bind(this);

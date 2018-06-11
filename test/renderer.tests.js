@@ -29,11 +29,11 @@ describe('Highway.Renderer', () => {
     expect(Page).to.be.instanceof(Highway.Renderer);
   });
 
-  it('Should call `onEnter` and `onEnterCompleted` on `init`', () => {
+  it('Should call `onEnter` and `onEnterCompleted` on `setup`', () => {
     Home.onEnter = sinon.spy();
     Home.onEnterCompleted = sinon.spy();
 
-    Home.init();
+    Home.setup();
 
     expect(Home.onEnter.calledOnce).to.equal(true);
     expect(Home.onEnterCompleted.calledOnce).to.equal(true);

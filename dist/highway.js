@@ -201,7 +201,7 @@ class Renderer {
   /**
    * Renderer initialization.
    */
-  init() {
+  setup() {
     // We call the `onEnter` and `onEnterCompleted` methods of the renderer on
     // initialization if they exists.
     this.onEnter && this.onEnter();
@@ -490,9 +490,9 @@ class core_Core extends tiny_emitter_default.a {
     // Status variables.
     this.navigating = false;
 
-    // Get the page renderer and properly initialize it.
+    // Get the page renderer and properly setup it.
     this.From = new (helpers_Helpers.getRenderer(this.props.slug, this.renderers))(this.props);
-    this.From.init();
+    this.From.setup();
 
     // Events
     this._click = this.click.bind(this);

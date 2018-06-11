@@ -328,6 +328,7 @@ This example supports:
 - :sparkles: Improve events
 - :sparkles: Improve transitions
 - :sparkles: Improve documentation
+- :art: Rename renderers `init` method to `setup` method
 - :bug: Fix events
 - :bug: Fix helpers
 
