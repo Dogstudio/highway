@@ -331,6 +331,7 @@ This example supports:
 - :art: Rename renderers `init` method to `setup` method
 - :bug: Fix events
 - :bug: Fix helpers
+- :bug: Skip link with `javascript:` in `href`
 
 #### 1.2.x
 
