@@ -4170,7 +4170,7 @@ function (_Emitter) {
     value: function bind() {
       // We get all the links from the document except the ones with a `target`
       // attribute.
-      this.links = document.querySelectorAll('a:not([target])'); // We then loop over each one of them to bind the `click` event.
+      this.links = document.querySelectorAll('a:not([target]):not([href*="javascript"])'); // We then loop over each one of them to bind the `click` event.
 
       var _iteratorNormalCompletion = true;
       var _didIteratorError = false;
