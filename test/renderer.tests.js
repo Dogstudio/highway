@@ -40,23 +40,19 @@ describe('Highway.Renderer', () => {
   });
 
   it('Should remove `[router-view]` from the document on `remove`', () => {
+    Home.root = document.createElement('div');
+    Home.root.innerHTML = '<p></p>';
     Home.remove();
 
-    const a = Home.wrapper;
-    const b = Home.wrapper.querySelector('[router-view]');
-
-    expect(a).to.be.instanceof(Object);
-    expect(b).to.be.null;
+    expect(Home.root.innerHTML).to.be.empty;
   });
 
   it('Should add `[router-view]` to the document on `add`', () => {
+    Home.root = document.createElement('div');
+    Home.root.innerHTML = '<p></p>';
     Page.add();
 
-    const a = Page.wrapper;
-    const b = Page.wrapper.querySelector('[router-view]');
-
-    expect(a).to.be.instanceof(Object);
-    expect(b).to.be.instanceof(Object);
+    expect(Home.root.innerHTML).to.not.be.empty;
   });
 
   it('Should update the document on `update`', () => {
