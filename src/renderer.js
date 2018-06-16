@@ -10,12 +10,16 @@ export default class Renderer {
    * @constructor
    */
   constructor(props) {
-    // We extract our properties.
+    // We get the view.
+    this.root = document.querySelector('[router-view]');
+
+    // We save fetched informations
+    this.page = props.page;
     this.view = props.view;
-    this.page = props.page.cloneNode(true);
+    this.slug = props.slug;
 
     // We get our transition we will use later to show/hide our view.
-    this.Transition = props.transition ? new props.transition(props.view) : null;
+    this.Transition = props.transition ? new props.transition(this.root) : null;
   }
 
   /**
@@ -32,23 +36,19 @@ export default class Renderer {
    * Add view in DOM.
    */
   add() {
-    // We update the `[router-wrapper]`.
-    this.wrapper = document.querySelector('[router-wrapper]');
+    // We update the [router-view] slug
+    this.root.setAttribute('router-view', this.slug);
 
-    // Before doing anything crazy you need to know your view doesn't exists
-    // in the [router-wrapper] so it is appended to it right now!
-    this.wrapper.appendChild(this.view);
+    // And HTML
+    this.root.innerHTML = this.view.innerHTML;
   }
 
   /**
    * Remove view in DOM.
    */
   remove() {
-    // We update the `[router-wrapper]`.
-    this.wrapper = this.view.parentNode;
-
     // It's time to say goodbye to the view... Farewell my friend.
-    this.wrapper.removeChild(this.view);
+    this.root.innerHTML = '';
   }
 
   /**
@@ -69,8 +69,7 @@ export default class Renderer {
    */
   show() {
     return new Promise(async resolve => {
-      // Add view in DOM.
-      this.add();
+      // Update DOM.
       this.update();
 
       // The `onEnter` method if set is called everytime the view is appended

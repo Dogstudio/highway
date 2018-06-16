@@ -190,12 +190,16 @@ class Renderer {
    * @constructor
    */
   constructor(props) {
-    // We extract our properties.
+    // We get the view.
+    this.root = document.querySelector('[router-view]');
+
+    // We save fetched informations
+    this.page = props.page;
     this.view = props.view;
-    this.page = props.page.cloneNode(true);
+    this.slug = props.slug;
 
     // We get our transition we will use later to show/hide our view.
-    this.Transition = props.transition ? new props.transition(props.view) : null;
+    this.Transition = props.transition ? new props.transition(this.root) : null;
   }
 
   /**
@@ -212,23 +216,19 @@ class Renderer {
    * Add view in DOM.
    */
   add() {
-    // We update the `[router-wrapper]`.
-    this.wrapper = document.querySelector('[router-wrapper]');
+    // We update the [router-view] slug
+    this.root.setAttribute('router-view', this.slug);
 
-    // Before doing anything crazy you need to know your view doesn't exists
-    // in the [router-wrapper] so it is appended to it right now!
-    this.wrapper.appendChild(this.view);
+    // And HTML
+    this.root.innerHTML = this.view.innerHTML;
   }
 
   /**
    * Remove view in DOM.
    */
   remove() {
-    // We update the `[router-wrapper]`.
-    this.wrapper = this.view.parentNode;
-
     // It's time to say goodbye to the view... Farewell my friend.
-    this.wrapper.removeChild(this.view);
+    this.root.innerHTML = '';
   }
 
   /**
@@ -249,8 +249,7 @@ class Renderer {
    */
   show() {
     return new Promise(async resolve => {
-      // Add view in DOM.
-      this.add();
+      // Update DOM.
       this.update();
 
       // The `onEnter` method if set is called everytime the view is appended
@@ -479,7 +478,7 @@ class core_Core extends tiny_emitter_default.a {
 
     // Properties & state.
     this.state = this.getState(window.location.href);
-    this.props = this.getProps(document);
+    this.props = this.getProps(document.cloneNode(true));
 
     // Link.
     this.link = null;
@@ -643,7 +642,10 @@ class core_Core extends tiny_emitter_default.a {
 
     // We trigger an event when a link is clicked to let you know do whatever
     // you want at this point of the process.
-    this.emit('NAVIGATE_OUT', this.From, this.state);
+    this.emit('NAVIGATE_OUT', {
+      page: this.From.page,
+      view: this.From.view
+    }, this.state);
 
     // Unbind events
     this.unbind();
@@ -716,9 +718,13 @@ class core_Core extends tiny_emitter_default.a {
 
     // The page we get is the one we want to go `to`.
     this.To = new (helpers_Helpers.getRenderer(this.props.slug, this.renderers))(this.props);
+    this.To.add();
 
     // We trigger an event when the new content is added to the DOM.
-    this.emit('NAVIGATE_IN', this.To, this.state);
+    this.emit('NAVIGATE_IN', {
+      page: this.To.page,
+      view: this.To.root
+    }, this.state);
 
     // Now we show our content!
     await this.To.show();
@@ -730,7 +736,13 @@ class core_Core extends tiny_emitter_default.a {
     this.navigating = false;
 
     // And we emit an event you can listen to.
-    this.emit('NAVIGATE_END', this.From, this.To, this.state);
+    this.emit('NAVIGATE_END', {
+      page: this.From.page,
+      view: this.From.view
+    }, {
+      page: this.To.page,
+      view: this.To.root
+    }, this.state);
 
     // We prepare the next navigation by replacing the `from` renderer by
     // the `to` renderer now that the pages have been swapped successfully.

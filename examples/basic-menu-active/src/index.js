@@ -16,7 +16,7 @@ import Highway from 'dist/highway';
   // active item in the menu based on the `state` of Highway.
   const links = document.querySelectorAll('nav a');
 
-  H.on('NAVIGATE_IN', (from, state) => {
+  H.on('NAVIGATE_IN', (to, state) => {
     for (const link of links) {
       link.classList.remove('is-active');
 

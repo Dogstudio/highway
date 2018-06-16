@@ -25,7 +25,7 @@ export default class Core extends Emitter {
 
     // Properties & state.
     this.state = this.getState(window.location.href);
-    this.props = this.getProps(document);
+    this.props = this.getProps(document.cloneNode(true));
 
     // Link.
     this.link = null;
@@ -189,7 +189,10 @@ export default class Core extends Emitter {
 
     // We trigger an event when a link is clicked to let you know do whatever
     // you want at this point of the process.
-    this.emit('NAVIGATE_OUT', this.From, this.state);
+    this.emit('NAVIGATE_OUT', {
+      page: this.From.page,
+      view: this.From.view
+    }, this.state);
 
     // Unbind events
     this.unbind();
@@ -262,9 +265,13 @@ export default class Core extends Emitter {
 
     // The page we get is the one we want to go `to`.
     this.To = new (Helpers.getRenderer(this.props.slug, this.renderers))(this.props);
+    this.To.add();
 
     // We trigger an event when the new content is added to the DOM.
-    this.emit('NAVIGATE_IN', this.To, this.state);
+    this.emit('NAVIGATE_IN', {
+      page: this.To.page,
+      view: this.To.root
+    }, this.state);
 
     // Now we show our content!
     await this.To.show();
@@ -276,7 +283,13 @@ export default class Core extends Emitter {
     this.navigating = false;
 
     // And we emit an event you can listen to.
-    this.emit('NAVIGATE_END', this.From, this.To, this.state);
+    this.emit('NAVIGATE_END', {
+      page: this.From.page,
+      view: this.From.view
+    }, {
+      page: this.To.page,
+      view: this.To.root
+    }, this.state);
 
     // We prepare the next navigation by replacing the `from` renderer by
     // the `to` renderer now that the pages have been swapped successfully.

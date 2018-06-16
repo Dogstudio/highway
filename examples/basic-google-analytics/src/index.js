@@ -14,7 +14,7 @@ import Highway from 'dist/highway';
   // In this example we listen to the `NAVIGATE_END` event from Highway that
   // occurs when a navigation ends and send a new `pageview` to Google Analytics
   // based on the `state` of Highway.
-  H.on('NAVIGATE_END', (from, to, state) => {
+  H.on('NAVIGATE_IN', (to, state) => {
     if (typeof gtag !== 'undefined') {
       // eslint-disable-next-line
       gtag('config', 'GA_TRACKING_ID', {

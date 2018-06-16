@@ -1008,11 +1008,14 @@ function () {
   function Renderer(props) {
     _classCallCheck(this, Renderer);
 
-    // We extract our properties.
-    this.view = props.view;
-    this.page = props.page.cloneNode(true); // We get our transition we will use later to show/hide our view.
+    // We get the view.
+    this.root = document.querySelector('[router-view]'); // We save fetched informations
 
-    this.Transition = props.transition ? new props.transition(props.view) : null;
+    this.page = props.page;
+    this.view = props.view;
+    this.slug = props.slug; // We get our transition we will use later to show/hide our view.
+
+    this.Transition = props.transition ? new props.transition(this.root) : null;
   }
   /**
    * Renderer initialization.
@@ -1034,11 +1037,10 @@ function () {
   }, {
     key: "add",
     value: function add() {
-      // We update the `[router-wrapper]`.
-      this.wrapper = document.querySelector('[router-wrapper]'); // Before doing anything crazy you need to know your view doesn't exists
-      // in the [router-wrapper] so it is appended to it right now!
+      // We update the [router-view] slug
+      this.root.setAttribute('router-view', this.slug); // And HTML
 
-      this.wrapper.appendChild(this.view);
+      this.root.innerHTML = this.view.innerHTML;
     }
     /**
      * Remove view in DOM.
@@ -1047,10 +1049,8 @@ function () {
   }, {
     key: "remove",
     value: function remove() {
-      // We update the `[router-wrapper]`.
-      this.wrapper = this.view.parentNode; // It's time to say goodbye to the view... Farewell my friend.
-
-      this.wrapper.removeChild(this.view);
+      // It's time to say goodbye to the view... Farewell my friend.
+      this.root.innerHTML = '';
     }
     /**
      * Update document informations
@@ -1086,9 +1086,7 @@ function () {
             while (1) {
               switch (_context.prev = _context.next) {
                 case 0:
-                  // Add view in DOM.
-                  _this.add();
-
+                  // Update DOM.
                   _this.update(); // The `onEnter` method if set is called everytime the view is appended
                   // to the DOM. This let you do some crazy stuffs at this right moment.
 
@@ -1100,14 +1098,14 @@ function () {
                   _context.t0 = _this.Transition;
 
                   if (!_context.t0) {
-                    _context.next = 7;
+                    _context.next = 6;
                     break;
                   }
 
-                  _context.next = 7;
+                  _context.next = 6;
                   return _this.Transition.show();
 
-                case 7:
+                case 6:
                   // The `onEnterCompleted` method if set in your custom renderer is called
                   // everytime a transition is over if set. Otherwise it's called right after
                   // the `onEnter` method.
@@ -1115,7 +1113,7 @@ function () {
 
                   resolve();
 
-                case 9:
+                case 8:
                 case "end":
                   return _context.stop();
               }
@@ -4094,7 +4092,7 @@ function (_Emitter) {
     _this.transitions = transitions; // Properties & state.
 
     _this.state = _this.getState(window.location.href);
-    _this.props = _this.getProps(document); // Link.
+    _this.props = _this.getProps(document.cloneNode(true)); // Link.
 
     _this.link = null; // Cache.
 
@@ -4315,7 +4313,10 @@ function (_Emitter) {
                 this.navigating = true; // We trigger an event when a link is clicked to let you know do whatever
                 // you want at this point of the process.
 
-                this.emit('NAVIGATE_OUT', this.From, this.state); // Unbind events
+                this.emit('NAVIGATE_OUT', {
+                  page: this.From.page,
+                  view: this.From.view
+                }, this.state); // Unbind events
 
                 this.unbind(); // We pause the script and wait for the `from` renderer to be completely
                 // hidden and removed from the DOM.
@@ -4444,25 +4445,35 @@ function (_Emitter) {
                 // We reset the scroll position.
                 window.scrollTo(0, 0); // The page we get is the one we want to go `to`.
 
-                this.To = new (_helpers.default.getRenderer(this.props.slug, this.renderers))(this.props); // We trigger an event when the new content is added to the DOM.
+                this.To = new (_helpers.default.getRenderer(this.props.slug, this.renderers))(this.props);
+                this.To.add(); // We trigger an event when the new content is added to the DOM.
 
-                this.emit('NAVIGATE_IN', this.To, this.state); // Now we show our content!
+                this.emit('NAVIGATE_IN', {
+                  page: this.To.page,
+                  view: this.To.root
+                }, this.state); // Now we show our content!
 
-                _context3.next = 5;
+                _context3.next = 6;
                 return this.To.show();
 
-              case 5:
+              case 6:
                 // Bind events
                 this.bind(); // We reset our status variables.
 
                 this.navigating = false; // And we emit an event you can listen to.
 
-                this.emit('NAVIGATE_END', this.From, this.To, this.state); // We prepare the next navigation by replacing the `from` renderer by
+                this.emit('NAVIGATE_END', {
+                  page: this.From.page,
+                  view: this.From.view
+                }, {
+                  page: this.To.page,
+                  view: this.To.root
+                }, this.state); // We prepare the next navigation by replacing the `from` renderer by
                 // the `to` renderer now that the pages have been swapped successfully.
 
                 this.From = this.To;
 
-              case 9:
+              case 10:
               case "end":
                 return _context3.stop();
             }

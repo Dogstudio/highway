@@ -9,7 +9,7 @@
 
 <p align="center"><img src="https://i.imgur.com/SNk3YwV.png" alt="Banner" /></p>
 
-**Highway** is a *lightweight (**2ko** gzipped)*, *robust*, *modern* and *flexible* library that will let you create **AJAX navigations** with beautiful **transitions** on your websites. It's been a while we were trying to build this kind of library to fits our needs at [**Dogstudio**](https://www.dogstudio.co) and that hopefully will fit yours now we're releasing it!
+**Highway** is a *lightweight (**2.2ko** gzipped)*, *robust*, *modern* and *flexible* library that will let you create **AJAX navigations** with beautiful **transitions** on your websites. It's been a while we were trying to build this kind of library to fits our needs at [**Dogstudio**](https://www.dogstudio.co) and that hopefully will fit yours now we're releasing it!
 
 ## Table of Content
 
@@ -250,8 +250,8 @@ Last but not least, **Highway** extends [**tiny-emitter**](https://github.com/sc
 
 All events give you access to some parameters named:
 
-- `from`: The renderer of the page you come from.
-- `to`: The renderer of the page you go to.
+- `from`: The the full page DOM and the view you come from.
+- `to`: The full page DOM and the view you go to.
 - `state`: The state of **Highway** that contains all the informations about the URL of the page you go to.
 - `error`: The error that occured during the navigation related to the HTTP request.
 
@@ -317,6 +317,12 @@ This example supports:
 - [ ] More Demos
 
 ## Releases
+#### 2.0.x
+
+- :art: Update informations sent with events
+- :bug: Fix `NAVIGATE_IN` event that was fired too early
+- :bug: Fix the view swapping that causes so issues
+
 #### 1.3.x
 
 - :tada: Add ES5 version in `dist/es5` folder
