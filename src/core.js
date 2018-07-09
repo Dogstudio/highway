@@ -129,9 +129,10 @@ export default class Core extends Emitter {
     // in order to compare it with the current state and handle the `click`
     // event appropriately.
     const anchor = Helpers.getAnchor(href);
+    const params = Helpers.getParams(href);
     const pathname = Helpers.getPathname(href);
 
-    if (!this.navigating && pathname !== this.state.pathname) {
+    if (!this.navigating && pathname !== this.state.pathname && !params) {
       // Update link
       this.link = event.currentTarget;
 
@@ -142,7 +143,7 @@ export default class Core extends Emitter {
       // If the pathnames are the same there might be an anchor appended to
       // it so we need to check it and reload the page to use the default
       // browser behaviour.
-      if (anchor) {
+      if (anchor || params) {
         window.location.href = href;
       }
 

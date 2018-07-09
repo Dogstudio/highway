@@ -335,6 +335,7 @@ This example supports:
 - :sparkles: Improve transitions
 - :sparkles: Improve documentation
 - :art: Rename renderers `init` method to `setup` method
+- :bug: Quick fix for URLs with parameters
 - :bug: Fix events
 - :bug: Fix helpers
 - :bug: Skip link with `javascript:` in `href`

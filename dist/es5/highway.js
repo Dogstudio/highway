@@ -4245,9 +4245,11 @@ function (_Emitter) {
 
       var anchor = _helpers.default.getAnchor(href);
 
+      var params = _helpers.default.getParams(href);
+
       var pathname = _helpers.default.getPathname(href);
 
-      if (!this.navigating && pathname !== this.state.pathname) {
+      if (!this.navigating && pathname !== this.state.pathname && !params) {
         // Update link
         this.link = event.currentTarget; // Now push the state!
 
@@ -4256,7 +4258,7 @@ function (_Emitter) {
         // If the pathnames are the same there might be an anchor appended to
         // it so we need to check it and reload the page to use the default
         // browser behaviour.
-        if (anchor) {
+        if (anchor || params) {
           window.location.href = href;
         }
       }

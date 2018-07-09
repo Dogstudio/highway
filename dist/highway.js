@@ -582,9 +582,10 @@ class core_Core extends tiny_emitter_default.a {
     // in order to compare it with the current state and handle the `click`
     // event appropriately.
     const anchor = helpers_Helpers.getAnchor(href);
+    const params = helpers_Helpers.getParams(href);
     const pathname = helpers_Helpers.getPathname(href);
 
-    if (!this.navigating && pathname !== this.state.pathname) {
+    if (!this.navigating && pathname !== this.state.pathname && !params) {
       // Update link
       this.link = event.currentTarget;
 
@@ -595,7 +596,7 @@ class core_Core extends tiny_emitter_default.a {
       // If the pathnames are the same there might be an anchor appended to
       // it so we need to check it and reload the page to use the default
       // browser behaviour.
-      if (anchor) {
+      if (anchor || params) {
         window.location.href = href;
       }
 
