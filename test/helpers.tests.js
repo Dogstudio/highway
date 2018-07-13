@@ -51,9 +51,9 @@ describe('Highway.Helpers', () => {
     expect(Highway.Helpers.getDOM(b)).to.be.instanceof(Object);
   });
 
-  it('Should return [router-view] DOM or `null`', () => {
+  it('Should return [data-router-view] DOM or `null`', () => {
     const a = new window.DOMParser().parseFromString('<div></div>', 'text/html');
-    const b = new window.DOMParser().parseFromString('<div router-view></div>', 'text/html');
+    const b = new window.DOMParser().parseFromString('<div data-router-view></div>', 'text/html');
 
     expect(Highway.Helpers.getView(a)).to.be.null;
     expect(Highway.Helpers.getView(b)).to.be.instanceof(Object);
@@ -64,8 +64,8 @@ describe('Highway.Helpers', () => {
     const b = document.createElement('div');
     const c = document.createElement('div');
 
-    b.setAttribute('router-view', '');
-    c.setAttribute('router-view', 'home');
+    b.setAttribute('data-router-view', '');
+    c.setAttribute('data-router-view', 'home');
 
     expect(Highway.Helpers.getSlug(a)).to.be.null;
     expect(Highway.Helpers.getSlug(b)).to.be.empty;
