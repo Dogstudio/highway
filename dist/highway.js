@@ -212,11 +212,11 @@ class Renderer {
    * Add view in DOM.
    */
   add() {
-    // We update the `[router-wrapper]`.
-    this.wrapper = document.querySelector('[router-wrapper]');
+    // We update the `[data-router-wrapper]`.
+    this.wrapper = document.querySelector('[data-router-wrapper]');
 
     // Before doing anything crazy you need to know your view doesn't exists
-    // in the [router-wrapper] so it is appended to it right now!
+    // in the [data-router-wrapper] so it is appended to it right now!
     this.wrapper.appendChild(this.view);
   }
 
@@ -224,7 +224,7 @@ class Renderer {
    * Remove view in DOM.
    */
   remove() {
-    // We update the `[router-wrapper]`.
+    // We update the `[data-router-wrapper]`.
     this.wrapper = this.view.parentNode;
 
     // It's time to say goodbye to the view... Farewell my friend.
@@ -398,18 +398,18 @@ class helpers_Helpers {
    * @static
    */
   static getView(page) {
-    return page.querySelector('[router-view]');
+    return page.querySelector('[data-router-view]');
   }
 
   /**
    * Get view's slug from view element
    *
-   * @arg    {string} view — [router-view] DOM
+   * @arg    {string} view — [data-router-view] DOM
    * @return {string} Page slug or `null`
    * @static
    */
   static getSlug(view) {
-    return view.getAttribute('router-view');
+    return view.getAttribute('data-router-view');
   }
 
   /**
@@ -748,11 +748,11 @@ class core_Core extends tiny_emitter_default.a {
 class Transition {
 
   /**
-   * @arg {object} view — [router-view] node
+   * @arg {object} view — [data-router-view] node
    * @constructor
    */
   constructor(view) {
-    // The [router-view] is the only main information we need since the role of
+    // The [data-router-view] is the only main information we need since the role of
     // the transition is to show/hide the required DOM elements.
     this.view = view;
   }

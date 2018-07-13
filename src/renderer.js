@@ -32,11 +32,11 @@ export default class Renderer {
    * Add view in DOM.
    */
   add() {
-    // We update the `[router-wrapper]`.
-    this.wrapper = document.querySelector('[router-wrapper]');
+    // We update the `[data-router-wrapper]`.
+    this.wrapper = document.querySelector('[data-router-wrapper]');
 
     // Before doing anything crazy you need to know your view doesn't exists
-    // in the [router-wrapper] so it is appended to it right now!
+    // in the [data-router-wrapper] so it is appended to it right now!
     this.wrapper.appendChild(this.view);
   }
 
@@ -44,7 +44,7 @@ export default class Renderer {
    * Remove view in DOM.
    */
   remove() {
-    // We update the `[router-wrapper]`.
+    // We update the `[data-router-wrapper]`.
     this.wrapper = this.view.parentNode;
 
     // It's time to say goodbye to the view... Farewell my friend.

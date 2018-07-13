@@ -95,18 +95,18 @@ export default class Helpers {
    * @static
    */
   static getView(page) {
-    return page.querySelector('[router-view]');
+    return page.querySelector('[data-router-view]');
   }
 
   /**
    * Get view's slug from view element
    *
-   * @arg    {string} view — [router-view] DOM
+   * @arg    {string} view — [data-router-view] DOM
    * @return {string} Page slug or `null`
    * @static
    */
   static getSlug(view) {
-    return view.getAttribute('router-view');
+    return view.getAttribute('data-router-view');
   }
 
   /**

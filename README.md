@@ -61,14 +61,14 @@ const H = new Highway.Core({
 });
 ```
 
-Finally, in order to work properly **Highway** needs a basic HTML structure. All you have to do is to put somewhere in your pages the `router-wrapper` that will contain and **only** contain the `router-view`. You need to understand that **Highway** will only change the `router-view` presents in the `router-wrapper`. Everything outside of the `router-wrapper` will stay the same all along the user's navigation.
+Finally, in order to work properly **Highway** needs a basic HTML structure. All you have to do is to put somewhere in your pages the `data-router-wrapper` that will contain and **only** contain the `router-view`. You need to understand that **Highway** will only change the `datarouter-view` presents in the `data-router-wrapper`. Everything outside of the `data-router-wrapper` will stay the same all along the user's navigation.
 
 ```html
 <!-- [...] -->
 <body>
   <!-- [...] -->
-  <main router-wrapper>
-    <article router-view>
+  <main data-router-wrapper>
+    <article data-router-view>
       <!-- [...] -->
     </article>
   </main>
@@ -88,15 +88,15 @@ Everytime you create a page that needs its own Javascript to work you need to re
 
 ### HTML
 
-About your HTML this is actually pretty simple... Remember the `router-view` you added to your DOM? You are going to name it and the name you are going to give to your `router-view` will be used later to identify it and relate it to the correct custom renderer in Javascript.
+About your HTML this is actually pretty simple... Remember the `data-router-view` you added to your DOM? You are going to name it and the name you are going to give to your `data-router-view` will be used later to identify it and relate it to the correct custom renderer in Javascript.
 
 **index.html**
 ```html
 <!-- [...] -->
 <body>
   <!-- [...] -->
-  <main router-wrapper>
-    <article router-view="home">
+  <main data-router-wrapper>
+    <article data-router-view="home">
       <!-- [...] -->
     </article>
   </main>
@@ -124,15 +124,15 @@ export default Home;
 
 Besides the required methods from **Highway** present in the `Highway.Renderer` you have access to **optional** ones that are called all along the process of the navigation. Here is the list of these **optional** methods:
 
-- `onEnter`: Called when the transition `in` starts & the `router-view` is added to `router-wrapper`.
+- `onEnter`: Called when the transition `in` starts & the `data-router-view` is added to `data-router-wrapper`.
 - `onLeave`: Called when the transition `out` starts.
 - `onEnterCompleted`: Called when the transition `in` is over.
-- `onLeaveCompleted`: Called when the transition `out` is over & the `router-view` is removed from `router-wrapper`.
+- `onLeaveCompleted`: Called when the transition `out` is over & the `data-router-view` is removed from `data-router-wrapper`.
 
 `Highway.Renderer` also gives you access to useful variables you will be able to use in your own code:
 
 - `this.page`: The full DOM of the page related to the renderer.
-- `this.view`: The `[router-view]` of the page related to the renderer.
+- `this.view`: The `[data-router-view]` of the page related to the renderer.
 
 **home.js**
 ```javascript
@@ -151,13 +151,13 @@ export default Home;
 ```
 
 Now your custom renderer is created you need to add it to the renderers list of `Highway.Core`...  
-Remember the name you gave to your `router-view`, it's now time to relate it to your custom renderer.
+Remember the name you gave to your `data-router-view`, it's now time to relate it to your custom renderer.
 
 ```javascript
 // Import Renderers
 import Home from 'path/to/home.js';
 
-// Relate you renderer to your [router-view] name
+// Relate you renderer to your [data-router-view] name
 const H = new Highway.Core({
   renderers: {
     home: Home
@@ -175,12 +175,12 @@ Don't be afraid, let's now see how to create our first transition!
 
 Transitions in **Highway** are really simple, you need to extend `Highway.Transition` and provide two required methods:
 
-- `in`: The `in` method should contain the transition to show a `[router-view]`.
-- `out`: The `out` method should contain the transition to hide a `[router-view]`.
+- `in`: The `in` method should contain the transition to show a `[data-router-view]`.
+- `out`: The `out` method should contain the transition to hide a `[data-router-view]`.
 
 Each one get two parameters you can name howewer you want but here are good defaults:
 
-- `view`: The `[router-view]` you will show/hide.
+- `view`: The `[data-router-view]` you will show/hide.
 - `done`: The callback method **you have to** call once the `in` and `out` transitions are over.
 
 **transition.js**
@@ -203,7 +203,7 @@ export default Transition;
 ```
 
 Now your transition is created you need to add it to the transitions list of `Highway.Core`...  
-Remember the name you gave to you `router-view`, it's now time to relate it to your transition.
+Remember the name you gave to you `data-router-view`, it's now time to relate it to your transition.
 
 ```javascript
 // Import Renderers
@@ -212,7 +212,7 @@ import Home from 'path/to/home.js';
 // Import Transitions
 import Transition from 'path/to/transition.js';
 
-// Relate you transition to your [router-view] name
+// Relate you transition to your [data-router-view] name
 const H = new Highway.Core({
   renderers: {
     home: Home
@@ -223,7 +223,7 @@ const H = new Highway.Core({
 });
 ```
 
-Finally you might want to use the same transition for all the pages across your website. This is possible by adding a `default` key to your transitions list. When you do so, for each page, **Highway** will look for a transition in the list related to your `router-view` name and fallback to the `default` one if none is found.
+Finally you might want to use the same transition for all the pages across your website. This is possible by adding a `default` key to your transitions list. When you do so, for each page, **Highway** will look for a transition in the list related to your `data-router-view` name and fallback to the `default` one if none is found.
 
 ```javascript
 // [...]

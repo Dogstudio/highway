@@ -6,11 +6,11 @@
 export default class Transition {
 
   /**
-   * @arg {object} view — [router-view] node
+   * @arg {object} view — [data-router-view] node
    * @constructor
    */
   constructor(view) {
-    // The [router-view] is the only main information we need since the role of
+    // The [data-router-view] is the only main information we need since the role of
     // the transition is to show/hide the required DOM elements.
     this.view = view;
   }
