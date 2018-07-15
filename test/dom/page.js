@@ -8,8 +8,8 @@ const HTML = `
     <title>Page</title>
   </head>
   <body class="bar">
-    <main router-wrapper>
-      <article router-view="page"></article>
+    <main data-router-wrapper>
+      <article data-router-view="page"></article>
     </main>
   </body>
 </html>`;
@@ -18,7 +18,7 @@ const HTML = `
 const DOM = new window.DOMParser().parseFromString(HTML, 'text/html');
 
 // We now get the `[router-view]` from the fake DOM.
-const VIEW = DOM.querySelector('[router-view]');
+const VIEW = DOM.querySelector('[data-router-view]');
 
 // Export instance
 export default new Highway.Renderer({

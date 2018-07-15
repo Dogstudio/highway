@@ -986,7 +986,9 @@ __webpack_require__(47);
 
 __webpack_require__(34);
 
-function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } } function _next(value) { step("next", value); } function _throw(err) { step("throw", err); } _next(); }); }; }
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -1034,9 +1036,9 @@ function () {
   }, {
     key: "add",
     value: function add() {
-      // We update the `[router-wrapper]`.
-      this.wrapper = document.querySelector('[router-wrapper]'); // Before doing anything crazy you need to know your view doesn't exists
-      // in the [router-wrapper] so it is appended to it right now!
+      // We update the `[data-router-wrapper]`.
+      this.wrapper = document.querySelector('[data-router-wrapper]'); // Before doing anything crazy you need to know your view doesn't exists
+      // in the [data-router-wrapper] so it is appended to it right now!
 
       this.wrapper.appendChild(this.view);
     }
@@ -1047,7 +1049,7 @@ function () {
   }, {
     key: "remove",
     value: function remove() {
-      // We update the `[router-wrapper]`.
+      // We update the `[data-router-wrapper]`.
       this.wrapper = this.view.parentNode; // It's time to say goodbye to the view... Farewell my friend.
 
       this.wrapper.removeChild(this.view);
@@ -1360,12 +1362,12 @@ function () {
   }, {
     key: "getView",
     value: function getView(page) {
-      return page.querySelector('[router-view]');
+      return page.querySelector('[data-router-view]');
     }
     /**
      * Get view's slug from view element
      *
-     * @arg    {string} view — [router-view] DOM
+     * @arg    {string} view — [data-router-view] DOM
      * @return {string} Page slug or `null`
      * @static
      */
@@ -1373,7 +1375,7 @@ function () {
   }, {
     key: "getSlug",
     value: function getSlug(view) {
-      return view.getAttribute('router-view');
+      return view.getAttribute('data-router-view');
     }
     /**
      * Get page renderer
@@ -2695,13 +2697,13 @@ var Transition =
 /*#__PURE__*/
 function () {
   /**
-   * @arg {object} view — [router-view] node
+   * @arg {object} view — [data-router-view] node
    * @constructor
    */
   function Transition(view) {
     _classCallCheck(this, Transition);
 
-    // The [router-view] is the only main information we need since the role of
+    // The [data-router-view] is the only main information we need since the role of
     // the transition is to show/hide the required DOM elements.
     this.view = view;
   }
@@ -4047,7 +4049,9 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
-function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } } function _next(value) { step("next", value); } function _throw(err) { step("throw", err); } _next(); }); }; }
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
