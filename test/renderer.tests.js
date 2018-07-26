@@ -58,13 +58,7 @@ describe('Highway.Renderer', () => {
   it('Should update the document on `update`', () => {
     Page.update();
 
-    const a = document.title;
-    const b = document.body.className;
-    const c = document.documentElement.className;
-
-    expect(a).to.equal('Page');
-    expect(b).to.equal('bar');
-    expect(c).to.equal('foo');
+    expect(document.title).to.equal('Page');
   });
 
   it('Should call `add`, `update`, `onEnter` and `onEnterCompleted` on `show`', () => {

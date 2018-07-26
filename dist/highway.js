@@ -236,10 +236,8 @@ class Renderer {
    */
   update() {
     // Now we update all the informations in the DOM we need!
-    // We update the class attribute on the `html` and `body` tag and the title
+    // We update the title
     document.title = this.page.title;
-    document.body.className = this.page.body.className;
-    document.documentElement.className = this.page.documentElement.className;
   }
 
   /**
