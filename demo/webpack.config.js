@@ -14,7 +14,7 @@ module.exports = {
   },
   resolve: {
     alias: {
-      'highway': 'build/highway'
+      'highway': 'build/highway.min.js'
     },
     modules: ['.', 'node_modules'],
     extensions: ['.js']
