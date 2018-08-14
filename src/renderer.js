@@ -11,7 +11,7 @@ export default class Renderer {
    */
   constructor(props) {
     // We get the view.
-    this.root = document.querySelector('[router-view]');
+    this.root = document.querySelector('[data-router-view]');
 
     // We save fetched informations
     this.page = props.page;
@@ -36,8 +36,8 @@ export default class Renderer {
    * Add view in DOM.
    */
   add() {
-    // We update the [router-view] slug
-    this.root.setAttribute('router-view', this.slug);
+    // We update the [data-router-view] slug
+    this.root.setAttribute('data-router-view', this.slug);
 
     // And HTML
     this.root.innerHTML = this.view.innerHTML;

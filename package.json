@@ -3,10 +3,10 @@
   "license": "MIT",
   "version": "2.0.2-beta",
   "description": "Highway helps you manage your page transitions",
-  "main": "dist/highway.js",
-  "unpkg": "dist/highway.min.js",
+  "main": "build/highway.js",
+  "unpkg": "build/highway.min.js",
   "files": [
-    "dist"
+    "build"
   ],
   "contributors": [
     {
@@ -16,8 +16,8 @@
     }
   ],
   "scripts": {
-    "cleanES5": "rm -rf dist/es5",
-    "cleanES6": "rm -rf dist/highway.*",
+    "cleanES5": "rm -rf build/es5",
+    "cleanES6": "rm -rf build/highway.*",
     "buildES5": "npm run cleanES5 && webpack --config webpack.es5.js",
     "buildES6": "npm run cleanES6 && webpack --config webpack.es6.js",
     "clean": "npm run cleanES5 && npm run cleanES6",

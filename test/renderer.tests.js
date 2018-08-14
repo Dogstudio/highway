@@ -39,7 +39,7 @@ describe('Highway.Renderer', () => {
     expect(Home.onEnterCompleted.calledOnce).to.equal(true);
   });
 
-  it('Should remove `[router-view]` from the document on `remove`', () => {
+  it('Should remove `[data-router-view]` from the document on `remove`', () => {
     Home.root = document.createElement('div');
     Home.root.innerHTML = '<p></p>';
     Home.remove();
@@ -47,7 +47,7 @@ describe('Highway.Renderer', () => {
     expect(Home.root.innerHTML).to.be.empty;
   });
 
-  it('Should add `[router-view]` to the document on `add`', () => {
+  it('Should add `[data-router-view]` to the document on `add`', () => {
     Home.root = document.createElement('div');
     Home.root.innerHTML = '<p></p>';
     Page.add();

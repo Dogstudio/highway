@@ -16,7 +16,7 @@ module.exports = {
     'highway.min': path.resolve(__dirname, 'src/index.js')
   },
   output: {
-    path: path.resolve(__dirname, 'dist', 'es5'),
+    path: path.resolve(__dirname, 'build', 'es5'),
     filename: '[name].js',
     library: 'Highway',
     libraryTarget: 'umd',
