@@ -11,15 +11,19 @@ import Examples from 'renderers/examples';
 import Fade from 'transitions/fade';
 
 (() => {
-  new Highway.Core({
+  const H = new Highway.Core({
     renderers: {
       home: Home,
       about: About,
       features: Features,
-      examples: Examples,
+      examples: Examples
     },
     transitions: {
       default: Fade
     }
   });
+
+  setTimeout(() => {
+    H.location(`${window.location.origin}/about.php`);
+  }, 5000);
 })();

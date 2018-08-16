@@ -125,16 +125,25 @@ export default class Core extends Emitter {
     // Now get the URL of the target element!
     const { href } = event.currentTarget;
 
+    // Check
+    this.check(href);
+  }
+
+  /**
+   * Check if an URL is elligible
+   * @param {string} url - URL
+   */
+  check(url) {
     // We get the anchor and the pathname of the link that the user clicked
     // in order to compare it with the current state and handle the `click`
     // event appropriately.
-    const anchor = Helpers.getAnchor(href);
-    const params = Helpers.getParams(href);
-    const pathname = Helpers.getPathname(href);
+    const anchor = Helpers.getAnchor(url);
+    const params = Helpers.getParams(url);
+    const pathname = Helpers.getPathname(url);
 
     if (!this.navigating && pathname !== this.state.pathname && !params) {
       // Update link
-      this.link = event.currentTarget;
+      this.link = url;
 
       // Now push the state!
       this.pushState();
@@ -144,7 +153,7 @@ export default class Core extends Emitter {
       // it so we need to check it and reload the page to use the default
       // browser behaviour.
       if (anchor || params) {
-        window.location.href = href;
+        window.location.href = url;
       }
 
     }
@@ -168,7 +177,7 @@ export default class Core extends Emitter {
    */
   pushState() {
     // We update the state based on the clicked link `href` property.
-    const state = this.getState(this.link.href);
+    const state = this.getState(this.link);
 
     // We push a new entry in the history in order to be able to navigate
     // with the backward and forward buttons from the browser.
@@ -295,5 +304,14 @@ export default class Core extends Emitter {
     // We prepare the next navigation by replacing the `from` renderer by
     // the `to` renderer now that the pages have been swapped successfully.
     this.From = this.To;
+  }
+
+  /**
+   * Change location through Highway
+   * @param {string} url - URL
+   */
+  location(url) {
+    // Check URL
+    this.check(url);
   }
 }

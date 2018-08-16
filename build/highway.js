@@ -576,16 +576,25 @@ class core_Core extends tiny_emitter_default.a {
     // Now get the URL of the target element!
     const { href } = event.currentTarget;
 
+    // Check
+    this.check(href);
+  }
+
+  /**
+   * Check if an URL is elligible
+   * @param {string} url - URL
+   */
+  check(url) {
     // We get the anchor and the pathname of the link that the user clicked
     // in order to compare it with the current state and handle the `click`
     // event appropriately.
-    const anchor = helpers_Helpers.getAnchor(href);
-    const params = helpers_Helpers.getParams(href);
-    const pathname = helpers_Helpers.getPathname(href);
+    const anchor = helpers_Helpers.getAnchor(url);
+    const params = helpers_Helpers.getParams(url);
+    const pathname = helpers_Helpers.getPathname(url);
 
     if (!this.navigating && pathname !== this.state.pathname && !params) {
       // Update link
-      this.link = event.currentTarget;
+      this.link = url;
 
       // Now push the state!
       this.pushState();
@@ -595,7 +604,7 @@ class core_Core extends tiny_emitter_default.a {
       // it so we need to check it and reload the page to use the default
       // browser behaviour.
       if (anchor || params) {
-        window.location.href = href;
+        window.location.href = url;
       }
 
     }
@@ -619,7 +628,7 @@ class core_Core extends tiny_emitter_default.a {
    */
   pushState() {
     // We update the state based on the clicked link `href` property.
-    const state = this.getState(this.link.href);
+    const state = this.getState(this.link);
 
     // We push a new entry in the history in order to be able to navigate
     // with the backward and forward buttons from the browser.
@@ -746,6 +755,15 @@ class core_Core extends tiny_emitter_default.a {
     // We prepare the next navigation by replacing the `from` renderer by
     // the `to` renderer now that the pages have been swapped successfully.
     this.From = this.To;
+  }
+
+  /**
+   * Change location through Highway
+   * @param {string} url - URL
+   */
+  location(url) {
+    // Check URL
+    this.check(url);
   }
 }
 
