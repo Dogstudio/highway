@@ -13,7 +13,16 @@ class Fade extends Highway.Transition {
     // Animation
     Tween.fromTo(view, 1,
       { opacity: 0 },
-      { opacity: 1, onComplete: done }
+      {
+        opacity: 1,
+        onComplete: () => {
+          // Tracing
+          console.log('End: Fade.in()');
+
+          // Done
+          done();
+        }
+      }
     );
   }
 
@@ -24,7 +33,16 @@ class Fade extends Highway.Transition {
     // Animation
     Tween.fromTo(view, 1,
       { opacity: 1 },
-      { opacity: 0, onComplete: done }
+      {
+        opacity: 0,
+        onComplete: () => {
+          // Tracing
+          console.log('End: Fade.out()');
+
+          // Done
+          done();
+        }
+      }
     );
   }
 }

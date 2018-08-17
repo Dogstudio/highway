@@ -137,11 +137,21 @@ export default class Core extends Emitter {
     // We get the anchor and the pathname of the link that the user clicked
     // in order to compare it with the current state and handle the `click`
     // event appropriately.
-    const anchor = Helpers.getAnchor(url);
     const params = Helpers.getParams(url);
     const pathname = Helpers.getPathname(url);
 
-    if (!this.navigating && pathname !== this.state.pathname && !params) {
+    if (!this.navigating && (pathname !== this.state.pathname || params)) {
+      // Check if the pathname and the parameters are the same.
+      // This is the easy way of comparing 2 objects but not the most robust.
+      if (pathname === this.state.pathname && params) {
+        const oldParams = JSON.stringify(this.state.params);
+        const newParams = JSON.stringify(params);
+
+        if (oldParams === newParams) {
+          return;
+        }
+      }
+
       // Update link
       this.link = url;
 
@@ -149,10 +159,13 @@ export default class Core extends Emitter {
       this.pushState();
 
     } else {
+      // Check if there are anchors
+      const anchor = Helpers.getAnchor(url);
+
       // If the pathnames are the same there might be an anchor appended to
       // it so we need to check it and reload the page to use the default
       // browser behaviour.
-      if (anchor || params) {
+      if (anchor) {
         window.location.href = url;
       }
 
@@ -213,7 +226,8 @@ export default class Core extends Emitter {
 
     // We check cache to avoid unecessary HTTP requests.
     if (!this.cache.has(this.state.pathname)) {
-      // We pause the script and wait for the new page to be fetched
+      // We pause the script and wait for the `from` renderer to be completely
+      // hidden and removed from the DOM. The new page is fetched in parallel.
       const results = await Promise.all([
         this.fetch(),
         this.From.hide()

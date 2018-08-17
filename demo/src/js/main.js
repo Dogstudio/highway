@@ -22,4 +22,16 @@ import Fade from 'transitions/fade';
       default: Fade
     }
   });
+
+  // Events
+  H.on('NAVIGATE_END', (from, to, state) => {
+    // Check Anchor
+    if (state.anchor) {
+      const el = document.querySelector(state.anchor);
+
+      if (el) {
+        window.scrollTo(el.offsetLeft, el.offsetTop);
+      }
+    }
+  });
 })();
