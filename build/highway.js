@@ -658,10 +658,6 @@ class core_Core extends tiny_emitter_default.a {
     // Unbind events
     this.unbind();
 
-    // We pause the script and wait for the `from` renderer to be completely
-    // hidden and removed from the DOM.
-    await this.From.hide();
-
     // Update state with the one returne by the browser history. Basically
     // this is the state that was previously pushed by `history.pushState`.
     this.state = state;
@@ -669,15 +665,22 @@ class core_Core extends tiny_emitter_default.a {
     // We check cache to avoid unecessary HTTP requests.
     if (!this.cache.has(this.state.pathname)) {
       // We pause the script and wait for the new page to be fetched
-      const page = await this.fetch();
+      const results = await Promise.all([
+        this.fetch(),
+        this.From.hide()
+      ]);
 
       // Update properties with fetched page.
-      this.props = this.getProps(page);
+      this.props = this.getProps(results[0]);
 
       // Cache page
       this.cache.set(this.state.pathname, this.props);
 
     } else {
+      // We pause the script and wait for the `from` renderer to be completely
+      // hidden and removed from the DOM.
+      await this.From.hide();
+
       // Now we can update the properties from cache.
       this.props = this.cache.get(this.state.pathname);
 

@@ -22,8 +22,4 @@ import Fade from 'transitions/fade';
       default: Fade
     }
   });
-
-  setTimeout(() => {
-    H.location(`${window.location.origin}/about.php`);
-  }, 5000);
 })();
