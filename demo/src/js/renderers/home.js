@@ -5,22 +5,21 @@ import Highway from 'highway';
 class Home extends Highway.Renderer {
 
   onEnter() {
-    console.log('Load: Home');
-    console.log('----------');
-    console.log('Call: Home.onEnter()');
+    window.Console.clear();
+    window.Console.log('Load: <b>Home</b>');
+    window.Console.log('Call: <b>Home.onEnter()</b>');
   }
 
   onLeave() {
-    console.log('Call: Home.onLeave()');
+    window.Console.log('Call: <b>Home.onLeave()</b>');
   }
 
   onEnterCompleted() {
-    console.log('Call: Home.onEnterCompleted()');
+    window.Console.log('Call: <b>Home.onEnterCompleted()</b>');
   }
 
   onLeaveCompleted() {
-    console.log('Call: Home.onLeaveCompleted()');
-    console.log('----------');
+    window.Console.log('Call: <b>Home.onLeaveCompleted()</b>');
   }
 }
 

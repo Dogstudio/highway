@@ -1,0 +1,180 @@
+html {
+  box-sizing: border-box;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+}
+
+body {
+  color: rgba(20, 50, 120, .6);
+  font-family: Helvetica, Arial, sans-serif;
+  font-size: 14px;
+  line-height: 2;
+}
+
+/** Console **/
+.console {
+  position: fixed;
+  top: 0;
+  right: 0;
+  display: none;
+  width: 300px;
+  padding: 30px;
+  background-color: #222;
+  z-index: 999;
+}
+
+.console h2 {
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.console h2 + * {
+  margin-top: 10px;
+}
+
+.console p {
+  font-size: 13px;
+}
+
+/** Typography **/
+b,
+strong {
+  color: #ff4940;
+  font-weight: 700;
+}
+
+i,
+em {
+  font-style: italic;
+}
+
+a {
+  transition: color .3s ease-out;
+  color: #ff4940;
+  text-decoration: none;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: #222;
+  font-weight: 700;
+}
+
+h1 {
+  margin-bottom: 30px;
+  font-size: 28px;
+}
+
+h2 {
+  margin-bottom: 20px;
+  font-size: 20px;
+}
+
+h3,
+h4,
+h5,
+h6 {
+  margin-bottom: 15px;
+  font-size: 16px;
+}
+
+/** Structure **/
+main {
+  display: flex;
+  flex-wrap: wrap;
+  width: 1100px;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+header {
+  width: 200px;
+  min-height: 100vh;
+  padding-top: 40px;
+  padding-right: 40px;
+  border-right: 1px solid rgb(219, 223, 244);
+}
+
+article {
+  width: calc(100% - 200px);
+  padding-top: 125px;
+  padding-left: 80px;
+}
+
+/** Header - Logo **/
+.site-logo {
+  display: block;
+  width: 121px;
+  height: 44px;
+  margin-right: auto;
+  margin-bottom: 40px;
+  margin-left: auto;
+}
+
+.site-logo img {
+  display: block;
+  width: 100%;
+}
+
+/** Header - Menu **/
+.site-menu .menu-item:last-child a {
+  border-bottom: none;
+}
+
+.site-menu .menu-parent > a::after {
+  content: '';
+  display: inline-block;
+  margin-left: 10px;
+  border-top: 4px solid #222;
+  border-right: 4px solid transparent;
+  border-left: 4px solid transparent;
+  vertical-align: middle;
+}
+
+.site-menu .menu-parent:hover .menu-child {
+  display: block;
+}
+
+.site-menu .menu-child {
+  display: none;
+  border-bottom: 1px solid rgb(219, 223, 244);
+}
+
+.site-menu .menu-child a {
+  padding-left: 20px;
+}
+
+.site-menu a {
+  display: block;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid rgb(219, 223, 244);
+  font-weight: 700;
+}
+
+.site-menu a:hover,
+.site-menu a.is-active {
+  color: #222;
+}
+
+/** Content **/
+.site-content p + * {
+  margin-top: 20px;
+}
+
+.site-content p + h1,
+.site-content p + h2,
+.site-content p + h3,
+.site-content p + h4,
+.site-content p + h5,
+.site-content p + h6 {
+  margin-top: 30px;
+}

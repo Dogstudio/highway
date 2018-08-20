@@ -4,24 +4,21 @@
     <?php include('./parts/head.php'); ?>
 </head>
 <body>
-    <main>
+    <main class="site-container">
         <?php include('./parts/header.php'); ?>
 
-        <article data-router-view="features">
+        <article class="site-content" data-router-view="features">
             <h1>Features</h1>
+            <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ex commodi aperiam non eum, ratione perspiciatis dolorem facilis, aspernatur magnam dolorum animi maiores corrupti, excepturi blanditiis repellendus. Provident molestias esse autem!</p>
+            <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Labore quaerat magni vero cupiditate temporibus ipsam! Illum praesentium fugit cupiditate deserunt? Quisquam aperiam adipisci accusamus dolorum soluta laboriosam asperiores laborum unde!</p>
 
-            <ul>
-              <li><a href="#renderers">Renderers</a></li>
-              <li><a href="#transitions">Transitions</a></li>
-            </ul>
+            <h2 id="renderers">Renderers</h2>
+            <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ex commodi aperiam non eum, ratione perspiciatis dolorem facilis, aspernatur magnam dolorum animi maiores corrupti, excepturi blanditiis repellendus. Provident molestias esse autem!</p>
+            <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Labore quaerat magni vero cupiditate temporibus ipsam! Illum praesentium fugit cupiditate deserunt? Quisquam aperiam adipisci accusamus dolorum soluta laboriosam asperiores laborum unde!</p>
 
-            <section id="renderers">
-              <h2>Renderers</h2>
-            </section>
-
-            <section id="transitions">
-              <h2>Transitions</h2>
-            </section>
+            <h2 id="transitions">Transitions</h2>
+            <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ex commodi aperiam non eum, ratione perspiciatis dolorem facilis, aspernatur magnam dolorum animi maiores corrupti, excepturi blanditiis repellendus. Provident molestias esse autem!</p>
+            <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Labore quaerat magni vero cupiditate temporibus ipsam! Illum praesentium fugit cupiditate deserunt? Quisquam aperiam adipisci accusamus dolorum soluta laboriosam asperiores laborum unde!</p>
         </article>
     </main>
 

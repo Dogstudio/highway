@@ -4,10 +4,10 @@
     <?php include('./parts/head.php'); ?>
 </head>
 <body>
-    <main>
+    <main class="site-container">
         <?php include('./parts/header.php'); ?>
 
-        <article data-router-view="about">
+        <article class="site-content" data-router-view="about">
             <h1>About</h1>
         </article>
     </main>
