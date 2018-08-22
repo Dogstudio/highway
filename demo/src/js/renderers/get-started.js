@@ -2,12 +2,12 @@
 import Highway from 'highway';
 
 // Renderer
-class Features extends Highway.Renderer {
+class GetStarted extends Highway.Renderer {
 
   onEnter() {
     window.Console.clear();
-    window.Console.log('<span>Load:</span> <b>Features</b>');
-    window.Console.log('<span>Call:</span> <b>Features.onEnter()</b>');
+    window.Console.log('<span>Load:</span> <b>GetStarted</b>');
+    window.Console.log('<span>Call:</span> <b>GetStarted.onEnter()</b>');
 
     // Highlight.js
     const codes = document.querySelectorAll('pre code');
@@ -23,16 +23,16 @@ class Features extends Highway.Renderer {
   }
 
   onLeave() {
-    window.Console.log('<span>Call:</span> <b>Features.onLeave()</b>');
+    window.Console.log('<span>Call:</span> <b>GetStarted.onLeave()</b>');
   }
 
   onEnterCompleted() {
-    window.Console.log('<span>Call:</span> <b>Features.onEnterCompleted()</b>');
+    window.Console.log('<span>Call:</span> <b>GetStarted.onEnterCompleted()</b>');
   }
 
   onLeaveCompleted() {
-    window.Console.log('<span>Call:</span> <b>Features.onLeaveCompleted()</b>');
+    window.Console.log('<span>Call:</span> <b>GetStarted.onLeaveCompleted()</b>');
   }
 }
 
-export default Features;
+export default GetStarted;

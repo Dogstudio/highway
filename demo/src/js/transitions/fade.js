@@ -8,16 +8,16 @@ import Tween from 'gsap';
 class Fade extends Highway.Transition {
   in(view, done) {
     // Tracing
-    window.Console.log('Call: <b>Fade.in()</b>');
+    window.Console.log('<span>Call:</span> <b>Fade.in()</b>');
 
     // Animation
-    Tween.fromTo(view, 1,
+    Tween.fromTo(view, 0.5,
       { opacity: 0 },
       {
         opacity: 1,
         onComplete: () => {
           // Tracing
-          window.Console.log('End: <b>Fade.in()</b>');
+          window.Console.log('<span>End:</span> <b>Fade.in()</b>');
 
           // Done
           done();
@@ -28,16 +28,16 @@ class Fade extends Highway.Transition {
 
   out(view, done) {
     // Tracing
-    window.Console.log('Call: <b>Fade.out()</b>');
+    window.Console.log('<span>Call:</span> <b>Fade.out()</b>');
 
     // Animation
-    Tween.fromTo(view, 1,
+    Tween.fromTo(view, 0.5,
       { opacity: 1 },
       {
         opacity: 0,
         onComplete: () => {
           // Tracing
-          window.Console.log('End: <b>Fade.out()</b>');
+          window.Console.log('<span>End:</span> <b>Fade.out()</b>');
 
           // Done
           done();

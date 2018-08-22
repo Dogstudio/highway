@@ -6,20 +6,20 @@ class Examples extends Highway.Renderer {
 
   onEnter() {
     window.Console.clear();
-    window.Console.log('Load: <b>Examples</b>');
-    window.Console.log('Call: <b>Examples.onEnter()</b>');
+    window.Console.log('<span>Load:</span> <b>Examples</b>');
+    window.Console.log('<span>Call:</span> <b>Examples.onEnter()</b>');
   }
 
   onLeave() {
-    window.Console.log('Call: <b>Examples.onLeave()</b>');
+    window.Console.log('<span>Call:</span> <b>Examples.onLeave()</b>');
   }
 
   onEnterCompleted() {
-    window.Console.log('Call: <b>Examples.onEnterCompleted()</b>');
+    window.Console.log('<span>Call:</span> <b>Examples.onEnterCompleted()</b>');
   }
 
   onLeaveCompleted() {
-    window.Console.log('Call: <b>Examples.onLeaveCompleted()</b>');
+    window.Console.log('<span>Call:</span> <b>Examples.onLeaveCompleted()</b>');
   }
 }
 

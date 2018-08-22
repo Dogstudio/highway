@@ -6,20 +6,20 @@ class Home extends Highway.Renderer {
 
   onEnter() {
     window.Console.clear();
-    window.Console.log('Load: <b>Home</b>');
-    window.Console.log('Call: <b>Home.onEnter()</b>');
+    window.Console.log('<span>Load:</span> <b>Home</b>');
+    window.Console.log('<span>Call:</span> <b>Home.onEnter()</b>');
   }
 
   onLeave() {
-    window.Console.log('Call: <b>Home.onLeave()</b>');
+    window.Console.log('<span>Call:</span> <b>Home.onLeave()</b>');
   }
 
   onEnterCompleted() {
-    window.Console.log('Call: <b>Home.onEnterCompleted()</b>');
+    window.Console.log('<span>Call:</span> <b>Home.onEnterCompleted()</b>');
   }
 
   onLeaveCompleted() {
-    window.Console.log('Call: <b>Home.onLeaveCompleted()</b>');
+    window.Console.log('<span>Call:</span> <b>Home.onLeaveCompleted()</b>');
   }
 }
 
