@@ -10,8 +10,10 @@
             <li class="menu-parent">
                 <a href="/get-started.php">Get started</a>
                 <ul class="menu-child">
+                    <li class="menu-item"><a href="/get-started.php#structure">Structure</a></li>
                     <li class="menu-item"><a href="/get-started.php#renderers">Renderers</a></li>
                     <li class="menu-item"><a href="/get-started.php#transitions">Transitions</a></li>
+                    <li class="menu-item"><a href="/get-started.php#core">Core</a></li>
                 </ul>
             </li>
             <li class="menu-item"><a href="/examples.php">Examples</a></li>
