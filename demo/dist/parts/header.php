@@ -16,6 +16,7 @@
                     <li class="menu-item"><a href="/get-started.php#core">Core</a></li>
                 </ul>
             </li>
+            <li class="menu-item"><a href="/api.php">API</a></li>
             <li class="menu-item"><a href="/examples.php">Examples</a></li>
             <li class="menu-item"><a href="https://github.com/Dogstudio/highway" target="_blank">Github</a></li>
         </ul>

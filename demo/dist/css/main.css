@@ -14,7 +14,7 @@ body {
   color: rgba(145, 148, 168, 1);
   font-family: Heebo, Helvetica, sans-serif;
   font-size: 15px;
-  line-height: 2;
+  line-height: 1.8;
 }
 
 /** Console **/
@@ -209,7 +209,7 @@ article {
 
 .site-content ul li + li,
 .site-content ol li + li {
-  margin-top: 10px;
+  margin-top: 0px;
 }
 
 .site-content ul li::before {

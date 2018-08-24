@@ -2,6 +2,7 @@
 import Highway from 'highway';
 
 // Renderers
+import API from 'renderers/api';
 import Home from 'renderers/home';
 import Features from 'renderers/features';
 import Examples from 'renderers/examples';
@@ -21,6 +22,7 @@ import Console from 'console';
   // Highway
   const H = new Highway.Core({
     renderers: {
+      'api': API,
       'home': Home,
       'features': Features,
       'examples': Examples,
