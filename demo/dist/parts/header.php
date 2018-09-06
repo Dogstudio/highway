@@ -5,7 +5,7 @@
 
     <nav class="site-menu">
         <ul>
-            <li class="menu-item"><a href="/">Home</a></li>
+            <li class="menu-item"><a href="/">Introduction</a></li>
             <li class="menu-item"><a href="/installation.php">Installation</a></li>
             <li class="menu-parent">
                 <a href="/get-started.php">Get started</a>
