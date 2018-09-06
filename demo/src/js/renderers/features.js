@@ -5,10 +5,6 @@ import Highway from 'highway';
 class Features extends Highway.Renderer {
 
   onEnter() {
-    window.Console.clear();
-    window.Console.log('<span>Load:</span> <b>Features</b>');
-    window.Console.log('<span>Call:</span> <b>Features.onEnter()</b>');
-
     // Highlight.js
     const codes = document.querySelectorAll('pre code');
 
@@ -20,18 +16,6 @@ class Features extends Highway.Renderer {
       // eslint-disable-next-line
       hljs.highlightBlock(code);
     }
-  }
-
-  onLeave() {
-    window.Console.log('<span>Call:</span> <b>Features.onLeave()</b>');
-  }
-
-  onEnterCompleted() {
-    window.Console.log('<span>Call:</span> <b>Features.onEnterCompleted()</b>');
-  }
-
-  onLeaveCompleted() {
-    window.Console.log('<span>Call:</span> <b>Features.onLeaveCompleted()</b>');
   }
 }
 

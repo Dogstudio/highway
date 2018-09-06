@@ -2,8 +2,6 @@
 import Highway from 'highway';
 
 // Renderers
-import API from 'renderers/api';
-import Home from 'renderers/home';
 import Features from 'renderers/features';
 import Examples from 'renderers/examples';
 import GetStarted from 'renderers/get-started';
@@ -12,18 +10,10 @@ import Installation from 'renderers/installation';
 // Transitions
 import Fade from 'transitions/fade';
 
-// Console
-import Console from 'console';
-
 (() => {
-  // Console
-  window.Console = Console;
-
   // Highway
   const H = new Highway.Core({
     renderers: {
-      'api': API,
-      'home': Home,
       'features': Features,
       'examples': Examples,
       'get-started': GetStarted,

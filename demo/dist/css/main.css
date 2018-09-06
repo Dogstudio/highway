@@ -122,6 +122,12 @@ article {
 }
 
 /** Header - Logo **/
+.site-header-buttons {
+  position: absolute;
+  top: 47px;
+  left: 280px;
+}
+
 .site-logo {
   display: block;
   width: 121px;
@@ -175,6 +181,18 @@ article {
 .site-menu a:hover,
 .site-menu a.is-active {
   color: #222;
+}
+
+/** Footer **/
+.site-footer {
+  padding: 40px 0 20px;
+  border-top: 1px solid rgb(219, 223, 244);
+  font-size: 13px;
+  text-align: center;
+}
+
+.site-footer-buttons {
+  margin-bottom: 15px;
 }
 
 /** Content **/
@@ -372,4 +390,15 @@ article {
   font-family: FiraCode, sans-serif;
   font-size: 12px;
   line-height: 20px;
+}
+
+/** Responsive **/
+@media only screen and (min-width: 960px) {
+  .site-header-inner {
+    position: fixed;
+    top: 40px;
+    left: 50%;
+    width: 160px;
+    transform: translateX(-480px);
+  }
 }
