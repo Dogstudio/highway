@@ -32,7 +32,7 @@
 
             <ul>
                 <li><strong>this.page</strong>: The full DOM of the view the renderer is attached to.</li>
-                <li><strong>this.view</strong>: The <strong>[data-router-view]</strong> of the view the renderer is attached to.</li>
+                <li><strong>this.root</strong>: The <strong>[data-router-view]</strong> of the view the renderer is attached to.</li>
             </ul>
 
             <p>Long story short, let see what a custom renderer look like:</p>
@@ -47,7 +47,7 @@
                 <li><strong>out</strong>: The method that should contain the transition to hide a <strong>data-router-view</strong>.</li>
             </ul>
 
-            <p>Each of those methods get two parameters we can name the way we want. Here are some good defaults:</p>
+            <p>Each of those methods get two parameters we can name the way we want.<br> Here are some good defaults:</p>
             
             <ul>
                 <li><strong>view</strong>: The <strong>data-router-view</strong> to show or hide.</li>
@@ -63,7 +63,7 @@
             <p>This is a reminder of our HTML structure so far:</p>
             <?php include('./snippets/structure.php'); ?>
 
-            <p>Now let call <strong>Highway.Core</strong> and do some magic:</p>
+            <p>Now let's call <strong>Highway.Core</strong> and do some magic:</p>
             <?php include('./snippets/core.php'); ?>
 
             <p>Now we attached our custom renderer and transition to our view, all scripts contained in the custom renderer will be called everytime the view is displayed and the transition will be called everytime we leave or access the view.</p>
