@@ -32,7 +32,7 @@ export default class Core extends Emitter {
 
     // Cache
     this.cache = new Map();
-    this.cache.set(this.location.pathname, document.documentElement.outerHTML);
+    this.cache.set(this.location.pathname, this.properties);
 
     // Get the page renderer and properly setup it.
     this.From = new this.properties.renderer(this.properties);
@@ -119,14 +119,13 @@ export default class Core extends Emitter {
 
     // When users navigate using the browser buttons we check if the locations
     // have no anchors and that our locations are different.
-    if (this.location.pathname !== location.pathname || this.location.params !== location.params) {
-      if (!this.location.anchor && !location.anchor) {
-        this.popping = true;
+    if (this.location.pathname !== location.pathname || !this.location.anchor && !location.anchor) {
+      this.popping = true;
+      this.location = location;
 
-        // If everything is fine we can save our location and do what we need to
-        // do before fetching it.
-        this.beforeFetch();
-      }
+      // If everything is fine we can save our location and do what we need to
+      // do before fetching it.
+      this.beforeFetch();
     }
 
     this.location = location;
@@ -186,6 +185,9 @@ export default class Core extends Emitter {
       // We wait until the view is hidden.
       await this.From.hide();
 
+      // Get Properties
+      this.properties = this.cache.get(this.location.pathname);
+
     } else {
       // We wait till all our Promises are resolved.
       const results = await Promise.all([
@@ -193,14 +195,14 @@ export default class Core extends Emitter {
         this.From.hide()
       ]);
 
+      // Now everything went fine we can extract the properties of the view we
+      // successfully fetched and keep going.
+      this.properties = this.Helpers.getProperties(results[0]);
+
       // We cache our result
       // eslint-disable-next-line
-      this.cache.set(this.location.pathname, results[0]);
+      this.cache.set(this.location.pathname, this.properties);
     }
-
-    // Now everything went fine we can extract the properties of the view we
-    // successfully fetched and keep going.
-    this.properties = this.Helpers.getProperties(this.cache.get(this.location.pathname));
 
     this.pushState();
     this.afterFetch();
