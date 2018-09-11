@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <?php include('./parts/head.php'); ?>
+    <title>Highway - Examples</title>
 </head>
 <body>
     <main class="site-container">
@@ -19,7 +20,12 @@
             </form>
 
             <h2>Disable links</h2>
-            <p>All links using a <strong>target</strong> attribute are going to be skipped by <strong>Highway</strong> as well as all links using Javascript in the <strong>href</strong> attribute. We have then some options in our hand to manipulate our links the way we want.</p>
+            <p>All links using a <strong>target</strong> or a <strong>data-router-disabled</strong> attribute are going to be skipped by <strong>Highway</strong>. We have then some options in our hand to manipulate our links the way we want.</p>
+            
+            <h3>[data-router-disabled]</h3>
+            <p>All links using the <strong>data-router-disabled</strong> are automatically skipped by <strong>Highway</strong>.</p>
+            <?php include('./snippets/disabled.php'); ?>
+            <p><a href="mailto:john@doe.com" data-router-disabled class="button">Try me!</a></p>
 
             <h3>Same window</h3>
             <p>We can force a link to be skipped by <strong>Highway</strong> and open in the same window by using:</p>
@@ -30,11 +36,6 @@
             <p>We can force a link to be skipped by <strong>Highway</strong> and open in a new window by using:</p>
             <?php include('./snippets/blank.php'); ?>
             <p><a href="./index.php" target="_blank" class="button">Try me!</a></p>
-
-            <h3>Javascript</h3>
-            <p>All links using Javascript are automatically skipped by <strong>Highway</strong>.</p>
-            <?php include('./snippets/alert.php'); ?>
-            <p><a href="javascript:alert('Hello World');" class="button">Try me!</a></p>
 
             <h2>URL Parameters</h2>
             <p>We might often need to add parameters to our URL for some reasons but keep in mind that all parameters added to the page URL by links will launch the transitions even if the URL pathname is the <strong>same</strong>.</p>

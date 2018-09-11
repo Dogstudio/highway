@@ -23,7 +23,13 @@ class Fade extends Highway.Transition {
       { opacity: 1 },
       {
         opacity: 0,
-        onComplete: done
+        onComplete: () => {
+          // We reset the scroll position
+          window.scrollTo(0, 0);
+
+          // Done
+          done();
+        }
       }
     );
   }

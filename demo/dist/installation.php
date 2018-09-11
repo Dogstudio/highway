@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <?php include('./parts/head.php'); ?>
+    <title>Highway - Installation</title>
 </head>
 <body>
     <main class="site-container">

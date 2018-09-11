@@ -27,7 +27,7 @@ import Fade from 'transitions/fade';
   // Events
   const links = document.querySelectorAll('.site-menu a');
 
-  H.on('NAVIGATE_IN', (to, state) => {
+  H.on('NAVIGATE_IN', (to, location) => {
     // Check Active Link
     for (let i = 0; i < links.length; i++) {
       const link = links[i];
@@ -36,16 +36,16 @@ import Fade from 'transitions/fade';
       link.classList.remove('is-active');
 
       // Active link
-      if (link.href === state.url) {
+      if (link.href === location.href) {
         link.classList.add('is-active');
       }
     }
   });
 
-  H.on('NAVIGATE_END', (from, to, state) => {
+  H.on('NAVIGATE_END', (from, to, location) => {
     // Check Anchor
-    if (state.anchor) {
-      const el = document.querySelector(state.anchor);
+    if (location.anchor) {
+      const el = document.querySelector(location.anchor);
 
       if (el) {
         window.scrollTo(el.offsetLeft, el.offsetTop);

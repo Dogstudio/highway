@@ -186,28 +186,25 @@ var tiny_emitter_default = /*#__PURE__*/__webpack_require__.n(tiny_emitter);
 class Renderer {
 
   /**
-   * @arg {object} props — Set of properties (slug, page, view,...)
+   * @arg {object} properties — Set of properties (slug, page, view,...)
    * @constructor
    */
-  constructor(props) {
+  constructor(properties) {
     // We get the view.
-    this.root = document.querySelector('[data-router-view]');
+    this.view = document.querySelector('[data-router-view]');
 
-    // We save fetched informations
-    this.page = props.page;
-    this.view = props.view;
-    this.slug = props.slug;
+    // We save properties of the renderer
+    this.properties = properties;
 
     // We get our transition we will use later to show/hide our view.
-    this.Transition = props.transition ? new props.transition(this.root) : null;
+    this.Transition = properties.transition ? new properties.transition(this.view) : null;
   }
 
   /**
    * Renderer initialization.
    */
   setup() {
-    // We call the `onEnter` and `onEnterCompleted` methods of the renderer on
-    // initialization if they exists.
+    // These both methods have to be called at least once on first load.
     this.onEnter && this.onEnter();
     this.onEnterCompleted && this.onEnterCompleted();
   }
@@ -216,19 +213,16 @@ class Renderer {
    * Add view in DOM.
    */
   add() {
-    // We update the [data-router-view] slug
-    this.root.setAttribute('data-router-view', this.slug);
-
-    // And HTML
-    this.root.innerHTML = this.view.innerHTML;
+    // We setup the DOM for our [data-router-view]
+    this.view.setAttribute('data-router-view', this.properties.slug);
+    this.view.innerHTML = this.properties.view.innerHTML;
   }
 
   /**
    * Remove view in DOM.
    */
   remove() {
-    // It's time to say goodbye to the view... Farewell my friend.
-    this.root.innerHTML = '';
+    this.view.innerHTML = '';
   }
 
   /**
@@ -237,7 +231,7 @@ class Renderer {
   update() {
     // Now we update all the informations in the DOM we need!
     // We update the title
-    document.title = this.page.title;
+    document.title = this.properties.page.title;
   }
 
   /**
@@ -313,15 +307,25 @@ const PARSER = new window.DOMParser();
 class helpers_Helpers {
 
   /**
+   * @arg {object} renderers — List of renderers
+   * @arg {object} transitions — List of transitions
+   * @constructor
+   */
+  constructor(renderers, transitions) {
+    this.renderers = renderers;
+    this.transitions = transitions;
+  }
+
+  /**
    * Get origin of an URL
    *
    * @arg    {string} url — URL to match
    * @return {string} Origin of URL or `null`
    * @static
    */
-  static getOrigin(url) {
+  getOrigin(url) {
     const match = url.match(/(https?:\/\/[\w\-.]+)/);
-    return match ? match[1] : null;
+    return match ? match[1].replace(/https?:\/\//, '') : null;
   }
 
   /**
@@ -331,7 +335,7 @@ class helpers_Helpers {
    * @return {string} Pathname of URL or `null`
    * @static
    */
-  static getPathname(url) {
+  getPathname(url) {
     const match = url.match(/https?:\/\/.*?(\/[\w_\-./]+)/);
     return match ? match[1] : '/';
   }
@@ -343,7 +347,7 @@ class helpers_Helpers {
    * @return {string} Anchor in URL or `null`
    * @static
    */
-  static getAnchor(url) {
+  getAnchor(url) {
     const match = url.match(/(#.*)$/);
     return match ? match[1] : null;
   }
@@ -355,7 +359,7 @@ class helpers_Helpers {
    * @return {object} Search in URL formatted as an object or `null`
    * @static
    */
-  static getParams(url) {
+  getParams(url) {
     const match = url.match(/\?([\w_\-.=&]+)/);
 
     if (!match) {
@@ -383,7 +387,7 @@ class helpers_Helpers {
    * @return {string} Page DOM
    * @static
    */
-  static getDOM(page) {
+  getDOM(page) {
     return typeof page === 'string' ? PARSER.parseFromString(page, 'text/html') : page;
   }
 
@@ -394,7 +398,7 @@ class helpers_Helpers {
    * @return {object} View element or `null`
    * @static
    */
-  static getView(page) {
+  getView(page) {
     return page.querySelector('[data-router-view]');
   }
 
@@ -405,7 +409,7 @@ class helpers_Helpers {
    * @return {string} Page slug or `null`
    * @static
    */
-  static getSlug(view) {
+  getSlug(view) {
     return view.getAttribute('data-router-view');
   }
 
@@ -413,38 +417,67 @@ class helpers_Helpers {
    * Get page renderer
    *
    * @arg    {string} slug — Renderer's slug
-   * @arg    {object} renderers — List of renderers
    * @return {object} Single renderer or default one
    * @static
    */
-  static getRenderer(slug, renderers) {
-    if (typeof renderers === 'undefined' || !renderers) {
-      return Renderer;
-    }
-    return slug in renderers ? renderers[slug] : Renderer;
+  getRenderer(slug) {
+    return slug in this.renderers ? this.renderers[slug] : Renderer;
   }
 
   /**
    * Get page transition
    *
    * @arg    {string} slug — Transition slug
-   * @arg    {object} transitions — List of transitions
    * @return {object} Single transition or `null`
    * @static
    */
-  static getTransition(slug, transitions) {
-    if (typeof transitions === 'undefined' || !transitions) {
-      return null;
-    }
-
-    if (!(slug in transitions)) {
-      if ('default' in transitions) {
-        return transitions['default'];
+  getTransition(slug) {
+    if (!(slug in this.transitions)) {
+      if ('default' in this.transitions) {
+        return this.transitions['default'];
       }
       return null;
     }
 
-    return transitions[slug];
+    return this.transitions[slug];
+  }
+
+  /**
+   * Get all required properties for a context.
+   *
+   * @arg    {object} context – DOM context
+   * @return {object} Properties
+   */
+  getProperties(context) {
+    const page = this.getDOM(context);
+    const view = this.getView(page);
+    const slug = this.getSlug(view);
+    const renderer = this.getRenderer(slug, this.renderers);
+    const transition = this.getTransition(slug, this.transitions);
+
+    return {
+      page,
+      view,
+      slug,
+      renderer,
+      transition
+    };
+  }
+
+  /**
+   * Get state of an URL.
+   *
+   * @arg    {string} url — URL to decompose
+   * @return {object} State
+   */
+  getLocation(url) {
+    return {
+      href: url,
+      anchor: this.getAnchor(url),
+      origin: this.getOrigin(url),
+      params: this.getParams(url),
+      pathname: this.getPathname(url)
+    };
   }
 }
 
@@ -470,156 +503,94 @@ class core_Core extends tiny_emitter_default.a {
     // and send custom events all along the script.
     super();
 
-    // All your custom renderers and transitions you sent to Highway.
-    this.renderers = renderers;
-    this.transitions = transitions;
+    // Helpers.
+    this.Helpers = new helpers_Helpers(renderers, transitions);
 
     // Properties & state.
-    this.state = this.getState(window.location.href);
-    this.props = this.getProps(document.cloneNode(true));
-
-    // Link.
-    this.link = null;
-
-    // Cache.
-    this.cache = new Map();
+    this.location = this.Helpers.getLocation(window.location.href);
+    this.properties = this.Helpers.getProperties(document.cloneNode(true));
 
     // Status variables.
-    this.navigating = false;
+    this.popping = false;
+    this.running = false;
+
+    // Cache
+    this.cache = new Map();
+    this.cache.set(this.location.pathname, document.documentElement.outerHTML);
 
     // Get the page renderer and properly setup it.
-    this.From = new (helpers_Helpers.getRenderer(this.props.slug, this.renderers))(this.props);
+    this.From = new this.properties.renderer(this.properties);
     this.From.setup();
 
-    // Events
-    this._click = this.click.bind(this);
+    // Events variables.
+    this._navigate = this.navigate.bind(this);
 
     // Listen the `popstate` on the window to run the router each time an
     // history entry changes. Basically everytime the backward/forward arrows
     // are triggered by the user.
     window.addEventListener('popstate', this.popState.bind(this));
 
-    // Event binding
-    this.bind();
+    // Event attachement
+    this.attach();
   }
 
   /**
-   * Get all required properties for a context.
-   *
-   * @arg    {string|object} context – DOM context
-   * @return {object} Properties
+   * Attach `click` event on links.
    */
-  getProps(context) {
-    const page = helpers_Helpers.getDOM(context);
-    const view = helpers_Helpers.getView(page);
-    const slug = helpers_Helpers.getSlug(view);
-    const transition = helpers_Helpers.getTransition(slug, this.transitions);
+  attach() {
+    // Get all elligible links.
+    this.links = document.querySelectorAll('a:not([target]):not([data-router-disabled])');
 
-    return {
-      page,
-      view,
-      slug,
-      transition
-    };
-  }
-
-  /**
-   * Get state of an URL.
-   *
-   * @arg    {string} location — Window location
-   * @return {object} State
-   */
-  getState(location) {
-    return {
-      url: location,
-      anchor: helpers_Helpers.getAnchor(location),
-      origin: helpers_Helpers.getOrigin(location),
-      params: helpers_Helpers.getParams(location),
-      pathname: helpers_Helpers.getPathname(location)
-    };
-  }
-
-  /**
-   * Bind `click` event on links.
-   */
-  bind() {
-    // We get all the links from the document except the ones with a `target`
-    // attribute.
-    this.links = document.querySelectorAll('a:not([target]):not([href*="javascript"])');
-
-    // We then loop over each one of them to bind the `click` event.
     for (const link of this.links) {
-      link.addEventListener('click', this._click);
+      link.addEventListener('click', this._navigate);
     }
   }
 
   /**
-   * Unbind `click` event on links.
+   * Detach `click` event on links.
    */
-  unbind() {
-    // We then loop over each one of them to unbind the `click` event.
+  detach() {
     for (const link of this.links) {
-      link.removeEventListener('click', this._click);
+      link.removeEventListener('click', this._navigate);
     }
   }
 
   /**
    * Click method called on `click` event.
    *
-   * @arg {object} event - `click` event
+   * @arg {object} e - `click` event
    */
-  click(event) {
-    // To run the router properly we have to prevent the default behaviour
-    // of link elements to avoir page reloading.
-    event.preventDefault();
+  navigate(e) {
+    // Prevent default `click`
+    e.preventDefault();
 
-    // Now get the URL of the target element!
-    const { href } = event.currentTarget;
-
-    // Check
-    this.check(href);
+    // We have to redirect to our `href` using Highway
+    this.redirect(e.currentTarget.href);
   }
 
   /**
-   * Check if an URL is elligible
-   * @param {string} url - URL
+   * Redirect to URL
+   * @param {string} href - URL
    */
-  check(url) {
-    // We get the anchor and the pathname of the link that the user clicked
-    // in order to compare it with the current state and handle the `click`
-    // event appropriately.
-    const params = helpers_Helpers.getParams(url);
-    const pathname = helpers_Helpers.getPathname(url);
+  redirect(href) {
+    // When our URL is different from the current location `href` and no other
+    // navigation is running for the moment we are allowed to start a new one.
+    // But if the URL containes anchors or if the origin is different we force
+    // the hard reloading of the page to avoid serious errors.
+    if (!this.running && href !== this.location.href) {
+      // We temporary store the future location.
+      const location = this.Helpers.getLocation(href);
 
-    if (!this.navigating && (pathname !== this.state.pathname || params)) {
-      // Check if the pathname and the parameters are the same.
-      // This is the easy way of comparing 2 objects but not the most robust.
-      if (pathname === this.state.pathname && params) {
-        const oldParams = JSON.stringify(this.state.params);
-        const newParams = JSON.stringify(params);
+      if (location.origin !== this.location.origin || location.anchor && location.pathname === this.location.pathname) {
+        window.location.href = href;
 
-        if (oldParams === newParams) {
-          return;
-        }
+      } else {
+        this.location = location;
+
+        // Now all our conditions are passed we can update our location and do
+        // what we need to do before fetching it.
+        this.beforeFetch();
       }
-
-      // Update link
-      this.link = url;
-
-      // Now push the state!
-      this.pushState();
-
-    } else {
-      // Check if there are anchors
-      const anchor = helpers_Helpers.getAnchor(url);
-
-      // If the pathnames are the same there might be an anchor appended to
-      // it so we need to check it and reload the page to use the default
-      // browser behaviour.
-      if (anchor) {
-        window.location.href = url;
-      }
-
     }
   }
 
@@ -627,81 +598,31 @@ class core_Core extends tiny_emitter_default.a {
    * Watch history entry changes.
    */
   popState() {
-    // We update the state based on the clicked link `href` property.
-    const state = this.getState(window.location.href);
+    // We temporary store the future location.
+    const location = this.Helpers.getLocation(window.location.href);
 
-    if (state.pathname !== this.state.pathname) {
-      // Call `beforeFetch` for optimizations.
-      this.beforeFetch(state);
+    // When users navigate using the browser buttons we check if the locations
+    // have no anchors and that our locations are different.
+    if (this.location.pathname !== location.pathname || this.location.params !== location.params) {
+      if (!this.location.anchor && !location.anchor) {
+        this.popping = true;
+
+        // If everything is fine we can save our location and do what we need to
+        // do before fetching it.
+        this.beforeFetch();
+      }
     }
+
+    this.location = location;
   }
 
   /**
    * Update DOM on `click` event.
    */
   pushState() {
-    // We update the state based on the clicked link `href` property.
-    const state = this.getState(this.link);
-
-    // We push a new entry in the history in order to be able to navigate
-    // with the backward and forward buttons from the browser.
-    state.pathname && window.history.pushState(state, '', state.url);
-
-    // Call `beforeFetch` for optimizations.
-    this.beforeFetch(state);
-  }
-
-  /**
-   * Do some tests before HTTP requests to optimize pipeline.
-   *
-   * @arg {object} state - State to save
-   */
-  async beforeFetch(state) {
-    // Use of a boolean to avoid repetitive fetch calls by super excited users
-    // that could lead to some serious issues.
-    this.navigating = true;
-
-    // We trigger an event when a link is clicked to let you know do whatever
-    // you want at this point of the process.
-    this.emit('NAVIGATE_OUT', {
-      page: this.From.page,
-      view: this.From.view
-    }, this.state);
-
-    // Unbind events
-    this.unbind();
-
-    // Update state with the one returne by the browser history. Basically
-    // this is the state that was previously pushed by `history.pushState`.
-    this.state = state;
-
-    // We check cache to avoid unecessary HTTP requests.
-    if (!this.cache.has(this.state.pathname)) {
-      // We pause the script and wait for the `from` renderer to be completely
-      // hidden and removed from the DOM. The new page is fetched in parallel.
-      const results = await Promise.all([
-        this.fetch(),
-        this.From.hide()
-      ]);
-
-      // Update properties with fetched page.
-      this.props = this.getProps(results[0]);
-
-      // Cache page
-      this.cache.set(this.state.pathname, this.props);
-
-    } else {
-      // We pause the script and wait for the `from` renderer to be completely
-      // hidden and removed from the DOM.
-      await this.From.hide();
-
-      // Now we can update the properties from cache.
-      this.props = this.cache.get(this.state.pathname);
-
+    if (!this.popping) {
+      window.history.pushState(this.location, '', this.location.href);
     }
-
-    // Call `afterFetch` to push the page in the DOM.
-    this.afterFetch();
   }
 
   /**
@@ -710,77 +631,103 @@ class core_Core extends tiny_emitter_default.a {
    * @return {string} Fetch response
    */
   async fetch() {
-    const response = await fetch(this.state.url, {
+    const response = await fetch(this.location.href, {
       mode: 'same-origin',
       method: 'GET',
-      headers: {
-        'X-Requested-With': 'Highway'
-      },
+      headers: { 'X-Requested-With': 'Highway' },
       credentials: 'same-origin'
     });
 
-    // Check the HTTP code.
-    // 200+: Success of the HTTP request.
+    // We have to checked if the fetch response is OK otherwise we have to force
+    // the hard reloading of the page because we might have an error.
     if (response.status >= 200 && response.status < 300) {
-      // The HTTP response is the page HTML as a string.
       return response.text();
     }
 
-    // An extra event is emitted if an error has occured that can be used
-    // outside of the router to let you deal with the mess that happened.
-    this.emit('NAVIGATE_ERROR', response);
+    window.location.href = this.location.href;
+  }
 
-    // !200+: Error of the HTTP request
-    throw new Error(response.statusText);
+  /**
+   * Do some tests before HTTP requests to optimize pipeline.
+   */
+  async beforeFetch() {
+    // We lock the navigation to avoid multiples clicks that could overload the
+    // navigation process meaning that if the a navigation is running the user
+    // cannot trigger a new one while the previous one is running.
+    this.running = true;
+
+    // We emit an event right before hiding the current view to create a hook
+    // for developers that want to do stuffs when an elligible link is clicked.
+    this.emit('NAVIGATE_OUT', {
+      page: this.From.properties.page,
+      view: this.From.properties.view
+    }, this.location);
+
+    // We have to verify our cache in order to save some HTTPRequests. If we
+    // don't use any caching system everytime we would come back to a page we
+    // already saw we will have to fetch it again and it's pointless.
+    if (this.cache.has(this.location.pathname)) {
+      // We wait until the view is hidden.
+      await this.From.hide();
+
+    } else {
+      // We wait till all our Promises are resolved.
+      const results = await Promise.all([
+        this.fetch(),
+        this.From.hide()
+      ]);
+
+      // We cache our result
+      // eslint-disable-next-line
+      this.cache.set(this.location.pathname, results[0]);
+    }
+
+    // Now everything went fine we can extract the properties of the view we
+    // successfully fetched and keep going.
+    this.properties = this.Helpers.getProperties(this.cache.get(this.location.pathname));
+
+    this.pushState();
+    this.afterFetch();
   }
 
   /**
    * Push page in DOM
    */
   async afterFetch() {
-    // We reset the scroll position.
-    window.scrollTo(0, 0);
-
-    // The page we get is the one we want to go `to`.
-    this.To = new (helpers_Helpers.getRenderer(this.props.slug, this.renderers))(this.props);
+    // We are calling the renderer attached to the view we just fetched and we
+    // are adding the [data-router-view] in our DOM.
+    this.To = new this.properties.renderer(this.properties);
     this.To.add();
 
-    // We trigger an event when the new content is added to the DOM.
+    // We then emit a now event right before the view is shown to create a hook
+    // for developers who want to make stuff before the view is visible.
     this.emit('NAVIGATE_IN', {
-      page: this.To.page,
-      view: this.To.root
-    }, this.state);
+      page: this.To.properties.page,
+      view: this.To.view
+    }, this.location);
 
-    // Now we show our content!
+    // We wait for the view transition to be over before resetting some variables
+    // and reattaching the events to all the new elligible links in our DOM.
     await this.To.show();
 
-    // Bind events
-    this.bind();
+    this.popping = false;
+    this.running = false;
 
-    // We reset our status variables.
-    this.navigating = false;
+    this.detach();
+    this.attach();
 
-    // And we emit an event you can listen to.
+    // Finally we emit a last event to create a hook for developers who want to
+    // make stuff when the navigation has ended.
     this.emit('NAVIGATE_END', {
-      page: this.From.page,
-      view: this.From.view
+      page: this.From.properties.page,
+      view: this.From.properties.view
     }, {
-      page: this.To.page,
-      view: this.To.root
-    }, this.state);
+      page: this.To.properties.page,
+      view: this.To.view
+    }, this.location);
 
-    // We prepare the next navigation by replacing the `from` renderer by
-    // the `to` renderer now that the pages have been swapped successfully.
+    // Last but not least we swap the From and To renderers for future navigations.
     this.From = this.To;
-  }
-
-  /**
-   * Change location through Highway
-   * @param {string} url - URL
-   */
-  location(url) {
-    // Check URL
-    this.check(url);
   }
 }
 
@@ -840,10 +787,8 @@ class Transition {
 
 
 
-
 /* harmony default export */ var src = __webpack_exports__["default"] = ({
   Core: core_Core,
-  Helpers: helpers_Helpers,
   Renderer: Renderer,
   Transition: Transition
 });

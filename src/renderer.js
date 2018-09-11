@@ -6,28 +6,25 @@
 export default class Renderer {
 
   /**
-   * @arg {object} props — Set of properties (slug, page, view,...)
+   * @arg {object} properties — Set of properties (slug, page, view,...)
    * @constructor
    */
-  constructor(props) {
+  constructor(properties) {
     // We get the view.
-    this.root = document.querySelector('[data-router-view]');
+    this.view = document.querySelector('[data-router-view]');
 
-    // We save fetched informations
-    this.page = props.page;
-    this.view = props.view;
-    this.slug = props.slug;
+    // We save properties of the renderer
+    this.properties = properties;
 
     // We get our transition we will use later to show/hide our view.
-    this.Transition = props.transition ? new props.transition(this.root) : null;
+    this.Transition = properties.transition ? new properties.transition(this.view) : null;
   }
 
   /**
    * Renderer initialization.
    */
   setup() {
-    // We call the `onEnter` and `onEnterCompleted` methods of the renderer on
-    // initialization if they exists.
+    // These both methods have to be called at least once on first load.
     this.onEnter && this.onEnter();
     this.onEnterCompleted && this.onEnterCompleted();
   }
@@ -36,19 +33,16 @@ export default class Renderer {
    * Add view in DOM.
    */
   add() {
-    // We update the [data-router-view] slug
-    this.root.setAttribute('data-router-view', this.slug);
-
-    // And HTML
-    this.root.innerHTML = this.view.innerHTML;
+    // We setup the DOM for our [data-router-view]
+    this.view.setAttribute('data-router-view', this.properties.slug);
+    this.view.innerHTML = this.properties.view.innerHTML;
   }
 
   /**
    * Remove view in DOM.
    */
   remove() {
-    // It's time to say goodbye to the view... Farewell my friend.
-    this.root.innerHTML = '';
+    this.view.innerHTML = '';
   }
 
   /**
@@ -57,7 +51,7 @@ export default class Renderer {
   update() {
     // Now we update all the informations in the DOM we need!
     // We update the title
-    document.title = this.page.title;
+    document.title = this.properties.page.title;
   }
 
   /**
