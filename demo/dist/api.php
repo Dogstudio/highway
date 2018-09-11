@@ -13,7 +13,7 @@
 
             <h2>Methods</h2>
             <h3>Renderers</h3>
-            <p>This is the list of methods you can call on renderers.<br> Checkout the <a href="./get-started.php#renderers">documentation</a> about renderers to get more informations.</p>
+            <p>This is the list of methods we can call on renderers.<br> Check out the <a href="./get-started.php#renderers">documentation</a> about renderers to get more informations.</p>
 
             <table cellpadding="0" cellspacing="0">
                 <tr>
@@ -39,7 +39,7 @@
             </table>
 
             <h3>Transitions</h3>
-            <p>This is the list of methods you can call on transitions.<br> Checkout the <a href="./get-started.php#transitions">documentation</a> about transitions to get more informations.</p>
+            <p>This is the list of methods we can call on transitions.<br> Check out the <a href="./get-started.php#transitions">documentation</a> about transitions to get more informations.</p>
 
             <table cellpadding="0" cellspacing="0">
                 <tr>
@@ -57,8 +57,7 @@
             </table>
 
             <h3>Core</h3>
-            <p><strong>Highway</strong> is based on the <a href="https://github.com/scottcorgan/tiny-emitter#readme" target="_blank">tiny-emitter</a> library so when we call <strong>Highway.Core</strong> we have access to all the methods available in <a href="https://github.com/scottcorgan/tiny-emitter#readme" target="_blank">tiny-emitter</a> in order to use the events listed below.</p>
-            <p>In addition to the methods inherited from <a href="https://github.com/scottcorgan/tiny-emitter#readme" target="_blank">tiny-emitter</a>, you have some buil-in ones you might need:</p>
+            <p><strong>Highway</strong> is based on the <a href="https://github.com/scottcorgan/tiny-emitter#readme" target="_blank">tiny-emitter</a> library so when we call <strong>Highway.Core</strong> we have access to all the methods available in <a href="https://github.com/scottcorgan/tiny-emitter#readme" target="_blank">tiny-emitter</a> in order to use the events listed below. In addition to the methods inherited from <a href="https://github.com/scottcorgan/tiny-emitter#readme" target="_blank">tiny-emitter</a>, we have some buil-in ones available we might need:</p>
 
             <table cellpadding="0" cellspacing="0">
                 <tr>
@@ -66,16 +65,16 @@
                     <th>Description</th>
                 </tr>
                 <tr>
-                    <td><em>Core</em>.<strong>bind()</strong></td>
-                    <td>This method listen to all links of the document that have <strong>no target</strong> attribute and calls <strong>Highway</strong> on <em>click</em>.</td>
+                    <td><em>Core</em>.<strong>attach()</strong></td>
+                    <td>This method listen to all links of the document that have no <strong>target</strong> or <strong>data-router-disabled</strong> attribute and calls <strong>Highway</strong> on <em>click</em>.</td>
                 </tr>
                 <tr>
-                    <td><em>Core</em>.<strong>unbind()</strong></td>
+                    <td><em>Core</em>.<strong>detach()</strong></td>
                     <td>This method clears the events attached to all the links of the document.</td>
                 </tr>
                 <tr>
-                    <td><em>Core</em>.<strong>location(<em>url</em>)</strong></td>
-                    <td>This method navigates to a given <strong>same-origin</strong> URL using <strong>Highway</strong>.</td>
+                    <td><em>Core</em>.<strong>redirect(<em>href</em>)</strong></td>
+                    <td>This method navigates to a given URL using <strong>Highway</strong>.</td>
                 </tr>
             </table>
 
@@ -89,44 +88,34 @@
                 <tr>
                     <td>NAVIGATE_IN</td>
                     <td>
-                        This event is triggered everytime the transition to show the <strong>data-router-view</strong> is called.
+                        This event is emitted everytime the transition to show the <strong>data-router-view</strong> is called.
                         It returns those arguments:<br><br>
                         <ul>
-                            <li><strong>to:</strong> The <strong>data-router-view</strong> to show.</li>
-                            <li><strong>state:</strong> The URL datas of the current view.</li>
+                            <li><strong>to:</strong> The <strong>data-router-view</strong> we show.</li>
+                            <li><strong>location:</strong> The URL datas of the current view.</li>
                         </ul>
                     </td>
                 </tr>
                 <tr>
                     <td>NAVIGATE_OUT</td>
                     <td>
-                        This event is triggered everytime the transition to hide the <strong>data-router-view</strong> is called.
+                        This event is emitted everytime the transition to hide the <strong>data-router-view</strong> is called.
                         It returns those arguments:<br><br>
                         <ul>
-                            <li><strong>from:</strong> The <strong>data-router-view</strong> to hide.</li>
-                            <li><strong>state:</strong> The URL datas of the current view.</li>
+                            <li><strong>from:</strong> The <strong>data-router-view</strong> we hide.</li>
+                            <li><strong>location:</strong> The URL datas of the current view.</li>
                         </ul>
                     </td>
                 </tr>
                 <tr>
                     <td>NAVIGATE_END</td>
                     <td>
-                        This event is triggered everytime a transition ends.
+                        This event is emitted everytime a transition ends.
                         It returns those arguments:<br><br>
                         <ul>
-                            <li><strong>from:</strong> The <strong>data-router-view</strong> to hide.</li>
-                            <li><strong>to:</strong> The <strong>data-router-view</strong> to show.</li>
-                            <li><strong>state:</strong> The URL datas of the current view.</li>
-                        </ul>
-                    </td>
-                </tr>
-                <tr>
-                    <td>NAVIGATE_ERROR</td>
-                    <td>
-                        This event is triggered everytime an error happens.
-                        It returns this argument:<br><br>
-                        <ul>
-                            <li><strong>error:</strong> The error datas from the HTTPRequest.</li>
+                            <li><strong>to:</strong> The <strong>data-router-view</strong> we show.</li>
+                            <li><strong>from:</strong> The <strong>data-router-view</strong> we hide.</li>
+                            <li><strong>location:</strong> The URL datas of the current view.</li>
                         </ul>
                     </td>
                 </tr>

@@ -32,8 +32,8 @@
             <p>In our custom renderer we also have access to some useful variables:</p>
 
             <ul>
-                <li><strong>this.page</strong>: The full DOM of the view the renderer is attached to.</li>
-                <li><strong>this.root</strong>: The <strong>[data-router-view]</strong> of the view the renderer is attached to.</li>
+                <li><strong>this.view</strong>: The <strong>[data-router-view]</strong> of the view the renderer is attached to.</li>
+                <li><strong>this.properties</strong>: All the properties we can get of our renderer.</li>
             </ul>
 
             <p>Long story short, let see what a custom renderer look like:</p>
@@ -72,6 +72,7 @@
             <?php include('./snippets/core-default.php'); ?>
 
             <p>That's it ! We now have <strong>Highway</strong> setup and ready to work. We can repeat those steps for each view of our website and we'll have beautiful transitions between them.</p>
+            <p>We can go further an take a look at the <a href="./api.php">API</a> of <strong>Highway</strong>.</p>
         </article>
     </main>
 

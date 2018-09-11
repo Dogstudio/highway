@@ -237,11 +237,12 @@ export default class Core extends Emitter {
     // Finally we emit a last event to create a hook for developers who want to
     // make stuff when the navigation has ended.
     this.emit('NAVIGATE_END', {
-      page: this.From.properties.page,
-      view: this.From.properties.view
-    }, {
       page: this.To.properties.page,
       view: this.To.view
+    },
+    {
+      page: this.From.properties.page,
+      view: this.From.properties.view
     }, this.location);
 
     // Last but not least we swap the From and To renderers for future navigations.

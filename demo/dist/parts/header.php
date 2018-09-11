@@ -28,8 +28,7 @@
                 </li>
                 <li class="menu-item"><a href="/api.php">API</a></li>
                 <li class="menu-item"><a href="/examples.php">Examples</a></li>
-                <li class="menu-item"><a href="/sdsd.php">404</a></li>
-                <li class="menu-item"><a href="https://github.com/Dogstudio/highway">Github</a></li>
+                <li class="menu-item"><a href="/demos.php">Demos</a></li>
             </ul>
         </nav>
     </div>
