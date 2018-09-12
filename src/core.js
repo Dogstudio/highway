@@ -35,8 +35,11 @@ export default class Core extends Emitter {
     this.cache.set(this.location.pathname, this.properties);
 
     // Get the page renderer and properly setup it.
-    this.From = new this.properties.renderer(this.properties);
-    this.From.setup();
+    this.properties.renderer
+      .then(Renderer => {
+        this.From = new Renderer(this.properties);
+        this.From.setup();
+      });
 
     // Events variables.
     this._navigate = this.navigate.bind(this);
@@ -216,7 +219,9 @@ export default class Core extends Emitter {
   async afterFetch() {
     // We are calling the renderer attached to the view we just fetched and we
     // are adding the [data-router-view] in our DOM.
-    this.To = new this.properties.renderer(this.properties);
+    const Renderer = await this.properties.renderer;
+
+    this.To = new Renderer(this.properties);
     this.To.add();
 
     // We then emit a now event right before the view is shown to create a hook
