@@ -3,11 +3,11 @@
 const H = // [...] Call Highway.Core;
 
 // Listen the `NAVIGATE_END` event
-H.on('NAVIGATE_END', (from, to, state) => {
+H.on('NAVIGATE_END', (to, from, location) => {
     // Check Anchor
-    if (state.anchor) {
+    if (location.anchor) {
         // Get element
-        const el = document.querySelector(state.anchor);
+        const el = document.querySelector(location.anchor);
 
         if (el) {
             // Scroll to element

@@ -610,9 +610,11 @@ class core_Core extends tiny_emitter_default.a {
       // If everything is fine we can save our location and do what we need to
       // do before fetching it.
       this.beforeFetch();
-    }
 
-    this.location = location;
+    } else {
+      // Update Location
+      this.location = location;
+    }
   }
 
   /**

@@ -89,6 +89,15 @@ h2 {
   font-size: 22px;
 }
 
+h2 a {
+  color: #222;
+}
+
+h2 a:hover,
+h2 a:focus {
+  color: #ff4940;
+}
+
 h3,
 h4,
 h5,
@@ -374,6 +383,22 @@ article {
   padding: 15px;
   color: #222;
   font-size: 13px;
+}
+
+/** Demos **/
+.demos-list {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0 -10px;
+}
+
+.demos-list li {
+  width: 50%;
+  padding: 0 10px !important;
+}
+
+.demos-list li::before {
+  content: none !important;
 }
 
 /** Utilities **/

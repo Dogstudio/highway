@@ -42,7 +42,7 @@ import Fade from 'transitions/fade';
     }
   });
 
-  H.on('NAVIGATE_END', (from, to, location) => {
+  H.on('NAVIGATE_END', (to, from, location) => {
     // Check Anchor
     if (location.anchor) {
       const el = document.querySelector(location.anchor);
@@ -50,6 +50,16 @@ import Fade from 'transitions/fade';
       if (el) {
         window.scrollTo(el.offsetLeft, el.offsetTop);
       }
+    }
+
+    // Page View
+    if (typeof gtag !== 'undefined') {
+      // eslint-disable-next-line
+      gtag('config', 'UA-125659111-1', {
+        'page_path': location.pathname,
+        'page_title': to.page.title,
+        'page_location': location.href
+      });
     }
   });
 })();

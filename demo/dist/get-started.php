@@ -33,7 +33,7 @@
 
             <ul>
                 <li><strong>this.view</strong>: The <strong>[data-router-view]</strong> of the view the renderer is attached to.</li>
-                <li><strong>this.properties</strong>: All the properties we can get of our renderer.</li>
+                <li><strong>this.properties</strong>: All the properties we can get of our renderer (page, view, slug, transition,...).</li>
             </ul>
 
             <p>Long story short, let see what a custom renderer look like:</p>

@@ -34,7 +34,7 @@
             <h3>Modern</h3>
             <p>When developing <strong>Highway</strong> we had to choose between either making it fully compatible with major browsers including IE11 or taking advantage of ES2015+ features to get a lighter library but with less browser support.</p>
             <p>At first we chose to develop it in ES2015+ only to get a library that doesn't weight more than <strong>2.2ko</strong> when minified and gzipped. Also we trully believe we have to lead the developer ecosystem with other agencies to the future.</p>
-            <p>But then since we are really kind at <a href="https://www.dogstudio.co" target="_blank">Dogstudio</a>, we took more time to provide an ES5 version as well. This way you have the choice between a lighter version of <strong>Highway</strong> with less but still very good browser support or the ES5 one that is a bit heavier but that supports our old friend, IE11.</p>
+            <p>But then since we are really kind at <a href="https://www.dogstudio.co" target="_blank">Dogstudio</a>, we took more time to provide an ES5 version as well. This way we have the choice between a lighter version of <strong>Highway</strong> with less but still very good browser support or the ES5 one that is a bit heavier but that supports our old friend, IE11.</p>
         
             <p>Now we get to know more about <strong>Highway</strong> it's time for us to <a href="./installation.php">install it</a>.</p>
         </article>
