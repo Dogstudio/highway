@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Metas -->
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+<!-- Title -->
+<title>Highway - Demos</title>
+
+<!-- CSS -->
+<link rel="stylesheet" href="./assets/css/reset.css" />
+<link rel="stylesheet" href="./assets/css/fonts.css" />
+<link rel="stylesheet" href="./assets/css/highlight-github.css" />
+<link rel="stylesheet" href="./assets/css/main.css" />
+
+<!-- Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-125659111-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag() {
+    dataLayer.push(arguments);
+  }
+  gtag('js', new Date());
+  gtag('config', 'UA-125659111-1');
+</script>
+
+  </head>
+  <body>
+    <main class="site-container">
+      <!-- Github Banner -->
+<a href="https://github.com/Dogstudio/highway" target="_blank">
+  <img style="position: fixed; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub">
+</a>
+
+<!-- Header -->
+<header class="site-header">
+  <div class="site-header-inner">
+    <a href="/" class="site-logo"><img src="./assets/images/logo_2x.png" /></a>
+
+    <nav class="site-menu">
+      <ul>
+        <li class="menu-item">
+          <a href="/" >Introduction</a>
+        </li>
+
+        <li class="menu-item">
+          <a href="/installation.html" >Installation</a>
+        </li>
+
+        <li class="menu-item">
+          <a href="/get-started.html" >Get started</a>
+        </li>
+
+        <li class="menu-item">
+          <a href="/api.html" class="is-active">API Reference</a>
+        </li>
+
+        <li class="menu-item">
+          <a href="/examples.html" >Examples</a>
+        </li>
+
+        <li class="menu-item">
+          <a href="/demos.html" >Demos</a>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+
+      <article id="top" class="site-content" data-router-view="demos">
+        <h1>API</h1>
+
+<h2>Methods</h2>
+<h3>Renderers</h3>
+<p>This is the list of methods we can call on renderers.<br> Check out the <a href="./get-started.html#renderers">documentation</a> about renderers to get more informations.</p>
+
+<table cellpadding="0" cellspacing="0">
+  <tr>
+    <th width="40%">Methods</th>
+    <th>Description</th>
+  </tr>
+  <tr>
+    <td><em>Renderer</em>.<strong>onEnter()</strong></td>
+    <td>This methods is called when the <strong>data-router-view</strong> is added to the DOM.</td>
+  </tr>
+  <tr>
+    <td><em>Renderer</em>.<strong>onLeave()</strong></td>
+    <td>This methods is called when transition to hide the <strong>data-router-view</strong> is called.</td>
+  </tr>
+  <tr>
+    <td><em>Renderer</em>.<strong>onEnterCompleted()</strong></td>
+    <td>This methods is called when the transition to show the <strong>data-router-view</strong> is over.</td>
+  </tr>
+  <tr>
+    <td><em>Renderer</em>.<strong>onLeaveCompleted()</strong></td>
+    <td>This methods is called when the <strong>data-router-view</strong> is removed from the DOM.</td>
+  </tr>
+</table>
+
+<h3>Transitions</h3>
+<p>This is the list of methods we can call on transitions.<br> Check out the <a href="./get-started.html#transitions">documentation</a> about transitions to get more informations.</p>
+
+<table cellpadding="0" cellspacing="0">
+  <tr>
+    <th width="40%">Methods</th>
+    <th>Description</th>
+  </tr>
+  <tr>
+    <td><em>Transition</em>.<strong>in(<em>view</em>, <em>done</em>)</strong></td>
+    <td>This method is called to show the <strong>data-router-view</strong>.</td>
+  </tr>
+  <tr>
+    <td><em>Transition</em>.<strong>out(<em>view</em>, <em>done</em>)</strong></td>
+    <td>This method is called to hide the <strong>data-router-view</strong>.</td>
+  </tr>
+</table>
+
+<h3>Core</h3>
+<p><strong>Highway</strong> is based on the <a href="https://github.com/scottcorgan/tiny-emitter#readme" target="_blank">tiny-emitter</a> library so when we call <strong>Highway.Core</strong> we have access to all the methods available in <a href="https://github.com/scottcorgan/tiny-emitter#readme" target="_blank">tiny-emitter</a> in order to use the events listed below. In addition to the methods inherited from <a href="https://github.com/scottcorgan/tiny-emitter#readme" target="_blank">tiny-emitter</a>, we have some buil-in ones available we might need:</p>
+
+<table cellpadding="0" cellspacing="0">
+  <tr>
+    <th width="40%">Methods</th>
+    <th>Description</th>
+  </tr>
+  <tr>
+    <td><em>Core</em>.<strong>attach()</strong></td>
+    <td>This method listen to all links of the document that have no <strong>target</strong> or <strong>data-router-disabled</strong> attribute and calls <strong>Highway</strong> on <em>click</em>.</td>
+  </tr>
+  <tr>
+    <td><em>Core</em>.<strong>detach()</strong></td>
+    <td>This method clears the events attached to all the links of the document.</td>
+  </tr>
+  <tr>
+    <td><em>Core</em>.<strong>redirect(<em>href</em>)</strong></td>
+    <td>This method navigates to a given URL using <strong>Highway</strong>.</td>
+  </tr>
+</table>
+
+<h2>Events</h2>
+
+<table cellpadding="0" cellspacing="0">
+  <tr>
+    <th width="40%">Events</th>
+    <th>Description</th>
+  </tr>
+  <tr>
+    <td>NAVIGATE_IN</td>
+    <td>
+      This event is emitted everytime the transition to show the <strong>data-router-view</strong> is called.
+      It returns those arguments:<br><br>
+      <ul>
+        <li><strong>to:</strong> The <strong>data-router-view</strong> we show.</li>
+        <li><strong>location:</strong> The URL datas of the current view.</li>
+      </ul>
+    </td>
+  </tr>
+  <tr>
+    <td>NAVIGATE_OUT</td>
+    <td>
+      This event is emitted everytime the transition to hide the <strong>data-router-view</strong> is called.
+      It returns those arguments:<br><br>
+      <ul>
+        <li><strong>from:</strong> The <strong>data-router-view</strong> we hide.</li>
+        <li><strong>location:</strong> The URL datas of the current view.</li>
+      </ul>
+    </td>
+  </tr>
+  <tr>
+    <td>NAVIGATE_END</td>
+    <td>
+      This event is emitted everytime a transition ends.
+      It returns those arguments:<br><br>
+      <ul>
+        <li><strong>to:</strong> The <strong>data-router-view</strong> we show.</li>
+        <li><strong>from:</strong> The <strong>data-router-view</strong> we hide.</li>
+        <li><strong>location:</strong> The URL datas of the current view.</li>
+      </ul>
+    </td>
+  </tr>
+</table>
+
+      </article>
+    </main>
+
+    <!-- Footer -->
+<footer class="site-footer">
+  <p class="site-footer-buttons">
+    <a class="github-button" href="https://github.com/Dogstudio/highway" data-icon="octicon-star" data-size="large" data-show-count="true" aria-label="Star Dogstudio/highway on GitHub">Star</a>
+  </p>
+  <p>©2018 - Coded by <a href="https://github.com/Anthodpnt" target="_blank">Anthodpnt</a> & Powered by <a href="https://www.dogstudio.co" target="_blank">Dogstudio</a></p>
+</footer>
+
+<!-- Github Buttons -->
+<script async defer src="https://buttons.github.io/buttons.js"></script>
+
+<!-- Scripts -->
+<script src="./assets/js/highlight.js"></script>
+<script src="./assets/js/main.js"></script>
+
+  </body>
+</html>

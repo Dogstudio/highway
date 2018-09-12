@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Metas -->
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+<!-- Title -->
+<title>Highway - Get Started</title>
+
+<!-- CSS -->
+<link rel="stylesheet" href="./assets/css/reset.css" />
+<link rel="stylesheet" href="./assets/css/fonts.css" />
+<link rel="stylesheet" href="./assets/css/highlight-github.css" />
+<link rel="stylesheet" href="./assets/css/main.css" />
+
+<!-- Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-125659111-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag() {
+    dataLayer.push(arguments);
+  }
+  gtag('js', new Date());
+  gtag('config', 'UA-125659111-1');
+</script>
+
+  </head>
+  <body>
+    <main class="site-container">
+      <!-- Github Banner -->
+<a href="https://github.com/Dogstudio/highway" target="_blank">
+  <img style="position: fixed; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub">
+</a>
+
+<!-- Header -->
+<header class="site-header">
+  <div class="site-header-inner">
+    <a href="/" class="site-logo"><img src="./assets/images/logo_2x.png" /></a>
+
+    <nav class="site-menu">
+      <ul>
+        <li class="menu-item">
+          <a href="/" >Introduction</a>
+        </li>
+
+        <li class="menu-item">
+          <a href="/installation.html" >Installation</a>
+        </li>
+
+        <li class="menu-item">
+          <a href="/get-started.html" class="is-active">Get started</a>
+        </li>
+
+        <li class="menu-item">
+          <a href="/api.html" >API Reference</a>
+        </li>
+
+        <li class="menu-item">
+          <a href="/examples.html" >Examples</a>
+        </li>
+
+        <li class="menu-item">
+          <a href="/demos.html" >Demos</a>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+
+      <article id="top" class="site-content" data-router-view="get-started">
+        <h1>Get started</h1>
+<p>Now we have followed the <a href="./installation.html">installation</a> process of <strong>Highway</strong> it's time to use all the magic in it !</p>
+
+<h2 id="structure">Structure</h2>
+<p>In order to work properly, <strong>Highway</strong> needs a basic HTML structure.</p>
+<p>All we have to do is to put somewhere in our views the <strong>data-router-wrapper</strong> that will contain and only contain the <strong>data-router-view</strong> that will be updated by <strong>Highway</strong> on navigation. Everything outside of the <strong>data-router-wrapper</strong> will stay the same all along the user's navigation.</p>
+<p>This is the look of this HTML structure itself:</p>
+<pre>
+<code class="html">&lt;!-- File: index.html --&gt;
+&lt;!-- [...] --&gt;
+&lt;body&gt;
+  &lt;!-- [...] --&gt;
+  &lt;main data-router-wrapper&gt;
+    &lt;article data-router-view="name"&gt;
+      &lt;!-- [...] --&gt;
+    &lt;/article&gt;
+  &lt;/main&gt;
+  &lt;!-- [...] --&gt;
+&lt;/body&gt;
+</code>
+</pre>
+
+
+<h2 id="renderers">Renderers</h2>
+<p>A renderer is a script for each view that contains all the Javascript we need for each one of them. It can be shared by multiple views if we want. A default renderer called <strong>Highway.Renderer</strong> can be extended to create our custom ones and it'll be used by default if a given view has no custom renderer attached to it.</p>
+<p>A renderer comes with some built-in methods to let us call our scripts at different key moment during the navigation process. These built-in methods are:</p>
+
+<ul>
+    <li><strong>onEnter</strong>: This method is called when the <strong>data-router-view</strong> is added to the DOM.</li>
+    <li><strong>onLeave</strong>: This method is called when the transition to hide the <strong>data-router-view</strong> starts.</li>
+    <li><strong>onEnterCompleted</strong>: This method is called when the transition to show the <strong>data-router-view</strong> is over.</li>
+    <li><strong>onLeaveCompleted</strong>: This method is called when the <strong>data-router-view</strong> is removed from the DOM.</li>
+</ul>
+
+<p>In our custom renderer we also have access to some useful variables:</p>
+
+<ul>
+    <li><strong>this.view</strong>: The <strong>[data-router-view]</strong> of the view the renderer is attached to.</li>
+    <li><strong>this.properties</strong>: All the properties we can get of our renderer (page, view, slug, transition,...).</li>
+</ul>
+
+<p>Long story short, let see what a custom renderer look like:</p>
+<pre>
+<code class="js">// File: custom-renderer.js
+// Import Highway
+import Highway from '@dogstudio/highway';
+
+class CustomRenderer extends Highway.Renderer {
+  // Built-in methods
+  onEnter() { [...] }
+  onLeave() { [...] }
+  onEnterCompleted() { [...] }
+  onLeaveCompleted() { [...] }
+}
+
+// Don`t forget to export your renderer
+export default CustomRenderer;
+</code>
+</pre>
+
+
+<h2 id="transitions">Transitions</h2>
+<p>OK so we know more about renderers but we are sad because there are no transitions between our views... Let now see how to create them!</p>
+<p>Transitions in <strong>Highway</strong> are pretty simple. A default transition called <strong>Highway.Transition</strong> can be extended to create our custom ones. Once we've extended the <strong>Highway.Transition</strong> we have access to those essential methods:</p>
+
+<ul>
+    <li><strong>in</strong>: The method that should contain the transition to show a <strong>data-router-view</strong>.</li>
+    <li><strong>out</strong>: The method that should contain the transition to hide a <strong>data-router-view</strong>.</li>
+</ul>
+
+<p>Each of those methods get two parameters we can name the way we want.<br> Here are some good defaults:</p>
+
+<ul>
+    <li><strong>view</strong>: The <strong>data-router-view</strong> to show or hide.</li>
+    <li><strong>done</strong>: The required callback method <strong>we have to call</strong> once each of the transitions is over.</li>
+</ul>
+
+<p>Let now see what a custom transition looks like:</p>
+<pre>
+<code class="js">// File: custom-transition.js
+// Import Highway
+import Highway from '@dogstudio/highway';
+
+class CustomTransition extends Highway.Transition {
+  // Built-in methods
+  in(view, done) {
+    // [...]
+  }
+
+  out(view, done) {
+    // [...]
+  }
+}
+
+// Don`t forget to export your transition
+export default CustomTransition;
+</code>
+</pre>
+
+
+<h2 id="core">Core</h2>
+<p>We should now have our custom renderers and transitions, it's time to attach everything to the right views and to <strong>Highway</strong>. To do so we have to call <strong>Highway.Core</strong> where we can attach everything we created.</p>
+<p>Remember the <strong>data-router-view</strong> we added to our view? We named it and its name will now be used to attach it to our custom renderer and transition.</p>
+<p>This is a reminder of our HTML structure so far:</p>
+<pre>
+<code class="html">&lt;!-- File: index.html --&gt;
+&lt;!-- [...] --&gt;
+&lt;body&gt;
+  &lt;!-- [...] --&gt;
+  &lt;main data-router-wrapper&gt;
+    &lt;article data-router-view="name"&gt;
+      &lt;!-- [...] --&gt;
+    &lt;/article&gt;
+  &lt;/main&gt;
+  &lt;!-- [...] --&gt;
+&lt;/body&gt;
+</code>
+</pre>
+
+
+<p>Now let's call <strong>Highway.Core</strong> and do some magic:</p>
+<pre>
+<code class="js">// File: main.js
+// Import Renderers
+import CustomRenderer from 'path/to/custom-renderer.js';
+
+// Import transitions
+import CustomTransition from 'path/to/custom-transition.js';
+
+// Attach the renderers and transitions to the [data-router-view] name
+const H = new Highway.Core({
+  renderers: {
+    name: CustomRenderer
+  },
+  transitions: {
+    name: CustomTransition
+  }
+});
+</code>
+</pre>
+
+
+<p>Now we attached our custom renderer and transition to our view, all scripts contained in the custom renderer will be called everytime the view is displayed and the transition will be called everytime we leave or access the view.</p>
+<p>We might want to use the same transition for all the views across our website. This is possible by adding a <strong>default</strong> key to our transitions list in the <strong>Highway.Core</strong> options. When we do so, for each view, <strong>Highway</strong> will look for a transition attached to our <strong>data-router-view</strong> name and fallback to the default one if none is found.</p>
+<pre>
+<code class="js">// File: main.js
+// Import Renderers
+import CustomRenderer from 'path/to/custom-renderer.js';
+
+// Import transitions
+import CustomTransition from 'path/to/custom-transition.js';
+
+// Attach the renderers and transitions to the [data-router-view] name
+const H = new Highway.Core({
+  renderers: {
+    name: CustomRenderer
+  },
+  transitions: {
+    default: CustomTransition // We use our custom transition for all views by default
+  }
+});
+</code>
+</pre>
+
+
+<p>That's it ! We now have <strong>Highway</strong> setup and ready to work. We can repeat those steps for each view of our website and we'll have beautiful transitions between them.</p>
+<p>We can go further an take a look at the <a href="./api.html">API</a> of <strong>Highway</strong>.</p>
+
+      </article>
+    </main>
+
+    <!-- Footer -->
+<footer class="site-footer">
+  <p class="site-footer-buttons">
+    <a class="github-button" href="https://github.com/Dogstudio/highway" data-icon="octicon-star" data-size="large" data-show-count="true" aria-label="Star Dogstudio/highway on GitHub">Star</a>
+  </p>
+  <p>©2018 - Coded by <a href="https://github.com/Anthodpnt" target="_blank">Anthodpnt</a> & Powered by <a href="https://www.dogstudio.co" target="_blank">Dogstudio</a></p>
+</footer>
+
+<!-- Github Buttons -->
+<script async defer src="https://buttons.github.io/buttons.js"></script>
+
+<!-- Scripts -->
+<script src="./assets/js/highlight.js"></script>
+<script src="./assets/js/main.js"></script>
+
+  </body>
+</html>

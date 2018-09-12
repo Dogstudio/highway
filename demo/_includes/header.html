@@ -1,0 +1,39 @@
+<!-- Github Banner -->
+<a href="https://github.com/Dogstudio/highway" target="_blank">
+  <img style="position: fixed; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub">
+</a>
+
+<!-- Header -->
+<header class="site-header">
+  <div class="site-header-inner">
+    <a href="/" class="site-logo"><img src="./assets/images/logo_2x.png" /></a>
+
+    <nav class="site-menu">
+      <ul>
+        <li class="menu-item">
+          <a href="/" {% if page.url == '/' %}class="is-active"{% endif %}>Introduction</a>
+        </li>
+
+        <li class="menu-item">
+          <a href="/installation.html" {% if page.url == '/installation.html' %}class="is-active"{% endif %}>Installation</a>
+        </li>
+
+        <li class="menu-item">
+          <a href="/get-started.html" {% if page.url == '/get-started.html' %}class="is-active"{% endif %}>Get started</a>
+        </li>
+
+        <li class="menu-item">
+          <a href="/api.html" {% if page.url == '/api.html' %}class="is-active"{% endif %}>API Reference</a>
+        </li>
+
+        <li class="menu-item">
+          <a href="/examples.html" {% if page.url == '/examples.html' %}class="is-active"{% endif %}>Examples</a>
+        </li>
+
+        <li class="menu-item">
+          <a href="/demos.html" {% if page.url == '/demos.html' %}class="is-active"{% endif %}>Demos</a>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</header>
