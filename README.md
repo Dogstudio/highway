@@ -11,9 +11,9 @@
 
 ## Table of Content
 
-- [**Guide**](#)
-- [**Examples**](#)
-- [**Demos**](#)
+- [**Guide**](https://dogstudio.github.io/highway/)
+- [**Examples**](https://dogstudio.github.io/highway/examples.html)
+- [**Demos**](https://dogstudio.github.io/highway/demos.html)
 - [**Support**](https://github.com/Dogstudio/highway#support)
 - [**Roadmap**](https://github.com/Dogstudio/highway#roadmap)
 - [**Releases**](https://github.com/Dogstudio/highway#releases)
@@ -36,7 +36,7 @@
 ## Releases
 #### 2.0.x
 
-- :tada: Add [demo website]()
+- :tada: Add [demo website](https://dogstudio.github.io/highway/)
 - :tada: Add `Core.redirect(href)` method
 - :art: Update informations sent with events
 - :art: Rename `Core.bind()` into `Core.attach()`
