@@ -25,7 +25,7 @@
 - Firefox
 - Edge
 - Safari 6.2+
-- Internet Explorer 10+ (with [**whatwg-fetch**](https://github.com/github/fetch)
+- Internet Explorer 10+ (+ [**whatwg-fetch**](https://github.com/github/fetch))
 
 ## Roadmap
 
