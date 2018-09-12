@@ -6,24 +6,25 @@
 export default class Renderer {
 
   /**
-   * @arg {object} props — Set of properties (slug, page, view,...)
+   * @arg {object} properties — Set of properties (slug, page, view,...)
    * @constructor
    */
-  constructor(props) {
-    // We extract our properties.
-    this.view = props.view;
-    this.page = props.page.cloneNode(true);
+  constructor(properties) {
+    // We get the view.
+    this.view = document.querySelector('[data-router-view]');
+
+    // We save properties of the renderer
+    this.properties = properties;
 
     // We get our transition we will use later to show/hide our view.
-    this.Transition = props.transition ? new props.transition(props.view) : null;
+    this.Transition = properties.transition ? new properties.transition(this.view) : null;
   }
 
   /**
    * Renderer initialization.
    */
   setup() {
-    // We call the `onEnter` and `onEnterCompleted` methods of the renderer on
-    // initialization if they exists.
+    // These both methods have to be called at least once on first load.
     this.onEnter && this.onEnter();
     this.onEnterCompleted && this.onEnterCompleted();
   }
@@ -32,23 +33,16 @@ export default class Renderer {
    * Add view in DOM.
    */
   add() {
-    // We update the `[data-router-wrapper]`.
-    this.wrapper = document.querySelector('[data-router-wrapper]');
-
-    // Before doing anything crazy you need to know your view doesn't exists
-    // in the [data-router-wrapper] so it is appended to it right now!
-    this.wrapper.appendChild(this.view);
+    // We setup the DOM for our [data-router-view]
+    this.view.setAttribute('data-router-view', this.properties.slug);
+    this.view.innerHTML = this.properties.view.innerHTML;
   }
 
   /**
    * Remove view in DOM.
    */
   remove() {
-    // We update the `[data-router-wrapper]`.
-    this.wrapper = this.view.parentNode;
-
-    // It's time to say goodbye to the view... Farewell my friend.
-    this.wrapper.removeChild(this.view);
+    this.view.innerHTML = '';
   }
 
   /**
@@ -56,10 +50,8 @@ export default class Renderer {
    */
   update() {
     // Now we update all the informations in the DOM we need!
-    // We update the class attribute on the `html` and `body` tag and the title
-    document.title = this.page.title;
-    document.body.className = this.page.body.className;
-    document.documentElement.className = this.page.documentElement.className;
+    // We update the title
+    document.title = this.properties.page.title;
   }
 
   /**
@@ -69,8 +61,7 @@ export default class Renderer {
    */
   show() {
     return new Promise(async resolve => {
-      // Add view in DOM.
-      this.add();
+      // Update DOM.
       this.update();
 
       // The `onEnter` method if set is called everytime the view is appended

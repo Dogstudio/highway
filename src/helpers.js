@@ -13,15 +13,25 @@ const PARSER = new window.DOMParser();
 export default class Helpers {
 
   /**
+   * @arg {object} renderers — List of renderers
+   * @arg {object} transitions — List of transitions
+   * @constructor
+   */
+  constructor(renderers, transitions) {
+    this.renderers = renderers;
+    this.transitions = transitions;
+  }
+
+  /**
    * Get origin of an URL
    *
    * @arg    {string} url — URL to match
    * @return {string} Origin of URL or `null`
    * @static
    */
-  static getOrigin(url) {
+  getOrigin(url) {
     const match = url.match(/(https?:\/\/[\w\-.]+)/);
-    return match ? match[1] : null;
+    return match ? match[1].replace(/https?:\/\//, '') : null;
   }
 
   /**
@@ -31,7 +41,7 @@ export default class Helpers {
    * @return {string} Pathname of URL or `null`
    * @static
    */
-  static getPathname(url) {
+  getPathname(url) {
     const match = url.match(/https?:\/\/.*?(\/[\w_\-./]+)/);
     return match ? match[1] : '/';
   }
@@ -43,7 +53,7 @@ export default class Helpers {
    * @return {string} Anchor in URL or `null`
    * @static
    */
-  static getAnchor(url) {
+  getAnchor(url) {
     const match = url.match(/(#.*)$/);
     return match ? match[1] : null;
   }
@@ -55,7 +65,7 @@ export default class Helpers {
    * @return {object} Search in URL formatted as an object or `null`
    * @static
    */
-  static getParams(url) {
+  getParams(url) {
     const match = url.match(/\?([\w_\-.=&]+)/);
 
     if (!match) {
@@ -83,7 +93,7 @@ export default class Helpers {
    * @return {string} Page DOM
    * @static
    */
-  static getDOM(page) {
+  getDOM(page) {
     return typeof page === 'string' ? PARSER.parseFromString(page, 'text/html') : page;
   }
 
@@ -94,7 +104,7 @@ export default class Helpers {
    * @return {object} View element or `null`
    * @static
    */
-  static getView(page) {
+  getView(page) {
     return page.querySelector('[data-router-view]');
   }
 
@@ -105,7 +115,7 @@ export default class Helpers {
    * @return {string} Page slug or `null`
    * @static
    */
-  static getSlug(view) {
+  getSlug(view) {
     return view.getAttribute('data-router-view');
   }
 
@@ -113,37 +123,66 @@ export default class Helpers {
    * Get page renderer
    *
    * @arg    {string} slug — Renderer's slug
-   * @arg    {object} renderers — List of renderers
    * @return {object} Single renderer or default one
    * @static
    */
-  static getRenderer(slug, renderers) {
-    if (typeof renderers === 'undefined' || !renderers) {
-      return Renderer;
-    }
-    return slug in renderers ? renderers[slug] : Renderer;
+  getRenderer(slug) {
+    return slug in this.renderers ? this.renderers[slug] : Renderer;
   }
 
   /**
    * Get page transition
    *
    * @arg    {string} slug — Transition slug
-   * @arg    {object} transitions — List of transitions
    * @return {object} Single transition or `null`
    * @static
    */
-  static getTransition(slug, transitions) {
-    if (typeof transitions === 'undefined' || !transitions) {
-      return null;
-    }
-
-    if (!(slug in transitions)) {
-      if ('default' in transitions) {
-        return transitions['default'];
+  getTransition(slug) {
+    if (!(slug in this.transitions)) {
+      if ('default' in this.transitions) {
+        return this.transitions['default'];
       }
       return null;
     }
 
-    return transitions[slug];
+    return this.transitions[slug];
+  }
+
+  /**
+   * Get all required properties for a context.
+   *
+   * @arg    {object} context – DOM context
+   * @return {object} Properties
+   */
+  getProperties(context) {
+    const page = this.getDOM(context);
+    const view = this.getView(page);
+    const slug = this.getSlug(view);
+    const renderer = this.getRenderer(slug, this.renderers);
+    const transition = this.getTransition(slug, this.transitions);
+
+    return {
+      page,
+      view,
+      slug,
+      renderer,
+      transition
+    };
+  }
+
+  /**
+   * Get state of an URL.
+   *
+   * @arg    {string} url — URL to decompose
+   * @return {object} State
+   */
+  getLocation(url) {
+    return {
+      href: url,
+      anchor: this.getAnchor(url),
+      origin: this.getOrigin(url),
+      params: this.getParams(url),
+      pathname: this.getPathname(url)
+    };
   }
 }
