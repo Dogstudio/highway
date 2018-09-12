@@ -394,6 +394,7 @@ article {
 
 .demos-list li {
   width: 50%;
+  margin: 0 0 20px;
   padding: 0 10px !important;
 }
 
