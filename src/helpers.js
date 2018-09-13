@@ -138,6 +138,10 @@ export default class Helpers {
    * @static
    */
   getTransition(slug) {
+    if (!this.transitions) {
+      return null;
+    }
+
     if (!(slug in this.transitions)) {
       if ('default' in this.transitions) {
         return this.transitions['default'];
