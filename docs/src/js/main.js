@@ -1,3 +1,6 @@
+// Polyfill
+import 'whatwg-fetch';
+
 // Import Highway
 import Highway from 'highway';
 

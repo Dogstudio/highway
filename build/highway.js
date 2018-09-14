@@ -421,7 +421,15 @@ class helpers_Helpers {
    * @static
    */
   getRenderer(slug) {
-    return slug in this.renderers ? this.renderers[slug] : Renderer;
+    if (slug in this.renderers) {
+      if (typeof this.renderers[slug].then === 'function') {
+        return Promise.resolve(this.renderers[slug]).then(({ default: cons }) => cons);
+      }
+
+      return Promise.resolve(this.renderers[slug]);
+    }
+
+    return Promise.resolve(Renderer);
   }
 
   /**
@@ -432,6 +440,10 @@ class helpers_Helpers {
    * @static
    */
   getTransition(slug) {
+    if (!this.transitions) {
+      return null;
+    }
+
     if (!(slug in this.transitions)) {
       if ('default' in this.transitions) {
         return this.transitions['default'];
@@ -519,8 +531,10 @@ class core_Core extends tiny_emitter_default.a {
     this.cache.set(this.location.pathname, this.properties);
 
     // Get the page renderer and properly setup it.
-    this.From = new this.properties.renderer(this.properties);
-    this.From.setup();
+    this.properties.renderer.then(Renderer => {
+      this.From = new Renderer(this.properties);
+      this.From.setup();
+    });
 
     // Events variables.
     this._navigate = this.navigate.bind(this);
@@ -700,7 +714,9 @@ class core_Core extends tiny_emitter_default.a {
   async afterFetch() {
     // We are calling the renderer attached to the view we just fetched and we
     // are adding the [data-router-view] in our DOM.
-    this.To = new this.properties.renderer(this.properties);
+    const Renderer = await this.properties.renderer;
+
+    this.To = new Renderer(this.properties);
     this.To.add();
 
     // We then emit a now event right before the view is shown to create a hook

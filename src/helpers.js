@@ -129,8 +129,7 @@ export default class Helpers {
   getRenderer(slug) {
     if (slug in this.renderers) {
       if (typeof this.renderers[slug].then === 'function') {
-        return Promise.resolve(this.renderers[slug])
-          .then(({default: cons}) => cons);
+        return Promise.resolve(this.renderers[slug]).then(({ default: cons }) => cons);
       }
 
       return Promise.resolve(this.renderers[slug]);

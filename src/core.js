@@ -35,11 +35,10 @@ export default class Core extends Emitter {
     this.cache.set(this.location.pathname, this.properties);
 
     // Get the page renderer and properly setup it.
-    this.properties.renderer
-      .then(Renderer => {
-        this.From = new Renderer(this.properties);
-        this.From.setup();
-      });
+    this.properties.renderer.then(Renderer => {
+      this.From = new Renderer(this.properties);
+      this.From.setup();
+    });
 
     // Events variables.
     this._navigate = this.navigate.bind(this);
