@@ -89,6 +89,10 @@
 
 - :rocket: First release
 
+## Contributors
+
+- [Anthodpnt](https://twitter.com/Anthodpnt)
+
 ## License
 
 See the [**LICENSE**](https://github.com/Dogstudio/highway/blob/master/LICENSE) file for license rights and limitations (MIT).
