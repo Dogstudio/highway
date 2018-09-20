@@ -4,9 +4,9 @@
   "version": "2.0.3",
   "main": "assets/js/main.js",
   "scripts": {
-    "build": "webpack",
+    "build": "webpack && jekyll build",
     "watch": "webpack --watch",
-    "serve": "php -S localhost:8080 -t _site/",
+    "serve": "jekyll serve",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "devDependencies": {
