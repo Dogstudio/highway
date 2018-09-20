@@ -1,12 +1,12 @@
 {
   "name": "@dogstudio/highway",
   "license": "MIT",
-  "version": "2.0.2",
+  "version": "2.0.3",
   "main": "assets/js/main.js",
   "scripts": {
     "build": "webpack",
     "watch": "webpack --watch",
-    "serve": "php -S localhost:8080 -t dist/",
+    "serve": "php -S localhost:8080 -t _site/",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "devDependencies": {
