@@ -2847,7 +2847,7 @@ function (_Emitter) {
 
     _this.cache = new Map();
 
-    _this.cache.set(_this.location.pathname, _this.properties); // Get the page renderer and properly setup it.
+    _this.cache.set(_this.location.url, _this.properties); // Get the page renderer and properly setup it.
 
 
     _this.properties.renderer.then(function (Renderer) {
