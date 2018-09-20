@@ -45,6 +45,7 @@
 - :art: Replace `Renderer.page` by `Renderer.properties`
 - :bug: Fix `NAVIGATE_IN` event that was fired too early
 - :bug: Fix the view swapping that causes so issues
+- :bug: Fix page caching with queries
 - :bug: Fix [issue #9](https://github.com/Dogstudio/highway/issues/9)
 - :bug: Fix [issue #12](https://github.com/Dogstudio/highway/issues/12)
 - :sparkles: Improve overall code

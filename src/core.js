@@ -32,7 +32,7 @@ export default class Core extends Emitter {
 
     // Cache
     this.cache = new Map();
-    this.cache.set(this.location.pathname, this.properties);
+    this.cache.set(this.location.url, this.properties);
 
     // Get the page renderer and properly setup it.
     this.properties.renderer.then(Renderer => {
