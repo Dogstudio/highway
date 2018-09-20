@@ -2416,14 +2416,23 @@ function () {
     key: "getRenderer",
     value: function getRenderer(slug) {
       if (slug in this.renderers) {
-        if (typeof this.renderers[slug].then === 'function') {
-          return Promise.resolve(this.renderers[slug]).then(function (_ref) {
+        var renderer = this.renderers[slug];
+
+        if (typeof renderer === 'function' && !_renderer.default.isPrototypeOf(renderer)) {
+          return Promise.resolve(renderer()).then(function (_ref) {
             var cons = _ref.default;
             return cons;
           });
         }
 
-        return Promise.resolve(this.renderers[slug]);
+        if (typeof renderer.then === 'function') {
+          return Promise.resolve(renderer).then(function (_ref2) {
+            var cons = _ref2.default;
+            return cons;
+          });
+        }
+
+        return Promise.resolve(renderer);
       }
 
       return Promise.resolve(_renderer.default);
