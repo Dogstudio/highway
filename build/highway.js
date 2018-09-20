@@ -422,11 +422,17 @@ class helpers_Helpers {
    */
   getRenderer(slug) {
     if (slug in this.renderers) {
-      if (typeof this.renderers[slug].then === 'function') {
-        return Promise.resolve(this.renderers[slug]).then(({ default: cons }) => cons);
+      const renderer = this.renderers[slug];
+
+      if (typeof renderer === 'function' && !Renderer.isPrototypeOf(renderer)) {
+        return Promise.resolve(renderer()).then(({ default: cons }) => cons);
       }
 
-      return Promise.resolve(this.renderers[slug]);
+      if (typeof renderer.then === 'function') {
+        return Promise.resolve(renderer).then(({ default: cons }) => cons);
+      }
+
+      return Promise.resolve(renderer);
     }
 
     return Promise.resolve(Renderer);

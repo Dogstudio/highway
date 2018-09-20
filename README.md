@@ -38,6 +38,7 @@
 
 - :tada: Add [demo website](https://dogstudio.github.io/highway/)
 - :tada: Add `Core.redirect(href)` method
+- :tada: Add dynamic import for renderers
 - :art: Update informations sent with events
 - :art: Rename `Core.bind()` into `Core.attach()`
 - :art: Rename `Core.unbind()` into `Core.dettach()`
@@ -88,6 +89,10 @@
 #### 0.0.x
 
 - :rocket: First release
+
+## Contributors
+
+- [Anthodpnt](https://twitter.com/Anthodpnt)
 
 ## License
 
