@@ -93,6 +93,7 @@
 ## Contributors
 
 - [Anthodpnt](https://twitter.com/Anthodpnt)
+- [ThaoD5](https://twitter.com/ThaoD5)
 
 ## License
 
