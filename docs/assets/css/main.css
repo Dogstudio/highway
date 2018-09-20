@@ -285,7 +285,7 @@ article {
   text-align: left;
 }
 
-.site-content table + * {
+.site-content .table-wrapper + * {
   margin-top: 35px;
 }
 
@@ -426,5 +426,128 @@ article {
     left: 50%;
     width: 160px;
     transform: translateX(-480px);
+  }
+
+  .burger-menu {
+    display: none;
+  }
+}
+
+@media only screen and (max-width: 959px) {
+  .site-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 70px;
+    padding-right: 0;
+    padding-top: 13px;
+    min-height: auto;
+    background-color: white;
+    border-bottom: 1px solid rgb(219, 223, 244);
+    z-index: 200;
+  }
+
+  .burger-menu {
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 70px;
+    width: 70px;
+    padding: 0;
+    outline: none;
+    cursor: pointer;
+    border: 0;
+    background: transparent;
+  }
+
+  .burger-menu-lines {
+    position: relative;
+    top: -3px;
+    height: 2px;
+    width: 20px;
+    background-color: #222;
+    display: inline-block;
+  }
+
+  .burger-menu-lines::before,
+  .burger-menu-lines::after {
+    content: '';
+    height: 2px;
+    width: 20px;
+    position: absolute;
+    left: 0;
+    background-color: #222;
+  }
+
+  .burger-menu-lines::before {
+    top: -7px;
+  }
+
+  .burger-menu-lines::after {
+    bottom: -7px;
+  }
+
+  .site-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    padding: 20px 30px;
+    background-color: white;
+    border-bottom: 1px solid rgb(219, 223, 244);
+    display: none;
+  }
+
+  .site-container {
+    width: 100%;
+  }
+
+  .site-content {
+    width: 100%;
+    padding: 90px 30px 0;
+  }
+
+  .github-banner {
+    display: none;
+  }
+
+  .site-header.is-open .site-menu {
+    display: block;
+  }
+
+  .site-header.is-open .burger-menu-lines {
+    background-color: transparent;
+  }
+
+  .site-header.is-open .burger-menu-lines::before {
+    transform: rotate(45deg);
+    top: 0;
+  }
+
+  .site-header.is-open .burger-menu-lines::after {
+    transform: rotate(-45deg);
+    bottom: 0;
+  }
+
+  .site-footer {
+    margin-top: 30px;
+  }
+
+  table {
+    min-width: 600px;
+  }
+
+  .table-wrapper {
+    overflow: auto;
+    width: 100%;
+  }
+}
+
+@media only screen and (max-width: 480px) {
+  .demos-list li {
+    width: 100%;
+    margin: 0 0 20px 0;
+    padding: 0 10px !important;
   }
 }

@@ -8,6 +8,13 @@ import Highway from 'highway';
 import Fade from 'transitions/fade';
 
 (() => {
+  const $menuToggler = document.querySelector('.js-toggle-menu');
+  const $siteHeader = document.querySelector('.js-site-header');
+
+  $menuToggler.addEventListener('click', () => {
+    $siteHeader.classList.toggle('is-open');
+  });
+
   // Highway
   const H = new Highway.Core({
     renderers: {
@@ -57,5 +64,10 @@ import Fade from 'transitions/fade';
         'page_location': location.href
       });
     }
+  });
+
+  H.on('NAVIGATE_OUT', (from, location) => {
+    // Close menu
+    $siteHeader.classList.remove('is-open');
   });
 })();
