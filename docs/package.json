@@ -1,7 +1,7 @@
 {
   "name": "@dogstudio/highway",
   "license": "MIT",
-  "version": "2.0.5",
+  "version": "2.0.6",
   "main": "assets/js/main.js",
   "scripts": {
     "build": "webpack && jekyll build",
