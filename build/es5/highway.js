@@ -3100,7 +3100,7 @@ function (_Emitter) {
                 // don't use any caching system everytime we would come back to a page we
                 // already saw we will have to fetch it again and it's pointless.
 
-                if (!this.cache.has(this.location.pathname)) {
+                if (!this.cache.has(this.location.url)) {
                   _context2.next = 8;
                   break;
                 }
@@ -3110,7 +3110,7 @@ function (_Emitter) {
 
               case 5:
                 // Get Properties
-                this.properties = this.cache.get(this.location.pathname);
+                this.properties = this.cache.get(this.location.url);
                 _context2.next = 13;
                 break;
 
@@ -3125,7 +3125,7 @@ function (_Emitter) {
                 this.properties = this.Helpers.getProperties(results[0]); // We cache our result
                 // eslint-disable-next-line
 
-                this.cache.set(this.location.pathname, this.properties);
+                this.cache.set(this.location.url, this.properties);
 
               case 13:
                 this.pushState();

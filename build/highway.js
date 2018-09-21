@@ -687,12 +687,12 @@ class core_Core extends tiny_emitter_default.a {
     // We have to verify our cache in order to save some HTTPRequests. If we
     // don't use any caching system everytime we would come back to a page we
     // already saw we will have to fetch it again and it's pointless.
-    if (this.cache.has(this.location.pathname)) {
+    if (this.cache.has(this.location.url)) {
       // We wait until the view is hidden.
       await this.From.hide();
 
       // Get Properties
-      this.properties = this.cache.get(this.location.pathname);
+      this.properties = this.cache.get(this.location.url);
 
     } else {
       // We wait till all our Promises are resolved.
@@ -707,7 +707,7 @@ class core_Core extends tiny_emitter_default.a {
 
       // We cache our result
       // eslint-disable-next-line
-      this.cache.set(this.location.pathname, this.properties);
+      this.cache.set(this.location.url, this.properties);
     }
 
     this.pushState();
