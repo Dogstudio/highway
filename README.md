@@ -44,6 +44,8 @@
 - :art: Rename `Core.unbind()` into `Core.dettach()`
 - :art: Rename `Renderer.root` into `Renderer.view`
 - :art: Replace `Renderer.page` by `Renderer.properties`
+- :bug: Fix pushState location in the process
+- :bug: Fix CMD/CTRL + click behavior of browsers
 - :bug: Fix `NAVIGATE_IN` event that was fired too early
 - :bug: Fix the view swapping that causes so issues
 - :bug: Fix page caching with queries
