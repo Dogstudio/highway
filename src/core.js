@@ -172,6 +172,9 @@ export default class Core extends Emitter {
    * Do some tests before HTTP requests to optimize pipeline.
    */
   async beforeFetch() {
+    // Push State
+    this.pushState();
+
     // We lock the navigation to avoid multiples clicks that could overload the
     // navigation process meaning that if the a navigation is running the user
     // cannot trigger a new one while the previous one is running.
@@ -210,7 +213,6 @@ export default class Core extends Emitter {
       this.cache.set(this.location.href, this.properties);
     }
 
-    this.pushState();
     this.afterFetch();
   }
 

@@ -676,6 +676,9 @@ class core_Core extends tiny_emitter_default.a {
    * Do some tests before HTTP requests to optimize pipeline.
    */
   async beforeFetch() {
+    // Push State
+    this.pushState();
+
     // We lock the navigation to avoid multiples clicks that could overload the
     // navigation process meaning that if the a navigation is running the user
     // cannot trigger a new one while the previous one is running.
@@ -714,7 +717,6 @@ class core_Core extends tiny_emitter_default.a {
       this.cache.set(this.location.href, this.properties);
     }
 
-    this.pushState();
     this.afterFetch();
   }
 

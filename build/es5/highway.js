@@ -3091,9 +3091,11 @@ function (_Emitter) {
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
-                // We lock the navigation to avoid multiples clicks that could overload the
+                // Push State
+                this.pushState(); // We lock the navigation to avoid multiples clicks that could overload the
                 // navigation process meaning that if the a navigation is running the user
                 // cannot trigger a new one while the previous one is running.
+
                 this.running = true; // We emit an event right before hiding the current view to create a hook
                 // for developers that want to do stuffs when an elligible link is clicked.
 
@@ -3105,24 +3107,24 @@ function (_Emitter) {
                 // already saw we will have to fetch it again and it's pointless.
 
                 if (!this.cache.has(this.location.href)) {
-                  _context2.next = 8;
+                  _context2.next = 9;
                   break;
                 }
 
-                _context2.next = 5;
+                _context2.next = 6;
                 return this.From.hide();
 
-              case 5:
+              case 6:
                 // Get Properties
                 this.properties = this.cache.get(this.location.href);
-                _context2.next = 13;
+                _context2.next = 14;
                 break;
 
-              case 8:
-                _context2.next = 10;
+              case 9:
+                _context2.next = 11;
                 return Promise.all([this.fetch(), this.From.hide()]);
 
-              case 10:
+              case 11:
                 results = _context2.sent;
                 // Now everything went fine we can extract the properties of the view we
                 // successfully fetched and keep going.
@@ -3131,8 +3133,7 @@ function (_Emitter) {
 
                 this.cache.set(this.location.href, this.properties);
 
-              case 13:
-                this.pushState();
+              case 14:
                 this.afterFetch();
 
               case 15:
