@@ -127,7 +127,9 @@ export default class Helpers {
    * @static
    */
   getRenderer(slug) {
-    if (slug in this.renderers) {
+    if (!this.renderers) {
+      return Promise.resolve(Renderer);
+    } else if (slug in this.renderers) {
       const renderer = this.renderers[slug];
 
       if (typeof renderer === 'function' && !Renderer.isPrototypeOf(renderer)) {
