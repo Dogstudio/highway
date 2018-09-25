@@ -2952,10 +2952,12 @@ function (_Emitter) {
   }, {
     key: "navigate",
     value: function navigate(e) {
-      // Prevent default `click`
-      e.preventDefault(); // We have to redirect to our `href` using Highway
+      if (!(e.metaKey || e.ctrlKey)) {
+        // Prevent default `click`
+        e.preventDefault(); // We have to redirect to our `href` using Highway
 
-      this.redirect(e.currentTarget.href);
+        this.redirect(e.currentTarget.href);
+      }
     }
     /**
      * Redirect to URL

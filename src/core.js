@@ -79,11 +79,13 @@ export default class Core extends Emitter {
    * @arg {object} e - `click` event
    */
   navigate(e) {
-    // Prevent default `click`
-    e.preventDefault();
+    if (!(e.metaKey || e.ctrlKey)) {
+      // Prevent default `click`
+      e.preventDefault();
 
-    // We have to redirect to our `href` using Highway
-    this.redirect(e.currentTarget.href);
+      // We have to redirect to our `href` using Highway
+      this.redirect(e.currentTarget.href);
+    }
   }
 
   /**
