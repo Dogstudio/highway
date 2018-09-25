@@ -2415,7 +2415,9 @@ function () {
   }, {
     key: "getRenderer",
     value: function getRenderer(slug) {
-      if (slug in this.renderers) {
+      if (!this.renderers) {
+        return Promise.resolve(_renderer.default);
+      } else if (slug in this.renderers) {
         var renderer = this.renderers[slug];
 
         if (typeof renderer === 'function' && !_renderer.default.isPrototypeOf(renderer)) {
