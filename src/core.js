@@ -36,7 +36,7 @@ export default class Core extends Emitter {
 
     // Cache
     this.cache = new Map();
-    this.cache.set(this.location.url, this.properties);
+    this.cache.set(this.location.href, this.properties);
 
     // Get the page renderer and properly setup it.
     this.properties.renderer.then(Renderer => {
@@ -83,14 +83,16 @@ export default class Core extends Emitter {
    * @arg {object} e - `click` event
    */
   navigate(e) {
-    // Prevent default `click`
-    e.preventDefault();
+    if (!(e.metaKey || e.ctrlKey)) {
+      // Prevent default `click`
+      e.preventDefault();
 
-    // Check to see if this navigation will use a contextual transition
-    e.target.hasAttribute('data-transition') ? this.contextualTransition = this.Transitions[e.target.dataset.transition].prototype : this.contextualTransition = false;
+      // Check to see if this navigation will use a contextual transition
+      e.target.hasAttribute('data-transition') ? this.contextualTransition = this.Transitions[e.target.dataset.transition].prototype : this.contextualTransition = false;
 
-    // We have to redirect to our `href` using Highway
-    this.redirect(e.currentTarget.href);
+      // We have to redirect to our `href` using Highway
+      this.redirect(e.currentTarget.href);
+    }
   }
 
   /**
@@ -177,6 +179,9 @@ export default class Core extends Emitter {
    * Do some tests before HTTP requests to optimize pipeline.
    */
   async beforeFetch() {
+    // Push State
+    this.pushState();
+
     // We lock the navigation to avoid multiples clicks that could overload the
     // navigation process meaning that if the a navigation is running the user
     // cannot trigger a new one while the previous one is running.
@@ -192,12 +197,12 @@ export default class Core extends Emitter {
     // We have to verify our cache in order to save some HTTPRequests. If we
     // don't use any caching system everytime we would come back to a page we
     // already saw we will have to fetch it again and it's pointless.
-    if (this.cache.has(this.location.pathname)) {
+    if (this.cache.has(this.location.href)) {
       // We wait until the view is hidden.
       await this.From.hide(this.contextualTransition);
 
       // Get Properties
-      this.properties = this.cache.get(this.location.pathname);
+      this.properties = this.cache.get(this.location.href);
     } else {
       // We wait till all our Promises are resolved.
       const results = await Promise.all([
@@ -211,10 +216,9 @@ export default class Core extends Emitter {
 
       // We cache our result
       // eslint-disable-next-line
-      this.cache.set(this.location.pathname, this.properties);
+      this.cache.set(this.location.href, this.properties);
     }
 
-    this.pushState();
     this.afterFetch();
   }
 
