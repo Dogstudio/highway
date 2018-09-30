@@ -2,7 +2,6 @@
  * @file Highway default transition that handle DOM animations.
  * @author Anthony Du Pont <bulldog@dogstudio.co>
  */
-
 export default class Transition {
 
   /**
@@ -19,13 +18,18 @@ export default class Transition {
    * Add the view in DOM and play an `in` transition if one is defined.
    *
    * @return {object} Promise
+   * @param {(object|boolean)} contextualTransition - If the transition is changing on the fly
    */
-  show() {
+  show(contextualTransition) {
     return new Promise(resolve => {
       // The `in` method in encapsulated in the `show` method make transition
       // code easier to write. This way you don't have to define any Promise
       // in your transition code and focus on the transition itself.
-      this.in && this.in(this.view, resolve);
+      if (contextualTransition === false) {
+        this.in && this.in(this.view, resolve);
+      } else {
+        contextualTransition.in && contextualTransition.in(this.view, resolve);
+      }
     });
   }
 
@@ -33,13 +37,18 @@ export default class Transition {
    * Play an `out` transition if one is defined and remove the view from DOM.
    *
    * @return {object} Promise
+   * @param {(object|boolean)} contextualTransition - If the transition is changing on the fly
    */
-  hide() {
+  hide(contextualTransition) {
     return new Promise(resolve => {
       // The `out` method in encapsulated in the `hide` method make transition
       // code easier to write. This way you don't have to define any Promise
       // in your transition code and focus on the transition itself.
-      this.out && this.out(this.view, resolve);
+      if (contextualTransition === false) {
+        this.out && this.out(this.view, resolve);
+      } else {
+        contextualTransition.out && contextualTransition.out(this.view, resolve);
+      }
     });
   }
 }

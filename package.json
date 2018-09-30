@@ -22,6 +22,7 @@
     "buildES6": "npm run cleanES6 && webpack --config webpack.es6.js",
     "clean": "npm run cleanES5 && npm run cleanES6",
     "build": "npm run buildES5 && npm run buildES6",
+    "watchES5": "npm run cleanES5 && webpack --watch --config webpack.es5.js",
     "watch": "npm run clean && webpack --watch --config webpack.es6.js",
     "test": "nyc --reporter=lcov mocha test/*.tests.js --require jsdom-global/register --require @babel/register"
   },
@@ -58,7 +59,7 @@
     "nyc": "^12.0.1",
     "sinon": "^5.0.10",
     "uglifyjs-webpack-plugin": "^1.2.5",
-    "webpack": "^4.10.2",
+    "webpack": "^4.19.1",
     "webpack-cli": "^2.1.4"
   },
   "dependencies": {
