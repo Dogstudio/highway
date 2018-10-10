@@ -8,28 +8,22 @@ import Tween from 'gsap';
 class ShiftFadeRight extends Highway.Transition {
   in(view, done) {
     // Animation
-    Tween.fromTo(view, 0.6,
-      {
-        x: -40,
-        opacity: 0
-      },
+    Tween.fromTo(view, 0.5,
+      { x: -40, opacity: 0 },
       {
         x: 0,
         opacity: 1,
         onComplete: done
-      }, 0.1
+      }
     );
   }
 
   out(view, done) {
     // Animation
-    Tween.fromTo(view, 0.6,
+    Tween.fromTo(view, 0.5,
+      { x: 0, opacity: 1 },
       {
-        x: 0,
-        opacity: 1
-      },
-      {
-        x: 70,
+        x: 40,
         opacity: 0,
         onComplete: () => {
           // We reset the scroll position
@@ -38,7 +32,7 @@ class ShiftFadeRight extends Highway.Transition {
           // Done
           done();
         }
-      }, 0.1
+      }
     );
   }
 }

@@ -6,8 +6,8 @@ import Highway from 'highway';
 
 // Transitions
 import Fade from 'transitions/fade';
-import ShiftFadeRight from './transitions/shiftFadeRight';
-import ShiftFadeLeft from './transitions/shiftFadeLeft';
+import ShiftFadeRight from 'transitions/shiftFadeRight';
+import ShiftFadeLeft from 'transitions/shiftFadeLeft';
 
 (() => {
   const $menuToggler = document.querySelector('.js-toggle-menu');
@@ -26,8 +26,8 @@ import ShiftFadeLeft from './transitions/shiftFadeLeft';
     },
     transitions: {
       default: Fade,
-      "ShiftFadeRight": ShiftFadeRight,
-      "ShiftFadeLeft": ShiftFadeLeft
+      ShiftFadeRight: ShiftFadeRight,
+      ShiftFadeLeft: ShiftFadeLeft
     }
   });
 

@@ -2415,7 +2415,9 @@ function () {
   }, {
     key: "getRenderer",
     value: function getRenderer(slug) {
-      if (slug in this.renderers) {
+      if (!this.renderers) {
+        return Promise.resolve(_renderer.default);
+      } else if (slug in this.renderers) {
         var renderer = this.renderers[slug];
 
         if (typeof renderer === 'function' && !_renderer.default.isPrototypeOf(renderer)) {
@@ -2602,13 +2604,13 @@ function () {
     }
     /**
      * Add the view in DOM and play an `in` transition if one is defined.
-     *
+     * @param {(object|boolean)} contextualTransition - If the transition is changing on the fly
      * @return {object} Promise
      */
 
   }, {
     key: "show",
-    value: function show() {
+    value: function show(contextualTransition) {
       var _this = this;
 
       return new Promise(
@@ -2638,7 +2640,7 @@ function () {
                   }
 
                   _context.next = 6;
-                  return _this.Transition.show();
+                  return _this.Transition.show(contextualTransition);
 
                 case 6:
                   // The `onEnterCompleted` method if set in your custom renderer is called
@@ -2663,13 +2665,13 @@ function () {
     }
     /**
      * Play an `out` transition if one is defined and remove the view from DOM.
-     *
+     * @param {(object|boolean)} contextualTransition - If the transition is changing on the fly
      * @return {object} Promise
      */
 
   }, {
     key: "hide",
-    value: function hide() {
+    value: function hide(contextualTransition) {
       var _this2 = this;
 
       return new Promise(
@@ -2695,7 +2697,7 @@ function () {
                   }
 
                   _context2.next = 5;
-                  return _this2.Transition.hide();
+                  return _this2.Transition.hide(contextualTransition);
 
                 case 5:
                   // Remove view from DOM.
@@ -2846,7 +2848,10 @@ function (_Emitter) {
     // and send custom events all along the script.
     _this = _possibleConstructorReturn(this, _getPrototypeOf(Core).call(this)); // Helpers.
 
-    _this.Helpers = new _helpers.default(renderers, transitions); // Properties & state.
+    _this.Helpers = new _helpers.default(renderers, transitions); // Prep contextual transition info.
+
+    _this.Transitions = transitions;
+    _this.contextualTransition = false; // Properties & state.
 
     _this.location = _this.Helpers.getLocation(window.location.href);
     _this.properties = _this.Helpers.getProperties(document.cloneNode(true)); // Status variables.
@@ -2856,7 +2861,7 @@ function (_Emitter) {
 
     _this.cache = new Map();
 
-    _this.cache.set(_this.location.url, _this.properties); // Get the page renderer and properly setup it.
+    _this.cache.set(_this.location.href, _this.properties); // Get the page renderer and properly setup it.
 
 
     _this.properties.renderer.then(function (Renderer) {
@@ -2950,10 +2955,14 @@ function (_Emitter) {
   }, {
     key: "navigate",
     value: function navigate(e) {
-      // Prevent default `click`
-      e.preventDefault(); // We have to redirect to our `href` using Highway
+      if (!(e.metaKey || e.ctrlKey)) {
+        // Prevent default `click`
+        e.preventDefault(); // Check to see if this navigation will use a contextual transition
 
-      this.redirect(e.currentTarget.href);
+        e.target.hasAttribute('data-transition') ? this.contextualTransition = this.Transitions[e.target.dataset.transition].prototype : this.contextualTransition = false; // We have to redirect to our `href` using Highway
+
+        this.redirect(e.currentTarget.href);
+      }
     }
     /**
      * Redirect to URL
@@ -2988,7 +2997,9 @@ function (_Emitter) {
   }, {
     key: "popState",
     value: function popState() {
-      // We temporary store the future location.
+      // A contextual transition only effects the transition when a certain link is clicked, not when navigating via browser buttons
+      this.contextualTransition = false; // We temporary store the future location.
+
       var location = this.Helpers.getLocation(window.location.href); // When users navigate using the browser buttons we check if the locations
       // have no anchors and that our locations are different.
 
@@ -3087,9 +3098,11 @@ function (_Emitter) {
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
-                // We lock the navigation to avoid multiples clicks that could overload the
+                // Push State
+                this.pushState(); // We lock the navigation to avoid multiples clicks that could overload the
                 // navigation process meaning that if the a navigation is running the user
                 // cannot trigger a new one while the previous one is running.
+
                 this.running = true; // We emit an event right before hiding the current view to create a hook
                 // for developers that want to do stuffs when an elligible link is clicked.
 
@@ -3100,35 +3113,34 @@ function (_Emitter) {
                 // don't use any caching system everytime we would come back to a page we
                 // already saw we will have to fetch it again and it's pointless.
 
-                if (!this.cache.has(this.location.pathname)) {
-                  _context2.next = 8;
+                if (!this.cache.has(this.location.href)) {
+                  _context2.next = 9;
                   break;
                 }
 
-                _context2.next = 5;
-                return this.From.hide();
+                _context2.next = 6;
+                return this.From.hide(this.contextualTransition);
 
-              case 5:
+              case 6:
                 // Get Properties
-                this.properties = this.cache.get(this.location.pathname);
-                _context2.next = 13;
+                this.properties = this.cache.get(this.location.href);
+                _context2.next = 14;
                 break;
 
-              case 8:
-                _context2.next = 10;
-                return Promise.all([this.fetch(), this.From.hide()]);
+              case 9:
+                _context2.next = 11;
+                return Promise.all([this.fetch(), this.From.hide(this.contextualTransition)]);
 
-              case 10:
+              case 11:
                 results = _context2.sent;
                 // Now everything went fine we can extract the properties of the view we
                 // successfully fetched and keep going.
                 this.properties = this.Helpers.getProperties(results[0]); // We cache our result
                 // eslint-disable-next-line
 
-                this.cache.set(this.location.pathname, this.properties);
+                this.cache.set(this.location.href, this.properties);
 
-              case 13:
-                this.pushState();
+              case 14:
                 this.afterFetch();
 
               case 15:
@@ -3174,7 +3186,7 @@ function (_Emitter) {
                 // and reattaching the events to all the new elligible links in our DOM.
 
                 _context3.next = 8;
-                return this.To.show();
+                return this.To.show(this.contextualTransition);
 
               case 8:
                 this.popping = false;
@@ -4530,37 +4542,47 @@ function () {
    * Add the view in DOM and play an `in` transition if one is defined.
    *
    * @return {object} Promise
+   * @param {(object|boolean)} contextualTransition - If the transition is changing on the fly
    */
 
 
   _createClass(Transition, [{
     key: "show",
-    value: function show() {
+    value: function show(contextualTransition) {
       var _this = this;
 
       return new Promise(function (resolve) {
         // The `in` method in encapsulated in the `show` method make transition
         // code easier to write. This way you don't have to define any Promise
         // in your transition code and focus on the transition itself.
-        _this.in && _this.in(_this.view, resolve);
+        if (contextualTransition === false) {
+          _this.in && _this.in(_this.view, resolve);
+        } else {
+          contextualTransition.in && contextualTransition.in(_this.view, resolve);
+        }
       });
     }
     /**
      * Play an `out` transition if one is defined and remove the view from DOM.
      *
      * @return {object} Promise
+     * @param {(object|boolean)} contextualTransition - If the transition is changing on the fly
      */
 
   }, {
     key: "hide",
-    value: function hide() {
+    value: function hide(contextualTransition) {
       var _this2 = this;
 
       return new Promise(function (resolve) {
         // The `out` method in encapsulated in the `hide` method make transition
         // code easier to write. This way you don't have to define any Promise
         // in your transition code and focus on the transition itself.
-        _this2.out && _this2.out(_this2.view, resolve);
+        if (contextualTransition === false) {
+          _this2.out && _this2.out(_this2.view, resolve);
+        } else {
+          contextualTransition.out && contextualTransition.out(_this2.view, resolve);
+        }
       });
     }
   }]);
