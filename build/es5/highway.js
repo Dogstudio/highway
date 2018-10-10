@@ -2415,9 +2415,7 @@ function () {
   }, {
     key: "getRenderer",
     value: function getRenderer(slug) {
-      if (!this.renderers) {
-        return Promise.resolve(_renderer.default);
-      } else if (slug in this.renderers) {
+      if (slug in this.renderers) {
         var renderer = this.renderers[slug];
 
         if (typeof renderer === 'function' && !_renderer.default.isPrototypeOf(renderer)) {
@@ -2858,7 +2856,7 @@ function (_Emitter) {
 
     _this.cache = new Map();
 
-    _this.cache.set(_this.location.href, _this.properties); // Get the page renderer and properly setup it.
+    _this.cache.set(_this.location.url, _this.properties); // Get the page renderer and properly setup it.
 
 
     _this.properties.renderer.then(function (Renderer) {
@@ -2952,12 +2950,10 @@ function (_Emitter) {
   }, {
     key: "navigate",
     value: function navigate(e) {
-      if (!(e.metaKey || e.ctrlKey)) {
-        // Prevent default `click`
-        e.preventDefault(); // We have to redirect to our `href` using Highway
+      // Prevent default `click`
+      e.preventDefault(); // We have to redirect to our `href` using Highway
 
-        this.redirect(e.currentTarget.href);
-      }
+      this.redirect(e.currentTarget.href);
     }
     /**
      * Redirect to URL
@@ -3091,11 +3087,9 @@ function (_Emitter) {
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
-                // Push State
-                this.pushState(); // We lock the navigation to avoid multiples clicks that could overload the
+                // We lock the navigation to avoid multiples clicks that could overload the
                 // navigation process meaning that if the a navigation is running the user
                 // cannot trigger a new one while the previous one is running.
-
                 this.running = true; // We emit an event right before hiding the current view to create a hook
                 // for developers that want to do stuffs when an elligible link is clicked.
 
@@ -3106,34 +3100,35 @@ function (_Emitter) {
                 // don't use any caching system everytime we would come back to a page we
                 // already saw we will have to fetch it again and it's pointless.
 
-                if (!this.cache.has(this.location.href)) {
-                  _context2.next = 9;
+                if (!this.cache.has(this.location.pathname)) {
+                  _context2.next = 8;
                   break;
                 }
 
-                _context2.next = 6;
+                _context2.next = 5;
                 return this.From.hide();
 
-              case 6:
+              case 5:
                 // Get Properties
-                this.properties = this.cache.get(this.location.href);
-                _context2.next = 14;
+                this.properties = this.cache.get(this.location.pathname);
+                _context2.next = 13;
                 break;
 
-              case 9:
-                _context2.next = 11;
+              case 8:
+                _context2.next = 10;
                 return Promise.all([this.fetch(), this.From.hide()]);
 
-              case 11:
+              case 10:
                 results = _context2.sent;
                 // Now everything went fine we can extract the properties of the view we
                 // successfully fetched and keep going.
                 this.properties = this.Helpers.getProperties(results[0]); // We cache our result
                 // eslint-disable-next-line
 
-                this.cache.set(this.location.href, this.properties);
+                this.cache.set(this.location.pathname, this.properties);
 
-              case 14:
+              case 13:
+                this.pushState();
                 this.afterFetch();
 
               case 15:

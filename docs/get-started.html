@@ -64,6 +64,7 @@ layout: default
 
 <p>Now we attached our custom renderer and transition to our view, all scripts contained in the custom renderer will be called everytime the view is displayed and the transition will be called everytime we leave or access the view.</p>
 <p>We might want to use the same transition for all the views across our website. This is possible by adding a <strong>default</strong> key to our transitions list in the <strong>Highway.Core</strong> options. When we do so, for each view, <strong>Highway</strong> will look for a transition attached to our <strong>data-router-view</strong> name and fallback to the default one if none is found.</p>
+<p>On the other hand, we might want to fire a contextual in/out transition when a certain link is clicked. To do so, simply create the desired transition(s) and then add <strong>data-transition="ContextualTransition"</strong> to the respective link(s). The default transition and the transition assigned to a view won't change. For example, click <a href="./api.html" data-transition="ShiftFadeRight">this link</a> to navigate to API Reference with a fade to the right, and <a href="./api.html" data-transition="ShiftFadeLeft">this link</a> to navigate to API Reference with a fade to the left.</p>
 {% include _snippets/core-default.html %}
 
 <p>That's it ! We now have <strong>Highway</strong> setup and ready to work. We can repeat those steps for each view of our website and we'll have beautiful transitions between them.</p>

@@ -421,9 +421,7 @@ class helpers_Helpers {
    * @static
    */
   getRenderer(slug) {
-    if (!this.renderers) {
-      return Promise.resolve(Renderer);
-    } else if (slug in this.renderers) {
+    if (slug in this.renderers) {
       const renderer = this.renderers[slug];
 
       if (typeof renderer === 'function' && !Renderer.isPrototypeOf(renderer)) {
@@ -536,7 +534,7 @@ class core_Core extends tiny_emitter_default.a {
 
     // Cache
     this.cache = new Map();
-    this.cache.set(this.location.href, this.properties);
+    this.cache.set(this.location.url, this.properties);
 
     // Get the page renderer and properly setup it.
     this.properties.renderer.then(Renderer => {
@@ -583,13 +581,11 @@ class core_Core extends tiny_emitter_default.a {
    * @arg {object} e - `click` event
    */
   navigate(e) {
-    if (!(e.metaKey || e.ctrlKey)) {
-      // Prevent default `click`
-      e.preventDefault();
+    // Prevent default `click`
+    e.preventDefault();
 
-      // We have to redirect to our `href` using Highway
-      this.redirect(e.currentTarget.href);
-    }
+    // We have to redirect to our `href` using Highway
+    this.redirect(e.currentTarget.href);
   }
 
   /**
@@ -676,9 +672,6 @@ class core_Core extends tiny_emitter_default.a {
    * Do some tests before HTTP requests to optimize pipeline.
    */
   async beforeFetch() {
-    // Push State
-    this.pushState();
-
     // We lock the navigation to avoid multiples clicks that could overload the
     // navigation process meaning that if the a navigation is running the user
     // cannot trigger a new one while the previous one is running.
@@ -694,12 +687,12 @@ class core_Core extends tiny_emitter_default.a {
     // We have to verify our cache in order to save some HTTPRequests. If we
     // don't use any caching system everytime we would come back to a page we
     // already saw we will have to fetch it again and it's pointless.
-    if (this.cache.has(this.location.href)) {
+    if (this.cache.has(this.location.pathname)) {
       // We wait until the view is hidden.
       await this.From.hide();
 
       // Get Properties
-      this.properties = this.cache.get(this.location.href);
+      this.properties = this.cache.get(this.location.pathname);
 
     } else {
       // We wait till all our Promises are resolved.
@@ -714,9 +707,10 @@ class core_Core extends tiny_emitter_default.a {
 
       // We cache our result
       // eslint-disable-next-line
-      this.cache.set(this.location.href, this.properties);
+      this.cache.set(this.location.pathname, this.properties);
     }
 
+    this.pushState();
     this.afterFetch();
   }
 
