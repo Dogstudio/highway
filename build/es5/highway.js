@@ -2553,7 +2553,7 @@ function () {
     _classCallCheck(this, Renderer);
 
     // We get the view.
-    this.view = document.querySelector('[data-router-view]'); // We save properties of the renderer
+    this.view = document.querySelector('[data-router-wrapper]'); // We save properties of the renderer
 
     this.properties = properties; // We get our transition we will use later to show/hide our view.
 
@@ -2572,24 +2572,15 @@ function () {
       this.onEnterCompleted && this.onEnterCompleted();
     }
     /**
-     * Add view in DOM.
+     * Add view in DOM, then remove previous view
      */
 
   }, {
     key: "add",
     value: function add() {
       // We setup the DOM for our [data-router-view]
-      this.view.setAttribute('data-router-view', this.properties.slug);
-      this.view.innerHTML = this.properties.view.innerHTML;
-    }
-    /**
-     * Remove view in DOM.
-     */
-
-  }, {
-    key: "remove",
-    value: function remove() {
-      this.view.innerHTML = '';
+      this.view.insertAdjacentHTML('beforeend', this.properties.view.outerHTML);
+      this.view.firstElementChild.remove();
     }
     /**
      * Update document informations
@@ -2604,6 +2595,7 @@ function () {
     }
     /**
      * Add the view in DOM and play an `in` transition if one is defined.
+     *
      * @param {(object|boolean)} contextualTransition - If the transition is changing on the fly
      * @return {object} Promise
      */
@@ -2700,16 +2692,13 @@ function () {
                   return _this2.Transition.hide(contextualTransition);
 
                 case 5:
-                  // Remove view from DOM.
-                  _this2.remove(); // The `onLeaveCompleted` method if set in your custom renderer is called
+                  // The `onLeaveCompleted` method if set in your custom renderer is called
                   // everytime a view is completely removed from the DOM.
-
-
                   _this2.onLeaveCompleted && _this2.onLeaveCompleted(); // Resolve Promise
 
                   resolve();
 
-                case 8:
+                case 7:
                 case "end":
                   return _context2.stop();
               }
