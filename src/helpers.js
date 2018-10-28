@@ -127,9 +127,13 @@ export default class Helpers {
    * @static
    */
   getRenderer(slug) {
+    // Return Default
     if (!this.renderers) {
       return Promise.resolve(Renderer);
-    } else if (slug in this.renderers) {
+    }
+
+    // Return Renderer
+    if (slug in this.renderers) {
       const renderer = this.renderers[slug];
 
       if (typeof renderer === 'function' && !Renderer.isPrototypeOf(renderer)) {
@@ -143,6 +147,7 @@ export default class Helpers {
       return Promise.resolve(renderer);
     }
 
+    // Return Default
     return Promise.resolve(Renderer);
   }
 
@@ -158,14 +163,15 @@ export default class Helpers {
       return null;
     }
 
-    if (!(slug in this.transitions)) {
-      if ('default' in this.transitions) {
-        return this.transitions['default'];
-      }
-      return null;
+    if (slug in this.transitions) {
+      return this.transitions[slug];
     }
 
-    return this.transitions[slug];
+    if ('default' in this.transitions) {
+      return this.transitions['default'];
+    }
+
+    return null;
   }
 
   /**

@@ -18,17 +18,17 @@ export default class Transition {
    * Add the view in DOM and play an `in` transition if one is defined.
    *
    * @return {object} Promise
-   * @param {(object|boolean)} contextualTransition - If the transition is changing on the fly
+   * @param {(object|boolean)} contextual - If the transition is changing on the fly
    */
-  show(contextualTransition) {
+  show(contextual) {
     return new Promise(resolve => {
       // The `in` method in encapsulated in the `show` method make transition
       // code easier to write. This way you don't have to define any Promise
       // in your transition code and focus on the transition itself.
-      if (contextualTransition === false) {
+      if (!contextual) {
         this.in && this.in(this.view, resolve);
       } else {
-        contextualTransition.in && contextualTransition.in(this.view, resolve);
+        contextual.in && contextual.in(this.view, resolve);
       }
     });
   }
@@ -37,17 +37,17 @@ export default class Transition {
    * Play an `out` transition if one is defined and remove the view from DOM.
    *
    * @return {object} Promise
-   * @param {(object|boolean)} contextualTransition - If the transition is changing on the fly
+   * @param {(object|boolean)} contextual - If the transition is changing on the fly
    */
-  hide(contextualTransition) {
+  hide(contextual) {
     return new Promise(resolve => {
       // The `out` method in encapsulated in the `hide` method make transition
       // code easier to write. This way you don't have to define any Promise
       // in your transition code and focus on the transition itself.
-      if (contextualTransition === false) {
+      if (!contextual) {
         this.out && this.out(this.view, resolve);
       } else {
-        contextualTransition.out && contextualTransition.out(this.view, resolve);
+        contextual.out && contextual.out(this.view, resolve);
       }
     });
   }

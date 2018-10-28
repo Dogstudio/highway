@@ -24,7 +24,7 @@ export default class Core extends Emitter {
 
     // Prep contextual transition info.
     this.Transitions = transitions;
-    this.contextualTransition = false;
+    this.Contextual = false;
 
     // Properties & state.
     this.location = this.Helpers.getLocation(window.location.href);
@@ -88,7 +88,7 @@ export default class Core extends Emitter {
       e.preventDefault();
 
       // Check to see if this navigation will use a contextual transition
-      e.target.hasAttribute('data-transition') ? this.contextualTransition = this.Transitions[e.target.dataset.transition].prototype : this.contextualTransition = false;
+      e.target.hasAttribute('data-transition') ? this.Contextual = this.Transitions[e.target.dataset.transition].prototype : this.Contextual = false;
 
       // We have to redirect to our `href` using Highway
       this.redirect(e.currentTarget.href);
@@ -125,9 +125,11 @@ export default class Core extends Emitter {
    */
   popState() {
     // A contextual transition only effects the transition when a certain link is clicked, not when navigating via browser buttons
-    this.contextualTransition = false;
+    this.Contextual = false;
+
     // We temporary store the future location.
     const location = this.Helpers.getLocation(window.location.href);
+
     // When users navigate using the browser buttons we check if the locations
     // have no anchors and that our locations are different.
     if (this.location.pathname !== location.pathname || !this.location.anchor && !location.anchor) {
@@ -199,7 +201,7 @@ export default class Core extends Emitter {
     // already saw we will have to fetch it again and it's pointless.
     if (this.cache.has(this.location.href)) {
       // We wait until the view is hidden.
-      await this.From.hide(this.contextualTransition);
+      await this.From.hide(this.Contextual);
 
       // Get Properties
       this.properties = this.cache.get(this.location.href);
@@ -207,7 +209,7 @@ export default class Core extends Emitter {
       // We wait till all our Promises are resolved.
       const results = await Promise.all([
         this.fetch(),
-        this.From.hide(this.contextualTransition)
+        this.From.hide(this.Contextual)
       ]);
 
       // Now everything went fine we can extract the properties of the view we
@@ -242,7 +244,7 @@ export default class Core extends Emitter {
 
     // We wait for the view transition to be over before resetting some variables
     // and reattaching the events to all the new elligible links in our DOM.
-    await this.To.show(this.contextualTransition);
+    await this.To.show(this.Contextual);
 
     this.popping = false;
     this.running = false;

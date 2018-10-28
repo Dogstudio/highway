@@ -107,7 +107,7 @@ h6 {
 }
 
 /** Structure **/
-main {
+.site-container {
   display: flex;
   flex-wrap: wrap;
   width: 960px;
@@ -115,7 +115,7 @@ main {
   margin-left: auto;
 }
 
-header {
+.site-header {
   width: 200px;
   min-height: 100vh;
   padding-top: 40px;
@@ -123,7 +123,7 @@ header {
   border-right: 1px solid rgb(219, 223, 244);
 }
 
-article {
+.site-content-wrapper {
   width: calc(100% - 200px);
   padding-top: 120px;
   padding-left: 80px;

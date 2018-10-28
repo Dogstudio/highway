@@ -50,10 +50,10 @@ export default class Renderer {
   /**
    * Add the view in DOM and play an `in` transition if one is defined.
    *
-   * @param {(object|boolean)} contextualTransition - If the transition is changing on the fly
+   * @param {(object|boolean)} contextual - If the transition is changing on the fly
    * @return {object} Promise
    */
-  show(contextualTransition) {
+  show(contextual) {
     return new Promise(async resolve => {
       // Update DOM.
       this.update();
@@ -65,7 +65,7 @@ export default class Renderer {
       // The transition is set in your custom renderer with a getter called
       // `transition` that should return the transition object you want to
       // apply to you view. We call the `in` step of this one right now!
-      this.Transition && await this.Transition.show(contextualTransition);
+      this.Transition && await this.Transition.show(contextual);
 
       // The `onEnterCompleted` method if set in your custom renderer is called
       // everytime a transition is over if set. Otherwise it's called right after
@@ -79,10 +79,11 @@ export default class Renderer {
 
   /**
    * Play an `out` transition if one is defined and remove the view from DOM.
-   * @param {(object|boolean)} contextualTransition - If the transition is changing on the fly
+   *
+   * @param {(object|boolean)} contextual - If the transition is changing on the fly
    * @return {object} Promise
    */
-  hide(contextualTransition) {
+  hide(contextual) {
     return new Promise(async resolve => {
       // The `onLeave` method if set in your custom renderer is called everytime
       // before a view will be removed from the DOM. This let you do some stuffs
@@ -90,7 +91,7 @@ export default class Renderer {
       this.onLeave && this.onLeave();
 
       // We call the `out` step of your transition right now!
-      this.Transition && await this.Transition.hide(contextualTransition);
+      this.Transition && await this.Transition.hide(contextual);
 
       // The `onLeaveCompleted` method if set in your custom renderer is called
       // everytime a view is completely removed from the DOM.

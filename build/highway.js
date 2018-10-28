@@ -230,10 +230,10 @@ class Renderer {
   /**
    * Add the view in DOM and play an `in` transition if one is defined.
    *
-   * @param {(object|boolean)} contextualTransition - If the transition is changing on the fly
+   * @param {(object|boolean)} contextual - If the transition is changing on the fly
    * @return {object} Promise
    */
-  show(contextualTransition) {
+  show(contextual) {
     return new Promise(async resolve => {
       // Update DOM.
       this.update();
@@ -245,7 +245,7 @@ class Renderer {
       // The transition is set in your custom renderer with a getter called
       // `transition` that should return the transition object you want to
       // apply to you view. We call the `in` step of this one right now!
-      this.Transition && await this.Transition.show(contextualTransition);
+      this.Transition && await this.Transition.show(contextual);
 
       // The `onEnterCompleted` method if set in your custom renderer is called
       // everytime a transition is over if set. Otherwise it's called right after
@@ -259,10 +259,11 @@ class Renderer {
 
   /**
    * Play an `out` transition if one is defined and remove the view from DOM.
-   * @param {(object|boolean)} contextualTransition - If the transition is changing on the fly
+   *
+   * @param {(object|boolean)} contextual - If the transition is changing on the fly
    * @return {object} Promise
    */
-  hide(contextualTransition) {
+  hide(contextual) {
     return new Promise(async resolve => {
       // The `onLeave` method if set in your custom renderer is called everytime
       // before a view will be removed from the DOM. This let you do some stuffs
@@ -270,7 +271,7 @@ class Renderer {
       this.onLeave && this.onLeave();
 
       // We call the `out` step of your transition right now!
-      this.Transition && await this.Transition.hide(contextualTransition);
+      this.Transition && await this.Transition.hide(contextual);
 
       // The `onLeaveCompleted` method if set in your custom renderer is called
       // everytime a view is completely removed from the DOM.
@@ -412,9 +413,13 @@ class helpers_Helpers {
    * @static
    */
   getRenderer(slug) {
+    // Return Default
     if (!this.renderers) {
       return Promise.resolve(Renderer);
-    } else if (slug in this.renderers) {
+    }
+
+    // Return Renderer
+    if (slug in this.renderers) {
       const renderer = this.renderers[slug];
 
       if (typeof renderer === 'function' && !Renderer.isPrototypeOf(renderer)) {
@@ -428,6 +433,7 @@ class helpers_Helpers {
       return Promise.resolve(renderer);
     }
 
+    // Return Default
     return Promise.resolve(Renderer);
   }
 
@@ -443,14 +449,15 @@ class helpers_Helpers {
       return null;
     }
 
-    if (!(slug in this.transitions)) {
-      if ('default' in this.transitions) {
-        return this.transitions['default'];
-      }
-      return null;
+    if (slug in this.transitions) {
+      return this.transitions[slug];
     }
 
-    return this.transitions[slug];
+    if ('default' in this.transitions) {
+      return this.transitions['default'];
+    }
+
+    return null;
   }
 
   /**
@@ -519,7 +526,7 @@ class core_Core extends tiny_emitter_default.a {
 
     // Prep contextual transition info.
     this.Transitions = transitions;
-    this.contextualTransition = false;
+    this.Contextual = false;
 
     // Properties & state.
     this.location = this.Helpers.getLocation(window.location.href);
@@ -583,7 +590,7 @@ class core_Core extends tiny_emitter_default.a {
       e.preventDefault();
 
       // Check to see if this navigation will use a contextual transition
-      e.target.hasAttribute('data-transition') ? this.contextualTransition = this.Transitions[e.target.dataset.transition].prototype : this.contextualTransition = false;
+      e.target.hasAttribute('data-transition') ? this.Contextual = this.Transitions[e.target.dataset.transition].prototype : this.Contextual = false;
 
       // We have to redirect to our `href` using Highway
       this.redirect(e.currentTarget.href);
@@ -620,9 +627,11 @@ class core_Core extends tiny_emitter_default.a {
    */
   popState() {
     // A contextual transition only effects the transition when a certain link is clicked, not when navigating via browser buttons
-    this.contextualTransition = false;
+    this.Contextual = false;
+
     // We temporary store the future location.
     const location = this.Helpers.getLocation(window.location.href);
+
     // When users navigate using the browser buttons we check if the locations
     // have no anchors and that our locations are different.
     if (this.location.pathname !== location.pathname || !this.location.anchor && !location.anchor) {
@@ -694,7 +703,7 @@ class core_Core extends tiny_emitter_default.a {
     // already saw we will have to fetch it again and it's pointless.
     if (this.cache.has(this.location.href)) {
       // We wait until the view is hidden.
-      await this.From.hide(this.contextualTransition);
+      await this.From.hide(this.Contextual);
 
       // Get Properties
       this.properties = this.cache.get(this.location.href);
@@ -702,7 +711,7 @@ class core_Core extends tiny_emitter_default.a {
       // We wait till all our Promises are resolved.
       const results = await Promise.all([
         this.fetch(),
-        this.From.hide(this.contextualTransition)
+        this.From.hide(this.Contextual)
       ]);
 
       // Now everything went fine we can extract the properties of the view we
@@ -737,7 +746,7 @@ class core_Core extends tiny_emitter_default.a {
 
     // We wait for the view transition to be over before resetting some variables
     // and reattaching the events to all the new elligible links in our DOM.
-    await this.To.show(this.contextualTransition);
+    await this.To.show(this.Contextual);
 
     this.popping = false;
     this.running = false;
@@ -782,17 +791,17 @@ class Transition {
    * Add the view in DOM and play an `in` transition if one is defined.
    *
    * @return {object} Promise
-   * @param {(object|boolean)} contextualTransition - If the transition is changing on the fly
+   * @param {(object|boolean)} contextual - If the transition is changing on the fly
    */
-  show(contextualTransition) {
+  show(contextual) {
     return new Promise(resolve => {
       // The `in` method in encapsulated in the `show` method make transition
       // code easier to write. This way you don't have to define any Promise
       // in your transition code and focus on the transition itself.
-      if (contextualTransition === false) {
+      if (!contextual) {
         this.in && this.in(this.view, resolve);
       } else {
-        contextualTransition.in && contextualTransition.in(this.view, resolve);
+        contextual.in && contextual.in(this.view, resolve);
       }
     });
   }
@@ -801,17 +810,17 @@ class Transition {
    * Play an `out` transition if one is defined and remove the view from DOM.
    *
    * @return {object} Promise
-   * @param {(object|boolean)} contextualTransition - If the transition is changing on the fly
+   * @param {(object|boolean)} contextual - If the transition is changing on the fly
    */
-  hide(contextualTransition) {
+  hide(contextual) {
     return new Promise(resolve => {
       // The `out` method in encapsulated in the `hide` method make transition
       // code easier to write. This way you don't have to define any Promise
       // in your transition code and focus on the transition itself.
-      if (contextualTransition === false) {
+      if (!contextual) {
         this.out && this.out(this.view, resolve);
       } else {
-        contextualTransition.out && contextualTransition.out(this.view, resolve);
+        contextual.out && contextual.out(this.view, resolve);
       }
     });
   }
