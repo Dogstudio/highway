@@ -11,7 +11,7 @@ export default class Renderer {
    */
   constructor(properties) {
     // We get the view.
-    this.view = document.querySelector('[data-router-view]');
+    this.view = document.querySelector('[data-router-wrapper]');
 
     // We save properties of the renderer
     this.properties = properties;
@@ -30,19 +30,12 @@ export default class Renderer {
   }
 
   /**
-   * Add view in DOM.
+   * Add view in DOM, then remove previous view
    */
   add() {
     // We setup the DOM for our [data-router-view]
-    this.view.setAttribute('data-router-view', this.properties.slug);
-    this.view.innerHTML = this.properties.view.innerHTML;
-  }
-
-  /**
-   * Remove view in DOM.
-   */
-  remove() {
-    this.view.innerHTML = '';
+    this.view.insertAdjacentHTML('beforeend', this.properties.view.outerHTML);
+    this.view.firstElementChild.remove();
   }
 
   /**
@@ -56,6 +49,7 @@ export default class Renderer {
 
   /**
    * Add the view in DOM and play an `in` transition if one is defined.
+   *
    * @param {(object|boolean)} contextualTransition - If the transition is changing on the fly
    * @return {object} Promise
    */
@@ -97,9 +91,6 @@ export default class Renderer {
 
       // We call the `out` step of your transition right now!
       this.Transition && await this.Transition.hide(contextualTransition);
-
-      // Remove view from DOM.
-      this.remove();
 
       // The `onLeaveCompleted` method if set in your custom renderer is called
       // everytime a view is completely removed from the DOM.
