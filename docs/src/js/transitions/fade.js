@@ -7,8 +7,6 @@ import Tween from 'gsap';
 // Fade
 class Fade extends Highway.Transition {
   in(view, done) {
-    console.log(view);
-
     // Animation
     Tween.fromTo(view, 0.5,
       { opacity: 0 },
@@ -20,8 +18,6 @@ class Fade extends Highway.Transition {
   }
 
   out(view, done) {
-    console.log(view);
-
     // Animation
     Tween.fromTo(view, 0.5,
       { opacity: 1 },

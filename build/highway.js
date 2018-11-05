@@ -2976,6 +2976,7 @@ function (_Emitter) {
         var location = this.Helpers.getLocation(href);
 
         if (location.origin !== this.location.origin || location.anchor && location.pathname === this.location.pathname) {
+          // We redirect when origins are differents or when there is an anchor.
           window.location.href = href;
         } else {
           this.location = location; // Now all our conditions are passed we can update our location and do

@@ -7,8 +7,6 @@ import Tween from 'gsap';
 // Basic
 class Basic extends Highway.Transition {
   in(view, done) {
-    console.log(view);
-
     // Scroll Top
     window.scrollTo(0, 0);
 
@@ -20,8 +18,6 @@ class Basic extends Highway.Transition {
   }
 
   out(view, done) {
-    console.log(view);
-
     // Animation
     Tween.set(view, { opacity: 0 });
 

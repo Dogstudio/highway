@@ -114,13 +114,16 @@ export default class Core extends Emitter {
       const location = this.Helpers.getLocation(href);
 
       if (location.origin !== this.location.origin || location.anchor && location.pathname === this.location.pathname) {
+        // We redirect when origins are differents or when there is an anchor.
         window.location.href = href;
+
       } else {
         this.location = location;
 
         // Now all our conditions are passed we can update our location and do
         // what we need to do before fetching it.
         this.beforeFetch();
+
       }
     }
   }
@@ -148,6 +151,7 @@ export default class Core extends Emitter {
     } else {
       // Update Location
       this.location = location;
+
     }
   }
 
@@ -210,6 +214,7 @@ export default class Core extends Emitter {
 
       // Get Properties
       this.properties = this.cache.get(this.location.href);
+
     } else {
       // We wait till all our Promises are resolved.
       const results = await Promise.all([
@@ -224,6 +229,7 @@ export default class Core extends Emitter {
       // We cache our result
       // eslint-disable-next-line
       this.cache.set(this.location.href, this.properties);
+
     }
 
     this.afterFetch();

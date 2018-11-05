@@ -26,7 +26,7 @@ import Basic from 'transitions/basic';
     transitions: {
       default: Fade,
       contextual: {
-        Basic: Basic
+        basic: Basic
       }
     }
   });
