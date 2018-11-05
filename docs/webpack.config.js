@@ -18,7 +18,8 @@ module.exports = {
       {
         test: /\.js$/,
         include: [
-          path.resolve(__dirname, 'src')
+          path.resolve('src'),
+          path.resolve('..', 'src')
         ],
         use: {
           loader: 'babel-loader',
@@ -45,7 +46,7 @@ module.exports = {
   },
   resolve: {
     alias: {
-      'highway': 'build/es5/highway.min.js',
+      'highway': 'src/highway.js',
       'gsap': 'gsap/TweenMax.js'
     },
     modules: ['.', 'node_modules'],

@@ -88,7 +88,12 @@ export default class Core extends Emitter {
       e.preventDefault();
 
       // Check to see if this navigation will use a contextual transition
-      e.target.hasAttribute('data-transition') ? this.Contextual = this.Transitions[e.target.dataset.transition].prototype : this.Contextual = false;
+      e.target.hasAttribute('data-transition') ? this.Contextual = this.Transitions['contextual'][e.target.dataset.transition].prototype : this.Contextual = false;
+
+      // Set transition name
+      if (this.Contextual) {
+        this.Contextual.name = e.target.dataset.transition;
+      }
 
       // We have to redirect to our `href` using Highway
       this.redirect(e.currentTarget.href);

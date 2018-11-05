@@ -11,13 +11,16 @@ export default class Renderer {
    */
   constructor(properties) {
     // We get the view.
-    this.view = document.querySelector('[data-router-wrapper]');
+    this.wrap = document.querySelector('[data-router-wrapper]');
 
     // We save properties of the renderer
     this.properties = properties;
 
     // We get our transition we will use later to show/hide our view.
-    this.Transition = properties.transition ? new properties.transition(this.view) : null;
+    this.Transition = properties.transition ? new properties.transition(this.wrap) : null;
+
+    // Set transition Name
+    this.Transition.name = properties.slug;
   }
 
   /**
@@ -34,8 +37,8 @@ export default class Renderer {
    */
   add() {
     // We setup the DOM for our [data-router-view]
-    this.view.insertAdjacentHTML('beforeend', this.properties.view.outerHTML);
-    this.view.firstElementChild.remove();
+    this.wrap.insertAdjacentHTML('beforeend', this.properties.view.outerHTML);
+    this.wrap.firstElementChild.remove();
   }
 
   /**

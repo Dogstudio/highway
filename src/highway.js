@@ -7,6 +7,10 @@ import Helpers from './helpers';
 import Renderer from './renderer';
 import Transition from './transition';
 
+// Highway Version
+console.log('Highway v2.1.0');
+
+// Export Highway
 export default {
   Core,
   Helpers,
