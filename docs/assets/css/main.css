@@ -215,7 +215,7 @@ h6 {
 .site-content p + h4,
 .site-content p + h5,
 .site-content p + h6 {
-  margin-top: 40px;
+  margin-top: 30px;
 }
 
 .site-content p + ul,
@@ -330,8 +330,8 @@ h6 {
 }
 
 .site-content hr {
-  margin-top: 50px;
-  margin-bottom: 50px;
+  margin-top: 35px;
+  margin-bottom: 35px;
   border: 0 none;
   height: 1px;
   background-color: rgb(219, 223, 244);
@@ -408,7 +408,7 @@ h6 {
 }
 
 /** Highlight **/
-.hljs {
+code, .hljs {
   padding: 20px;
   border-radius: 5px;
   border: 1px solid rgb(219, 223, 244);
@@ -416,6 +416,14 @@ h6 {
   font-family: FiraCode, sans-serif;
   font-size: 12px;
   line-height: 20px;
+}
+
+code {
+  padding: 3px 4px;
+  border-radius: 3px;
+  background-color: #f8f8f8;
+  font-size: 12px;
+  line-height: 1;
 }
 
 /** Responsive **/
