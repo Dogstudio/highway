@@ -11,6 +11,7 @@ html {
 }
 
 body {
+  background-color: #f8f8f8;
   color: rgba(145, 148, 168, 1);
   font-family: Heebo, Helvetica, sans-serif;
   font-size: 15px;
@@ -49,7 +50,7 @@ body {
 /** Typography **/
 b,
 strong {
-  color: #222;
+  color: #0f1520;
 }
 
 i,
@@ -58,14 +59,15 @@ em {
 }
 
 a {
-  transition: color .3s ease-out;
   color: #ff4940;
   text-decoration: none;
+  transition: color .3s ease-out, border .3s ease-out;
 }
 
 a:hover,
 a:focus {
-  color: #222;
+  color: #0f1520;
+  border-color: #0f1520;
 }
 
 h1,
@@ -75,7 +77,7 @@ h4,
 h5,
 h6 {
   margin-bottom: 10px;
-  color: #222;
+  color: #0f1520;
   font-family: Gilroy, sans-serif;
   font-weight: 500;
 }
@@ -90,7 +92,7 @@ h2 {
 }
 
 h2 a {
-  color: #222;
+  color: #0f1520;
 }
 
 h2 a:hover,
@@ -110,24 +112,19 @@ h6 {
 .site-container {
   display: flex;
   flex-wrap: wrap;
-  width: 960px;
   margin-right: auto;
   margin-left: auto;
 }
 
 .site-header {
-  width: 200px;
+  width: 230px;
   min-height: 100vh;
-  padding-top: 40px;
-  padding-right: 40px;
-  border-right: 1px solid rgb(219, 223, 244);
+  background-color: #0f1520;
 }
 
 .site-content-wrapper {
-  width: calc(100% - 200px);
+  width: calc(100% - 230px);
   padding-top: 120px;
-  padding-left: 80px;
-  padding-bottom: 100px;
 }
 
 /** Header - Logo **/
@@ -141,9 +138,7 @@ h6 {
   display: block;
   width: 121px;
   height: 44px;
-  margin-right: auto;
   margin-bottom: 40px;
-  margin-left: auto;
 }
 
 .site-logo img {
@@ -160,7 +155,7 @@ h6 {
   content: '';
   display: inline-block;
   margin-left: 10px;
-  border-top: 4px solid #222;
+  border-top: 4px solid #0f1520;
   border-right: 4px solid transparent;
   border-left: 4px solid transparent;
   vertical-align: middle;
@@ -181,21 +176,55 @@ h6 {
 
 .site-menu a {
   display: block;
-  padding-top: 10px;
-  padding-bottom: 10px;
-  border-bottom: 1px solid rgb(219, 223, 244);
+  padding-top: 5px;
+  padding-bottom: 5px;
+  color: #fff;
   font-weight: 700;
 }
 
 .site-menu a:hover,
 .site-menu a.is-active {
-  color: #222;
+  color: #ff4940;
+}
+
+/** Bottom **/
+.site-bottom {
+  margin-top: 80px;
+}
+
+.site-bottom a {
+  display: block;
+  padding-top: 30px;
+  padding-bottom: 30px;
+  border-top: 1px solid rgb(219, 223, 244);
+  border-bottom: 1px solid rgb(219, 223, 244);
+  color: #0f1520;
+  font-family: GTSectra, serif;
+  font-size: 36px;
+  text-align: center;
+  text-decoration: none;
+}
+
+.site-bottom a:hover,
+.site-bottom a:focus {
+  color: #ff4940;
+}
+
+.site-bottom a::before {
+  content: 'Next';
+  display: block;
+  color: #888;
+  font-family: Gilroy, sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  opacity: 0.5;
 }
 
 /** Footer **/
 .site-footer {
   padding: 40px 0 20px;
-  border-top: 1px solid rgb(219, 223, 244);
   font-size: 13px;
   text-align: center;
 }
@@ -205,6 +234,11 @@ h6 {
 }
 
 /** Content **/
+.site-content-inner {
+  max-width: 800px;
+  padding-left: 80px;
+}
+
 .site-content p + * {
   margin-top: 20px;
 }
@@ -308,7 +342,7 @@ h6 {
 }
 
 .site-content th {
-  color: #222;
+  color: #0f1520;
 }
 
 .site-content th + th,
@@ -381,8 +415,13 @@ h6 {
   outline: none;
   border: 1px solid rgb(219, 223, 244);
   padding: 15px;
-  color: #222;
+  color: #0f1520;
   font-size: 13px;
+}
+
+.site-content a {
+  text-decoration: underline;
+  text-decoration-skip: ink;
 }
 
 /** Demos **/
@@ -412,7 +451,7 @@ code, .hljs {
   padding: 20px;
   border-radius: 5px;
   border: 1px solid rgb(219, 223, 244);
-  color: #222;
+  color: #0f1520;
   font-family: FiraCode, sans-serif;
   font-size: 12px;
   line-height: 20px;
@@ -431,9 +470,9 @@ code {
   .site-header-inner {
     position: fixed;
     top: 40px;
-    left: 50%;
+    left: 40px;
     width: 160px;
-    transform: translateX(-480px);
+    /* transform: translateX(-480px); */
   }
 
   .burger-menu {
@@ -474,7 +513,7 @@ code {
     top: -3px;
     height: 2px;
     width: 20px;
-    background-color: #222;
+    background-color: #0f1520;
     display: inline-block;
   }
 
@@ -485,7 +524,7 @@ code {
     width: 20px;
     position: absolute;
     left: 0;
-    background-color: #222;
+    background-color: #0f1520;
   }
 
   .burger-menu-lines::before {

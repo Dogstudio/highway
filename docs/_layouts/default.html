@@ -7,13 +7,19 @@
     <div class="site-container">
       {% include header.html %}
 
-      <main class="site-content-wrapper" data-router-wrapper>
-        <article id="top" class="site-content" data-router-view="{{ page.slug }}">
-          {{ content }}
-        </article>
+      <main class="site-content-wrapper">
+        <div data-router-wrapper>
+          <article id="top" class="site-content" data-router-view="{{ page.slug }}">
+            <div class="site-content-inner">
+              {{ content }}
+            </div>
+
+            {% include bottom.html %}
+          </article>
+        </div>
+
+        {% include footer.html %}
       </main>
     </div>
-
-    {% include footer.html %}
   </body>
 </html>

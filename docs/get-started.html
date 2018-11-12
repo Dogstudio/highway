@@ -5,13 +5,22 @@ layout: default
 ---
 
 <h1>Get started</h1>
-<p>Now we have followed the <a href="./installation.html">installation</a> process of <strong>Highway</strong> it's time to use all the magic in it !</p>
-
 <h2 id="structure">Structure</h2>
-<p>In order to work properly, <strong>Highway</strong> needs a basic HTML structure.</p>
-<p>All we have to do is to put somewhere in our views the <strong>data-router-wrapper</strong> that will contain and only contain the <strong>data-router-view</strong> that will be updated by <strong>Highway</strong> on navigation. Everything outside of the <strong>data-router-wrapper</strong> will stay the same all along the user's navigation.</p>
-<p>This is the look of this HTML structure itself:</p>
-{% include _snippets/structure.html %}
+<p>The elements required for Highway are the <code>data-router-wrapper</code> and the <code>data-router-view</code>. Highway cannot work without those elements. The <code>data-router-view</code> that will contain the content of a page should always be a child of the <code>data-router-wrapper</code>. Highway will look for this element in pages to update the content on navigation.</p>
+<pre>
+<code class="html">&lt;!-- File: index.html --&gt;
+&lt;!-- [...] --&gt;
+&lt;body&gt;
+  &lt;!-- [...] --&gt;
+  &lt;main data-router-wrapper&gt;
+    &lt;article data-router-view="name"&gt;
+      &lt;!-- [...] --&gt;
+    &lt;/article&gt;
+  &lt;/main&gt;
+  &lt;!-- [...] --&gt;
+&lt;/body&gt;
+</code>
+</pre>
 
 <h2 id="renderers">Renderers</h2>
 <p>A renderer is a script for each view that contains all the Javascript we need for each one of them. It can be shared by multiple views if we want. A default renderer called <strong>Highway.Renderer</strong> can be extended to create our custom ones and it'll be used by default if a given view has no custom renderer attached to it.</p>
