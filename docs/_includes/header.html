@@ -6,7 +6,7 @@
 <!-- Header -->
 <header class="site-header js-site-header">
   <div class="site-header-inner">
-    <a href="./" class="site-logo"><img src="./assets/images/logo_2x.png" /></a>
+    <a href="./" class="site-logo"><img src="./assets/images/logo_2x.png" /> v2.1.0</a>
 
     <button class="burger-menu js-toggle-menu">
       <span class="burger-menu-lines"></span>
@@ -39,7 +39,11 @@
         </li>
 
         <li class="menu-item">
-          <a href="https://join.slack.com/t/highway-lib/shared_invite/enQtNDcxMzY5MDc0NDE3LWQyMWMwZjhiNDUxOWVkM2Y0MTkxMTY5ZTU3ZjRmNjU2ZTI3YjAwNGQ2ZTZlYTcyNTBhYWEzMGQyZGFlODY0MjY" target="_blank">Community</a>
+          <a href="./contributors.html" {% if page.url == '/contributors.html' %}class="is-active"{% endif %}>Contributors</a>
+        </li>
+
+        <li class="menu-item menu-item--slack">
+          <a href="https://join.slack.com/t/highway-lib/shared_invite/enQtNDcxMzY5MDc0NDE3LWQyMWMwZjhiNDUxOWVkM2Y0MTkxMTY5ZTU3ZjRmNjU2ZTI3YjAwNGQ2ZTZlYTcyNTBhYWEzMGQyZGFlODY0MjY" target="_blank">Join the Community</a>
         </li>
       </ul>
     </nav>
