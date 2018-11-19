@@ -2,12 +2,15 @@
 slug: examples
 title: Highway - Examples
 layout: default
+next_url: ./demos.html
+next_label: Demos
 ---
 
 <h1>Examples</h1>
 <h2 id="forms"><a href="./examples.html#forms">Forms</a></h2>
-<p>Form submission is not considered as a navigation so it <strong>hard reloads</strong> the page by default. We have to consider using AJAX validation and the <em>Core</em>.<strong>redirect(<em>href</em>)</strong> method if we want to redirect our users to a <em>Thank you</em> page.</p>
-
+<p>Form submission is not considered as a navigation so it <strong>hard reloads</strong> the page by default. We have to consider using AJAX validation and the <em>Core</em>.<strong>redirect(<em>href</em>, <em>ContextualTransition</em>)</strong> method if we want to redirect our users to a <em>Thank you</em> page.
+    ContextualTransition can also be set to false to utilize the view transition. Try this out by hovering on the button below for 1.5 seconds to be taken to the API Reference page, using a contextual transition (more on that below).</p>
+<div class="button redirect-example">Hover me!</div>
 <h2 id="disable-links"><a href="./examples.html#disable-links">Disable Links</a></h2>
 <p>All links using with a different origin, a <strong>target</strong> attribute or a <strong>data-router-disabled</strong> attribute are going to be ignored by <strong>Highway</strong>. We have then some options in our hand to manipulate our links the way we want.</p>
 
@@ -70,3 +73,6 @@ layout: default
 <p>Depending on our websites we might have to deal with third-party scripts used by plugins or others. Those scripts have to be evaluated on each page transition in order to be runned again.</p>
 <p>Unfortunately there is a danger to evaluate malicious code and we cannot take the responsability of potential issues related to that. That's why we are never going to implement any evaluation method in <strong>Highway</strong>.</p>
 <p>Check out this <a href="https://github.com/Dogstudio/highway/issues/7#issuecomment-396161696" target="_blank">Github issue</a> to have more informations about this topic.</p>
+
+<h2 id="contextual">Contextual Transitions</h2>
+<p><a href="./get-started.html" class="button" data-transition="contextualExample">Try me!</a></p>

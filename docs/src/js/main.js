@@ -6,8 +6,15 @@ import Highway from 'highway';
 
 // Transitions
 import Fade from 'transitions/fade';
+import Contextual from 'transitions/contextualExample';
 
 (() => {
+
+  // for clicking back and forward, we always want to drop them on the top of the page
+  if ('scrollRestoration' in history) {
+    history.scrollRestoration = 'manual';
+  }
+
   const $menuToggler = document.querySelector('.js-toggle-menu');
   const $siteHeader = document.querySelector('.js-site-header');
 
@@ -23,9 +30,34 @@ import Fade from 'transitions/fade';
       'installation': () => import('renderers/installation')
     },
     transitions: {
-      default: Fade
+      default: Fade,
+      contextual: {
+        contextualExample: Contextual
+      }
     }
   });
+
+  // this should probably be in examples.js somehow, but I ran out of time and needed access to the Highway.Core created above
+  const hoverRedirect = () => {
+    let hoveringButton = false;
+    let countdown;
+    const redirectButton = document.querySelector('.redirect-example');
+    if (redirectButton) {
+      redirectButton.addEventListener('mouseenter', () => {
+        hoveringButton = true;
+        countdown = setTimeout(() => {
+          if (hoveringButton === true) {
+            H.redirect('http://127.0.0.1:4000/api.html', 'contextualExample');
+          }
+        }, 1500);
+      });
+      redirectButton.addEventListener('mouseleave', () => {
+        hoveringButton = false;
+        clearTimeout(countdown);
+      });
+    }
+  };
+  hoverRedirect();
 
   // Events
   const links = document.querySelectorAll('.site-menu a');
@@ -43,6 +75,8 @@ import Fade from 'transitions/fade';
         link.classList.add('is-active');
       }
     }
+
+    hoverRedirect();
   });
 
   H.on('NAVIGATE_END', (to, from, location) => {
