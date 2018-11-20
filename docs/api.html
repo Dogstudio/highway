@@ -8,89 +8,104 @@ next_label: Examples
 
 <h1>API</h1>
 
-<h2>Methods</h2>
+<h2>Hooks/Methods</h2>
 <h3>Renderers</h3>
-<p>This is the list of methods we can call on renderers.<br> Check out the <a href="./get-started.html#renderers">documentation</a> about renderers to get more informations.</p>
+<p>Renderers have a number of hooks/methods available to structure them and call pieces of Javascript at key moments on navigation. Read more of the <a href="#">documentation</a> about renderers.</p>
 
 <div class="table-wrapper">
   <table cellpadding="0" cellspacing="0">
     <tr>
-      <th width="40%">Methods</th>
+      <th width="20%">Hooks/Methods</th>
       <th>Description</th>
     </tr>
     <tr>
-      <td><em>Renderer</em>.<strong>onEnter()</strong></td>
-      <td>This methods is called when the <strong>data-router-view</strong> is added to the DOM.</td>
+      <td><code>onEnter()</code></td>
+      <td>This method is run when the <code>data-router-view</code> is added to the DOM Tree.</td>
     </tr>
     <tr>
-      <td><em>Renderer</em>.<strong>onLeave()</strong></td>
-      <td>This methods is called when transition to hide the <strong>data-router-view</strong> is called.</td>
+      <td><code>onLeave()</code></td>
+      <td>This method is run when transition to hide the <code>data-router-view</code> is called.</td>
     </tr>
     <tr>
-      <td><em>Renderer</em>.<strong>onEnterCompleted()</strong></td>
-      <td>This methods is called when the transition to show the <strong>data-router-view</strong> is over.</td>
+      <td><code>onEnterCompleted()</code></td>
+      <td>This method is run when the transition to display the <code>data-router-view</code> is done.</td>
     </tr>
     <tr>
-      <td><em>Renderer</em>.<strong>onLeaveCompleted()</strong></td>
-      <td>This methods is called when the <strong>data-router-view</strong> is removed from the DOM.</td>
+      <td><code>onLeaveCompleted()</code></td>
+      <td>This method is run when the <code>data-router-view</code> is removed from the DOM Tree.</td>
     </tr>
   </table>
 </div>
 
 <h3>Transitions</h3>
-<p>This is the list of methods we can call on transitions.<br> Check out the <a href="./get-started.html#transitions">documentation</a> about transitions to get more informations.</p>
+<p>Transitions have a number of hooks/methods available to manage which animations should be run to display a page and which one should be run to hide it. Read more of the <a href="#">documentation</a> about transitions.</p>
 
 <div class="table-wrapper">
   <table cellpadding="0" cellspacing="0">
     <tr>
-      <th width="40%">Methods</th>
+      <th width="20%">Methods</th>
+      <th>Parameters</th>
       <th>Description</th>
     </tr>
     <tr>
-      <td><em>Transition</em>.<strong>in(<em>view</em>, <em>done</em>)</strong></td>
-      <td>This method is called to show the <strong>data-router-view</strong>.</td>
+      <td><code>in(view, done)</code></td>
+      <td>
+        <p><code>view | &lt;Node&gt;</code></p>
+        <code>done | &lt;Callback&gt;</code>
+      </td>
+      <td>This method is called to display the <code>data-router-view</code>.</td>
     </tr>
     <tr>
-      <td><em>Transition</em>.<strong>out(<em>view</em>, <em>done</em>)</strong></td>
-      <td>This method is called to hide the <strong>data-router-view</strong>.</td>
+      <td><code>out(view, done)</code></td>
+      <td>
+        <p><code>view | &lt;Node&gt;</code></p>
+        <code>done | &lt;Callback&gt;</code>
+      </td>
+      <td>This method is called to hide the <code>data-router-view</code>.</td>
     </tr>
   </table>
 </div>
 
 <h3>Core</h3>
-<p><strong>Highway</strong> is based on the <a href="https://github.com/scottcorgan/tiny-emitter#readme" target="_blank">tiny-emitter</a> library so when we call <strong>Highway.Core</strong> we have access to all the methods available in <a href="https://github.com/scottcorgan/tiny-emitter#readme" target="_blank">tiny-emitter</a> in order to use the events listed below. In addition to the methods inherited from <a href="https://github.com/scottcorgan/tiny-emitter#readme" target="_blank">tiny-emitter</a>, we have some buil-in ones available we might need:</p>
+<p>In addition to the methods inherited from <a href="https://github.com/scottcorgan/tiny-emitter#readme" target="_blank">tiny-emitter</a>, we have some buil-in ones available we might need:</p>
 
 <div class="table-wrapper">
   <table cellpadding="0" cellspacing="0">
     <tr>
       <th width="40%">Methods</th>
+      <th>Parameters</th>
       <th>Description</th>
     </tr>
     <tr>
-      <td><em>Core</em>.<strong>attach()</strong></td>
-      <td>This method listen to all links of the document that have no <strong>target</strong> or <strong>data-router-disabled</strong> attribute and calls <strong>Highway</strong> on <em>click</em>.</td>
+      <td>Core.<code>attach()</code></td>
+      <td></td>
+      <td>This method listen to all links of the document that have no <code>target</code> or <code>data-router-disabled</code> attribute and calls Highway on click.</td>
     </tr>
     <tr>
-      <td><em>Core</em>.<strong>detach()</strong></td>
+      <td>Core.<code>detach()</code></td>
+      <td></td>
       <td>This method clears the events attached to all the links of the document.</td>
     </tr>
     <tr>
-      <td><em>Core</em>.<strong>redirect(<em>href</em>)</strong></td>
-      <td>This method navigates to a given URL using <strong>Highway</strong>.</td>
+      <td>Core.<code>redirect(href)</code></td>
+      <td></td>
+      <td>This method navigates to a given URL using Highway.</td>
     </tr>
   </table>
 </div>
 
 <h2>Events</h2>
-
+<p>Highway extends <a href="https://github.com/scottcorgan/tiny-emitter#readme" target="_blank">tiny-emitter</a> so <code>Highway.Core</code> exposes all the methods available in <a href="https://github.com/scottcorgan/tiny-emitter#readme" target="_blank">tiny-emitter</a> to use the events below.</p>
 <div class="table-wrapper">
   <table cellpadding="0" cellspacing="0">
     <tr>
       <th width="40%">Events</th>
+      <th>Parameters</th>
       <th>Description</th>
     </tr>
     <tr>
       <td>NAVIGATE_IN</td>
+      <td></td>
       <td>
         This event is emitted everytime the transition to show the <strong>data-router-view</strong> is called.
         It returns those arguments:<br><br>
@@ -102,6 +117,7 @@ next_label: Examples
     </tr>
     <tr>
       <td>NAVIGATE_OUT</td>
+      <td></td>
       <td>
         This event is emitted everytime the transition to hide the <strong>data-router-view</strong> is called.
         It returns those arguments:<br><br>
@@ -113,6 +129,7 @@ next_label: Examples
     </tr>
     <tr>
       <td>NAVIGATE_END</td>
+      <td></td>
       <td>
         This event is emitted everytime a transition ends.
         It returns those arguments:<br><br>

@@ -328,7 +328,7 @@ h6 {
 .site-content-inner table {
   position: relative;
   z-index: 0;
-  width: 100%;
+  width: 960px;
   text-align: left;
 }
 

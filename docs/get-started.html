@@ -99,7 +99,7 @@ const H = new Highway.Core({
 
 <h2>Transitions</h2>
 <p>The transitions are the managers of the animations to display or hide a page. Each page can have its custom transition which will extend the built-in and default <code>Highway.Transition</code>. A page that doesn't have a transition related to it won't be animated.</p>
-<p>The Javascript inside a transition will be run everytime a page it's related to is either displayed or hidden on navigation. Two hooks/methods are available to manage which animations should be run to display a page and which one should be run to hide a page.</p>
+<p>The Javascript inside a transition will be run everytime a page it's related to is either displayed or hidden on navigation. A number of hooks/methods are available to manage which animations should be run to display a page and which one should be run to hide a page.</p>
 
 <ul>
     <li><code>in</code>: This method should contain the animation to display a <code>data-router-view</code>.</li>
@@ -160,7 +160,8 @@ const H = new Highway.Core({
 </code>
 </pre>
 
-<p>Finally each page might not need a specific transition but instead multiple pages might need a shared transition. The <code>default</code> key can be used in the <code>Highway.Core</code> options to tell Highway to use a default transition for all pages that don't have a transition related to them.</p>
+<h3>Default transition</h3>
+<p>Each page might not need a specific transition but instead multiple pages might need a shared transition. The <code>default</code> key can be used in the <code>Highway.Core</code> options to tell Highway to use a default transition for all pages that don't have a transition related to them.</p>
 
 <pre>
 <code class="js">// File: main.js
@@ -186,5 +187,53 @@ const H = new Highway.Core({
     default: OtherTransition
   }
 });
+</code>
+</pre>
+
+<h3>Contextual transitions</h3>
+<p>Some links on a page might need a specific transition depending on their context that is different from the transition related to the said page. A contextual transition can me atteched to links with the <code>data-transition</code> attribute that takes the name given to the transition in <code>Highway.Core</code> as value.</p>
+
+<pre>
+<code class="js">// File: main.js
+// Import Highway
+import Highway from '@dogstudio/highway';
+
+// Import Renderers
+import CustomRenderer from 'path/to/custom-renderer.js';
+
+// Import Transitions
+import CustomTransition from 'path/to/custom-transition.js';
+import ContextualTransition from 'path/to/contextual-transition.js';
+
+// Call Highway.Core once
+// The custom transition will be used for the page labelled by `name`.
+// The contextual transition will be used by all links it's attached to with the `data-transition` attribute.
+const H = new Highway.Core({
+  renderers: {
+    name: CustomRenderer
+  },
+  transitions: {
+    name: CustomTransition,
+    contextual: {
+      foo: ContextualTransition
+    }
+  }
+});
+</code>
+</pre>
+
+<pre>
+<code class="html">&lt;!-- File: index.html --&gt;
+&lt;!-- [...] --&gt;
+&lt;body&gt;
+  &lt;!-- [...] --&gt;
+  &lt;main data-router-wrapper&gt;
+    &lt;article data-router-view="name"&gt;
+      &lt;!-- This link will call the transition named `foo` in `Highway.Core` --&gt;
+      &lt;a href="path/to/page" data-transition="foo"&gt;&lt;/a&gt;
+    &lt;/article&gt;
+  &lt;/main&gt;
+  &lt;!-- [...] --&gt;
+&lt;/body&gt;
 </code>
 </pre>
