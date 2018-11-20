@@ -38,7 +38,16 @@ export default class Renderer {
   add() {
     // We setup the DOM for our [data-router-view]
     this.wrap.insertAdjacentHTML('beforeend', this.properties.view.outerHTML);
+    this.wrap.lastElementChild.style.visibility = 'hidden';
+  }
+
+  /**
+   * Remove old view in DOM and set visibility to visible on new view
+   */
+  remove() {
+    // We remove the old view. This happens when the user fires removeOldView() in the in transition
     this.wrap.firstElementChild.remove();
+    this.wrap.lastElementChild.style.visibility = 'visible';
   }
 
   /**
@@ -69,6 +78,9 @@ export default class Renderer {
       // `transition` that should return the transition object you want to
       // apply to you view. We call the `in` step of this one right now!
       this.Transition && await this.Transition.show(contextual);
+
+      // Developers can decide when to resolve the transition, prompting this method.
+      this.remove();
 
       // The `onEnterCompleted` method if set in your custom renderer is called
       // everytime a transition is over if set. Otherwise it's called right after

@@ -88,23 +88,21 @@ export default class Core extends Emitter {
       e.preventDefault();
 
       // Check to see if this navigation will use a contextual transition
-      e.target.hasAttribute('data-transition') ? this.Contextual = this.Transitions['contextual'][e.target.dataset.transition].prototype : this.Contextual = false;
-
-      // Set transition name
-      if (this.Contextual) {
-        this.Contextual.name = e.target.dataset.transition;
-      }
+      const contextual = e.currentTarget.hasAttribute('data-transition') ? e.currentTarget.dataset.transition : false;
 
       // We have to redirect to our `href` using Highway
-      this.redirect(e.currentTarget.href);
+      // There we set up the contextual transition, so this and Core.redirect can pass in either transition name or false
+      this.redirect(e.currentTarget.href, contextual);
     }
   }
 
   /**
    * Redirect to URL
+   *
    * @param {string} href - URL
+   * @param {(object|boolean)} contextual - If the transition is changing on the fly
    */
-  redirect(href) {
+  redirect(href, contextual) {
     // When our URL is different from the current location `href` and no other
     // navigation is running for the moment we are allowed to start a new one.
     // But if the URL containes anchors or if the origin is different we force
@@ -112,6 +110,14 @@ export default class Core extends Emitter {
     if (!this.running && href !== this.location.href) {
       // We temporary store the future location.
       const location = this.Helpers.getLocation(href);
+      
+      // Set contextual transition values if applicable
+      this.Contextual = false;
+
+      if (contextual) {
+        this.Contextual = this.Transitions['contextual'][contextual].prototype;
+        this.Contextual.name = contextual;
+      }
 
       if (location.origin !== this.location.origin || location.anchor && location.pathname === this.location.pathname) {
         // We redirect when origins are differents or when there is an anchor.
@@ -250,7 +256,7 @@ export default class Core extends Emitter {
     // for developers who want to make stuff before the view is visible.
     this.emit('NAVIGATE_IN', {
       page: this.To.properties.page,
-      view: this.To.view
+      view: this.To.properties.view
     }, this.location);
 
     // We wait for the view transition to be over before resetting some variables
@@ -267,7 +273,7 @@ export default class Core extends Emitter {
     // make stuff when the navigation has ended.
     this.emit('NAVIGATE_END', {
       page: this.To.properties.page,
-      view: this.To.view
+      view: this.To.properties.view
     },
     {
       page: this.From.properties.page,
