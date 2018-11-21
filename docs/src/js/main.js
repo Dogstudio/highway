@@ -6,6 +6,7 @@ import Highway from 'highway';
 
 // Transitions
 import Fade from 'transitions/fade';
+import Overlap from 'transitions/overlap';
 import Basic from 'transitions/basic';
 
 (() => {
@@ -26,7 +27,8 @@ import Basic from 'transitions/basic';
     transitions: {
       default: Fade,
       contextual: {
-        basic: Basic
+        basic: Basic,
+        overlap: Overlap
       }
     }
   });
@@ -49,7 +51,7 @@ import Basic from 'transitions/basic';
     }
   });
 
-  H.on('NAVIGATE_END', (to, from, location) => {
+  H.on('NAVIGATE_END', (from, to, location) => {
     // Check Anchor
     if (location.anchor) {
       const el = document.querySelector(location.anchor);

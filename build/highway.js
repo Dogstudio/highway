@@ -2450,11 +2450,19 @@ function () {
       }
 
       if (slug in this.transitions) {
-        return this.transitions[slug];
+        // Return Transition
+        return {
+          class: this.transitions[slug],
+          name: slug
+        };
       }
 
       if ('default' in this.transitions) {
-        return this.transitions['default'];
+        // Return Transition
+        return {
+          class: this.transitions['default'],
+          name: 'default'
+        };
       }
 
       return null;
@@ -2523,6 +2531,8 @@ __webpack_require__(47);
 
 __webpack_require__(22);
 
+__webpack_require__(100);
+
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
@@ -2552,9 +2562,7 @@ function () {
 
     this.properties = properties; // We get our transition we will use later to show/hide our view.
 
-    this.Transition = properties.transition ? new properties.transition(this.wrap) : null; // Set transition Name
-
-    this.Transition.name = properties.slug;
+    this.Transition = properties.transition ? new properties.transition.class(this.wrap, properties.transition.name) : null;
   }
   /**
    * Renderer initialization.
@@ -2577,7 +2585,6 @@ function () {
     value: function add() {
       // We setup the DOM for our [data-router-view]
       this.wrap.insertAdjacentHTML('beforeend', this.properties.view.outerHTML);
-      this.wrap.firstElementChild.remove();
     }
     /**
      * Update document informations
@@ -2949,31 +2956,38 @@ function (_Emitter) {
         // Prevent default `click`
         e.preventDefault(); // Check to see if this navigation will use a contextual transition
 
-        e.target.hasAttribute('data-transition') ? this.Contextual = this.Transitions['contextual'][e.target.dataset.transition].prototype : this.Contextual = false; // Set transition name
+        var contextual = e.currentTarget.hasAttribute('data-transition') ? e.currentTarget.dataset.transition : false; // We have to redirect to our `href` using Highway
+        // There we set up the contextual transition, so this and Core.redirect can pass in either transition name or false
 
-        if (this.Contextual) {
-          this.Contextual.name = e.target.dataset.transition;
-        } // We have to redirect to our `href` using Highway
-
-
-        this.redirect(e.currentTarget.href);
+        this.redirect(e.currentTarget.href, contextual);
       }
     }
     /**
      * Redirect to URL
+     *
      * @param {string} href - URL
+     * @param {(object|boolean)} contextual - If the transition is changing on the fly
      */
 
   }, {
     key: "redirect",
     value: function redirect(href) {
+      var contextual = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+
       // When our URL is different from the current location `href` and no other
       // navigation is running for the moment we are allowed to start a new one.
       // But if the URL containes anchors or if the origin is different we force
       // the hard reloading of the page to avoid serious errors.
       if (!this.running && href !== this.location.href) {
         // We temporary store the future location.
-        var location = this.Helpers.getLocation(href);
+        var location = this.Helpers.getLocation(href); // Set contextual transition values if applicable
+
+        this.Contextual = false;
+
+        if (contextual) {
+          this.Contextual = this.Transitions['contextual'][contextual].prototype;
+          this.Contextual.name = contextual;
+        }
 
         if (location.origin !== this.location.origin || location.anchor && location.pathname === this.location.pathname) {
           // We redirect when origins are differents or when there is an anchor.
@@ -3177,7 +3191,7 @@ function (_Emitter) {
 
                 this.emit('NAVIGATE_IN', {
                   page: this.To.properties.page,
-                  view: this.To.view
+                  view: this.To.wrap.lastElementChild
                 }, this.location); // We wait for the view transition to be over before resetting some variables
                 // and reattaching the events to all the new elligible links in our DOM.
 
@@ -3192,11 +3206,11 @@ function (_Emitter) {
                 // make stuff when the navigation has ended.
 
                 this.emit('NAVIGATE_END', {
-                  page: this.To.properties.page,
-                  view: this.To.view
-                }, {
                   page: this.From.properties.page,
                   view: this.From.properties.view
+                }, {
+                  page: this.To.properties.page,
+                  view: this.To.wrap.lastElementChild
                 }, this.location); // Last but not least we swap the From and To renderers for future navigations.
 
                 this.From = this.To;
@@ -4553,7 +4567,8 @@ function () {
       var _this = this;
 
       // Get View
-      var view = this.wrap.firstElementChild; // Promise
+      var to = this.wrap.lastElementChild;
+      var from = this.wrap.firstElementChild; // Promise
 
       return new Promise(function (resolve) {
         // The `in` method in encapsulated in the `show` method make transition
@@ -4561,16 +4576,16 @@ function () {
         // in your transition code and focus on the transition itself.
         if (!contextual) {
           // Change Attributes
-          view.setAttribute('data-transition-in', _this.name);
-          view.removeAttribute('data-transition-out', _this.name); // Call transition attached to the view.
+          to.setAttribute('data-transition-in', _this.name);
+          to.removeAttribute('data-transition-out', _this.name); // Call transition attached to the view.
 
-          _this.in && _this.in(view, resolve);
+          _this.in && _this.in(from, to, resolve);
         } else {
           // Change Attributes
-          view.setAttribute('data-transition-in', contextual.name);
-          view.removeAttribute('data-transition-out', contextual.name); // Call the contextual transition.
+          to.setAttribute('data-transition-in', contextual.name);
+          to.removeAttribute('data-transition-out', contextual.name); // Call the contextual transition.
 
-          contextual.in && contextual.in(view, resolve);
+          contextual.in && contextual.in(from, to, resolve);
         }
       });
     }
@@ -4587,7 +4602,8 @@ function () {
       var _this2 = this;
 
       // Get view
-      var view = this.wrap.firstElementChild; // Promise
+      var to = this.wrap.lastElementChild;
+      var from = this.wrap.firstElementChild; // Promise
 
       return new Promise(function (resolve) {
         // The `out` method in encapsulated in the `hide` method make transition
@@ -4595,16 +4611,16 @@ function () {
         // in your transition code and focus on the transition itself.
         if (!contextual) {
           // Change Attributes
-          view.setAttribute('data-transition-out', _this2.name);
-          view.removeAttribute('data-transition-in', _this2.name); // Call the transition attached to the view.
+          from.setAttribute('data-transition-out', _this2.name);
+          from.removeAttribute('data-transition-in', _this2.name); // Call the transition attached to the view.
 
-          _this2.out && _this2.out(view, resolve);
+          _this2.out && _this2.out(from, to, resolve);
         } else {
           // Change Attributes
-          view.setAttribute('data-transition-out', contextual.name);
-          view.removeAttribute('data-transition-in', contextual.name); // Call the contextual transition.
+          from.setAttribute('data-transition-out', contextual.name);
+          from.removeAttribute('data-transition-in', contextual.name); // Call the contextual transition.
 
-          contextual.out && contextual.out(view, resolve);
+          contextual.out && contextual.out(from, to, resolve);
         }
       });
     }

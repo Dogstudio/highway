@@ -164,11 +164,13 @@ export default class Helpers {
     }
 
     if (slug in this.transitions) {
-      return this.transitions[slug];
+      // Return Transition
+      return { class: this.transitions[slug], name: slug };
     }
 
     if ('default' in this.transitions) {
-      return this.transitions['default'];
+      // Return Transition
+      return { class: this.transitions['default'], name: 'default' };
     }
 
     return null;

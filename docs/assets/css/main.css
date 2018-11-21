@@ -25,6 +25,19 @@ body {
   line-height: 1.8;
 }
 
+/** Transitions **/
+[data-router-wrapper] {
+  position: relative;
+  width: 100%;
+}
+
+[data-transition-in="overlap"] {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+}
+
 /** Typography **/
 b,
 strong {

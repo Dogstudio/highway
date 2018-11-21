@@ -26,7 +26,8 @@ export default class Transition {
    */
   show(contextual) {
     // Get View
-    const view = this.wrap.firstElementChild;
+    const to = this.wrap.lastElementChild;
+    const from = this.wrap.firstElementChild;
 
     // Promise
     return new Promise(resolve => {
@@ -35,19 +36,19 @@ export default class Transition {
       // in your transition code and focus on the transition itself.
       if (!contextual) {
         // Change Attributes
-        view.setAttribute('data-transition-in', this.name);
-        view.removeAttribute('data-transition-out', this.name);
+        to.setAttribute('data-transition-in', this.name);
+        to.removeAttribute('data-transition-out', this.name);
 
         // Call transition attached to the view.
-        this.in && this.in(view, resolve);
+        this.in && this.in(from, to, resolve);
 
       } else {
         // Change Attributes
-        view.setAttribute('data-transition-in', contextual.name);
-        view.removeAttribute('data-transition-out', contextual.name);
+        to.setAttribute('data-transition-in', contextual.name);
+        to.removeAttribute('data-transition-out', contextual.name);
 
         // Call the contextual transition.
-        contextual.in && contextual.in(view, resolve);
+        contextual.in && contextual.in(from, to, resolve);
 
       }
     });
@@ -61,7 +62,8 @@ export default class Transition {
    */
   hide(contextual) {
     // Get view
-    const view = this.wrap.firstElementChild;
+    const to = this.wrap.lastElementChild;
+    const from = this.wrap.firstElementChild;
 
     // Promise
     return new Promise(resolve => {
@@ -70,19 +72,19 @@ export default class Transition {
       // in your transition code and focus on the transition itself.
       if (!contextual) {
         // Change Attributes
-        view.setAttribute('data-transition-out', this.name);
-        view.removeAttribute('data-transition-in', this.name);
+        from.setAttribute('data-transition-out', this.name);
+        from.removeAttribute('data-transition-in', this.name);
 
         // Call the transition attached to the view.
-        this.out && this.out(view, resolve);
+        this.out && this.out(from, to, resolve);
 
       } else {
         // Change Attributes
-        view.setAttribute('data-transition-out', contextual.name);
-        view.removeAttribute('data-transition-in', contextual.name);
+        from.setAttribute('data-transition-out', contextual.name);
+        from.removeAttribute('data-transition-in', contextual.name);
 
         // Call the contextual transition.
-        contextual.out && contextual.out(view, resolve);
+        contextual.out && contextual.out(from, to, resolve);
 
       }
     });

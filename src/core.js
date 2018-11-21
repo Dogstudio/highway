@@ -102,7 +102,7 @@ export default class Core extends Emitter {
    * @param {string} href - URL
    * @param {(object|boolean)} contextual - If the transition is changing on the fly
    */
-  redirect(href, contextual) {
+  redirect(href, contextual = false) {
     // When our URL is different from the current location `href` and no other
     // navigation is running for the moment we are allowed to start a new one.
     // But if the URL containes anchors or if the origin is different we force
@@ -110,7 +110,7 @@ export default class Core extends Emitter {
     if (!this.running && href !== this.location.href) {
       // We temporary store the future location.
       const location = this.Helpers.getLocation(href);
-      
+
       // Set contextual transition values if applicable
       this.Contextual = false;
 
@@ -256,7 +256,7 @@ export default class Core extends Emitter {
     // for developers who want to make stuff before the view is visible.
     this.emit('NAVIGATE_IN', {
       page: this.To.properties.page,
-      view: this.To.properties.view
+      view: this.To.wrap.lastElementChild
     }, this.location);
 
     // We wait for the view transition to be over before resetting some variables
@@ -272,12 +272,12 @@ export default class Core extends Emitter {
     // Finally we emit a last event to create a hook for developers who want to
     // make stuff when the navigation has ended.
     this.emit('NAVIGATE_END', {
-      page: this.To.properties.page,
-      view: this.To.properties.view
-    },
-    {
       page: this.From.properties.page,
       view: this.From.properties.view
+    },
+    {
+      page: this.To.properties.page,
+      view: this.To.wrap.lastElementChild
     }, this.location);
 
     // Last but not least we swap the From and To renderers for future navigations.

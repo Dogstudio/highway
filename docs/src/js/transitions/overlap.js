@@ -5,11 +5,8 @@ import Highway from 'highway';
 import Tween, { TweenMax } from 'gsap';
 
 // Fade
-class Fade extends Highway.Transition {
+class Overlap extends Highway.Transition {
   in(from, to, done) {
-    // Remove Old View
-    from.remove();
-
     // Animation
     Tween.fromTo(to, 0.5,
       { opacity: 0 },
@@ -18,18 +15,26 @@ class Fade extends Highway.Transition {
         onComplete: done
       }
     );
-  }
 
-  out(from, to, done) {
     // Animation
     Tween.fromTo(from, 0.5,
       { opacity: 1 },
       {
         opacity: 0,
-        onComplete: done
+        onComplete: () => {
+          // Set New View in DOM Stream
+          to.style.position = 'static';
+
+          // Remove Old View
+          from.remove();
+        }
       }
     );
   }
+
+  out(from, to, done) {
+    done();
+  }
 }
 
-export default Fade;
+export default Overlap;

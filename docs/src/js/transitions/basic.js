@@ -6,20 +6,23 @@ import Tween from 'gsap';
 
 // Basic
 class Basic extends Highway.Transition {
-  in(view, done) {
+  in(from, to, done) {
     // Scroll Top
     window.scrollTo(0, 0);
 
+    // Remove Old View
+    from.remove();
+
     // Animation
-    Tween.set(view, { opacity: 1 });
+    Tween.set(to, { opacity: 1 });
 
     // Done
     done();
   }
 
-  out(view, done) {
+  out(from, to, done) {
     // Animation
-    Tween.set(view, { opacity: 0 });
+    Tween.set(from, { opacity: 0 });
 
     // Done
     done();
