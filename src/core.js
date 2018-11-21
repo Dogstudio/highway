@@ -52,27 +52,31 @@ export default class Core extends Emitter {
     // are triggered by the user.
     window.addEventListener('popstate', this.popState.bind(this));
 
+    // Get all elligible links.
+    this.links = document.querySelectorAll('a:not([target]):not([data-router-disabled])');
+
     // Event attachement
-    this.attach();
+    this.attach(this.links);
   }
 
   /**
    * Attach `click` event on links.
+   *
+   * @param {(array|nodeList)} links - Links to use
    */
-  attach() {
-    // Get all elligible links.
-    this.links = document.querySelectorAll('a:not([target]):not([data-router-disabled])');
-
-    for (const link of this.links) {
+  attach(links) {
+    for (const link of links) {
       link.addEventListener('click', this._navigate);
     }
   }
 
   /**
    * Detach `click` event on links.
+   *
+   * @param {(array|nodeList)} links - Links to use
    */
-  detach() {
-    for (const link of this.links) {
+  detach(links) {
+    for (const link of links) {
       link.removeEventListener('click', this._navigate);
     }
   }
@@ -266,8 +270,14 @@ export default class Core extends Emitter {
     this.popping = false;
     this.running = false;
 
-    this.detach();
-    this.attach();
+    // Detach Event on Links
+    this.detach(this.links);
+
+    // Get all elligible links.
+    this.links = document.querySelectorAll('a:not([target]):not([data-router-disabled])');
+
+    // Attach Event on Links
+    this.attach(this.links);
 
     // Finally we emit a last event to create a hook for developers who want to
     // make stuff when the navigation has ended.

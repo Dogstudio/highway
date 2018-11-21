@@ -2872,28 +2872,30 @@ function (_Emitter) {
     // history entry changes. Basically everytime the backward/forward arrows
     // are triggered by the user.
 
-    window.addEventListener('popstate', _this.popState.bind(_assertThisInitialized(_assertThisInitialized(_this)))); // Event attachement
+    window.addEventListener('popstate', _this.popState.bind(_assertThisInitialized(_assertThisInitialized(_this)))); // Get all elligible links.
 
-    _this.attach();
+    _this.links = document.querySelectorAll('a:not([target]):not([data-router-disabled])'); // Event attachement
+
+    _this.attach(_this.links);
 
     return _this;
   }
   /**
    * Attach `click` event on links.
+   *
+   * @param {(array|nodeList)} links - Links to use
    */
 
 
   _createClass(Core, [{
     key: "attach",
-    value: function attach() {
-      // Get all elligible links.
-      this.links = document.querySelectorAll('a:not([target]):not([data-router-disabled])');
+    value: function attach(links) {
       var _iteratorNormalCompletion = true;
       var _didIteratorError = false;
       var _iteratorError = undefined;
 
       try {
-        for (var _iterator = this.links[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+        for (var _iterator = links[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
           var link = _step.value;
           link.addEventListener('click', this._navigate);
         }
@@ -2914,17 +2916,19 @@ function (_Emitter) {
     }
     /**
      * Detach `click` event on links.
+     *
+     * @param {(array|nodeList)} links - Links to use
      */
 
   }, {
     key: "detach",
-    value: function detach() {
+    value: function detach(links) {
       var _iteratorNormalCompletion2 = true;
       var _didIteratorError2 = false;
       var _iteratorError2 = undefined;
 
       try {
-        for (var _iterator2 = this.links[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
+        for (var _iterator2 = links[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
           var link = _step2.value;
           link.removeEventListener('click', this._navigate);
         }
@@ -3200,9 +3204,13 @@ function (_Emitter) {
 
               case 8:
                 this.popping = false;
-                this.running = false;
-                this.detach();
-                this.attach(); // Finally we emit a last event to create a hook for developers who want to
+                this.running = false; // Detach Event on Links
+
+                this.detach(this.links); // Get all elligible links.
+
+                this.links = document.querySelectorAll('a:not([target]):not([data-router-disabled])'); // Attach Event on Links
+
+                this.attach(this.links); // Finally we emit a last event to create a hook for developers who want to
                 // make stuff when the navigation has ended.
 
                 this.emit('NAVIGATE_END', {
@@ -3215,7 +3223,7 @@ function (_Emitter) {
 
                 this.From = this.To;
 
-              case 14:
+              case 15:
               case "end":
                 return _context3.stop();
             }
