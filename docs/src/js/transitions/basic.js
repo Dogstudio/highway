@@ -20,7 +20,7 @@ class Basic extends Highway.Transition {
     done();
   }
 
-  out(from, to, done) {
+  out(from, done) {
     // Animation
     Tween.set(from, { opacity: 0 });
 

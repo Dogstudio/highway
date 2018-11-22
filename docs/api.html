@@ -15,24 +15,24 @@ next_label: Examples
 <div class="table-wrapper">
   <table cellpadding="0" cellspacing="0">
     <tr>
-      <th width="20%">Hooks/Methods</th>
-      <th>Description</th>
+      <th width="25%">Methods</th>
+      <th>Details</th>
     </tr>
     <tr>
       <td><code>onEnter()</code></td>
-      <td>This method is run when the <code>data-router-view</code> is added to the DOM Tree.</td>
+      <td>This method in the renderer is run when the <code>data-router-view</code> is added to the DOM Tree.</td>
     </tr>
     <tr>
       <td><code>onLeave()</code></td>
-      <td>This method is run when transition to hide the <code>data-router-view</code> is called.</td>
+      <td>This method in the renderer is run when transition to hide the <code>data-router-view</code> is called.</td>
     </tr>
     <tr>
       <td><code>onEnterCompleted()</code></td>
-      <td>This method is run when the transition to display the <code>data-router-view</code> is done.</td>
+      <td>This method in the renderer is run when the transition to display the <code>data-router-view</code> is done.</td>
     </tr>
     <tr>
       <td><code>onLeaveCompleted()</code></td>
-      <td>This method is run when the <code>data-router-view</code> is removed from the DOM Tree.</td>
+      <td>This method in the renderer is run when the <code>data-router-view</code> is removed from the DOM Tree.</td>
     </tr>
   </table>
 </div>
@@ -43,102 +43,97 @@ next_label: Examples
 <div class="table-wrapper">
   <table cellpadding="0" cellspacing="0">
     <tr>
-      <th width="20%">Methods</th>
-      <th>Parameters</th>
-      <th>Description</th>
+      <th width="25%">Methods</th>
+      <th width="25%">Method Parameters</th>
+      <th>Details</th>
     </tr>
     <tr>
-      <td><code>in(view, done)</code></td>
+      <td><code>in(from, to, done)</code></td>
       <td>
-        <p><code>view | &lt;Node&gt;</code></p>
+        <code>to | &lt;Node&gt;</code><br>
+        <code>from | &lt;Node&gt;</code><br>
         <code>done | &lt;Callback&gt;</code>
       </td>
-      <td>This method is called to display the <code>data-router-view</code>.</td>
+      <td>
+        <p>This method is called to display the <code>data-router-view</code> in the <code>to</code> parameter and, for overlaping transitions only, to hide the <code>data-router-view</code> in the <code>from</code> parameter.</p>
+        <p>Once the animation is over the <code>done()</code> callback <strong>has to be called</strong> to continue the navigation process.</p>
+      </td>
     </tr>
     <tr>
-      <td><code>out(view, done)</code></td>
+      <td><code>out(from, done)</code></td>
       <td>
-        <p><code>view | &lt;Node&gt;</code></p>
+        <code>from | &lt;Node&gt;</code><br>
         <code>done | &lt;Callback&gt;</code>
       </td>
-      <td>This method is called to hide the <code>data-router-view</code>.</td>
+      <td>This method is called to hide the <code>data-router-view</code> in the <code>from</code> parameter. Once the animation is over the <code>done()</code> callback <strong>has to be called</strong> to continue the navigation process.</td>
     </tr>
   </table>
 </div>
 
 <h3>Core</h3>
-<p>In addition to the methods inherited from <a href="https://github.com/scottcorgan/tiny-emitter#readme" target="_blank">tiny-emitter</a>, we have some buil-in ones available we might need:</p>
+<p><code>Highway.Core</code> comes with some built-in and useful methods developers can have access to once it has been called with <code>new Highway.Core()</code>. Read more of the <a href="#">documentation</a> about the core of Highway.</p>
 
 <div class="table-wrapper">
   <table cellpadding="0" cellspacing="0">
     <tr>
-      <th width="40%">Methods</th>
-      <th>Parameters</th>
-      <th>Description</th>
+      <th width="25%">Methods</th>
+      <th width="25%">Method Parameters</th>
+      <th>Details</th>
     </tr>
     <tr>
-      <td>Core.<code>attach()</code></td>
-      <td></td>
-      <td>This method listen to all links of the document that have no <code>target</code> or <code>data-router-disabled</code> attribute and calls Highway on click.</td>
+      <td><code>attach(links)</code></td>
+      <td><code>links | &lt;Array|NodeList&gt;</code></td>
+      <td>All links on a page that don't have the <code>target</code> attribute or the <code>data-router-disabled</code> attribute are attached to Highway by default. This methods can be used to programatically attach links to Highway.</td>
     </tr>
     <tr>
-      <td>Core.<code>detach()</code></td>
-      <td></td>
-      <td>This method clears the events attached to all the links of the document.</td>
+      <td><code>detach(links)</code></td>
+      <td><code>links | &lt;Array|NodeList&gt;</code></td>
+      <td>All links in a <code>data-router-view</code> that is hidden are detached from Highway by default. This methods can be used to programatically detach links from Highway.</td>
     </tr>
     <tr>
-      <td>Core.<code>redirect(href)</code></td>
-      <td></td>
-      <td>This method navigates to a given URL using Highway.</td>
+      <td><code>redirect(href, transition)</code></td>
+      <td>
+        <code>href | &lt;String&gt;</code><br>
+        <code>transition | &lt;Transition&gt;</code>
+      </td>
+      <td>This method can be used to programatically redirect to an internal page with Highway. A transition extending <code>Highway.Transition</code> can be <strong>optionally</strong> added to the method to override the transition related to the page. The transition related to the page will be used if no transition is added to this method.</td>
     </tr>
   </table>
 </div>
 
 <h2>Events</h2>
-<p>Highway extends <a href="https://github.com/scottcorgan/tiny-emitter#readme" target="_blank">tiny-emitter</a> so <code>Highway.Core</code> exposes all the methods available in <a href="https://github.com/scottcorgan/tiny-emitter#readme" target="_blank">tiny-emitter</a> to use the events below.</p>
+<p><code>Highway.Core</code> extends <a href="https://github.com/scottcorgan/tiny-emitter#readme" target="_blank">tiny-emitter</a> so it gives developers access to all the <a href="https://github.com/scottcorgan/tiny-emitter#instance-methods" target="_blank">methods</a> from <em>tiny-emitter</em>. Those methods can be used to listen to the following events sent by Highway in the navigation process.</p>
 <div class="table-wrapper">
   <table cellpadding="0" cellspacing="0">
     <tr>
-      <th width="40%">Events</th>
-      <th>Parameters</th>
-      <th>Description</th>
+      <th width="25%">Events</th>
+      <th width="25%">Callback Parameters</th>
+      <th>Details</th>
     </tr>
     <tr>
-      <td>NAVIGATE_IN</td>
-      <td></td>
+      <td><code>NAVIGATE_IN</code></td>
       <td>
-        This event is emitted everytime the transition to show the <strong>data-router-view</strong> is called.
-        It returns those arguments:<br><br>
-        <ul>
-          <li><strong>to:</strong> The <strong>data-router-view</strong> we show.</li>
-          <li><strong>location:</strong> The URL datas of the current view.</li>
-        </ul>
+        <code>to | &lt;Node&gt;</code><br>
+        <code>location | &lt;Object&gt;</code>
       </td>
+      <td>This event is sent everytime a <code>data-router-view</code> is added to the DOM Tree. The <code>data-router-view</code> is available in the <code>to</code> parameter of the callback method. The <code>location</code> parameter of the callback method is an <code>&lt;Object&gt;</code> with all the informations about the page URL.</td>
     </tr>
     <tr>
-      <td>NAVIGATE_OUT</td>
-      <td></td>
+      <td><code>NAVIGATE_OUT</code></td>
       <td>
-        This event is emitted everytime the transition to hide the <strong>data-router-view</strong> is called.
-        It returns those arguments:<br><br>
-        <ul>
-          <li><strong>from:</strong> The <strong>data-router-view</strong> we hide.</li>
-          <li><strong>location:</strong> The URL datas of the current view.</li>
-        </ul>
+        <code>from | &lt;Node&gt;</code><br>
+        <code>location | &lt;Object&gt;</code>
       </td>
+      <td>This event is sent everytime the <code>out()</code> method of a transition is run to hide a <code>data-router-view</code>. The <code>data-router-view</code> is available in the <code>from</code> parameter of the callback method. The <code>location</code> parameter of the callback method is an <code>&lt;Object&gt;</code> with all the informations about the page URL.</td>
     </tr>
     <tr>
-      <td>NAVIGATE_END</td>
-      <td></td>
+      <td><code>NAVIGATE_END</code></td>
       <td>
-        This event is emitted everytime a transition ends.
-        It returns those arguments:<br><br>
-        <ul>
-          <li><strong>to:</strong> The <strong>data-router-view</strong> we show.</li>
-          <li><strong>from:</strong> The <strong>data-router-view</strong> we hide.</li>
-          <li><strong>location:</strong> The URL datas of the current view.</li>
-        </ul>
+        <code>to | &lt;Node&gt;</code><br>
+        <code>from | &lt;Node&gt;</code><br>
+        <code>location | &lt;Object&gt;</code>
       </td>
+      <td>This event is sent everytime the <code>done()</code> method is called in the <code>in()</code> method of a transition. The new <code>data-router-view</code> is available in the <code>to</code> parameter and the old <code>data-router-view</code> is available in the <code>from</code> parameter of the callback method. The <code>location</code> parameter of the callback method is an <code>&lt;Object&gt;</code> with all the informations about the page URL.</td>
     </tr>
   </table>
 </div>

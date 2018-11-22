@@ -62,7 +62,6 @@ export default class Transition {
    */
   hide(contextual) {
     // Get view
-    const to = this.wrap.lastElementChild;
     const from = this.wrap.firstElementChild;
 
     // Promise
@@ -76,7 +75,7 @@ export default class Transition {
         from.removeAttribute('data-transition-in', this.name);
 
         // Call the transition attached to the view.
-        this.out && this.out(from, to, resolve);
+        this.out && this.out(from, resolve);
 
       } else {
         // Change Attributes
@@ -84,7 +83,7 @@ export default class Transition {
         from.removeAttribute('data-transition-in', contextual.name);
 
         // Call the contextual transition.
-        contextual.out && contextual.out(from, to, resolve);
+        contextual.out && contextual.out(from, resolve);
 
       }
     });

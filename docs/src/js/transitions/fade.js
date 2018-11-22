@@ -20,7 +20,7 @@ class Fade extends Highway.Transition {
     );
   }
 
-  out(from, to, done) {
+  out(from, done) {
     // Animation
     Tween.fromTo(from, 0.5,
       { opacity: 1 },

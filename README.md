@@ -36,6 +36,8 @@
 - [ ] More Demos
 
 ## Releases
+#### 2.1.x
+
 #### 2.0.x
 
 - :tada: Add [demo website](https://dogstudio.github.io/highway/)
@@ -98,6 +100,7 @@
 
 - [Anthodpnt](https://twitter.com/Anthodpnt)
 - [ThaoD5](https://twitter.com/ThaoD5)
+- [joshkirk-zero](https://twitter.com/joshgkirk)
 
 ## License
 

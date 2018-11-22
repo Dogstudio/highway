@@ -32,7 +32,7 @@ class Overlap extends Highway.Transition {
     );
   }
 
-  out(from, to, done) {
+  out(from, done) {
     done();
   }
 }

@@ -109,7 +109,8 @@ const H = new Highway.Core({
 <p>Parameters can be used with these hooks/methods to animate pages and run everything smoothly:</p>
 
 <ul>
-    <li><code>view</code>: The <code>data-router-view</code> to display or hide.</li>
+    <li><code>to</code>: The <code>data-router-view</code> to display.</li>
+    <li><code>from</code>: The <code>data-router-view</code> to hide.</li>
     <li><code>done</code>: The required callback method that <strong>has to be called</strong> once the animation is done.</li>
 </ul>
 
@@ -120,11 +121,11 @@ import Highway from '@dogstudio/highway';
 
 class CustomTransition extends Highway.Transition {
   // Built-in methods
-  in(view, done) {
+  in(from, to, done) {
     // [...]
   }
 
-  out(view, done) {
+  out(from, done) {
     // [...]
   }
 }

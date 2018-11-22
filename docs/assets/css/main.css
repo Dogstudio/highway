@@ -502,6 +502,55 @@ h6 {
   content: none !important;
 }
 
+/** Browsers **/
+.browsers li {
+  padding-left: 0 !important; 
+}
+
+.browsers li::before {
+  content: none !important;
+}
+
+/** Contributors **/
+.contributors {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 20px -5px 0;
+}
+
+.contributors li {
+  width: 100px;
+  margin: 0 0 20px;
+  padding: 0 5px !important;
+  color: var(--primary);
+  font-family: Gilroy, sans-serif;
+  font-weight: 700;
+  line-height: 1;
+  text-align: center;
+}
+
+.contributors li::before {
+  content: none !important;
+}
+
+.contributors li img {
+  display: block;
+  width: 100%;
+  height: auto;
+  margin: 0 auto 15px;
+  border-radius: 50%;
+}
+
+.contributors li a {
+  color: var(--primary);
+  text-decoration: none;
+}
+
+.contributors li a:hover,
+.contributors li a:focus {
+  color: var(--accent);
+}
+
 /** Utilities **/
 .u-center {
   text-align: center;
