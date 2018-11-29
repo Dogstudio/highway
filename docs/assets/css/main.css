@@ -334,6 +334,17 @@ h6 {
   font-size: 0;
 }
 
+.site-content-inner pre .has-test {
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+  border-bottom: 0;
+}
+
+.site-content-inner pre .button {
+  border-bottom-right-radius: 5px;
+  border-bottom-left-radius: 5px;
+}
+
 .site-content-inner pre + * {
   margin-top: 35px;
 }
@@ -415,12 +426,16 @@ h6 {
   cursor: pointer;
 }
 
+.site-content-inner .button--full {
+  display: block;
+  width: 100%;
+}
+
 .site-content-inner button:hover,
 .site-content-inner button:focus,
 .site-content-inner .button:hover,
 .site-content-inner .button:focus {
-  background-color: #fff;
-  color: var(--accent);
+  background-color: #ff241a;
 }
 
 .site-content-inner form {

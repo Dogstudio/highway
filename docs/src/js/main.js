@@ -4,6 +4,11 @@ import 'whatwg-fetch';
 // Import Highway
 import Highway from 'highway';
 
+// Renderers
+import Examples from 'renderers/examples';
+import GetStarted from 'renderers/get-started';
+import Installation from 'renderers/installation';
+
 // Transitions
 import Fade from 'transitions/fade';
 import Overlap from 'transitions/overlap';
@@ -20,9 +25,9 @@ import Basic from 'transitions/basic';
   // Highway
   const H = new Highway.Core({
     renderers: {
-      'examples': () => import('renderers/examples'),
-      'get-started': () => import('renderers/get-started'),
-      'installation': () => import('renderers/installation')
+      'examples': Examples,
+      'get-started': GetStarted,
+      'installation': Installation
     },
     transitions: {
       default: Fade,
