@@ -22,6 +22,10 @@ export default class Core extends Emitter {
     // Helpers.
     this.Helpers = new Helpers(renderers, transitions);
 
+    // Prep contextual transition info.
+    this.Transitions = transitions;
+    this.Contextual = false;
+
     // Properties & state.
     this.location = this.Helpers.getLocation(window.location.href);
     this.properties = this.Helpers.getProperties(document.cloneNode(true));
@@ -48,27 +52,31 @@ export default class Core extends Emitter {
     // are triggered by the user.
     window.addEventListener('popstate', this.popState.bind(this));
 
+    // Get all elligible links.
+    this.links = document.querySelectorAll('a:not([target]):not([data-router-disabled])');
+
     // Event attachement
-    this.attach();
+    this.attach(this.links);
   }
 
   /**
    * Attach `click` event on links.
+   *
+   * @param {(array|nodeList)} links - Links to use
    */
-  attach() {
-    // Get all elligible links.
-    this.links = document.querySelectorAll('a:not([target]):not([data-router-disabled])');
-
-    for (const link of this.links) {
+  attach(links) {
+    for (const link of links) {
       link.addEventListener('click', this._navigate);
     }
   }
 
   /**
    * Detach `click` event on links.
+   *
+   * @param {(array|nodeList)} links - Links to use
    */
-  detach() {
-    for (const link of this.links) {
+  detach(links) {
+    for (const link of links) {
       link.removeEventListener('click', this._navigate);
     }
   }
@@ -83,16 +91,22 @@ export default class Core extends Emitter {
       // Prevent default `click`
       e.preventDefault();
 
+      // Check to see if this navigation will use a contextual transition
+      const contextual = e.currentTarget.hasAttribute('data-transition') ? e.currentTarget.dataset.transition : false;
+
       // We have to redirect to our `href` using Highway
-      this.redirect(e.currentTarget.href);
+      // There we set up the contextual transition, so this and Core.redirect can pass in either transition name or false
+      this.redirect(e.currentTarget.href, contextual);
     }
   }
 
   /**
    * Redirect to URL
+   *
    * @param {string} href - URL
+   * @param {(object|boolean)} contextual - If the transition is changing on the fly
    */
-  redirect(href) {
+  redirect(href, contextual = false) {
     // When our URL is different from the current location `href` and no other
     // navigation is running for the moment we are allowed to start a new one.
     // But if the URL containes anchors or if the origin is different we force
@@ -101,7 +115,16 @@ export default class Core extends Emitter {
       // We temporary store the future location.
       const location = this.Helpers.getLocation(href);
 
+      // Set contextual transition values if applicable
+      this.Contextual = false;
+
+      if (contextual) {
+        this.Contextual = this.Transitions['contextual'][contextual].prototype;
+        this.Contextual.name = contextual;
+      }
+
       if (location.origin !== this.location.origin || location.anchor && location.pathname === this.location.pathname) {
+        // We redirect when origins are differents or when there is an anchor.
         window.location.href = href;
 
       } else {
@@ -110,6 +133,7 @@ export default class Core extends Emitter {
         // Now all our conditions are passed we can update our location and do
         // what we need to do before fetching it.
         this.beforeFetch();
+
       }
     }
   }
@@ -118,6 +142,9 @@ export default class Core extends Emitter {
    * Watch history entry changes.
    */
   popState() {
+    // A contextual transition only effects the transition when a certain link is clicked, not when navigating via browser buttons
+    this.Contextual = false;
+
     // We temporary store the future location.
     const location = this.Helpers.getLocation(window.location.href);
 
@@ -134,6 +161,7 @@ export default class Core extends Emitter {
     } else {
       // Update Location
       this.location = location;
+
     }
   }
 
@@ -192,7 +220,7 @@ export default class Core extends Emitter {
     // already saw we will have to fetch it again and it's pointless.
     if (this.cache.has(this.location.href)) {
       // We wait until the view is hidden.
-      await this.From.hide();
+      await this.From.hide(this.Contextual);
 
       // Get Properties
       this.properties = this.cache.get(this.location.href);
@@ -201,7 +229,7 @@ export default class Core extends Emitter {
       // We wait till all our Promises are resolved.
       const results = await Promise.all([
         this.fetch(),
-        this.From.hide()
+        this.From.hide(this.Contextual)
       ]);
 
       // Now everything went fine we can extract the properties of the view we
@@ -211,6 +239,7 @@ export default class Core extends Emitter {
       // We cache our result
       // eslint-disable-next-line
       this.cache.set(this.location.href, this.properties);
+
     }
 
     this.afterFetch();
@@ -231,28 +260,34 @@ export default class Core extends Emitter {
     // for developers who want to make stuff before the view is visible.
     this.emit('NAVIGATE_IN', {
       page: this.To.properties.page,
-      view: this.To.view
+      view: this.To.wrap.lastElementChild
     }, this.location);
 
     // We wait for the view transition to be over before resetting some variables
     // and reattaching the events to all the new elligible links in our DOM.
-    await this.To.show();
+    await this.To.show(this.Contextual);
 
     this.popping = false;
     this.running = false;
 
-    this.detach();
-    this.attach();
+    // Detach Event on Links
+    this.detach(this.links);
+
+    // Get all elligible links.
+    this.links = document.querySelectorAll('a:not([target]):not([data-router-disabled])');
+
+    // Attach Event on Links
+    this.attach(this.links);
 
     // Finally we emit a last event to create a hook for developers who want to
     // make stuff when the navigation has ended.
     this.emit('NAVIGATE_END', {
-      page: this.To.properties.page,
-      view: this.To.view
-    },
-    {
       page: this.From.properties.page,
       view: this.From.properties.view
+    },
+    {
+      page: this.To.properties.page,
+      view: this.To.wrap.lastElementChild
     }, this.location);
 
     // Last but not least we swap the From and To renderers for future navigations.

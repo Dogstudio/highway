@@ -2,69 +2,239 @@
 slug: get-started
 title: Highway - Get Started
 layout: default
+next_url: api.html
+next_label: API Reference
 ---
 
 <h1>Get started</h1>
-<p>Now we have followed the <a href="./installation.html">installation</a> process of <strong>Highway</strong> it's time to use all the magic in it !</p>
+<h2 id="core"><a href="#core">Core</a></h2>
+<p>The core of Highway called <code>Highway.Core</code> works as a bridge to relate pages to <a href="{{ site.url }}/get-started.html#renderers">renderers</a> and <a href="{{ site.url }}/get-started.html#transitions">transitions</a>.<br> It has to be <strong>called once</strong> to enable Highway and it takes an <code>&lt;Object&gt;</code> of options.</p>
 
-<h2 id="structure">Structure</h2>
-<p>In order to work properly, <strong>Highway</strong> needs a basic HTML structure.</p>
-<p>All we have to do is to put somewhere in our views the <strong>data-router-wrapper</strong> that will contain and only contain the <strong>data-router-view</strong> that will be updated by <strong>Highway</strong> on navigation. Everything outside of the <strong>data-router-wrapper</strong> will stay the same all along the user's navigation.</p>
-<p>This is the look of this HTML structure itself:</p>
-{% include _snippets/structure.html %}
+<pre>
+<code class="js">// File: main.js
+// Import Highway
+import Highway from '@dogstudio/highway';
 
-<h2 id="renderers">Renderers</h2>
-<p>A renderer is a script for each view that contains all the Javascript we need for each one of them. It can be shared by multiple views if we want. A default renderer called <strong>Highway.Renderer</strong> can be extended to create our custom ones and it'll be used by default if a given view has no custom renderer attached to it.</p>
-<p>A renderer comes with some built-in methods to let us call our scripts at different key moment during the navigation process. These built-in methods are:</p>
+// Call Highway.Core once.
+// Store it in a variable to use events
+const H = new Highway.Core({[...]});
+</code>
+</pre>
 
-<ul>
-    <li><strong>onEnter</strong>: This method is called when the <strong>data-router-view</strong> is added to the DOM.</li>
-    <li><strong>onLeave</strong>: This method is called when the transition to hide the <strong>data-router-view</strong> starts.</li>
-    <li><strong>onEnterCompleted</strong>: This method is called when the transition to show the <strong>data-router-view</strong> is over.</li>
-    <li><strong>onLeaveCompleted</strong>: This method is called when the <strong>data-router-view</strong> is removed from the DOM.</li>
-</ul>
+<h2 id="html-structure"><a href="#html-structure">HTML Structure</a></h2>
+<p>Highway requires a <code>data-router-wrapper</code> and a <code>data-router-view</code> element.<br> The <code>data-router-view</code> has to be the <strong>only child element</strong> of the <code>data-router-wrapper</code>.</p>
+<p>Highway will look inside the <code>data-router-wrapper</code> for a <code>data-router-view</code> to update the content.<br> Everything outside the <code>data-router-wrapper</code> will stay the same on navigation.</p>
+<p>Finally the <code>data-router-view</code> can be labelled to relate the page to a <a href="{{ site.url }}/get-started.html#renderers">renderer</a> or to a <a href="{{ site.url }}/get-started.html#transitions">transition</a>.</p>
 
-<p>In our custom renderer we also have access to some useful variables:</p>
+<pre>
+<code class="html">&lt;!-- File: index.html --&gt;
+&lt;!-- [...] --&gt;
+&lt;body&gt;
+  &lt;!-- [...] --&gt;
+  &lt;main data-router-wrapper&gt;
+    &lt;article data-router-view="name"&gt;
+      &lt;!-- [...] --&gt;
+    &lt;/article&gt;
+  &lt;/main&gt;
+  &lt;!-- [...] --&gt;
+&lt;/body&gt;
+</code>
+</pre>
 
-<ul>
-    <li><strong>this.view</strong>: The <strong>[data-router-view]</strong> of the view the renderer is attached to.</li>
-    <li><strong>this.properties</strong>: All the properties we can get of our renderer (page, view, slug, transition,...).</li>
-</ul>
-
-<p>Long story short, let see what a custom renderer look like:</p>
-{% include _snippets/renderer.html %}
-
-<h2 id="transitions">Transitions</h2>
-<p>OK so we know more about renderers but we are sad because there are no transitions between our views... Let now see how to create them!</p>
-<p>Transitions in <strong>Highway</strong> are pretty simple. A default transition called <strong>Highway.Transition</strong> can be extended to create our custom ones. Once we've extended the <strong>Highway.Transition</strong> we have access to those essential methods:</p>
-
-<ul>
-    <li><strong>in</strong>: The method that should contain the transition to show a <strong>data-router-view</strong>.</li>
-    <li><strong>out</strong>: The method that should contain the transition to hide a <strong>data-router-view</strong>.</li>
-</ul>
-
-<p>Each of those methods get two parameters we can name the way we want.<br> Here are some good defaults:</p>
+<h2 id="renderers"><a href="#renderers">Renderers</a></h2>
+<p>The renderers work like capsules where all the Javascript related to a single page is put. Each page can have its custom renderer which will extend the built-in and default <code>Highway.Renderer</code>. A page that doesn't need specific Javascript doesn't need a renderer as well so the built-in <code>Highway.Renderer</code> will be used instead.</p>
+<p>The Javascript inside a renderer will be run everytime the page it's related to is either displayed or hidden on navigation. A number of hooks/methods are available to structure the renderer and call specific pieces of Javascript at key moments on navigation.</p>
 
 <ul>
-    <li><strong>view</strong>: The <strong>data-router-view</strong> to show or hide.</li>
-    <li><strong>done</strong>: The required callback method <strong>we have to call</strong> once each of the transitions is over.</li>
+    <li><code>onEnter</code>: This method is run when the <code>data-router-view</code> is added to the DOM Tree.</li>
+    <li><code>onLeave</code>: This method is run when the transition to hide the <code>data-router-view</code> runs.</li>
+    <li><code>onEnterCompleted</code>: This method is run when the transition to display the <code>data-router-view</code> is done.</li>
+    <li><code>onLeaveCompleted</code>: This method is run when the <code>data-router-view</code> is removed from the DOM Tree.</li>
 </ul>
 
-<p>Let now see what a custom transition looks like:</p>
-{% include _snippets/transition.html %}
+<p>Finally, built-in variables are available through the extension of the <code>Highway.Renderer</code>:</p>
 
-<h2 id="core">Core</h2>
-<p>We should now have our custom renderers and transitions, it's time to attach everything to the right views and to <strong>Highway</strong>. To do so we have to call <strong>Highway.Core</strong> where we can attach everything we created.</p>
-<p>Remember the <strong>data-router-view</strong> we added to our view? We named it and its name will now be used to attach it to our custom renderer and transition.</p>
-<p>This is a reminder of our HTML structure so far:</p>
-{% include _snippets/structure.html %}
+<ul>
+    <li><code>this.wrap</code>: The <code>data-router-wrapper</code> of the page the renderer is related to.</li>
+    <li><code>this.properties</code>: A set of properties related to the renderer (page, view, slug, transition,...).</li>
+</ul>
 
-<p>Now let's call <strong>Highway.Core</strong> and do some magic:</p>
-{% include _snippets/core.html %}
+<pre>
+<code class="js">// File: custom-renderer.js
+// Import Highway
+import Highway from '@dogstudio/highway';
 
-<p>Now we attached our custom renderer and transition to our view, all scripts contained in the custom renderer will be called everytime the view is displayed and the transition will be called everytime we leave or access the view.</p>
-<p>We might want to use the same transition for all the views across our website. This is possible by adding a <strong>default</strong> key to our transitions list in the <strong>Highway.Core</strong> options. When we do so, for each view, <strong>Highway</strong> will look for a transition attached to our <strong>data-router-view</strong> name and fallback to the default one if none is found.</p>
-{% include _snippets/core-default.html %}
+class CustomRenderer extends Highway.Renderer {
+  // Hooks/methods
+  onEnter() { [...] }
+  onLeave() { [...] }
+  onEnterCompleted() { [...] }
+  onLeaveCompleted() { [...] }
+}
 
-<p>That's it ! We now have <strong>Highway</strong> setup and ready to work. We can repeat those steps for each view of our website and we'll have beautiful transitions between them.</p>
-<p>We can go further an take a look at the <a href="./api.html">API</a> of <strong>Highway</strong>.</p>
+// Don`t forget to export your renderer
+export default CustomRenderer;
+</code>
+</pre>
+
+<p>The renderer can be related to a page in the <code>Highway.Core</code> options with the label of the <code>data-router-view</code> that lives inside the said page. A renderer that is not related to a page in the <code>Highway.Core</code> options will be ignored by Highway.</p>
+
+<pre>
+<code class="js">// File: main.js
+// Import Highway
+import Highway from '@dogstudio/highway';
+
+// Import Renderers
+import CustomRenderer from 'path/to/custom-renderer.js';
+
+// Call Highway.Core once.
+// Relate renderers to pages with the label of the `data-router-view`.
+const H = new Highway.Core({
+  renderers: {
+    name: CustomRenderer
+  }
+});
+</code>
+</pre>
+
+<h2 id="transitions"><a href="#transitions">Transitions</a></h2>
+<p>The transitions are the managers of the animations to display or hide a page. Each page can have its custom transition which will extend the built-in and default <code>Highway.Transition</code>. A page that doesn't have a transition related to it won't be animated.</p>
+<p>The Javascript inside a transition will be run everytime a page it's related to is either displayed or hidden on navigation. A number of hooks/methods are available to manage which animations should be run to display a page and which one should be run to hide a page.</p>
+
+<ul>
+    <li><code>in</code>: This method should contain the animation to display a <code>data-router-view</code>.</li>
+    <li><code>out</code>: This method should contain the animation to hide a <code>data-router-view</code>.</li>
+</ul>
+
+<p>Parameters can be used with these hooks/methods to animate pages and run everything smoothly:</p>
+
+<ul>
+    <li><code>to</code>: The <code>data-router-view</code> to display.</li>
+    <li><code>from</code>: The <code>data-router-view</code> to hide.</li>
+    <li><code>done</code>: The required callback method that <strong>has to be called</strong> once the animation is done.</li>
+</ul>
+
+<pre>
+<code class="js">// File: custom-transition.js
+// Import Highway
+import Highway from '@dogstudio/highway';
+
+class CustomTransition extends Highway.Transition {
+  // Built-in methods
+  in(from, to, done) {
+    // [...]
+  }
+
+  out(from, done) {
+    // [...]
+  }
+}
+
+// Don`t forget to export your transition
+export default CustomTransition;
+</code>
+</pre>
+
+<p>The transition can be related to a page in the <code>Highway.Core</code> options with the label of the <code>data-router-view</code> that lives inside the said page. A transition that is not related to a page in the <code>Highway.Core</code> options will be ignored by Highway and the page won't be animated on navigation.</p>
+
+<pre>
+<code class="js">// File: main.js
+// Import Highway
+import Highway from '@dogstudio/highway';
+
+// Import Renderers
+import CustomRenderer from 'path/to/custom-renderer.js';
+
+// Import Transitions
+import CustomTransition from 'path/to/custom-transition.js';
+
+// Call Highway.Core once.
+// Relate transitions to pages with the label of the `data-router-view`.
+const H = new Highway.Core({
+  renderers: {
+    name: CustomRenderer
+  },
+  transitions: {
+    name: CustomTransition
+  }
+});
+</code>
+</pre>
+
+<h3 id="default-transition"><a href="#default-transition">Default Transition</a></h3>
+<p>Each page might not need a specific transition but instead multiple pages might need a shared transition. The <code>default</code> key can be used in the <code>Highway.Core</code> options to tell Highway to use a default transition for all pages that don't have a transition related to them.</p>
+
+<pre>
+<code class="js">// File: main.js
+// Import Highway
+import Highway from '@dogstudio/highway';
+
+// Import Renderers
+import CustomRenderer from 'path/to/custom-renderer.js';
+
+// Import Transitions
+import OtherTransition from 'path/to/other-transition.js';
+import CustomTransition from 'path/to/custom-transition.js';
+
+// Call Highway.Core once
+// The custom transition will be used for the page labelled by `name`.
+// The other transition will be used by default for all pages with no specific transition related to them.
+const H = new Highway.Core({
+  renderers: {
+    name: CustomRenderer
+  },
+  transitions: {
+    name: CustomTransition,
+    default: OtherTransition
+  }
+});
+</code>
+</pre>
+
+<h3 id="contextual-transitions"><a href="#contextual-transitions">Contextual Transitions</a></h3>
+<p>Some links on a page might need a specific transition depending on their context that is different from the transition related to the said page. A contextual transition can me atteched to links with the <code>data-transition</code> attribute that takes the name given to the transition in <code>Highway.Core</code> as value.</p>
+
+<pre>
+<code class="js">// File: main.js
+// Import Highway
+import Highway from '@dogstudio/highway';
+
+// Import Renderers
+import CustomRenderer from 'path/to/custom-renderer.js';
+
+// Import Transitions
+import CustomTransition from 'path/to/custom-transition.js';
+import ContextualTransition from 'path/to/contextual-transition.js';
+
+// Call Highway.Core once
+// The custom transition will be used for the page labelled by `name`.
+// The contextual transition will be used by all links it's attached to with the `data-transition` attribute.
+const H = new Highway.Core({
+  renderers: {
+    name: CustomRenderer
+  },
+  transitions: {
+    name: CustomTransition,
+    contextual: {
+      foo: ContextualTransition
+    }
+  }
+});
+</code>
+</pre>
+
+<pre>
+<code class="html">&lt;!-- File: index.html --&gt;
+&lt;!-- [...] --&gt;
+&lt;body&gt;
+  &lt;!-- [...] --&gt;
+  &lt;main data-router-wrapper&gt;
+    &lt;article data-router-view="name"&gt;
+      &lt;!-- This link will call the transition named `foo` in `Highway.Core` --&gt;
+      &lt;a href="path/to/page" data-transition="foo"&gt;&lt;/a&gt;
+    &lt;/article&gt;
+  &lt;/main&gt;
+  &lt;!-- [...] --&gt;
+&lt;/body&gt;
+</code>
+</pre>

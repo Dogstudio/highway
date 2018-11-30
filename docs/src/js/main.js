@@ -4,12 +4,24 @@ import 'whatwg-fetch';
 // Import Highway
 import Highway from 'highway';
 
+// Renderers
+import Examples from 'renderers/examples';
+import GetStarted from 'renderers/get-started';
+import Installation from 'renderers/installation';
+
 // Transitions
 import Fade from 'transitions/fade';
+import Overlap from 'transitions/overlap';
+import Basic from 'transitions/basic';
 
 (() => {
   const $menuToggler = document.querySelector('.js-toggle-menu');
   const $siteHeader = document.querySelector('.js-site-header');
+
+  if ('scrollRestoration' in history) {
+    // Back off, browser, I got this...
+    history.scrollRestoration = 'manual';
+  }
 
   $menuToggler.addEventListener('click', () => {
     $siteHeader.classList.toggle('is-open');
@@ -18,12 +30,16 @@ import Fade from 'transitions/fade';
   // Highway
   const H = new Highway.Core({
     renderers: {
-      'examples': () => import('renderers/examples'),
-      'get-started': () => import('renderers/get-started'),
-      'installation': () => import('renderers/installation')
+      'examples': Examples,
+      'get-started': GetStarted,
+      'installation': Installation
     },
     transitions: {
-      default: Fade
+      default: Fade,
+      contextual: {
+        basic: Basic,
+        overlap: Overlap
+      }
     }
   });
 
@@ -45,7 +61,7 @@ import Fade from 'transitions/fade';
     }
   });
 
-  H.on('NAVIGATE_END', (to, from, location) => {
+  H.on('NAVIGATE_END', (from, to, location) => {
     // Check Anchor
     if (location.anchor) {
       const el = document.querySelector(location.anchor);

@@ -1,11 +1,12 @@
 {
   "name": "@dogstudio/highway",
   "license": "MIT",
-  "version": "2.0.8",
+  "version": "2.1.0",
   "description": "Highway helps you manage your page transitions",
   "main": "build/highway.js",
   "unpkg": "build/highway.min.js",
   "files": [
+    "src",
     "build"
   ],
   "contributors": [
@@ -13,17 +14,22 @@
       "name": "Anthony Du Pont",
       "email": "bulldog@dogstudio.co",
       "url": "https://twitter.com/Anthodpnt"
+    },
+    {
+      "name": "Thao Delefortrie",
+      "email": "malamute@dogstudio.co",
+      "url": "https://twitter.com/ThaoD5"
+    },
+    {
+      "name": "Josh Kirk",
+      "email": "josh@zero.nyc",
+      "url": "https://twitter.com/joshgkirk"
     }
   ],
   "scripts": {
-    "cleanES5": "rm -rf build/es5",
-    "cleanES6": "rm -rf build/highway.*",
-    "buildES5": "npm run cleanES5 && webpack --config webpack.es5.js",
-    "buildES6": "npm run cleanES6 && webpack --config webpack.es6.js",
-    "clean": "npm run cleanES5 && npm run cleanES6",
-    "build": "npm run buildES5 && npm run buildES6",
-    "watch": "npm run clean && webpack --watch --config webpack.es6.js",
-    "test": "nyc --reporter=lcov mocha test/*.tests.js --require jsdom-global/register --require @babel/register"
+    "clean": "rm -rf build/highway.*",
+    "build": "npm run clean && webpack",
+    "watch": "npm run clean && webpack --watch"
   },
   "repository": {
     "type": "git",
@@ -31,7 +37,7 @@
   },
   "keywords": [
     "js",
-    "router",
+    "manager",
     "javascript",
     "transitions",
     "animations",
@@ -46,20 +52,12 @@
     "@babel/preset-env": "7.0.0-rc.1",
     "@babel/register": "7.0.0-rc.1",
     "babel-loader": "^8.0.0-beta",
-    "chai": "^4.1.2",
-    "chai-as-promised": "^7.1.1",
     "compression-webpack-plugin": "^1.1.11",
     "eslint": "^4.19.1",
     "eslint-loader": "^2.0.0",
-    "isomorphic-fetch": "^2.2.1",
-    "jsdom": "^11.11.0",
-    "jsdom-global": "^3.0.2",
-    "mocha": "^5.2.0",
-    "nyc": "^12.0.1",
-    "sinon": "^5.0.10",
     "uglifyjs-webpack-plugin": "^1.2.5",
-    "webpack": "^4.10.2",
-    "webpack-cli": "^2.1.4"
+    "webpack": "^4.20.2",
+    "webpack-cli": "^3.1.2"
   },
   "dependencies": {
     "tiny-emitter": "^2.0.2"

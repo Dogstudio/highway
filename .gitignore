@@ -1,8 +1,6 @@
 # JUNK FILES & FOLDERS
 .cache
 .DS_Store
-.nyc_output/
 
 # FRONT FOLDERS
 node_modules/
-coverage/

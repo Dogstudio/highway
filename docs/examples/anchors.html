@@ -1,0 +1,52 @@
+---
+slug: examples
+title: Highway - Examples | URL Anchors
+layout: default
+next_url: examples/parameters.html
+next_label: URL Parameters
+---
+
+<h1>URL Anchors</h1>
+<p>The page might contains links using URL anchors which would tell the browser to scroll to a content on the page. Highway manage those URL anchors depending on the URL structure.</p>
+
+<h2 id="anchor">Same Page</h2>
+<p>The links to the same page with anchors won't trigger transitions. The default browser behavior will be used instead to scroll to the right content on the page.</p>
+<pre>
+<code class="html has-test">&lt;!-- File: index.html --&gt;
+&lt;!-- Link to the same page but with an anchor won't trigger the transition --&gt;
+&lt;a href="#anchor"&gt;&lt;/a&gt;
+</code>
+<a href="#anchor" class="button button--full">Try me</a>
+</pre>
+
+<h2>Other Pages</h2>
+<p>The links to other pages with anchors are going to be handled by Highway like it should normally do because with or without parameters the URLs are staying different from each other so transitions are required and are triggered by the links.</p>
+<pre>
+<code class="html has-test">&lt;!-- File: index.html --&gt;
+&lt;!-- Link to other pages but with an anchor will trigger the transition --&gt;
+&lt;a href="path/to/page#anchor"&gt;&lt;/a&gt;
+</code>
+<a href="{{ site.url }}/index.html?parameter=foo" class="button button--full">Try me</a>
+</pre>
+
+<p>However for links to other pages with an anchor the scroll to the right content on the page needs to be handled programmatically in Javascript using Highway <a href="{{ site.url }}/api.html#events">events</a>. The <code>NAVIGATE_END</code> event fits perfectly for this kind of behavior.</p>
+<pre>
+<code class="js">// File: main.js
+const H = new Highway.Core();
+
+// Listen the `NAVIGATE_END` event
+// This event is sent everytime the `done()` method is called in the `in()` method of a transition
+H.on('NAVIGATE_END', (from, to, location) => {
+  // Check Anchor
+  if (location.anchor) {
+    // Get element
+    const el = document.querySelector(location.anchor);
+
+    if (el) {
+      // Scroll to element
+      window.scrollTo(el.offsetLeft, el.offsetTop);
+    }
+  }
+});
+</code>
+</pre>

@@ -6,7 +6,7 @@
 <!-- Header -->
 <header class="site-header js-site-header">
   <div class="site-header-inner">
-    <a href="./" class="site-logo"><img src="./assets/images/logo_2x.png" /></a>
+    <a href="{{ site.url }}" class="site-logo"><img src="{{ site.url }}/assets/images/logo_2x.png" /> v2.1.0</a>
 
     <button class="burger-menu js-toggle-menu">
       <span class="burger-menu-lines"></span>
@@ -15,27 +15,41 @@
     <nav class="site-menu">
       <ul>
         <li class="menu-item">
-          <a href="./" {% if page.url == '/' %}class="is-active"{% endif %}>Introduction</a>
+          <a href="{{ site.url }}" {% if page.url == '/' %}class="is-active"{% endif %}>Introduction</a>
         </li>
 
         <li class="menu-item">
-          <a href="./installation.html" {% if page.url == '/installation.html' %}class="is-active"{% endif %}>Installation</a>
+          <a href="{{ site.url }}/installation.html" {% if page.url == '/installation.html' %}class="is-active"{% endif %}>Installation</a>
         </li>
 
         <li class="menu-item">
-          <a href="./get-started.html" {% if page.url == '/get-started.html' %}class="is-active"{% endif %}>Get started</a>
+          <a href="{{ site.url }}/get-started.html" {% if page.url == '/get-started.html' %}class="is-active"{% endif %}>Get Started</a>
         </li>
 
         <li class="menu-item">
-          <a href="./api.html" {% if page.url == '/api.html' %}class="is-active"{% endif %}>API Reference</a>
+          <a href="{{ site.url }}/api.html" {% if page.url == '/api.html' %}class="is-active"{% endif %}>API Reference</a>
+        </li>
+
+        <li class="menu-item menu-parent">
+          <a href="#" {% if page.dir == '/examples/' %}class="is-active"{% endif %}>Examples</a>
+
+          <ul class="menu-child">
+            <li><a href="{{ site.url }}/examples/disable.html" {% if page.url == '/examples/disable.html' %}class="is-active"{% endif %}>Disable</a></li>
+            <li><a href="{{ site.url }}/examples/events.html" {% if page.url == '/examples/events.html' %}class="is-active"{% endif %}>Events</a></li>
+            <li><a href="{{ site.url }}/examples/menu.html" {% if page.url == '/examples/menu.html' %}class="is-active"{% endif %}>Menu</a></li>
+            <li><a href="{{ site.url }}/examples/tracking.html" {% if page.url == '/examples/tracking.html' %}class="is-active"{% endif %}>Tracking</a></li>
+            <li><a href="{{ site.url }}/examples/transitions.html" {% if page.url == '/examples/transitions.html' %}class="is-active"{% endif %}>Transitions</a></li>
+            <li><a href="{{ site.url }}/examples/anchors.html" {% if page.url == '/examples/anchors.html' %}class="is-active"{% endif %}>URL Anchors</a></li>
+            <li><a href="{{ site.url }}/examples/parameters.html" {% if page.url == '/examples/parameters.html' %}class="is-active"{% endif %}>URL Parameters</a></li>
+          </ul>
         </li>
 
         <li class="menu-item">
-          <a href="./examples.html" {% if page.url == '/examples.html' %}class="is-active"{% endif %}>Examples</a>
+          <a href="{{ site.url }}/demos.html" {% if page.url == '/demos.html' %}class="is-active"{% endif %}>Demos</a>
         </li>
 
-        <li class="menu-item">
-          <a href="./demos.html" {% if page.url == '/demos.html' %}class="is-active"{% endif %}>Demos</a>
+        <li class="menu-item menu-item--slack">
+          <a href="https://join.slack.com/t/highway-lib/shared_invite/enQtNDcxMzY5MDc0NDE3LWQyMWMwZjhiNDUxOWVkM2Y0MTkxMTY5ZTU3ZjRmNjU2ZTI3YjAwNGQ2ZTZlYTcyNTBhYWEzMGQyZGFlODY0MjY" target="_blank">Join the Community</a>
         </li>
       </ul>
     </nav>

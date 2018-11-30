@@ -11,13 +11,13 @@ export default class Renderer {
    */
   constructor(properties) {
     // We get the view.
-    this.view = document.querySelector('[data-router-view]');
+    this.wrap = document.querySelector('[data-router-wrapper]');
 
     // We save properties of the renderer
     this.properties = properties;
 
     // We get our transition we will use later to show/hide our view.
-    this.Transition = properties.transition ? new properties.transition(this.view) : null;
+    this.Transition = properties.transition ? new properties.transition.class(this.wrap, properties.transition.name) : null;
   }
 
   /**
@@ -30,19 +30,11 @@ export default class Renderer {
   }
 
   /**
-   * Add view in DOM.
+   * Add view in DOM, then remove previous view
    */
   add() {
     // We setup the DOM for our [data-router-view]
-    this.view.setAttribute('data-router-view', this.properties.slug);
-    this.view.innerHTML = this.properties.view.innerHTML;
-  }
-
-  /**
-   * Remove view in DOM.
-   */
-  remove() {
-    this.view.innerHTML = '';
+    this.wrap.insertAdjacentHTML('beforeend', this.properties.view.outerHTML);
   }
 
   /**
@@ -57,9 +49,10 @@ export default class Renderer {
   /**
    * Add the view in DOM and play an `in` transition if one is defined.
    *
+   * @param {(object|boolean)} contextual - If the transition is changing on the fly
    * @return {object} Promise
    */
-  show() {
+  show(contextual) {
     return new Promise(async resolve => {
       // Update DOM.
       this.update();
@@ -71,7 +64,7 @@ export default class Renderer {
       // The transition is set in your custom renderer with a getter called
       // `transition` that should return the transition object you want to
       // apply to you view. We call the `in` step of this one right now!
-      this.Transition && await this.Transition.show();
+      this.Transition && await this.Transition.show(contextual);
 
       // The `onEnterCompleted` method if set in your custom renderer is called
       // everytime a transition is over if set. Otherwise it's called right after
@@ -86,9 +79,10 @@ export default class Renderer {
   /**
    * Play an `out` transition if one is defined and remove the view from DOM.
    *
+   * @param {(object|boolean)} contextual - If the transition is changing on the fly
    * @return {object} Promise
    */
-  hide() {
+  hide(contextual) {
     return new Promise(async resolve => {
       // The `onLeave` method if set in your custom renderer is called everytime
       // before a view will be removed from the DOM. This let you do some stuffs
@@ -96,10 +90,7 @@ export default class Renderer {
       this.onLeave && this.onLeave();
 
       // We call the `out` step of your transition right now!
-      this.Transition && await this.Transition.hide();
-
-      // Remove view from DOM.
-      this.remove();
+      this.Transition && await this.Transition.hide(contextual);
 
       // The `onLeaveCompleted` method if set in your custom renderer is called
       // everytime a view is completely removed from the DOM.
