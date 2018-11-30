@@ -2,14 +2,14 @@
 slug: examples
 title: Highway - Examples | Disable Highway
 layout: default
-next_url: demos.html
-next_label: Demos
+next_url: examples/events.html
+next_label: Events
 ---
 
 <h1>Disable Highway</h1>
 <p>All links on a page are automatically attached to Highway with <code>Highway.Core</code> to call transitions and create an AJAX navigation. Nevertheless some links have to be ignored or might need to be ignored by Highway for good reasons.</p>
 
-<h2>Cross-origin</h2>
+<h2>Cross-Origin</h2>
 <p>The links with a URL domain name that is different from the URL domain name of the website are all ignored by Highway for safety and to avoid cross-origin errors that would occur and that would break the navigation process.</p>
 <pre>
 <code class="html has-test">&lt;!-- File: index.html --&gt;
@@ -39,8 +39,8 @@ next_label: Demos
 <a href="javascript:alert('Hello World');" class="button button--full">Try me</a>
 </pre>
 
-<h2>Router disabled</h2>
-<p>The links can be programatically ignored with the <code>data-router-disabled</code> attribute. This attribute will force the browser to reload the page with transitions.</p>
+<h2>Router Disabled</h2>
+<p>The links can be programmatically ignored with the <code>data-router-disabled</code> attribute. This attribute will force the browser to reload the page with transitions.</p>
 <pre>
 <code class="html has-test">&lt;!-- File: index.html --&gt;
 &lt;!-- Link ignored by Highway because of the `data-router-disabled` attribute --&gt;

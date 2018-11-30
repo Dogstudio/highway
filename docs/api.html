@@ -9,8 +9,8 @@ next_label: Examples
 <h1>API</h1>
 
 <h2>Hooks/Methods</h2>
-<h3>Renderers</h3>
-<p>Renderers have a number of hooks/methods available to structure them and call pieces of Javascript at key moments on navigation. Read more of the <a href="#">documentation</a> about renderers.</p>
+<h3 id="renderers"><a href="#renderers">Renderers</a></h3>
+<p>Renderers have a number of hooks/methods available to structure them and call pieces of Javascript at key moments on navigation. Read more of the <a href="{{ site.url }}/get-started.html#renderers">documentation</a> about renderers.</p>
 
 <div class="table-wrapper">
   <table cellpadding="0" cellspacing="0">
@@ -37,8 +37,8 @@ next_label: Examples
   </table>
 </div>
 
-<h3>Transitions</h3>
-<p>Transitions have a number of hooks/methods available to manage which animations should be run to display a page and which one should be run to hide it. Read more of the <a href="#">documentation</a> about transitions.</p>
+<h3 id="transitions"><a href="#transitions">Transitions</a></h3>
+<p>Transitions have a number of hooks/methods available to manage which animations should be run to display a page and which one should be run to hide it. Read more of the <a href="{{ site.url }}/get-started.html#transitions">documentation</a> about transitions.</p>
 
 <div class="table-wrapper">
   <table cellpadding="0" cellspacing="0">
@@ -70,8 +70,8 @@ next_label: Examples
   </table>
 </div>
 
-<h3>Core</h3>
-<p><code>Highway.Core</code> comes with some built-in and useful methods developers can have access to once it has been called with <code>new Highway.Core()</code>. Read more of the <a href="#">documentation</a> about the core of Highway.</p>
+<h3 id="core"><a href="#core">Core</a></h3>
+<p><code>Highway.Core</code> comes with some built-in and useful methods developers can have access to once it has been called with <code>new Highway.Core()</code>. Read more of the <a href="{{ site.url }}/get-started.html#core">documentation</a> about the core of Highway.</p>
 
 <div class="table-wrapper">
   <table cellpadding="0" cellspacing="0">
@@ -101,7 +101,7 @@ next_label: Examples
   </table>
 </div>
 
-<h2>Events</h2>
+<h2 id="events"><a href="#events">Events</a></h2>
 <p><code>Highway.Core</code> extends <a href="https://github.com/scottcorgan/tiny-emitter#readme" target="_blank">tiny-emitter</a> so it gives developers access to all the <a href="https://github.com/scottcorgan/tiny-emitter#instance-methods" target="_blank">methods</a> from <em>tiny-emitter</em>. Those methods can be used to listen to the following events sent by Highway in the navigation process.</p>
 <div class="table-wrapper">
   <table cellpadding="0" cellspacing="0">
@@ -129,8 +129,8 @@ next_label: Examples
     <tr>
       <td><code>NAVIGATE_END</code></td>
       <td>
-        <code>to | &lt;Node&gt;</code><br>
         <code>from | &lt;Node&gt;</code><br>
+        <code>to | &lt;Node&gt;</code><br>
         <code>location | &lt;Object&gt;</code>
       </td>
       <td>This event is sent everytime the <code>done()</code> method is called in the <code>in()</code> method of a transition. The new <code>data-router-view</code> is available in the <code>to</code> parameter and the old <code>data-router-view</code> is available in the <code>from</code> parameter of the callback method. The <code>location</code> parameter of the callback method is an <code>&lt;Object&gt;</code> with all the informations about the page URL.</td>

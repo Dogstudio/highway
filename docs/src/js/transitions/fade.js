@@ -2,11 +2,14 @@
 import Highway from 'highway';
 
 // GSAP
-import Tween, { TweenMax } from 'gsap';
+import Tween from 'gsap';
 
 // Fade
 class Fade extends Highway.Transition {
   in(from, to, done) {
+    // Reset Scroll
+    window.scrollTo(0, 0);
+
     // Remove Old View
     from.remove();
 

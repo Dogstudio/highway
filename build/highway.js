@@ -2772,7 +2772,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * @author Anthony Du Pont <bulldog@dogstudio.co>
  */
 // Highway Version
-console.log('Highway v2.1.0'); // Export Highway
+console.log('Highway v2.1.0-beta'); // Export Highway
 
 var _default = {
   Core: _core.default,

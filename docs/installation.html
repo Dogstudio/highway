@@ -7,21 +7,21 @@ next_label: Get Started
 ---
 
 <h1>Installation</h1>
-<h2>Package</h2>
+<h2 id="package"><a href="#package">Package</a></h2>
 <h3>Install with YARN:</h3>
 <pre><code class="js">yarn add @dogstudio/highway</code></pre>
 
 <h3>Install with NPM:</h3>
 <pre><code class="js">npm install --save @dogstudio/highway</code></pre>
 
-<h2>Easy Usage</h2>
-<p>Highway's package contains a <code>built</code> folder with the ready-to-use <strong>ES5 version</strong> of Highway. The ES6 version of Highway has been compiled into this ES5 version with an optimized <a href="#" target="_blank">configuration</a> we defined so developers don't need to bother with the compilation process.</p>
+<h2 id="easy-usage"><a href="#easy-usage">Easy Usage</a></h2>
+<p>Highway's package contains a <code>built</code> folder with the ready-to-use <strong>ES5 version</strong> of Highway. The ES6 version of Highway has been compiled into this ES5 version with an optimized <a href="https://github.com/Dogstudio/highway/blob/develop/webpack.config.js" target="_blank">configuration</a> we defined so developers don't need to bother with the compilation process.</p>
 <p>Once the package is installed, Highway can be imported in Javascript with the <code>import</code> keyword to have access to <code>Highway.Core</code>, <code>Highway.Renderer</code> and <code>Highway.Transition</code> which are the ready-to-use classes that can be extended.</p>
 <pre><code class="js">import Highway from '@dogstudio/highway';</code></pre>
 
 <p>This will import the <code>node_modules/@dogstudio/highway/build/highway.js</code> file which is the ready-to-use ES5 version of Highway. Make sure to <a href="https://webpack.js.org/configuration/resolve/#resolve-modules" target="_blank">resolve</a> the <code>node_modules</code> folder so that the script will look into it to import the package.</p>
 
-<h2>Advanced Usage</h2>
+<h2 id="advanced-usage"><a href="#advanced-usage">Advanced Usage</a></h2>
 <p>The ES5 version is available for developers who don't want to bother with the compilation process but the ES6 source files are available as well for advanced developers who prefer to manage the compilation process to ES5 on their own.<p>
 <p>The ES6 version of Highway needs to be compiled to ES5 in order to work in browsers using tools like <a href="https://webpack.js.org/" target="_blank">Webpack</a> or <a href="https://parceljs.org/" target="_blank">Parcel</a>. Don't forget that the <code>node_modules</code> folder might be ignored by default including all packages inside it. With Webpack as an example specific packages can be included in the rules:</p>
 

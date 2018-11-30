@@ -1,0 +1,30 @@
+---
+slug: examples
+title: Highway - Examples | URL Parameters
+layout: default
+next_url: demos.html
+next_label: Demos
+---
+
+<h1>URL Parameters</h1>
+<p>The page might contains links using URL parameters which would change the content of a page for example to add additionnal informations, filter some content,... Highway manage those URL parameters depending on the URL structure.</p>
+
+<h2>Same Page</h2>
+<p>The links to the same page with parameters page will trigger transitions to update the content of the page.<br> This might happen with filters on a page for example with which the page need to be reloaded to filter the content of the page.</p>
+<pre>
+<code class="html has-test">&lt;!-- File: index.html --&gt;
+&lt;!-- Link to the same page but with a parameter will trigger the transition --&gt;
+&lt;a href="?parameter=foo"&gt;&lt;/a&gt;
+</code>
+<a href="?parameter=foo" class="button button--full">Try me</a>
+</pre>
+
+<h2>Other Pages</h2>
+<p>The links to other pages with parameters are going to be handled by Highway like it should normally do because with or without parameters the URLs are staying different from each other so transitions are required and are triggered by the links.</p>
+<pre>
+<code class="html has-test">&lt;!-- File: index.html --&gt;
+&lt;!-- Link to other pages but with a parameter will trigger the transition --&gt;
+&lt;a href="path/to/page?parameter=foo"&gt;&lt;/a&gt;
+</code>
+<a href="{{ site.url }}/index.html?parameter=foo" class="button button--full">Try me</a>
+</pre>

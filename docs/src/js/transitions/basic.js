@@ -7,7 +7,7 @@ import Tween from 'gsap';
 // Basic
 class Basic extends Highway.Transition {
   in(from, to, done) {
-    // Scroll Top
+    // Reset Scroll
     window.scrollTo(0, 0);
 
     // Remove Old View

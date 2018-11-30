@@ -1,0 +1,35 @@
+---
+slug: examples
+title: Highway - Examples | Menu
+layout: default
+next_url: examples/tracking.html
+next_label: Tracking
+---
+
+<h1>Menu</h1>
+<p>The menu on websites needs an active element to tell users on which page they are. With Highway and more globally AJAX navigation the header being outside of the <code>data-router-wrapper</code> as it should, it isn't updated on navigation and developers need to handle the active menu item programmatically with Highway <a href="{{ site.url }}/api.html#events">events</a>. The <code>NAVIGATE_IN</code> event fits perfectly for this kind of behavior.</p>
+<pre>
+<code class="js">// File: main.js
+const H = new Highway.Core();
+
+// Get all menu links
+const links = document.querySelectorAll('nav a');
+
+// Listen the `NAVIGATE_IN` event
+// This event is sent everytime a `data-router-view` is added to the DOM Tree
+H.on('NAVIGATE_IN', (to, location) => {
+  // Check Active Link
+  for (let i = 0; i < links.length; i++) {
+    const link = links[i];
+
+    // Clean class
+    link.classList.remove('is-active');
+
+    // Active link
+    if (link.href === location.href) {
+      link.classList.add('is-active');
+    }
+  }
+});
+</code>
+</pre>

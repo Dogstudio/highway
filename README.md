@@ -38,9 +38,17 @@
 ## Releases
 #### 2.1.x
 
+- :tada: Add contextual transitions
+- :tada: Add overlapping transitions
+- :sparkles: Improve [documentation website](https://dogstudio.github.io/highway/)
+- :sparkles: Improve `Core.redirect(href, transition)` method
+- :sparkles: Improve `Core.attach(links)` method
+- :sparkles: Improve `Core.detach(links)` method
+- :art: Invert `from` and `to` parameters of the `NAVIGATE_END` event
+
 #### 2.0.x
 
-- :tada: Add [demo website](https://dogstudio.github.io/highway/)
+- :tada: Add [documentation website](https://dogstudio.github.io/highway/)
 - :tada: Add `Core.redirect(href)` method
 - :tada: Add dynamic import for renderers
 - :art: Update informations sent with events

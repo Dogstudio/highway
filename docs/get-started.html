@@ -7,8 +7,8 @@ next_label: API Reference
 ---
 
 <h1>Get started</h1>
-<h2>Core</h2>
-<p>The core of Highway called <code>Highway.Core</code> works as a bridge to relate pages to <a href="#">renderers</a> and <a href="#">transitions</a>.<br> It has to be <strong>called once</strong> to enable Highway and it takes an <code>&lt;Object&gt;</code> of options.</p>
+<h2 id="core"><a href="#core">Core</a></h2>
+<p>The core of Highway called <code>Highway.Core</code> works as a bridge to relate pages to <a href="{{ site.url }}/get-started.html#renderers">renderers</a> and <a href="{{ site.url }}/get-started.html#transitions">transitions</a>.<br> It has to be <strong>called once</strong> to enable Highway and it takes an <code>&lt;Object&gt;</code> of options.</p>
 
 <pre>
 <code class="js">// File: main.js
@@ -21,10 +21,10 @@ const H = new Highway.Core({[...]});
 </code>
 </pre>
 
-<h2>HTML Structure</h2>
+<h2 id="html-structure"><a href="#html-structure">HTML Structure</a></h2>
 <p>Highway requires a <code>data-router-wrapper</code> and a <code>data-router-view</code> element.<br> The <code>data-router-view</code> has to be the <strong>only child element</strong> of the <code>data-router-wrapper</code>.</p>
 <p>Highway will look inside the <code>data-router-wrapper</code> for a <code>data-router-view</code> to update the content.<br> Everything outside the <code>data-router-wrapper</code> will stay the same on navigation.</p>
-<p>Finally the <code>data-router-view</code> can be labelled to relate the page to a <a href="#">renderer</a> or to a <a href="#">transition</a>.</p>
+<p>Finally the <code>data-router-view</code> can be labelled to relate the page to a <a href="{{ site.url }}/get-started.html#renderers">renderer</a> or to a <a href="{{ site.url }}/get-started.html#transitions">transition</a>.</p>
 
 <pre>
 <code class="html">&lt;!-- File: index.html --&gt;
@@ -41,7 +41,7 @@ const H = new Highway.Core({[...]});
 </code>
 </pre>
 
-<h2>Renderers</h2>
+<h2 id="renderers"><a href="#renderers">Renderers</a></h2>
 <p>The renderers work like capsules where all the Javascript related to a single page is put. Each page can have its custom renderer which will extend the built-in and default <code>Highway.Renderer</code>. A page that doesn't need specific Javascript doesn't need a renderer as well so the built-in <code>Highway.Renderer</code> will be used instead.</p>
 <p>The Javascript inside a renderer will be run everytime the page it's related to is either displayed or hidden on navigation. A number of hooks/methods are available to structure the renderer and call specific pieces of Javascript at key moments on navigation.</p>
 
@@ -97,7 +97,7 @@ const H = new Highway.Core({
 </code>
 </pre>
 
-<h2>Transitions</h2>
+<h2 id="transitions"><a href="#transitions">Transitions</a></h2>
 <p>The transitions are the managers of the animations to display or hide a page. Each page can have its custom transition which will extend the built-in and default <code>Highway.Transition</code>. A page that doesn't have a transition related to it won't be animated.</p>
 <p>The Javascript inside a transition will be run everytime a page it's related to is either displayed or hidden on navigation. A number of hooks/methods are available to manage which animations should be run to display a page and which one should be run to hide a page.</p>
 
@@ -161,7 +161,7 @@ const H = new Highway.Core({
 </code>
 </pre>
 
-<h3>Default transition</h3>
+<h3 id="default-transition"><a href="#default-transition">Default Transition</a></h3>
 <p>Each page might not need a specific transition but instead multiple pages might need a shared transition. The <code>default</code> key can be used in the <code>Highway.Core</code> options to tell Highway to use a default transition for all pages that don't have a transition related to them.</p>
 
 <pre>
@@ -191,7 +191,7 @@ const H = new Highway.Core({
 </code>
 </pre>
 
-<h3>Contextual transitions</h3>
+<h3 id="contextual-transitions"><a href="#contextual-transitions">Contextual Transitions</a></h3>
 <p>Some links on a page might need a specific transition depending on their context that is different from the transition related to the said page. A contextual transition can me atteched to links with the <code>data-transition</code> attribute that takes the name given to the transition in <code>Highway.Core</code> as value.</p>
 
 <pre>

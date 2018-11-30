@@ -1,0 +1,33 @@
+---
+slug: examples
+title: Highway - Examples | Events
+layout: default
+next_url: examples/menu.html
+next_label: Menu
+---
+
+<h1>Events</h1>
+<p><code>Highway.Core</code> extends <a href="https://github.com/scottcorgan/tiny-emitter#readme" target="_blank">tiny-emitter</a> so it gives developers access to all the <a href="https://github.com/scottcorgan/tiny-emitter#instance-methods" target="_blank">methods</a> from <em>tiny-emitter</em>. Those methods can be used to listen to the following events sent by Highway in the navigation process. Specific pieces of Javascript can then be run at key moments of Highway life cycle.</p>
+<pre>
+<code class="js">// File: main.js
+const H = new Highway.Core();
+
+// Listen the `NAVIGATE_IN` event
+// This event is sent everytime a `data-router-view` is added to the DOM Tree
+H.on('NAVIGATE_IN', (to, location) => {
+  // [...]
+});
+
+// Listen the `NAVIGATE_OUT` event
+// This event is sent everytime the `out()` method of a transition is run to hide a `data-router-view`
+H.on('NAVIGATE_OUT', (from, location) => {
+  // [...]
+});
+
+// Listen the `NAVIGATE_END` event
+// This event is sent everytime the `done()` method is called in the `in()` method of a transition
+H.on('NAVIGATE_END', (from, to, location) => {
+  // [...]
+});
+</code>
+</pre>

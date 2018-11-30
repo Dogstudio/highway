@@ -18,6 +18,11 @@ import Basic from 'transitions/basic';
   const $menuToggler = document.querySelector('.js-toggle-menu');
   const $siteHeader = document.querySelector('.js-site-header');
 
+  if ('scrollRestoration' in history) {
+    // Back off, browser, I got this...
+    history.scrollRestoration = 'manual';
+  }
+
   $menuToggler.addEventListener('click', () => {
     $siteHeader.classList.toggle('is-open');
   });

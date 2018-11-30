@@ -207,7 +207,7 @@ h6 {
   content: '';
   display: inline-block;
   margin-left: 10px;
-  border-top: 4px solid var(--bold);
+  border-top: 4px solid #fff;
   border-right: 4px solid transparent;
   border-left: 4px solid transparent;
   vertical-align: middle;
@@ -219,19 +219,20 @@ h6 {
 
 .site-menu .menu-child {
   display: none;
-  border-bottom: 1px solid rgb(219, 223, 244);
 }
 
 .site-menu .menu-child a {
   padding-left: 20px;
+  background-image: url('../images/separator.png');
+  background-position: 1px 0;
+  background-repeat: no-repeat;
 }
 
 .site-menu a {
   display: block;
-  padding-top: 5px;
-  padding-bottom: 5px;
   color: #fff;
   font-weight: 700;
+  line-height: 34px;
 }
 
 .site-menu a:hover,
@@ -261,6 +262,7 @@ h6 {
 
 .site-content-inner {
   flex-grow: 1;
+  width: 100%;
   max-width: 800px;
   padding-left: 80px;
 }
@@ -508,7 +510,7 @@ h6 {
 }
 
 .demos-list li {
-  width: 50%;
+  width: 25%;
   margin: 0 0 20px;
   padding: 0 10px !important;
 }
@@ -591,13 +593,12 @@ code {
 }
 
 /** Responsive **/
-@media only screen and (min-width: 960px) {
+@media only screen and (min-width: 1120px) {
   .site-header-inner {
     position: fixed;
     top: 40px;
     left: 40px;
     width: 160px;
-    /* transform: translateX(-480px); */
   }
 
   .burger-menu {
@@ -605,7 +606,7 @@ code {
   }
 }
 
-@media only screen and (max-width: 959px) {
+@media only screen and (max-width: 1119px) {
   .site-header {
     position: fixed;
     top: 0;
@@ -615,9 +616,23 @@ code {
     padding-right: 0;
     padding-top: 13px;
     min-height: auto;
-    background-color: white;
-    border-bottom: 1px solid rgb(219, 223, 244);
+    background-color: var(--primary);
     z-index: 200;
+  }
+
+  .site-bottom {
+    margin-right: -30px;
+    margin-left: -30px;
+  }
+
+  .site-logo {
+    margin-bottom: 0;
+    padding-left: 30px;
+    justify-content: flex-start;
+  }
+
+  .site-logo img {
+    margin-right: 10px;
   }
 
   .burger-menu {
@@ -638,7 +653,7 @@ code {
     top: -3px;
     height: 2px;
     width: 20px;
-    background-color: var(--primary);
+    background-color: #fff;
     display: inline-block;
   }
 
@@ -649,7 +664,7 @@ code {
     width: 20px;
     position: absolute;
     left: 0;
-    background-color: var(--primary);
+    background-color: #fff;
   }
 
   .burger-menu-lines::before {
@@ -665,19 +680,43 @@ code {
     top: 100%;
     left: 0;
     width: 100%;
-    padding: 20px 30px;
-    background-color: white;
-    border-bottom: 1px solid rgb(219, 223, 244);
+    padding: 30px;
+    background-color: var(--primary);
+    border-top: 1px solid #333;
     display: none;
+  }
+
+  .site-menu .menu-item--slack {
+    position: relative;
+    width: 100%;
+    margin-top: 30px;
+  }
+
+  .site-menu .menu-item--slack a {
+    padding-top: 13px;
+  }
+
+  .site-menu .menu-child {
+    display: block;
   }
 
   .site-container {
     width: 100%;
   }
 
+  .site-content {
+    padding-top: 40px;
+    min-height: 0;
+  }
+
   .site-content-wrapper {
     width: 100%;
-    padding: 90px 30px 0;
+    padding: 70px 30px 0;
+  }
+
+  .site-content-inner {
+    padding-left: 0;
+    margin: 0 auto;
   }
 
   .github-banner {
@@ -713,6 +752,10 @@ code {
   .table-wrapper {
     overflow: auto;
     width: 100%;
+  }
+
+  .demos-list li {
+    width: 50%;
   }
 }
 
