@@ -14,8 +14,6 @@
 ## Table of Content
 
 - [**Guide**](https://dogstudio.github.io/highway/)
-- [**Examples**](https://dogstudio.github.io/highway/examples.html)
-- [**Demos**](https://dogstudio.github.io/highway/demos.html)
 - [**Support**](https://github.com/Dogstudio/highway#support)
 - [**Roadmap**](https://github.com/Dogstudio/highway#roadmap)
 - [**Releases**](https://github.com/Dogstudio/highway#releases)
