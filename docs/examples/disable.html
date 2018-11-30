@@ -24,9 +24,9 @@ next_label: Events
 <pre>
 <code class="html has-test">&lt;!-- File: index.html --&gt;
 &lt;!-- Link ignored by Highway because of the `target` attribute --&gt;
-&lt;a href="./" target="_blank"&gt;&lt;/a&gt;
+&lt;a href="path/to/page" target="_blank"&gt;&lt;/a&gt;
 </code>
-<a href="./" target="_blank" class="button button--full">Try me</a>
+<a href="{{ site.url }}/highway/disable.html" target="_blank" class="button button--full">Try me</a>
 </pre>
 
 <h2>Javascript</h2>
@@ -44,7 +44,7 @@ next_label: Events
 <pre>
 <code class="html has-test">&lt;!-- File: index.html --&gt;
 &lt;!-- Link ignored by Highway because of the `data-router-disabled` attribute --&gt;
-&lt;a href="./" data-router-disabled&gt;&lt;/a&gt;
+&lt;a href="path/to/page" data-router-disabled&gt;&lt;/a&gt;
 </code>
-<a href="./" data-router-disabled class="button button--full">Try me</a>
+<a href="{{ site.url }}/highway/disable.html" data-router-disabled class="button button--full">Try me</a>
 </pre>
