@@ -9,7 +9,7 @@ next_label: Events
 <h1>Disable Highway</h1>
 <p>All links on a page are automatically attached to Highway with <code>Highway.Core</code> to call transitions and create an AJAX navigation. Nevertheless some links have to be ignored or might need to be ignored by Highway for good reasons.</p>
 
-<h2>Cross-Origin</h2>
+<h2 id="cross-origin"><a href="#cross-origin">Cross-Origin</a></h2>
 <p>The links with a URL domain name that is different from the URL domain name of the website are all ignored by Highway for safety and to avoid cross-origin errors that would occur and that would break the navigation process.</p>
 <pre>
 <code class="html has-test">&lt;!-- File: index.html --&gt;
@@ -19,7 +19,7 @@ next_label: Events
 <a href="http://www.google.be" class="button button--full">Try me</a>
 </pre>
 
-<h2>Target</h2>
+<h2 id="target"><a href="#target">Target</a></h2>
 <p>The links with a <code>target</code> attribute are all ignored to keep the default browser behavior related to the value of the attribute. The <code>_blank</code> value will open the page in a new window or a new tab and the <code>_self</code> value will reload the page without transitions.</p>
 <pre>
 <code class="html has-test">&lt;!-- File: index.html --&gt;
@@ -29,7 +29,7 @@ next_label: Events
 <a href="{{ site.url }}/highway/examples/disable.html" target="_blank" class="button button--full">Try me</a>
 </pre>
 
-<h2>Javascript</h2>
+<h2 id="javascript"><a href="#javascript">Javascript</a></h2>
 <p>The links with Javascript inside the <code>href</code> attribute are all ignored to avoid errors that would break the navigation process. Nevertheless the Javascript inside the attribute is still executed so <strong>be careful</strong> with this kind of use case to avoid malicious code execution.</p>
 <pre>
 <code class="html has-test">&lt;!-- File: index.html --&gt;
@@ -39,7 +39,7 @@ next_label: Events
 <a href="javascript:alert('Hello World');" class="button button--full">Try me</a>
 </pre>
 
-<h2>Router Disabled</h2>
+<h2 id="router-disabled"><a href="#router-disabled">Router Disabled</a></h2>
 <p>The links can be programmatically ignored with the <code>data-router-disabled</code> attribute. This attribute will force the browser to reload the page with transitions.</p>
 <pre>
 <code class="html has-test">&lt;!-- File: index.html --&gt;

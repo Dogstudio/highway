@@ -9,7 +9,7 @@ next_label: Demos
 <h1>URL Parameters</h1>
 <p>The page might contains links using URL parameters which would change the content of a page for example to add additionnal informations, filter some content,... Highway manage those URL parameters depending on the URL structure.</p>
 
-<h2>Same Page</h2>
+<h2 id="same-page"><a href="#same-page">Same Page</a></h2>
 <p>The links to the same page with parameters page will trigger transitions to update the content of the page.<br> This might happen with filters on a page for example with which the page need to be reloaded to filter the content of the page.</p>
 <pre>
 <code class="html has-test">&lt;!-- File: index.html --&gt;
@@ -19,7 +19,7 @@ next_label: Demos
 <a href="?parameter=foo" class="button button--full">Try me</a>
 </pre>
 
-<h2>Other Pages</h2>
+<h2 id="other-pages"><a href="#other-pages">Other Pages</a></h2>
 <p>The links to other pages with parameters are going to be handled by Highway like it should normally do because with or without parameters the URLs are staying different from each other so transitions are required and are triggered by the links.</p>
 <pre>
 <code class="html has-test">&lt;!-- File: index.html --&gt;
