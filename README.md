@@ -3,6 +3,8 @@
 [![npm](https://img.shields.io/npm/v/@dogstudio/highway.svg)](https://www.npmjs.com/package/@dogstudio/highway)
 [![npm](https://img.shields.io/npm/dt/@dogstudio/highway.svg)](https://www.npmjs.com/package/@dogstudio/highway)
 [![GitHub issues](https://img.shields.io/github/issues-raw/Dogstudio/highway.svg)](https://github.com/Dogstudio/highway/issues)
+![NpmLicense](https://img.shields.io/npm/l/@dogstudio/highway.svg)
+
 
 <p align="center"><img src="https://i.imgur.com/SNk3YwV.png" alt="Banner" /></p>
 
