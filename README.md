@@ -2,7 +2,7 @@
 
 [![npm](https://img.shields.io/npm/v/@dogstudio/highway.svg)](https://www.npmjs.com/package/@dogstudio/highway)
 [![npm](https://img.shields.io/npm/dt/@dogstudio/highway.svg)](https://www.npmjs.com/package/@dogstudio/highway)
-[![Gzip Size](https://img.badgesize.io/https://unpkg.com/@dogstudio/highway@1.3.4/dist/highway.min.js?compression=gzip)](https://unpkg.com/@dogstudio/highway@1.3.4/dist/highway.min.js)
+[![Gzip Size](https://img.badgesize.io/https://unpkg.com/@dogstudio/highway@2.1.0/build/highway.min.js?compression=gzip)](https://unpkg.com/@dogstudio/highway@1.3.4/dist/highway.min.js)
 [![GitHub issues](https://img.shields.io/github/issues-raw/Dogstudio/highway.svg)](https://github.com/Dogstudio/highway/issues)
 
 <p align="center"><img src="https://i.imgur.com/SNk3YwV.png" alt="Banner" /></p>
