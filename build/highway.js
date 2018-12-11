@@ -1,4 +1,14 @@
-define("Highway", [], function() { return /******/ (function(modules) { // webpackBootstrap
+(function webpackUniversalModuleDefinition(root, factory) {
+	if(typeof exports === 'object' && typeof module === 'object')
+		module.exports = factory();
+	else if(typeof define === 'function' && define.amd)
+		define("Highway", [], factory);
+	else if(typeof exports === 'object')
+		exports["Highway"] = factory();
+	else
+		root["Highway"] = factory();
+})(window, function() {
+return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
 /******/
@@ -2772,7 +2782,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * @author Anthony Du Pont <bulldog@dogstudio.co>
  */
 // Highway Version
-console.log('Highway v2.1.0'); // Export Highway
+console.log('Highway v2.1.1'); // Export Highway
 
 var _default = {
   Core: _core.default,
@@ -4661,4 +4671,5 @@ function () {
 exports.default = Transition;
 
 /***/ })
-/******/ ])});;
+/******/ ]);
+});

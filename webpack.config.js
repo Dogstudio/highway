@@ -19,7 +19,8 @@ module.exports = {
     path: path.resolve(__dirname, 'build'),
     filename: '[name].js',
     library: 'Highway',
-    libraryTarget: 'amd'
+    libraryTarget: 'umd',
+    umdNamedDefine: true
   },
   module: {
     rules: [
