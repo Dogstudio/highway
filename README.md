@@ -43,6 +43,7 @@
 - :sparkles: Improve `Core.attach(links)` method
 - :sparkles: Improve `Core.detach(links)` method
 - :art: Invert `from` and `to` parameters of the `NAVIGATE_END` event
+- :bug: Fix [issue #44](https://github.com/Dogstudio/highway/issues/44)
 
 #### 2.0.x
 
