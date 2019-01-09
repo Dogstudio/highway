@@ -39,7 +39,7 @@ H.on('NAVIGATE_END', (from, to, location) => {
     // eslint-disable-next-line
     gtag('config', 'UA-XXXXXXXXX-X', {
       'page_path': location.pathname,
-      'page_title': to.properties.page.title,
+      'page_title': to.page.title,
       'page_location': location.href
     });
   }
