@@ -109,6 +109,10 @@ h6 {
 }
 
 /** Structure **/
+.github-banner {
+  z-index: 999;
+}
+
 .site-container {
   display: flex;
   flex-wrap: wrap;
