@@ -37,8 +37,10 @@
 ## Releases
 #### 2.1.x
 
+- :tada: Add `trigger` information in transitions and events
 - :tada: Add contextual transitions
 - :tada: Add overlapping transitions
+- :sparkles: Improve transitions and events parameters for destructuring
 - :sparkles: Improve [documentation website](https://dogstudio.github.io/highway/)
 - :sparkles: Improve `Core.redirect(href, transition)` method
 - :sparkles: Improve `Core.attach(links)` method
