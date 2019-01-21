@@ -22,9 +22,9 @@ export default class Transition {
    * Add the view in DOM and play an `in` transition if one is defined.
    *
    * @return {object} Promise
-   * @param {(object|boolean)} contextual - If the transition is changing on the fly
+   * @param {object} datas - Set of datas
    */
-  show(contextual) {
+  show({ trigger, contextual }) {
     // Get View
     const to = this.wrap.lastElementChild;
     const from = this.wrap.firstElementChild;
@@ -40,7 +40,7 @@ export default class Transition {
         to.removeAttribute('data-transition-out', this.name);
 
         // Call transition attached to the view.
-        this.in && this.in(from, to, resolve);
+        this.in && this.in({ to, from, trigger, done: resolve });
 
       } else {
         // Change Attributes
@@ -48,7 +48,7 @@ export default class Transition {
         to.removeAttribute('data-transition-out', contextual.name);
 
         // Call the contextual transition.
-        contextual.in && contextual.in(from, to, resolve);
+        contextual.in && contextual.in({ to, from, trigger, done: resolve });
 
       }
     });
@@ -58,9 +58,9 @@ export default class Transition {
    * Play an `out` transition if one is defined and remove the view from DOM.
    *
    * @return {object} Promise
-   * @param {(object|boolean)} contextual - If the transition is changing on the fly
+   * @param {object} datas - Set of datas
    */
-  hide(contextual) {
+  hide({ trigger, contextual }) {
     // Get view
     const from = this.wrap.firstElementChild;
 
@@ -75,7 +75,7 @@ export default class Transition {
         from.removeAttribute('data-transition-in', this.name);
 
         // Call the transition attached to the view.
-        this.out && this.out(from, resolve);
+        this.out && this.out({ from, trigger, done: resolve });
 
       } else {
         // Change Attributes
@@ -83,7 +83,7 @@ export default class Transition {
         from.removeAttribute('data-transition-in', contextual.name);
 
         // Call the contextual transition.
-        contextual.out && contextual.out(from, resolve);
+        contextual.out && contextual.out({ from, trigger, done: resolve });
 
       }
     });

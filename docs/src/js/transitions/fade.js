@@ -6,7 +6,9 @@ import Tween from 'gsap';
 
 // Fade
 class Fade extends Highway.Transition {
-  in(from, to, done) {
+  in({ from, to, trigger, done }) {
+    console.log(trigger);
+
     // Reset Scroll
     window.scrollTo(0, 0);
 
@@ -23,7 +25,9 @@ class Fade extends Highway.Transition {
     );
   }
 
-  out(from, done) {
+  out({ from, trigger, done }) {
+    console.log(trigger);
+
     // Animation
     Tween.fromTo(from, 0.5,
       { opacity: 1 },

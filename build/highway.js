@@ -2610,13 +2610,13 @@ function () {
     /**
      * Add the view in DOM and play an `in` transition if one is defined.
      *
-     * @param {(object|boolean)} contextual - If the transition is changing on the fly
+     * @param {object} datas - Set of datas
      * @return {object} Promise
      */
 
   }, {
     key: "show",
-    value: function show(contextual) {
+    value: function show(datas) {
       var _this = this;
 
       return new Promise(
@@ -2646,7 +2646,7 @@ function () {
                   }
 
                   _context.next = 6;
-                  return _this.Transition.show(contextual);
+                  return _this.Transition.show(datas);
 
                 case 6:
                   // The `onEnterCompleted` method if set in your custom renderer is called
@@ -2672,13 +2672,13 @@ function () {
     /**
      * Play an `out` transition if one is defined and remove the view from DOM.
      *
-     * @param {(object|boolean)} contextual - If the transition is changing on the fly
+     * @param {object} datas - Set of datas
      * @return {object} Promise
      */
 
   }, {
     key: "hide",
-    value: function hide(contextual) {
+    value: function hide(datas) {
       var _this2 = this;
 
       return new Promise(
@@ -2704,7 +2704,7 @@ function () {
                   }
 
                   _context2.next = 5;
-                  return _this2.Transition.hide(contextual);
+                  return _this2.Transition.hide(datas);
 
                 case 5:
                   // The `onLeaveCompleted` method if set in your custom renderer is called
@@ -2886,7 +2886,9 @@ function (_Emitter) {
     _this.properties = _this.Helpers.getProperties(document.cloneNode(true)); // Status variables.
 
     _this.popping = false;
-    _this.running = false; // Cache
+    _this.running = false; // Trigger Element
+
+    _this.trigger = null; // Cache
 
     _this.cache = new Map();
 
@@ -2995,7 +2997,7 @@ function (_Emitter) {
         var contextual = e.currentTarget.hasAttribute('data-transition') ? e.currentTarget.dataset.transition : false; // We have to redirect to our `href` using Highway
         // There we set up the contextual transition, so this and Core.redirect can pass in either transition name or false
 
-        this.redirect(e.currentTarget.href, contextual);
+        this.redirect(e.currentTarget.href, contextual, e.currentTarget);
       }
     }
     /**
@@ -3003,17 +3005,20 @@ function (_Emitter) {
      *
      * @param {string} href - URL
      * @param {(object|boolean)} contextual - If the transition is changing on the fly
+     * @param {(object|string)} trigger - The trigger element or a string
      */
 
   }, {
     key: "redirect",
     value: function redirect(href) {
       var contextual = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
-
-      // When our URL is different from the current location `href` and no other
+      var trigger = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 'script';
+      // Save Trigger Element
+      this.trigger = trigger; // When our URL is different from the current location `href` and no other
       // navigation is running for the moment we are allowed to start a new one.
       // But if the URL containes anchors or if the origin is different we force
       // the hard reloading of the page to avoid serious errors.
+
       if (!this.running && href !== this.location.href) {
         // We temporary store the future location.
         var location = this.Helpers.getLocation(href); // Set contextual transition values if applicable
@@ -3043,7 +3048,9 @@ function (_Emitter) {
   }, {
     key: "popState",
     value: function popState() {
-      // A contextual transition only effects the transition when a certain link is clicked, not when navigating via browser buttons
+      // Save Trigger Element
+      this.trigger = 'popstate'; // A contextual transition only effects the transition when a certain link is clicked, not when navigating via browser buttons
+
       this.Contextual = false; // We temporary store the future location.
 
       var location = this.Helpers.getLocation(window.location.href); // When users navigate using the browser buttons we check if the locations
@@ -3139,7 +3146,7 @@ function (_Emitter) {
       var _beforeFetch = _asyncToGenerator(
       /*#__PURE__*/
       regeneratorRuntime.mark(function _callee2() {
-        var results;
+        var datas, results;
         return regeneratorRuntime.wrap(function _callee2$(_context2) {
           while (1) {
             switch (_context2.prev = _context2.next) {
@@ -3153,31 +3160,40 @@ function (_Emitter) {
                 // for developers that want to do stuffs when an elligible link is clicked.
 
                 this.emit('NAVIGATE_OUT', {
-                  page: this.From.properties.page,
-                  view: this.From.properties.view
-                }, this.location); // We have to verify our cache in order to save some HTTPRequests. If we
+                  from: {
+                    page: this.From.properties.page,
+                    view: this.From.properties.view
+                  },
+                  trigger: this.trigger,
+                  location: this.location
+                }); // Transition Datas
+
+                datas = {
+                  trigger: this.trigger,
+                  contextual: this.Contextual
+                }; // We have to verify our cache in order to save some HTTPRequests. If we
                 // don't use any caching system everytime we would come back to a page we
                 // already saw we will have to fetch it again and it's pointless.
 
                 if (!this.cache.has(this.location.href)) {
-                  _context2.next = 9;
+                  _context2.next = 10;
                   break;
                 }
 
-                _context2.next = 6;
-                return this.From.hide(this.Contextual);
+                _context2.next = 7;
+                return this.From.hide(datas);
 
-              case 6:
+              case 7:
                 // Get Properties
                 this.properties = this.cache.get(this.location.href);
-                _context2.next = 14;
+                _context2.next = 15;
                 break;
 
-              case 9:
-                _context2.next = 11;
-                return Promise.all([this.fetch(), this.From.hide(this.Contextual)]);
+              case 10:
+                _context2.next = 12;
+                return Promise.all([this.fetch(), this.From.hide(datas)]);
 
-              case 11:
+              case 12:
                 results = _context2.sent;
                 // Now everything went fine we can extract the properties of the view we
                 // successfully fetched and keep going.
@@ -3186,10 +3202,10 @@ function (_Emitter) {
 
                 this.cache.set(this.location.href, this.properties);
 
-              case 14:
+              case 15:
                 this.afterFetch();
 
-              case 15:
+              case 16:
               case "end":
                 return _context2.stop();
             }
@@ -3226,13 +3242,20 @@ function (_Emitter) {
                 // for developers who want to make stuff before the view is visible.
 
                 this.emit('NAVIGATE_IN', {
-                  page: this.To.properties.page,
-                  view: this.To.wrap.lastElementChild
-                }, this.location); // We wait for the view transition to be over before resetting some variables
+                  to: {
+                    page: this.To.properties.page,
+                    view: this.To.wrap.lastElementChild
+                  },
+                  trigger: this.trigger,
+                  location: this.location
+                }); // We wait for the view transition to be over before resetting some variables
                 // and reattaching the events to all the new elligible links in our DOM.
 
                 _context3.next = 8;
-                return this.To.show(this.Contextual);
+                return this.To.show({
+                  trigger: this.trigger,
+                  contextual: this.Contextual
+                });
 
               case 8:
                 this.popping = false;
@@ -3246,16 +3269,23 @@ function (_Emitter) {
                 // make stuff when the navigation has ended.
 
                 this.emit('NAVIGATE_END', {
-                  page: this.From.properties.page,
-                  view: this.From.properties.view
-                }, {
-                  page: this.To.properties.page,
-                  view: this.To.wrap.lastElementChild
-                }, this.location); // Last but not least we swap the From and To renderers for future navigations.
+                  to: {
+                    page: this.To.properties.page,
+                    view: this.To.wrap.lastElementChild
+                  },
+                  from: {
+                    page: this.From.properties.page,
+                    view: this.From.properties.view
+                  },
+                  trigger: this.trigger,
+                  location: this.location
+                }); // Last but not least we swap the From and To renderers for future navigations.
 
-                this.From = this.To;
+                this.From = this.To; // Reset Trigger
 
-              case 15:
+                this.trigger = null;
+
+              case 16:
               case "end":
                 return _context3.stop();
             }
@@ -4597,15 +4627,17 @@ function () {
    * Add the view in DOM and play an `in` transition if one is defined.
    *
    * @return {object} Promise
-   * @param {(object|boolean)} contextual - If the transition is changing on the fly
+   * @param {object} datas - Set of datas
    */
 
 
   _createClass(Transition, [{
     key: "show",
-    value: function show(contextual) {
+    value: function show(_ref) {
       var _this = this;
 
+      var trigger = _ref.trigger,
+          contextual = _ref.contextual;
       // Get View
       var to = this.wrap.lastElementChild;
       var from = this.wrap.firstElementChild; // Promise
@@ -4619,13 +4651,23 @@ function () {
           to.setAttribute('data-transition-in', _this.name);
           to.removeAttribute('data-transition-out', _this.name); // Call transition attached to the view.
 
-          _this.in && _this.in(from, to, resolve);
+          _this.in && _this.in({
+            to: to,
+            from: from,
+            trigger: trigger,
+            done: resolve
+          });
         } else {
           // Change Attributes
           to.setAttribute('data-transition-in', contextual.name);
           to.removeAttribute('data-transition-out', contextual.name); // Call the contextual transition.
 
-          contextual.in && contextual.in(from, to, resolve);
+          contextual.in && contextual.in({
+            to: to,
+            from: from,
+            trigger: trigger,
+            done: resolve
+          });
         }
       });
     }
@@ -4633,14 +4675,16 @@ function () {
      * Play an `out` transition if one is defined and remove the view from DOM.
      *
      * @return {object} Promise
-     * @param {(object|boolean)} contextual - If the transition is changing on the fly
+     * @param {object} datas - Set of datas
      */
 
   }, {
     key: "hide",
-    value: function hide(contextual) {
+    value: function hide(_ref2) {
       var _this2 = this;
 
+      var trigger = _ref2.trigger,
+          contextual = _ref2.contextual;
       // Get view
       var from = this.wrap.firstElementChild; // Promise
 
@@ -4653,13 +4697,21 @@ function () {
           from.setAttribute('data-transition-out', _this2.name);
           from.removeAttribute('data-transition-in', _this2.name); // Call the transition attached to the view.
 
-          _this2.out && _this2.out(from, resolve);
+          _this2.out && _this2.out({
+            from: from,
+            trigger: trigger,
+            done: resolve
+          });
         } else {
           // Change Attributes
           from.setAttribute('data-transition-out', contextual.name);
           from.removeAttribute('data-transition-in', contextual.name); // Call the contextual transition.
 
-          contextual.out && contextual.out(from, resolve);
+          contextual.out && contextual.out({
+            from: from,
+            trigger: trigger,
+            done: resolve
+          });
         }
       });
     }

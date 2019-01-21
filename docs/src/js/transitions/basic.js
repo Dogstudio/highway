@@ -6,7 +6,7 @@ import Tween from 'gsap';
 
 // Basic
 class Basic extends Highway.Transition {
-  in(from, to, done) {
+  in({ from, to, done }) {
     // Reset Scroll
     window.scrollTo(0, 0);
 
@@ -20,7 +20,7 @@ class Basic extends Highway.Transition {
     done();
   }
 
-  out(from, done) {
+  out({ from, done }) {
     // Animation
     Tween.set(from, { opacity: 0 });
 

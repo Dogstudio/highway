@@ -6,7 +6,7 @@ import Tween from 'gsap';
 
 // Fade
 class Overlap extends Highway.Transition {
-  in(from, to, done) {
+  in({ from, to, done }) {
     // Reset Scroll
     window.scrollTo(0, 0);
 
@@ -35,7 +35,7 @@ class Overlap extends Highway.Transition {
     );
   }
 
-  out(from, done) {
+  out({ done }) {
     done();
   }
 }

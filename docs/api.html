@@ -10,7 +10,7 @@ next_label: Examples
 
 <h2>Hooks/Methods</h2>
 <h3 id="renderers"><a href="#renderers">Renderers</a></h3>
-<p>Renderers have a number of hooks/methods available to structure them and call pieces of Javascript at key moments on navigation. Read more of the <a href="{{ site.url }}/highway/get-started.html#renderers">documentation</a> about renderers.</p>
+<p>Renderers have a number of hooks/methods available to structure them and call pieces of Javascript at key moments on navigation. Read more of the <a href="{{ site.url }}{{ site.pathname }}get-started.html#renderers">documentation</a> about renderers.</p>
 
 <div class="table-wrapper">
   <table cellpadding="0" cellspacing="0">
@@ -38,40 +38,45 @@ next_label: Examples
 </div>
 
 <h3 id="transitions"><a href="#transitions">Transitions</a></h3>
-<p>Transitions have a number of hooks/methods available to manage which animations should be run to display a page and which one should be run to hide it. Read more of the <a href="{{ site.url }}/highway/get-started.html#transitions">documentation</a> about transitions.</p>
+<p>Transitions have a number of hooks/methods available to manage which animations should be run to display a page and which one should be run to hide it. Read more of the <a href="{{ site.url }}{{ site.pathname }}get-started.html#transitions">documentation</a> about transitions.</p>
 
 <div class="table-wrapper">
   <table cellpadding="0" cellspacing="0">
     <tr>
-      <th width="25%">Methods</th>
+      <th width="30%">Methods</th>
       <th width="25%">Method Parameters</th>
       <th>Details</th>
     </tr>
     <tr>
-      <td><code>in(from, to, done)</code></td>
+      <td><code>in({ from, to, trigger, done })</code></td>
       <td>
         <code>to | &lt;Node&gt;</code><br>
         <code>from | &lt;Node&gt;</code><br>
-        <code>done | &lt;Callback&gt;</code>
+        <code>done | &lt;Callback&gt;</code><br>
+        <code>trigger | &lt;Node|String&gt;</code>
       </td>
       <td>
-        <p>This method is called to display the <code>data-router-view</code> in the <code>to</code> parameter and, for overlaping transitions only, to hide the <code>data-router-view</code> in the <code>from</code> parameter.</p>
-        <p>Once the animation is over the <code>done()</code> callback <strong>has to be called</strong> to continue the navigation process.</p>
+        <p>This method is called to display the <code>data-router-view</code> under the <code>to</code> parameter and, for overlaping transitions only, to hide the <code>data-router-view</code> under the <code>from</code> parameter. Once the animation is over the <code>done()</code> callback <strong>has to be called</strong> to continue the navigation process.</p>
+        <p>The <code>trigger</code> parameter contains either the link triggering the transition, <code>popstate</code> when the back/forward button of the browser triggers the transition or <code>script</code> for programmatical redirection.</p>
       </td>
     </tr>
     <tr>
-      <td><code>out(from, done)</code></td>
+      <td><code>out({ from, trigger, done })</code></td>
       <td>
         <code>from | &lt;Node&gt;</code><br>
-        <code>done | &lt;Callback&gt;</code>
+        <code>done | &lt;Callback&gt;</code><br>
+        <code>trigger | &lt;Node|String&gt;</code>
       </td>
-      <td>This method is called to hide the <code>data-router-view</code> in the <code>from</code> parameter. Once the animation is over the <code>done()</code> callback <strong>has to be called</strong> to continue the navigation process.</td>
+      <td>
+        <p>This method is called to hide the <code>data-router-view</code> under the <code>from</code> parameter. Once the animation is over the <code>done()</code> callback <strong>has to be called</strong> to continue the navigation process.</p>
+        <p>The <code>trigger</code> parameter contains either the link triggering the transition, <code>popstate</code> when the back/forward button of the browser triggers the transition or <code>script</code> for programmatical redirection.</p>
+      </td>
     </tr>
   </table>
 </div>
 
 <h3 id="core"><a href="#core">Core</a></h3>
-<p><code>Highway.Core</code> comes with some built-in and useful methods developers can have access to once it has been called with <code>new Highway.Core()</code>. Read more of the <a href="{{ site.url }}/highway/get-started.html#core">documentation</a> about the core of Highway.</p>
+<p><code>Highway.Core</code> comes with some built-in and useful methods developers can have access to once it has been called with <code>new Highway.Core()</code>. Read more of the <a href="{{ site.url }}{{ site.pathname }}get-started.html#core">documentation</a> about the core of Highway.</p>
 
 <div class="table-wrapper">
   <table cellpadding="0" cellspacing="0">
@@ -114,26 +119,29 @@ next_label: Examples
       <td><code>NAVIGATE_IN</code></td>
       <td>
         <code>to | &lt;Node&gt;</code><br>
+        <code>trigger | &lt;Node|String&gt;</code><br>
         <code>location | &lt;Object&gt;</code>
       </td>
-      <td>This event is sent everytime a <code>data-router-view</code> is added to the DOM Tree. The <code>data-router-view</code> is available in the <code>to</code> parameter of the callback method. The <code>location</code> parameter of the callback method is an <code>&lt;Object&gt;</code> with all the informations about the page URL.</td>
+      <td>This event is sent everytime a <code>data-router-view</code> is added to the DOM Tree. The callback method of the event gets an <code>Object</code> as a parameter that contains the <code>data-router-view</code> under the <code>to</code> key, the triggered element under the <code>trigger</code> key and all the URL informations under the <code>location</code> key.</td>
     </tr>
     <tr>
       <td><code>NAVIGATE_OUT</code></td>
       <td>
         <code>from | &lt;Node&gt;</code><br>
+        <code>trigger | &lt;Node|String&gt;</code><br>
         <code>location | &lt;Object&gt;</code>
       </td>
-      <td>This event is sent everytime the <code>out()</code> method of a transition is run to hide a <code>data-router-view</code>. The <code>data-router-view</code> is available in the <code>from</code> parameter of the callback method. The <code>location</code> parameter of the callback method is an <code>&lt;Object&gt;</code> with all the informations about the page URL.</td>
+      <td>This event is sent everytime the <code>out()</code> method of a transition is run to hide a <code>data-router-view</code>. The callback method of the event gets an <code>Object</code> as a parameter that contains the <code>data-router-view</code> under the <code>from</code> key, the triggered element under the <code>trigger</code> key and all the URL informations under the <code>location</code> key.</td>
     </tr>
     <tr>
       <td><code>NAVIGATE_END</code></td>
       <td>
-        <code>from | &lt;Node&gt;</code><br>
         <code>to | &lt;Node&gt;</code><br>
+        <code>from | &lt;Node&gt;</code><br>
+        <code>trigger | &lt;Node|String&gt;</code><br>
         <code>location | &lt;Object&gt;</code>
       </td>
-      <td>This event is sent everytime the <code>done()</code> method is called in the <code>in()</code> method of a transition. The new <code>data-router-view</code> is available in the <code>to</code> parameter and the old <code>data-router-view</code> is available in the <code>from</code> parameter of the callback method. The <code>location</code> parameter of the callback method is an <code>&lt;Object&gt;</code> with all the informations about the page URL.</td>
+      <td>This event is sent everytime the <code>done()</code> method is called in the <code>in()</code> method of a transition. The callback method of the event gets an <code>Object</code> as a parameter that contains the new <code>data-router-view</code> under the <code>to</code> key, the old <code>data-router-view</code> under the <code>from</code> key, the triggered element under the <code>trigger</code> key and all the URL informations under the <code>location</code> key.</td>
     </tr>
   </table>
 </div>

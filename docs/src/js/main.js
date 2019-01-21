@@ -46,7 +46,7 @@ import Basic from 'transitions/basic';
   // Events
   const links = document.querySelectorAll('.site-menu a');
 
-  H.on('NAVIGATE_IN', (to, location) => {
+  H.on('NAVIGATE_IN', ({ location }) => {
     // Check Active Link
     for (let i = 0; i < links.length; i++) {
       const link = links[i];
@@ -61,7 +61,7 @@ import Basic from 'transitions/basic';
     }
   });
 
-  H.on('NAVIGATE_END', (from, to, location) => {
+  H.on('NAVIGATE_END', ({ to, location }) => {
     // Check Anchor
     if (location.anchor) {
       const el = document.querySelector(location.anchor);
@@ -82,7 +82,7 @@ import Basic from 'transitions/basic';
     }
   });
 
-  H.on('NAVIGATE_OUT', (from, location) => {
+  H.on('NAVIGATE_OUT', () => {
     // Close menu
     $siteHeader.classList.remove('is-open');
   });

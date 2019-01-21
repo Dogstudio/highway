@@ -14,19 +14,19 @@ const H = new Highway.Core();
 
 // Listen the `NAVIGATE_IN` event
 // This event is sent everytime a `data-router-view` is added to the DOM Tree
-H.on('NAVIGATE_IN', (to, location) => {
+H.on('NAVIGATE_IN', ({ to, trigger, location }) => {
   // [...]
 });
 
 // Listen the `NAVIGATE_OUT` event
 // This event is sent everytime the `out()` method of a transition is run to hide a `data-router-view`
-H.on('NAVIGATE_OUT', (from, location) => {
+H.on('NAVIGATE_OUT', ({ from, trigger, location }) => {
   // [...]
 });
 
 // Listen the `NAVIGATE_END` event
 // This event is sent everytime the `done()` method is called in the `in()` method of a transition
-H.on('NAVIGATE_END', (from, to, location) => {
+H.on('NAVIGATE_END', ({ from, to, trigger, location }) => {
   // [...]
 });
 </code>

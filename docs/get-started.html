@@ -8,7 +8,7 @@ next_label: API Reference
 
 <h1>Get started</h1>
 <h2 id="core"><a href="#core">Core</a></h2>
-<p>The core of Highway called <code>Highway.Core</code> works as a bridge to relate pages to <a href="{{ site.url }}/highway/get-started.html#renderers">renderers</a> and <a href="{{ site.url }}/highway/get-started.html#transitions">transitions</a>.<br> It has to be <strong>called once</strong> to enable Highway and it takes an <code>&lt;Object&gt;</code> of options.</p>
+<p>The core of Highway called <code>Highway.Core</code> works as a bridge to relate pages to <a href="{{ site.url }}{{ site.pathname }}get-started.html#renderers">renderers</a> and <a href="{{ site.url }}{{ site.pathname }}get-started.html#transitions">transitions</a>.<br> It has to be <strong>called once</strong> to enable Highway and it takes an <code>&lt;Object&gt;</code> of options.</p>
 
 <pre>
 <code class="js">// File: main.js
@@ -24,7 +24,7 @@ const H = new Highway.Core({[...]});
 <h2 id="html-structure"><a href="#html-structure">HTML Structure</a></h2>
 <p>Highway requires a <code>data-router-wrapper</code> and a <code>data-router-view</code> element.<br> The <code>data-router-view</code> has to be the <strong>only child element</strong> of the <code>data-router-wrapper</code>.</p>
 <p>Highway will look inside the <code>data-router-wrapper</code> for a <code>data-router-view</code> to update the content.<br> Everything outside the <code>data-router-wrapper</code> will stay the same on navigation.</p>
-<p>Finally the <code>data-router-view</code> can be labelled to relate the page to a <a href="{{ site.url }}/highway/get-started.html#renderers">renderer</a> or to a <a href="{{ site.url }}/highway/get-started.html#transitions">transition</a>.</p>
+<p>Finally the <code>data-router-view</code> can be labelled to relate the page to a <a href="{{ site.url }}{{ site.pathname }}get-started.html#renderers">renderer</a> or to a <a href="{{ site.url }}{{ site.pathname }}get-started.html#transitions">transition</a>.</p>
 
 <pre>
 <code class="html">&lt;!-- File: index.html --&gt;
@@ -106,12 +106,13 @@ const H = new Highway.Core({
     <li><code>out</code>: This method should contain the animation to hide a <code>data-router-view</code>.</li>
 </ul>
 
-<p>Parameters can be used with these hooks/methods to animate pages and run everything smoothly:</p>
+<p>These hooks/methods get an <code>Object</code> as a parameter with datas that can be used to animate pages and run everything smoothly:</p>
 
 <ul>
     <li><code>to</code>: The <code>data-router-view</code> to display.</li>
     <li><code>from</code>: The <code>data-router-view</code> to hide.</li>
     <li><code>done</code>: The required callback method that <strong>has to be called</strong> once the animation is done.</li>
+    <li><code>trigger</code>: The triggered link, <code>popstate</code> or <code>script</code>.</li>
 </ul>
 
 <pre>
@@ -121,11 +122,11 @@ import Highway from '@dogstudio/highway';
 
 class CustomTransition extends Highway.Transition {
   // Built-in methods
-  in(from, to, done) {
+  in({ from, to, trigger, done }) {
     // [...]
   }
 
-  out(from, done) {
+  out({ from, trigger, done }) {
     // [...]
   }
 }

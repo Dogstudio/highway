@@ -34,6 +34,9 @@ export default class Core extends Emitter {
     this.popping = false;
     this.running = false;
 
+    // Trigger Element
+    this.trigger = null;
+
     // Cache
     this.cache = new Map();
     this.cache.set(this.location.href, this.properties);
@@ -96,7 +99,7 @@ export default class Core extends Emitter {
 
       // We have to redirect to our `href` using Highway
       // There we set up the contextual transition, so this and Core.redirect can pass in either transition name or false
-      this.redirect(e.currentTarget.href, contextual);
+      this.redirect(e.currentTarget.href, contextual, e.currentTarget);
     }
   }
 
@@ -105,8 +108,12 @@ export default class Core extends Emitter {
    *
    * @param {string} href - URL
    * @param {(object|boolean)} contextual - If the transition is changing on the fly
+   * @param {(object|string)} trigger - The trigger element or a string
    */
-  redirect(href, contextual = false) {
+  redirect(href, contextual = false, trigger = 'script') {
+    // Save Trigger Element
+    this.trigger = trigger;
+
     // When our URL is different from the current location `href` and no other
     // navigation is running for the moment we are allowed to start a new one.
     // But if the URL containes anchors or if the origin is different we force
@@ -142,6 +149,9 @@ export default class Core extends Emitter {
    * Watch history entry changes.
    */
   popState() {
+    // Save Trigger Element
+    this.trigger = 'popstate';
+
     // A contextual transition only effects the transition when a certain link is clicked, not when navigating via browser buttons
     this.Contextual = false;
 
@@ -211,16 +221,26 @@ export default class Core extends Emitter {
     // We emit an event right before hiding the current view to create a hook
     // for developers that want to do stuffs when an elligible link is clicked.
     this.emit('NAVIGATE_OUT', {
-      page: this.From.properties.page,
-      view: this.From.properties.view
-    }, this.location);
+      from: {
+        page: this.From.properties.page,
+        view: this.From.properties.view
+      },
+      trigger: this.trigger,
+      location: this.location
+    });
+
+    // Transition Datas
+    const datas = {
+      trigger: this.trigger,
+      contextual: this.Contextual
+    };
 
     // We have to verify our cache in order to save some HTTPRequests. If we
     // don't use any caching system everytime we would come back to a page we
     // already saw we will have to fetch it again and it's pointless.
     if (this.cache.has(this.location.href)) {
       // We wait until the view is hidden.
-      await this.From.hide(this.Contextual);
+      await this.From.hide(datas);
 
       // Get Properties
       this.properties = this.cache.get(this.location.href);
@@ -229,7 +249,7 @@ export default class Core extends Emitter {
       // We wait till all our Promises are resolved.
       const results = await Promise.all([
         this.fetch(),
-        this.From.hide(this.Contextual)
+        this.From.hide(datas)
       ]);
 
       // Now everything went fine we can extract the properties of the view we
@@ -259,13 +279,20 @@ export default class Core extends Emitter {
     // We then emit a now event right before the view is shown to create a hook
     // for developers who want to make stuff before the view is visible.
     this.emit('NAVIGATE_IN', {
-      page: this.To.properties.page,
-      view: this.To.wrap.lastElementChild
-    }, this.location);
+      to: {
+        page: this.To.properties.page,
+        view: this.To.wrap.lastElementChild
+      },
+      trigger: this.trigger,
+      location: this.location
+    });
 
     // We wait for the view transition to be over before resetting some variables
     // and reattaching the events to all the new elligible links in our DOM.
-    await this.To.show(this.Contextual);
+    await this.To.show({
+      trigger: this.trigger,
+      contextual: this.Contextual
+    });
 
     this.popping = false;
     this.running = false;
@@ -282,15 +309,22 @@ export default class Core extends Emitter {
     // Finally we emit a last event to create a hook for developers who want to
     // make stuff when the navigation has ended.
     this.emit('NAVIGATE_END', {
-      page: this.From.properties.page,
-      view: this.From.properties.view
-    },
-    {
-      page: this.To.properties.page,
-      view: this.To.wrap.lastElementChild
-    }, this.location);
+      to: {
+        page: this.To.properties.page,
+        view: this.To.wrap.lastElementChild
+      },
+      from: {
+        page: this.From.properties.page,
+        view: this.From.properties.view
+      },
+      trigger: this.trigger,
+      location: this.location
+    });
 
     // Last but not least we swap the From and To renderers for future navigations.
     this.From = this.To;
+
+    // Reset Trigger
+    this.trigger = null;
   }
 }
