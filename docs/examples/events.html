@@ -26,7 +26,7 @@ H.on('NAVIGATE_OUT', ({ from, trigger, location }) => {
 
 // Listen the `NAVIGATE_END` event
 // This event is sent everytime the `done()` method is called in the `in()` method of a transition
-H.on('NAVIGATE_END', ({ from, to, trigger, location }) => {
+H.on('NAVIGATE_END', ({ to, from, trigger, location }) => {
   // [...]
 });
 </code>
