@@ -40,6 +40,7 @@
 - :tada: Add `trigger` information in transitions and events
 - :tada: Add contextual transitions
 - :tada: Add overlapping transitions
+- :sparkles: Add [Prefetch](https://dogstudio.github.io/highway/examples/prefetch.html) example to documentation
 - :sparkles: Improve transitions and events parameters for destructuring
 - :sparkles: Improve [documentation website](https://dogstudio.github.io/highway/)
 - :sparkles: Improve `Core.redirect(href, transition)` method
