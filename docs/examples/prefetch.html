@@ -30,7 +30,7 @@ const H = new Highway.Core();
 H.on('NAVIGATE_END', (from, to, location) => {
   // Call Quicklink
   Quicklink({
-    el: to
+    el: to.view
   });
 });
 </code>
