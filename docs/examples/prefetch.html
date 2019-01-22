@@ -1,0 +1,41 @@
+---
+slug: examples
+title: Highway - Examples | Prefetch
+layout: default
+next_url: demos.html
+next_label: Demos
+---
+
+<h1>Prefetch</h1>
+<p>For performance purpose links on a page could be prefetched to speed up the HTTP Requests and get almost instantaneous responses from the server. Nevertheless this behavior has to be used with parsimony because it might result in useless HTTP Requests.</p>
+<p>Instead of adding more complexity to Highway and provide a prefetching feature it's better to rest on what already exists and what is already working pretty well. Unfortunately smart and efficient solutions are quite rare for now but the Google Chrome Lab team tried to give a solution called <a href="https://github.com/GoogleChromeLabs/quicklink" target="_blank">Quicklink</a>.</p>
+<p>Thanks to Highway flexibility it's quite simple to link both tools together using events:</p>
+
+<pre>
+<code class="js">// Import Highway
+import Highway from '@dogstudio/highway';
+
+// Import Quicklink
+// See: https://github.com/GoogleChromeLabs/quicklink
+import Quicklink from 'dist/quicklink.mjs';
+
+// Import Polyfills
+// See: https://github.com/w3c/IntersectionObserver/tree/master/polyfill
+import 'intersection-observer';
+
+// Call Highway.Core
+const H = new Highway.Core();
+
+// Listen Events
+H.on('NAVIGATE_END', (from, to, location) => {
+  // Call Quicklink
+  Quicklink({
+    el: to
+  });
+});
+</code>
+</pre>
+
+<p><strong>Disclaimer:</strong><br>This example is a very basic one to show how Highway and Quicklink can be used together.<br> Please make sure to read the documentation of <a href="https://github.com/GoogleChromeLabs/quicklink" target="_blank">Quicklink</a> and report bugs in the right repository.</p>
+
+
