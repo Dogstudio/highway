@@ -11,7 +11,7 @@ next_label: Transitions
 
 <h2 id="google-analytics"><a href="#google-analytics">Google Analytics</a></h2>
 <p><em>Google Analytics</em> is a tool among many others to track datas on websites. One of the most tracked and useful data is the page views on websites to learn where users are going and how many users visited the pages of websites. Unfortunately with Highway and more globally AJAX navigation the page views sent to <em>Google Analytics</em> will always be the same for all pages users will visit because the script in the <code>head</code> tag isn't reloaded on navigation.</p>
-<p>The script being outside of the <code>data-router-wrapper</code> as it should, it isn't updated on navigation and developers need to programmatically send those page views to <em>Google Analytics</em> with Highway <a href="./api.html#events">events</a>. The <code>NAVIGATE_END</code> event fits perfectly for this kind of behavior.</p>
+<p>The script being outside of the <code>data-router-wrapper</code> as it should, it isn't updated on navigation and developers need to programmatically send those page views to <em>Google Analytics</em> with Highway <a href="{{ site.url }}api.html#events">events</a>. The <code>NAVIGATE_END</code> event fits perfectly for this kind of behavior.</p>
 <pre>
 <code class="html">&lt;!-- File: index.html --&gt;
 &lt;!-- [...] --&gt;
@@ -49,8 +49,8 @@ H.on('NAVIGATE_END', ({ from, to, location }) => {
 
 <h2 id="google-tag-manager"><a href="#google-tag-manager">Google Tag Manager</a></h2>
 <p>Another tool to track datas on websites is <em>Google Tag Manager</em>. The difference with <em>Google Analytics</em> is that page views don't really need to be sent programmatically since the <em>Google Tag Manager</em> configuration provide the <a href="https://support.google.com/tagmanager/answer/7679322?hl=en" target="_blank">History Change Trigger</a> which can be used to watch all history changes and automatically track new page views.</p>
-<img src="./assets/images/tag-manager.jpg" alt="" />
+<img src="{{ site.url }}assets/images/tag-manager.jpg" alt="" />
 
 <h2 id="other-tools"><a href="#other-tools">Other Tools</a></h2>
 <p>Developers are free to use any tools needed to track datas from websites. Since those tools might need scripts in the <code>head</code> tag or before the closing <code>body</code> tag those will be outside of the <code>data-router-wrapper</code> of the pages and they won't be updated on navigation.</p>
-<p>The solution with Highway as showcased with <em>Google Analytics</em> is to use <a href="./api.html#events">events</a> so developers will be able to send datas to track with Javascript. Refer to the documentation of those tools to send datas programmatically.</p>
+<p>The solution with Highway as showcased with <em>Google Analytics</em> is to use <a href="{{ site.url }}api.html#events">events</a> so developers will be able to send datas to track with Javascript. Refer to the documentation of those tools to send datas programmatically.</p>

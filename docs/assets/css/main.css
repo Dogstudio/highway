@@ -185,7 +185,7 @@ h6 {
   margin-top: 1px;
   border-radius: 50%;
   background-color: #fff;
-  background-image: url('../images/slack.png');
+  background-image: url('.{{ site.url }}images/slack.png');
   background-position: 50% 50%;
   background-repeat: no-repeat;
   background-size: 20px auto;
@@ -227,7 +227,7 @@ h6 {
 
 .site-menu .menu-child a {
   padding-left: 20px;
-  background-image: url('../images/separator.png');
+  background-image: url('.{{ site.url }}images/separator.png');
   background-position: 1px 0;
   background-repeat: no-repeat;
 }
