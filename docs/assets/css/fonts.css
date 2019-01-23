@@ -2,118 +2,118 @@
   font-family: Heebo;
   font-weight: 200;
   font-style: normal;
-  src: url('.{{ site.url }}fonts/Heebo-Thin.woff'),
-       url('.{{ site.url }}fonts/Heebo-Thin.woff2');
+  src: url('../fonts/Heebo-Thin.woff'),
+       url('../fonts/Heebo-Thin.woff2');
 }
 
 @font-face {
   font-family: Heebo;
   font-weight: 300;
   font-style: normal;
-  src: url('.{{ site.url }}fonts/Heebo-Light.woff'),
-       url('.{{ site.url }}fonts/Heebo-Light.woff2');
+  src: url('../fonts/Heebo-Light.woff'),
+       url('../fonts/Heebo-Light.woff2');
 }
 
 @font-face {
   font-family: Heebo;
   font-weight: 400;
   font-style: normal;
-  src: url('.{{ site.url }}fonts/Heebo-Regular.woff'),
-       url('.{{ site.url }}fonts/Heebo-Regular.woff2');
+  src: url('../fonts/Heebo-Regular.woff'),
+       url('../fonts/Heebo-Regular.woff2');
 }
 
 @font-face {
   font-family: Heebo;
   font-weight: 700;
   font-style: normal;
-  src: url('.{{ site.url }}fonts/Heebo-Bold.woff'),
-       url('.{{ site.url }}fonts/Heebo-Bold.woff2');
+  src: url('../fonts/Heebo-Bold.woff'),
+       url('../fonts/Heebo-Bold.woff2');
 }
 
 @font-face {
   font-family: Gilroy;
   font-weight: 400;
   font-style: normal;
-  src: url('.{{ site.url }}fonts/Gilroy-Regular.woff'),
-       url('.{{ site.url }}fonts/Gilroy-Regular.woff2');
+  src: url('../fonts/Gilroy-Regular.woff'),
+       url('../fonts/Gilroy-Regular.woff2');
 }
 
 @font-face {
   font-family: Gilroy;
   font-weight: 400;
   font-style: italic;
-  src: url('.{{ site.url }}fonts/Gilroy-RegularItalic.woff'),
-       url('.{{ site.url }}fonts/Gilroy-RegularItalic.woff2');
+  src: url('../fonts/Gilroy-RegularItalic.woff'),
+       url('../fonts/Gilroy-RegularItalic.woff2');
 }
 
 @font-face {
   font-family: Gilroy;
   font-weight: 500;
   font-style: normal;
-  src: url('.{{ site.url }}fonts/Gilroy-Medium.woff'),
-       url('.{{ site.url }}fonts/Gilroy-Medium.woff2');
+  src: url('../fonts/Gilroy-Medium.woff'),
+       url('../fonts/Gilroy-Medium.woff2');
 }
 
 @font-face {
   font-family: Gilroy;
   font-weight: 500;
   font-style: italic;
-  src: url('.{{ site.url }}fonts/Gilroy-MediumItalic.woff'),
-       url('.{{ site.url }}fonts/Gilroy-MediumItalic.woff2');
+  src: url('../fonts/Gilroy-MediumItalic.woff'),
+       url('../fonts/Gilroy-MediumItalic.woff2');
 }
 
 @font-face {
   font-family: Gilroy;
   font-weight: 700;
   font-style: normal;
-  src: url('.{{ site.url }}fonts/Gilroy-Bold.woff'),
-       url('.{{ site.url }}fonts/Gilroy-Bold.woff2');
+  src: url('../fonts/Gilroy-Bold.woff'),
+       url('../fonts/Gilroy-Bold.woff2');
 }
 
 @font-face {
   font-family: Gilroy;
   font-weight: 700;
   font-style: italic;
-  src: url('.{{ site.url }}fonts/Gilroy-BoldItalic.woff'),
-       url('.{{ site.url }}fonts/Gilroy-BoldItalic.woff2');
+  src: url('../fonts/Gilroy-BoldItalic.woff'),
+       url('../fonts/Gilroy-BoldItalic.woff2');
 }
 
 @font-face {
   font-family: GTSectra;
   font-weight: 300;
   font-style: normal;
-  src: url('.{{ site.url }}fonts/GTSectraDisplay-Light.woff'),
-       url('.{{ site.url }}fonts/GTSectraDisplay-Light.woff2');
+  src: url('../fonts/GTSectraDisplay-Light.woff'),
+       url('../fonts/GTSectraDisplay-Light.woff2');
 }
 
 @font-face {
   font-family: GTSectra;
   font-weight: 400;
   font-style: normal;
-  src: url('.{{ site.url }}fonts/GTSectraDisplay-Regular.woff'),
-       url('.{{ site.url }}fonts/GTSectraDisplay-Regular.woff2');
+  src: url('../fonts/GTSectraDisplay-Regular.woff'),
+       url('../fonts/GTSectraDisplay-Regular.woff2');
 }
 
 @font-face {
   font-family: GTSectra;
   font-weight: 500;
   font-style: normal;
-  src: url('.{{ site.url }}fonts/GTSectraDisplay-Medium.woff'),
-       url('.{{ site.url }}fonts/GTSectraDisplay-Medium.woff2');
+  src: url('../fonts/GTSectraDisplay-Medium.woff'),
+       url('../fonts/GTSectraDisplay-Medium.woff2');
 }
 
 @font-face {
   font-family: GTSectra;
   font-weight: 700;
   font-style: normal;
-  src: url('.{{ site.url }}fonts/GTSectraDisplay-Bold.woff'),
-       url('.{{ site.url }}fonts/GTSectraDisplay-Bold.woff2');
+  src: url('../fonts/GTSectraDisplay-Bold.woff'),
+       url('../fonts/GTSectraDisplay-Bold.woff2');
 }
 
 @font-face {
   font-family: FiraCode;
   font-weight: 400;
   font-style: normal;
-  src: url('.{{ site.url }}fonts/FiraCode-Regular.woff'),
-       url('.{{ site.url }}fonts/FiraCode-Regular.woff2');
+  src: url('../fonts/FiraCode-Regular.woff'),
+       url('../fonts/FiraCode-Regular.woff2');
 }
