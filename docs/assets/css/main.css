@@ -25,6 +25,11 @@ body {
   line-height: 1.8;
 }
 
+body.menu-open {
+  height: 100%;
+  overflow: hidden;
+}
+
 /** Transitions **/
 [data-router-wrapper] {
   position: relative;
@@ -690,10 +695,12 @@ code {
     top: 100%;
     left: 0;
     width: 100%;
+    height: calc(100vh - 70px);
     padding: 30px;
     background-color: var(--primary);
     border-top: 1px solid #333;
     display: none;
+    overflow: auto;
   }
 
   .site-menu .menu-item--slack {

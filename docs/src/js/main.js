@@ -24,6 +24,10 @@ import Basic from 'transitions/basic';
   }
 
   $menuToggler.addEventListener('click', () => {
+    // Update Body
+    document.body.classList.toggle('menu-open');
+
+    // Update DOM
     $siteHeader.classList.toggle('is-open');
   });
 
