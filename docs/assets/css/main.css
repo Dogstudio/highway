@@ -298,6 +298,11 @@ h6 {
   margin-top: 35px;
 }
 
+.site-content-inner ul h3,
+.site-content-inner ol h3 {
+  margin-bottom: 0;
+}
+
 .site-content-inner ul li,
 .site-content-inner ol li {
   position: relative;
