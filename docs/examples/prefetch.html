@@ -27,7 +27,7 @@ import 'intersection-observer';
 const H = new Highway.Core();
 
 // Listen Events
-H.on('NAVIGATE_END', (from, to, location) => {
+H.on('NAVIGATE_END', ({ to }) => {
   // Call Quicklink
   Quicklink({
     el: to.view
