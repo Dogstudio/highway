@@ -119,8 +119,7 @@ h6 {
 }
 
 .site-container {
-  display: flex;
-  flex-wrap: wrap;
+  padding-left: 250px;  
   margin-right: auto;
   margin-left: auto;
 }
@@ -525,9 +524,46 @@ h6 {
 }
 
 .demos-list li {
-  width: 25%;
-  margin: 0 0 20px;
+  width: 33.33%;
+  margin: 0 0 30px;
   padding: 0 10px !important;
+}
+
+.demos-list figure {
+  position: relative;
+  overflow: hidden;
+}
+
+.demos-list figure::before {
+  padding-top: 56.25%;
+  display: block;
+  content: '';
+}
+
+.demos-list img {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  transition: transform .2s ease-out;
+}
+
+.demos-list li:hover img {
+  transform: translate(-50%, -50%) scale(1.05);
+}
+
+.demos-list li a {
+  display: block;
+  text-align: center;
+  text-decoration: none;
+}
+
+.demos-list li span {
+  display: block;
+  text-align: center;
+  margin-top: 10px;
 }
 
 .demos-list li::before {
@@ -609,15 +645,33 @@ code {
 
 /** Responsive **/
 @media only screen and (min-width: 1120px) {
-  .site-header-inner {
+  .site-header {
     position: fixed;
-    top: 40px;
-    left: 40px;
+    top: 0;
+    left: 0;
+    max-height: 100vh;
+    padding-bottom: 100px;
+    overflow: auto;
+  }
+
+  .site-header-inner {
+    margin-top: 40px;
+    margin-left: auto;
+    margin-right: auto;
     width: 160px;
   }
 
   .burger-menu {
     display: none;
+  }
+
+  .demos-list li {
+    max-width: 360px;
+  }
+
+  [data-router-view="demos"] .site-content-inner {
+    max-width: 100%;
+    padding-right: 80px;
   }
 }
 
