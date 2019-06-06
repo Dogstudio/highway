@@ -119,7 +119,7 @@ h6 {
 }
 
 .site-container {
-  padding-left: 250px;  
+  padding-left: 250px;
   margin-right: auto;
   margin-left: auto;
 }
@@ -131,7 +131,7 @@ h6 {
 }
 
 .site-content-wrapper {
-  width: calc(100% - 250px);
+  width: 100%;
 }
 
 /** Header - Logo **/
@@ -687,6 +687,10 @@ code {
     min-height: auto;
     background-color: var(--primary);
     z-index: 200;
+  }
+
+  .site-container {
+    padding-left: 0;
   }
 
   .site-bottom {
