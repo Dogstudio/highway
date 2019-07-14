@@ -35,6 +35,7 @@ module.exports = {
                     'not op_mini all'
                   ]
                 },
+                corejs: 3,
                 useBuiltIns: 'usage'
               }]
             ],
