@@ -37,6 +37,7 @@
 ## Releases
 #### 2.1.x
 
+- :lock: Update dependencies for security purposes
 - :tada: Add `trigger` information in transitions and events
 - :tada: Add contextual transitions
 - :tada: Add overlapping transitions
