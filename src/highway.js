@@ -8,7 +8,7 @@ import Renderer from './renderer';
 import Transition from './transition';
 
 // Highway Version
-console.log('Highway v2.1.2');
+console.log('Highway v2.1.3');
 
 // Export Highway
 export default {
