@@ -210,6 +210,15 @@ export default class Core extends Emitter {
    * Do some tests before HTTP requests to optimize pipeline.
    */
   async beforeFetch() {
+    this.emit('BEFORE_HISTORY', {
+      from: {
+        page: this.From.properties.page,
+        view: this.From.properties.view
+      },
+      trigger: this.trigger,
+      location: this.location
+    });
+
     // Push State
     this.pushState();
 
