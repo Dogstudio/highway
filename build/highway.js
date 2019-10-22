@@ -5994,7 +5994,7 @@ function (_Emitter) {
                   trigger: this.trigger,
                   contextual: this.Contextual
                 };
-                console.log('From', this.From); // We have to verify our cache in order to save some HTTPRequests. If we
+                console.log('From', this.From.properties.renderer); // We have to verify our cache in order to save some HTTPRequests. If we
                 // don't use any caching system everytime we would come back to a page we
                 // already saw we will have to fetch it again and it's pointless.
 
