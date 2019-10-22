@@ -5720,7 +5720,7 @@ function (_Emitter) {
   core_createClass(Core, [{
     key: "sleep",
     value: function sleep() {
-      this.asleep = this.lastFrom;
+      this.asleep = this.lastFrom; //this.asleep.view is a link to the element in the page
     }
     /**
      * Attach `click` event on links.
@@ -5958,6 +5958,7 @@ function (_Emitter) {
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
+                console.log('beforeFetch');
                 this.lastFrom = {
                   page: this.From.properties.page,
                   view: this.From.properties.view
@@ -5995,24 +5996,24 @@ function (_Emitter) {
                 // already saw we will have to fetch it again and it's pointless.
 
                 if (!this.cache.has(this.location.href)) {
-                  _context2.next = 12;
+                  _context2.next = 13;
                   break;
                 }
 
-                _context2.next = 9;
+                _context2.next = 10;
                 return this.From.hide(datas);
 
-              case 9:
+              case 10:
                 // Get Properties
                 this.properties = this.cache.get(this.location.href);
-                _context2.next = 17;
+                _context2.next = 18;
                 break;
 
-              case 12:
-                _context2.next = 14;
+              case 13:
+                _context2.next = 15;
                 return Promise.all([this.fetch(), this.From.hide(datas)]);
 
-              case 14:
+              case 15:
                 results = _context2.sent;
                 // Now everything went fine we can extract the properties of the view we
                 // successfully fetched and keep going.
@@ -6021,10 +6022,10 @@ function (_Emitter) {
 
                 this.cache.set(this.location.href, this.properties);
 
-              case 17:
+              case 18:
                 this.afterFetch();
 
-              case 18:
+              case 19:
               case "end":
                 return _context2.stop();
             }

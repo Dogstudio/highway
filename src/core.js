@@ -78,6 +78,8 @@ export default class Core extends Emitter {
    */
   sleep() {
     this.asleep = this.lastFrom;
+
+    //this.asleep.view is a link to the element in the page
   }
 
   /**
@@ -228,6 +230,8 @@ export default class Core extends Emitter {
    * Do some tests before HTTP requests to optimize pipeline.
    */
   async beforeFetch() {
+    console.log('beforeFetch');
+
     this.lastFrom = {
       page: this.From.properties.page,
       view: this.From.properties.view
