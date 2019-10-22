@@ -48,11 +48,6 @@ export default class Core extends Emitter {
     });
 
     // Sleep / Awaken variables
-    this.lastFrom = {
-      page: null,
-      view: null,
-      renderer: null,
-    };
     this.asleep = {
       page: null,
       view: null,
@@ -239,12 +234,6 @@ export default class Core extends Emitter {
   async beforeFetch() {
     console.log('beforeFetch');
 
-    this.lastFrom = {
-      page: this.From.properties.page,
-      view: this.From.properties.view,
-      href: this.location.href,
-    };
-
     this.emit('BEFORE_HISTORY', {
       from: {
         page: this.From.properties.page,
@@ -280,11 +269,9 @@ export default class Core extends Emitter {
     };
 
     console.log('from', this.From);
-    this.From.goToSleep();
-
-    this.From.properties.renderer.then(result => {
-      this.lastFrom.renderer = result;
-    });
+    if (this.From.goToSleep) {
+      console.log('check on the goto sleep do something differerent');
+    }
 
     // We have to verify our cache in order to save some HTTPRequests. If we
     // don't use any caching system everytime we would come back to a page we
