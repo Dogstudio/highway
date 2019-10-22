@@ -6002,7 +6002,7 @@ function (_Emitter) {
       var _beforeFetch = core_asyncToGenerator(
       /*#__PURE__*/
       regeneratorRuntime.mark(function _callee2() {
-        var datas, awaitFrom, results;
+        var datas, results;
         return regeneratorRuntime.wrap(function _callee2$(_context2) {
           while (1) {
             switch (_context2.prev = _context2.next) {
@@ -6038,10 +6038,8 @@ function (_Emitter) {
                   contextual: this.Contextual
                 };
                 console.log('from', this.From);
-                awaitFrom = this.From.hide(datas);
 
                 if (this.From.onSleep) {
-                  awaitFrom = this.From.sleep(datas);
                   console.log('check on the goto sleep do something differerent');
                 } // We have to verify our cache in order to save some HTTPRequests. If we
                 // don't use any caching system everytime we would come back to a page we
@@ -6049,29 +6047,61 @@ function (_Emitter) {
 
 
                 if (!this.cache.has(this.location.href)) {
-                  _context2.next = 16;
+                  _context2.next = 20;
                   break;
                 }
 
                 // We wait until the view is hidden.
                 console.log('We wait until the view is hidden.');
+
+                if (!this.From.onSleep) {
+                  _context2.next = 15;
+                  break;
+                }
+
                 _context2.next = 13;
-                return awaitFrom;
+                return this.From.sleep(datas);
 
               case 13:
-                // Get Properties
-                this.properties = this.cache.get(this.location.href);
-                _context2.next = 22;
+                _context2.next = 17;
                 break;
 
-              case 16:
+              case 15:
+                _context2.next = 17;
+                return this.From.hide(datas);
+
+              case 17:
+                // Get Properties
+                this.properties = this.cache.get(this.location.href);
+                _context2.next = 33;
+                break;
+
+              case 20:
                 // We wait till all our Promises are resolved.
                 console.log('We wait till all our Promises are resolved.');
-                _context2.next = 19;
-                return Promise.all([this.fetch(), awaitFrom]);
+                results = null;
 
-              case 19:
+                if (!this.From.onSleep) {
+                  _context2.next = 28;
+                  break;
+                }
+
+                _context2.next = 25;
+                return Promise.all([this.fetch(), this.From.sleep(datas)]);
+
+              case 25:
                 results = _context2.sent;
+                _context2.next = 31;
+                break;
+
+              case 28:
+                _context2.next = 30;
+                return Promise.all([this.fetch(), this.From.hide(datas)]);
+
+              case 30:
+                results = _context2.sent;
+
+              case 31:
                 // Now everything went fine we can extract the properties of the view we
                 // successfully fetched and keep going.
                 this.properties = this.Helpers.getProperties(results[0]); // We cache our result
@@ -6079,10 +6109,10 @@ function (_Emitter) {
 
                 this.cache.set(this.location.href, this.properties);
 
-              case 22:
+              case 33:
                 this.afterFetch();
 
-              case 23:
+              case 34:
               case "end":
                 return _context2.stop();
             }

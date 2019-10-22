@@ -270,9 +270,7 @@ export default class Core extends Emitter {
     };
 
     console.log('from', this.From);
-    let awaitFrom = this.From.hide(datas);
     if (this.From.onSleep) {
-      awaitFrom = this.From.sleep(datas);
       console.log('check on the goto sleep do something differerent');
     }
 
@@ -282,7 +280,12 @@ export default class Core extends Emitter {
     if (this.cache.has(this.location.href)) {
       // We wait until the view is hidden.
       console.log('We wait until the view is hidden.');
-      await awaitFrom;
+
+      if (this.From.onSleep) {
+        await this.From.sleep(datas);
+      } else {
+        await this.From.hide(datas);
+      }
 
       // Get Properties
       this.properties = this.cache.get(this.location.href);
@@ -290,10 +293,19 @@ export default class Core extends Emitter {
     } else {
       // We wait till all our Promises are resolved.
       console.log('We wait till all our Promises are resolved.');
-      const results = await Promise.all([
-        this.fetch(),
-        awaitFrom
-      ]);
+      let results = null;
+
+      if (this.From.onSleep) {
+        results = await Promise.all([
+          this.fetch(),
+          this.From.sleep(datas)
+        ]);
+      } else {
+        results = await Promise.all([
+          this.fetch(),
+          this.From.hide(datas)
+        ]);
+      }
 
       // Now everything went fine we can extract the properties of the view we
       // successfully fetched and keep going.
