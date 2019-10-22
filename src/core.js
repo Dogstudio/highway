@@ -275,6 +275,17 @@ export default class Core extends Emitter {
 
     console.log('From', this.From.properties.renderer);
     window.lastFrom = this.From;
+
+    this.From.properties.renderer.then(function(result) {
+      console.log('test A');
+      console.log(result);
+    });
+
+    this.From.properties.renderer.then(function(result) {
+      console.log('test B');
+      console.log(result);
+    });
+
     // We have to verify our cache in order to save some HTTPRequests. If we
     // don't use any caching system everytime we would come back to a page we
     // already saw we will have to fetch it again and it's pointless.

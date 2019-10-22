@@ -5995,33 +5995,41 @@ function (_Emitter) {
                   contextual: this.Contextual
                 };
                 console.log('From', this.From.properties.renderer);
-                window.lastFrom = this.From; // We have to verify our cache in order to save some HTTPRequests. If we
+                window.lastFrom = this.From;
+                this.From.properties.renderer.then(function (result) {
+                  console.log('test A');
+                  console.log(result);
+                });
+                this.From.properties.renderer.then(function (result) {
+                  console.log('test B');
+                  console.log(result);
+                }); // We have to verify our cache in order to save some HTTPRequests. If we
                 // don't use any caching system everytime we would come back to a page we
                 // already saw we will have to fetch it again and it's pointless.
 
                 if (!this.cache.has(this.location.href)) {
-                  _context2.next = 16;
+                  _context2.next = 18;
                   break;
                 }
 
                 // We wait until the view is hidden.
                 console.log('We wait until the view is hidden.');
-                _context2.next = 13;
+                _context2.next = 15;
                 return this.From.hide(datas);
 
-              case 13:
+              case 15:
                 // Get Properties
                 this.properties = this.cache.get(this.location.href);
-                _context2.next = 22;
+                _context2.next = 24;
                 break;
 
-              case 16:
+              case 18:
                 // We wait till all our Promises are resolved.
                 console.log('We wait till all our Promises are resolved.');
-                _context2.next = 19;
+                _context2.next = 21;
                 return Promise.all([this.fetch(), this.From.hide(datas)]);
 
-              case 19:
+              case 21:
                 results = _context2.sent;
                 // Now everything went fine we can extract the properties of the view we
                 // successfully fetched and keep going.
@@ -6030,10 +6038,10 @@ function (_Emitter) {
 
                 this.cache.set(this.location.href, this.properties);
 
-              case 22:
+              case 24:
                 this.afterFetch();
 
-              case 23:
+              case 25:
               case "end":
                 return _context2.stop();
             }
