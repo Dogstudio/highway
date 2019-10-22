@@ -241,7 +241,8 @@ export default class Core extends Emitter {
 
     this.lastFrom = {
       page: this.From.properties.page,
-      view: this.From.properties.view
+      view: this.From.properties.view,
+      href: this.location.href,
     };
 
     this.emit('BEFORE_HISTORY', {
