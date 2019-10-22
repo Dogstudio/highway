@@ -5729,7 +5729,7 @@ function (_Emitter) {
 
       console.log(this.asleep.renderer);
       var sleeper = new this.asleep.renderer(this.From.properties);
-      console.log(sleeper);
+      console.log(sleeper.goToSleep());
     }
     /**
      * Attach `click` event on links.
