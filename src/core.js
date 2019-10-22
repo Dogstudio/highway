@@ -271,6 +271,7 @@ export default class Core extends Emitter {
 
     console.log('from', this.From);
     if (this.From.onSleep) {
+      console.log('this.Contextual', this.Contextual);
       this.From.properties.view.classList.add('view-asleep');
       console.log('check on the goto sleep do something differerent');
     }
