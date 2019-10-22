@@ -6006,7 +6006,7 @@ function (_Emitter) {
                   trigger: this.trigger,
                   contextual: this.Contextual
                 };
-                console.log(this.From);
+                console.log('from', this.From);
                 this.From.properties.renderer.then(function (result) {
                   _this2.lastFrom.renderer = result;
                 }); // We have to verify our cache in order to save some HTTPRequests. If we

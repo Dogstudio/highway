@@ -279,7 +279,7 @@ export default class Core extends Emitter {
       contextual: this.Contextual
     };
 
-    console.log(this.From);
+    console.log('from', this.From);
     this.From.properties.renderer.then(result => {
       this.lastFrom.renderer = result;
     });
