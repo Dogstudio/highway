@@ -5994,33 +5994,34 @@ function (_Emitter) {
                   trigger: this.trigger,
                   contextual: this.Contextual
                 };
-                console.log('From', this.From.properties.renderer); // We have to verify our cache in order to save some HTTPRequests. If we
+                console.log('From', this.From.properties);
+                window.lastFrom = this.From; // We have to verify our cache in order to save some HTTPRequests. If we
                 // don't use any caching system everytime we would come back to a page we
                 // already saw we will have to fetch it again and it's pointless.
 
                 if (!this.cache.has(this.location.href)) {
-                  _context2.next = 15;
+                  _context2.next = 16;
                   break;
                 }
 
                 // We wait until the view is hidden.
                 console.log('We wait until the view is hidden.');
-                _context2.next = 12;
+                _context2.next = 13;
                 return this.From.hide(datas);
 
-              case 12:
+              case 13:
                 // Get Properties
                 this.properties = this.cache.get(this.location.href);
-                _context2.next = 21;
+                _context2.next = 22;
                 break;
 
-              case 15:
+              case 16:
                 // We wait till all our Promises are resolved.
                 console.log('We wait till all our Promises are resolved.');
-                _context2.next = 18;
+                _context2.next = 19;
                 return Promise.all([this.fetch(), this.From.hide(datas)]);
 
-              case 18:
+              case 19:
                 results = _context2.sent;
                 // Now everything went fine we can extract the properties of the view we
                 // successfully fetched and keep going.
@@ -6029,10 +6030,10 @@ function (_Emitter) {
 
                 this.cache.set(this.location.href, this.properties);
 
-              case 21:
+              case 22:
                 this.afterFetch();
 
-              case 22:
+              case 23:
               case "end":
                 return _context2.stop();
             }
