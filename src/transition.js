@@ -80,6 +80,10 @@ export default class Transition {
 
         this.goToSleep && this.goToSleep();
 
+        if (this.goToSleep) {
+            console.log('check');
+            this.goToSleep();
+        }
 
         // Call the transition attached to the view.
         this.out && this.out({ from, trigger, done: resolve });
