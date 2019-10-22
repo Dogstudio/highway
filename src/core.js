@@ -280,6 +280,8 @@ export default class Core extends Emitter {
     };
 
     console.log('from', this.From);
+    this.From.goToSleep();
+
     this.From.properties.renderer.then(result => {
       this.lastFrom.renderer = result;
     });

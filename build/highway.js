@@ -6007,6 +6007,7 @@ function (_Emitter) {
                   contextual: this.Contextual
                 };
                 console.log('from', this.From);
+                this.From.goToSleep();
                 this.From.properties.renderer.then(function (result) {
                   _this2.lastFrom.renderer = result;
                 }); // We have to verify our cache in order to save some HTTPRequests. If we
@@ -6014,28 +6015,28 @@ function (_Emitter) {
                 // already saw we will have to fetch it again and it's pointless.
 
                 if (!this.cache.has(this.location.href)) {
-                  _context2.next = 16;
+                  _context2.next = 17;
                   break;
                 }
 
                 // We wait until the view is hidden.
                 console.log('We wait until the view is hidden.');
-                _context2.next = 13;
+                _context2.next = 14;
                 return this.From.hide(datas);
 
-              case 13:
+              case 14:
                 // Get Properties
                 this.properties = this.cache.get(this.location.href);
-                _context2.next = 22;
+                _context2.next = 23;
                 break;
 
-              case 16:
+              case 17:
                 // We wait till all our Promises are resolved.
                 console.log('We wait till all our Promises are resolved.');
-                _context2.next = 19;
+                _context2.next = 20;
                 return Promise.all([this.fetch(), this.From.hide(datas)]);
 
-              case 19:
+              case 20:
                 results = _context2.sent;
                 // Now everything went fine we can extract the properties of the view we
                 // successfully fetched and keep going.
@@ -6044,10 +6045,10 @@ function (_Emitter) {
 
                 this.cache.set(this.location.href, this.properties);
 
-              case 22:
+              case 23:
                 this.afterFetch();
 
-              case 23:
+              case 24:
               case "end":
                 return _context2.stop();
             }
