@@ -273,7 +273,7 @@ export default class Core extends Emitter {
       contextual: this.Contextual
     };
 
-    console.log('From', this.From.properties);
+    console.log('From', this.From.properties.renderer);
     window.lastFrom = this.From;
     // We have to verify our cache in order to save some HTTPRequests. If we
     // don't use any caching system everytime we would come back to a page we
