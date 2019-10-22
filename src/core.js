@@ -63,6 +63,15 @@ export default class Core extends Emitter {
   }
 
   /**
+   * Sleep .
+   *
+   * @param {(target|element)} target to put to sleep
+   */
+  sleep(target) {
+    console.log(target);
+  }
+
+  /**
    * Attach `click` event on links.
    *
    * @param {(array|nodeList)} links - Links to use

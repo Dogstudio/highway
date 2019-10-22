@@ -5703,13 +5703,24 @@ function (_Emitter) {
     return _this;
   }
   /**
-   * Attach `click` event on links.
+   * Sleep .
    *
-   * @param {(array|nodeList)} links - Links to use
+   * @param {(target|element)} target to put to sleep
    */
 
 
   core_createClass(Core, [{
+    key: "sleep",
+    value: function sleep(target) {
+      console.log(target);
+    }
+    /**
+     * Attach `click` event on links.
+     *
+     * @param {(array|nodeList)} links - Links to use
+     */
+
+  }, {
     key: "attach",
     value: function attach(links) {
       var _iteratorNormalCompletion = true;
@@ -6208,7 +6219,8 @@ function () {
         if (!contextual) {
           // Change Attributes
           from.setAttribute('data-transition-out', _this2.name);
-          from.removeAttribute('data-transition-in', _this2.name); // Call the transition attached to the view.
+          from.removeAttribute('data-transition-in', _this2.name);
+          console.log(_this2.goToSleep); // Call the transition attached to the view.
 
           _this2.out && _this2.out({
             from: from,

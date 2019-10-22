@@ -74,6 +74,8 @@ export default class Transition {
         from.setAttribute('data-transition-out', this.name);
         from.removeAttribute('data-transition-in', this.name);
 
+        console.log(this.goToSleep);
+
         // Call the transition attached to the view.
         this.out && this.out({ from, trigger, done: resolve });
 
