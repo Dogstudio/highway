@@ -5959,7 +5959,7 @@ function (_Emitter) {
       var _beforeFetch = core_asyncToGenerator(
       /*#__PURE__*/
       regeneratorRuntime.mark(function _callee2() {
-        var datas, results;
+        var datas, awaitFrom, results;
         return regeneratorRuntime.wrap(function _callee2$(_context2) {
           while (1) {
             switch (_context2.prev = _context2.next) {
@@ -5995,6 +5995,7 @@ function (_Emitter) {
                   contextual: this.Contextual
                 };
                 console.log('from', this.From);
+                awaitFrom = this.From.hide(datas);
 
                 if (this.From.goToSleep) {
                   console.log('check on the goto sleep do something differerent');
@@ -6004,28 +6005,28 @@ function (_Emitter) {
 
 
                 if (!this.cache.has(this.location.href)) {
-                  _context2.next = 15;
+                  _context2.next = 16;
                   break;
                 }
 
                 // We wait until the view is hidden.
                 console.log('We wait until the view is hidden.');
-                _context2.next = 12;
-                return this.From.hide(datas);
+                _context2.next = 13;
+                return awaitFrom;
 
-              case 12:
+              case 13:
                 // Get Properties
                 this.properties = this.cache.get(this.location.href);
-                _context2.next = 21;
+                _context2.next = 22;
                 break;
 
-              case 15:
+              case 16:
                 // We wait till all our Promises are resolved.
                 console.log('We wait till all our Promises are resolved.');
-                _context2.next = 18;
-                return Promise.all([this.fetch(), this.From.hide(datas)]);
+                _context2.next = 19;
+                return Promise.all([this.fetch(), awaitFrom]);
 
-              case 18:
+              case 19:
                 results = _context2.sent;
                 // Now everything went fine we can extract the properties of the view we
                 // successfully fetched and keep going.
@@ -6034,10 +6035,10 @@ function (_Emitter) {
 
                 this.cache.set(this.location.href, this.properties);
 
-              case 21:
+              case 22:
                 this.afterFetch();
 
-              case 22:
+              case 23:
               case "end":
                 return _context2.stop();
             }
