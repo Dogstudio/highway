@@ -83,7 +83,7 @@ export default class Core extends Emitter {
     console.log('SLEEP', this.asleep);
     //this.asleep.view is a link to the element in the page
     console.log(this.asleep.renderer);
-    const sleeper = new this.asleep.renderer();
+    const sleeper = new this.asleep.renderer(this.From.properties);
     console.log(sleeper);
   }
 
@@ -278,6 +278,7 @@ export default class Core extends Emitter {
       contextual: this.Contextual
     };
 
+    console.log(this.From);
     this.From.properties.renderer.then(result => {
       this.lastFrom.renderer = result;
     });
