@@ -98,7 +98,17 @@ export default class Renderer {
       // everytime a view is completely removed from the DOM.
       this.onLeaveCompleted && this.onLeaveCompleted();
 
-      console.log(this.goToSleep);
+      // Resolve Promise
+      resolve();
+    });
+  }
+
+  sleep(datas) {
+    return new Promise(async resolve => {
+      console.log('RENDERER SLEEEEEEEEP');
+      this.onSleep && this.onSleep();
+
+      this.Transition && await this.Transition.hide(datas);
 
       // Resolve Promise
       resolve();

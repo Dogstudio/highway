@@ -5301,12 +5301,11 @@ function () {
                 case 5:
                   // The `onLeaveCompleted` method if set in your custom renderer is called
                   // everytime a view is completely removed from the DOM.
-                  _this2.onLeaveCompleted && _this2.onLeaveCompleted();
-                  console.log(_this2.goToSleep); // Resolve Promise
+                  _this2.onLeaveCompleted && _this2.onLeaveCompleted(); // Resolve Promise
 
                   resolve();
 
-                case 8:
+                case 7:
                 case "end":
                   return _context2.stop();
               }
@@ -5316,6 +5315,50 @@ function () {
 
         return function (_x2) {
           return _ref2.apply(this, arguments);
+        };
+      }());
+    }
+  }, {
+    key: "sleep",
+    value: function sleep(datas) {
+      var _this3 = this;
+
+      return new Promise(
+      /*#__PURE__*/
+      function () {
+        var _ref3 = _asyncToGenerator(
+        /*#__PURE__*/
+        regeneratorRuntime.mark(function _callee3(resolve) {
+          return regeneratorRuntime.wrap(function _callee3$(_context3) {
+            while (1) {
+              switch (_context3.prev = _context3.next) {
+                case 0:
+                  console.log('RENDERER SLEEEEEEEEP');
+                  _this3.onSleep && _this3.onSleep();
+                  _context3.t0 = _this3.Transition;
+
+                  if (!_context3.t0) {
+                    _context3.next = 6;
+                    break;
+                  }
+
+                  _context3.next = 6;
+                  return _this3.Transition.hide(datas);
+
+                case 6:
+                  // Resolve Promise
+                  resolve();
+
+                case 7:
+                case "end":
+                  return _context3.stop();
+              }
+            }
+          }, _callee3);
+        }));
+
+        return function (_x3) {
+          return _ref3.apply(this, arguments);
         };
       }());
     }
@@ -5997,7 +6040,8 @@ function (_Emitter) {
                 console.log('from', this.From);
                 awaitFrom = this.From.hide(datas);
 
-                if (this.From.goToSleep) {
+                if (this.From.onSleep) {
+                  awaitFrom = this.From.sleep(datas);
                   console.log('check on the goto sleep do something differerent');
                 } // We have to verify our cache in order to save some HTTPRequests. If we
                 // don't use any caching system everytime we would come back to a page we
@@ -6245,18 +6289,7 @@ function () {
         if (!contextual) {
           // Change Attributes
           from.setAttribute('data-transition-out', _this2.name);
-          from.removeAttribute('data-transition-in', _this2.name);
-          console.log(_this2);
-          console.log(_this2.out);
-          console.log(_this2.goToSleep);
-          _this2.goToSleep && _this2.goToSleep();
-
-          if (_this2.goToSleep) {
-            console.log('check');
-
-            _this2.goToSleep();
-          } // Call the transition attached to the view.
-
+          from.removeAttribute('data-transition-in', _this2.name); // Call the transition attached to the view.
 
           _this2.out && _this2.out({
             from: from,

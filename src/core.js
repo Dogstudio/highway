@@ -270,8 +270,9 @@ export default class Core extends Emitter {
     };
 
     console.log('from', this.From);
-    const awaitFrom = this.From.hide(datas);
-    if (this.From.goToSleep) {
+    let awaitFrom = this.From.hide(datas);
+    if (this.From.onSleep) {
+      awaitFrom = this.From.sleep(datas);
       console.log('check on the goto sleep do something differerent');
     }
 
