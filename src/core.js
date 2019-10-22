@@ -50,11 +50,13 @@ export default class Core extends Emitter {
     // Sleep / Awaken variables
     this.lastFrom = {
       page: null,
-      view: null
+      view: null,
+      renderer: null,
     };
     this.asleep = {
       page: null,
-      view: null
+      view: null,
+      renderer: null,
     };
 
     // Events variables.
@@ -78,7 +80,7 @@ export default class Core extends Emitter {
    */
   sleep() {
     this.asleep = this.lastFrom;
-
+    console.log('SLEEP', this.asleep);
     //this.asleep.view is a link to the element in the page
   }
 
@@ -273,17 +275,8 @@ export default class Core extends Emitter {
       contextual: this.Contextual
     };
 
-    console.log('From', this.From.properties.renderer);
-    window.lastFrom = this.From;
-
-    this.From.properties.renderer.then(function(result) {
-      console.log('test A');
-      console.log(result);
-    });
-
-    this.From.properties.renderer.then(function(result) {
-      console.log('test B');
-      console.log(result);
+    this.From.properties.renderer.then(result => {
+      this.lastFrom.renderer = result;
     });
 
     // We have to verify our cache in order to save some HTTPRequests. If we

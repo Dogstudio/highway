@@ -5692,11 +5692,13 @@ function (_Emitter) {
 
     _this.lastFrom = {
       page: null,
-      view: null
+      view: null,
+      renderer: null
     };
     _this.asleep = {
       page: null,
-      view: null
+      view: null,
+      renderer: null
     }; // Events variables.
 
     _this._navigate = _this.navigate.bind(_assertThisInitialized(_this)); // Listen the `popstate` on the window to run the router each time an
@@ -5720,7 +5722,8 @@ function (_Emitter) {
   core_createClass(Core, [{
     key: "sleep",
     value: function sleep() {
-      this.asleep = this.lastFrom; //this.asleep.view is a link to the element in the page
+      this.asleep = this.lastFrom;
+      console.log('SLEEP', this.asleep); //this.asleep.view is a link to the element in the page
     }
     /**
      * Attach `click` event on links.
@@ -5955,6 +5958,8 @@ function (_Emitter) {
       var _beforeFetch = core_asyncToGenerator(
       /*#__PURE__*/
       regeneratorRuntime.mark(function _callee2() {
+        var _this2 = this;
+
         var datas, results;
         return regeneratorRuntime.wrap(function _callee2$(_context2) {
           while (1) {
@@ -5994,42 +5999,35 @@ function (_Emitter) {
                   trigger: this.trigger,
                   contextual: this.Contextual
                 };
-                console.log('From', this.From.properties.renderer);
-                window.lastFrom = this.From;
                 this.From.properties.renderer.then(function (result) {
-                  console.log('test A');
-                  console.log(result);
-                });
-                this.From.properties.renderer.then(function (result) {
-                  console.log('test B');
-                  console.log(result);
+                  _this2.lastFrom.renderer = result;
                 }); // We have to verify our cache in order to save some HTTPRequests. If we
                 // don't use any caching system everytime we would come back to a page we
                 // already saw we will have to fetch it again and it's pointless.
 
                 if (!this.cache.has(this.location.href)) {
-                  _context2.next = 18;
+                  _context2.next = 15;
                   break;
                 }
 
                 // We wait until the view is hidden.
                 console.log('We wait until the view is hidden.');
-                _context2.next = 15;
+                _context2.next = 12;
                 return this.From.hide(datas);
 
-              case 15:
+              case 12:
                 // Get Properties
                 this.properties = this.cache.get(this.location.href);
-                _context2.next = 24;
+                _context2.next = 21;
                 break;
 
-              case 18:
+              case 15:
                 // We wait till all our Promises are resolved.
                 console.log('We wait till all our Promises are resolved.');
-                _context2.next = 21;
+                _context2.next = 18;
                 return Promise.all([this.fetch(), this.From.hide(datas)]);
 
-              case 21:
+              case 18:
                 results = _context2.sent;
                 // Now everything went fine we can extract the properties of the view we
                 // successfully fetched and keep going.
@@ -6038,10 +6036,10 @@ function (_Emitter) {
 
                 this.cache.set(this.location.href, this.properties);
 
-              case 24:
+              case 21:
                 this.afterFetch();
 
-              case 25:
+              case 22:
               case "end":
                 return _context2.stop();
             }

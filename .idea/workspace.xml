@@ -24,8 +24,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/core.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="314">
-              <caret line="284" column="28" lean-forward="true" selection-start-line="284" selection-start-column="28" selection-end-line="284" selection-end-column="28" />
+            <state relative-caret-position="265">
+              <caret line="82" column="25" selection-start-line="82" selection-start-column="25" selection-end-line="82" selection-end-column="25" />
             </state>
           </provider>
         </entry>
@@ -169,18 +169,18 @@
       <updated>1567599568864</updated>
       <workItem from="1567599570204" duration="297000" />
       <workItem from="1567599883091" duration="6000" />
-      <workItem from="1571730561867" duration="7279000" />
+      <workItem from="1571730561867" duration="7583000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="7582000" />
+    <option name="totallyTimeSpent" value="7886000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="1461" y="-75" width="1483" height="823" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.21582234" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.21582234" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="npm" order="2" side_tool="true" />
       <window_info id="Favorites" order="3" side_tool="true" />
@@ -195,7 +195,7 @@
       <window_info anchor="bottom" id="Version Control" order="8" />
       <window_info anchor="bottom" id="Database Changes" order="9" />
       <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
-      <window_info anchor="bottom" id="Terminal" order="11" visible="true" weight="0.19425444" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="11" visible="true" weight="0.19425444" />
       <window_info anchor="right" id="Commander" order="0" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -247,8 +247,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/core.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="314">
-          <caret line="284" column="28" lean-forward="true" selection-start-line="284" selection-start-column="28" selection-end-line="284" selection-end-column="28" />
+        <state relative-caret-position="265">
+          <caret line="82" column="25" selection-start-line="82" selection-start-column="25" selection-end-line="82" selection-end-column="25" />
         </state>
       </provider>
     </entry>
