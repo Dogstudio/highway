@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="50fdb22d-dc16-451e-9f33-0c07222efa17" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/src/core.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/core.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/renderer.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/renderer.js" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -21,20 +21,20 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/core.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="294">
-              <caret line="289" column="11" selection-start-line="289" selection-start-column="6" selection-end-line="289" selection-end-column="11" />
+            <state relative-caret-position="129">
+              <caret line="278" lean-forward="true" selection-start-line="278" selection-end-line="278" />
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/renderer.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="412">
-              <caret line="100" column="22" selection-start-line="100" selection-start-column="22" selection-end-line="100" selection-end-column="22" />
+            <state relative-caret-position="271">
+              <caret line="21" column="22" selection-start-line="21" selection-start-column="22" selection-end-line="21" selection-end-column="22" />
             </state>
           </provider>
         </entry>
@@ -87,8 +87,8 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/src/transition.js" />
-        <option value="$PROJECT_DIR$/src/renderer.js" />
         <option value="$PROJECT_DIR$/src/core.js" />
+        <option value="$PROJECT_DIR$/src/renderer.js" />
       </list>
     </option>
   </component>
@@ -171,15 +171,16 @@
       <updated>1567599568864</updated>
       <workItem from="1567599570204" duration="297000" />
       <workItem from="1567599883091" duration="6000" />
-      <workItem from="1571730561867" duration="8827000" />
+      <workItem from="1571730561867" duration="9006000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="9130000" />
+    <option name="totallyTimeSpent" value="9309000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="1479" y="-75" width="1483" height="823" extended-state="0" />
+    <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.21582234" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
@@ -239,17 +240,17 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/renderer.js">
+    <entry file="file://$PROJECT_DIR$/src/core.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="412">
-          <caret line="100" column="22" selection-start-line="100" selection-start-column="22" selection-end-line="100" selection-end-column="22" />
+        <state relative-caret-position="129">
+          <caret line="278" lean-forward="true" selection-start-line="278" selection-end-line="278" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/core.js">
+    <entry file="file://$PROJECT_DIR$/src/renderer.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="294">
-          <caret line="289" column="11" selection-start-line="289" selection-start-column="6" selection-end-line="289" selection-end-column="11" />
+        <state relative-caret-position="271">
+          <caret line="21" column="22" selection-start-line="21" selection-start-column="22" selection-end-line="21" selection-end-column="22" />
         </state>
       </provider>
     </entry>
