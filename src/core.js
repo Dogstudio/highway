@@ -276,6 +276,7 @@ export default class Core extends Emitter {
     // already saw we will have to fetch it again and it's pointless.
     if (this.cache.has(this.location.href)) {
       // We wait until the view is hidden.
+      console.log('We wait until the view is hidden.');
       await this.From.hide(datas);
 
       // Get Properties
@@ -283,6 +284,7 @@ export default class Core extends Emitter {
 
     } else {
       // We wait till all our Promises are resolved.
+      console.log('We wait till all our Promises are resolved.');
       const results = await Promise.all([
         this.fetch(),
         this.From.hide(datas)

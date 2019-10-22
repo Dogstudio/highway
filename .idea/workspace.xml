@@ -24,8 +24,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/core.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="212">
-              <caret line="232" column="28" selection-start-line="232" selection-start-column="28" selection-end-line="232" selection-end-column="28" />
+            <state relative-caret-position="216">
+              <caret line="286" column="62" selection-start-line="286" selection-start-column="62" selection-end-line="286" selection-end-column="62" />
             </state>
           </provider>
         </entry>
@@ -72,6 +72,7 @@
       <find>.out</find>
       <find>remove</find>
       <find>fetch</find>
+      <find>beforeFe</find>
     </findStrings>
     <dirStrings>
       <dir>$PROJECT_DIR$/src</dir>
@@ -167,12 +168,12 @@
       <updated>1567599568864</updated>
       <workItem from="1567599570204" duration="297000" />
       <workItem from="1567599883091" duration="6000" />
-      <workItem from="1571730561867" duration="5310000" />
+      <workItem from="1571730561867" duration="5757000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="5613000" />
+    <option name="totallyTimeSpent" value="6060000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="1461" y="-75" width="1483" height="823" extended-state="0" />
@@ -245,8 +246,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/core.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="212">
-          <caret line="232" column="28" selection-start-line="232" selection-start-column="28" selection-end-line="232" selection-end-column="28" />
+        <state relative-caret-position="216">
+          <caret line="286" column="62" selection-start-line="286" selection-start-column="62" selection-end-line="286" selection-end-column="62" />
         </state>
       </provider>
     </entry>
