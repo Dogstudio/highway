@@ -47,6 +47,16 @@ export default class Core extends Emitter {
       this.From.setup();
     });
 
+    // Sleep / Awaken variables
+    this.lastFrom = {
+      page: null,
+      view: null
+    };
+    this.asleep = {
+      page: null,
+      view: null
+    };
+
     // Events variables.
     this._navigate = this.navigate.bind(this);
 
@@ -65,10 +75,9 @@ export default class Core extends Emitter {
   /**
    * Sleep .
    *
-   * @param {(target|element)} target to put to sleep
    */
-  sleep(target) {
-    console.log(target);
+  sleep() {
+    this.asleep = this.lastFrom;
   }
 
   /**
@@ -219,6 +228,11 @@ export default class Core extends Emitter {
    * Do some tests before HTTP requests to optimize pipeline.
    */
   async beforeFetch() {
+    this.lastFrom = {
+      page: this.From.properties.page,
+      view: this.From.properties.view
+    };
+
     this.emit('BEFORE_HISTORY', {
       from: {
         page: this.From.properties.page,

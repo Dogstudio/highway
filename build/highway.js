@@ -5687,8 +5687,17 @@ function (_Emitter) {
       _this.From = new Renderer(_this.properties);
 
       _this.From.setup();
-    }); // Events variables.
+    }); // Sleep / Awaken variables
 
+
+    _this.lastFrom = {
+      page: null,
+      view: null
+    };
+    _this.asleep = {
+      page: null,
+      view: null
+    }; // Events variables.
 
     _this._navigate = _this.navigate.bind(_assertThisInitialized(_this)); // Listen the `popstate` on the window to run the router each time an
     // history entry changes. Basically everytime the backward/forward arrows
@@ -5705,14 +5714,13 @@ function (_Emitter) {
   /**
    * Sleep .
    *
-   * @param {(target|element)} target to put to sleep
    */
 
 
   core_createClass(Core, [{
     key: "sleep",
-    value: function sleep(target) {
-      console.log(target);
+    value: function sleep() {
+      this.asleep = this.lastFrom;
     }
     /**
      * Attach `click` event on links.
@@ -5950,6 +5958,10 @@ function (_Emitter) {
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
+                this.lastFrom = {
+                  page: this.From.properties.page,
+                  view: this.From.properties.view
+                };
                 this.emit('BEFORE_HISTORY', {
                   from: {
                     page: this.From.properties.page,
@@ -5983,24 +5995,24 @@ function (_Emitter) {
                 // already saw we will have to fetch it again and it's pointless.
 
                 if (!this.cache.has(this.location.href)) {
-                  _context2.next = 11;
+                  _context2.next = 12;
                   break;
                 }
 
-                _context2.next = 8;
+                _context2.next = 9;
                 return this.From.hide(datas);
 
-              case 8:
+              case 9:
                 // Get Properties
                 this.properties = this.cache.get(this.location.href);
-                _context2.next = 16;
+                _context2.next = 17;
                 break;
 
-              case 11:
-                _context2.next = 13;
+              case 12:
+                _context2.next = 14;
                 return Promise.all([this.fetch(), this.From.hide(datas)]);
 
-              case 13:
+              case 14:
                 results = _context2.sent;
                 // Now everything went fine we can extract the properties of the view we
                 // successfully fetched and keep going.
@@ -6009,10 +6021,10 @@ function (_Emitter) {
 
                 this.cache.set(this.location.href, this.properties);
 
-              case 16:
+              case 17:
                 this.afterFetch();
 
-              case 17:
+              case 18:
               case "end":
                 return _context2.stop();
             }
@@ -6221,6 +6233,7 @@ function () {
           from.setAttribute('data-transition-out', _this2.name);
           from.removeAttribute('data-transition-in', _this2.name);
           console.log(_this2);
+          console.log(_this2.out);
           console.log(_this2.goToSleep); // Call the transition attached to the view.
 
           _this2.out && _this2.out({
