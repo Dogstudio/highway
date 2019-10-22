@@ -159,6 +159,7 @@ export default class Core extends Emitter {
 
         // Now all our conditions are passed we can update our location and do
         // what we need to do before fetching it.
+        console.log('redirect fetching');
         this.beforeFetch();
 
       }
@@ -186,6 +187,7 @@ export default class Core extends Emitter {
 
       // If everything is fine we can save our location and do what we need to
       // do before fetching it.
+      console.log('popstate fetching');
       this.beforeFetch();
 
     } else {
@@ -271,6 +273,7 @@ export default class Core extends Emitter {
       contextual: this.Contextual
     };
 
+    console.log('From', this.From);
     // We have to verify our cache in order to save some HTTPRequests. If we
     // don't use any caching system everytime we would come back to a page we
     // already saw we will have to fetch it again and it's pointless.
