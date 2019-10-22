@@ -5346,10 +5346,12 @@ function () {
                   return _this3.Transition.hide(datas);
 
                 case 6:
-                  // Resolve Promise
+                  _this3.Transition.wrap.firstElementChild.classList.add('view-asleep'); // Resolve Promise
+
+
                   resolve();
 
-                case 7:
+                case 8:
                 case "end":
                   return _context3.stop();
               }
@@ -6040,7 +6042,6 @@ function (_Emitter) {
                 console.log('from', this.From);
 
                 if (this.From.onSleep) {
-                  this.From.wrap.firstElementChild.classList.add('view-asleep');
                   console.log('check on the goto sleep do something differerent');
                 } // We have to verify our cache in order to save some HTTPRequests. If we
                 // don't use any caching system everytime we would come back to a page we

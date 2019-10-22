@@ -110,6 +110,8 @@ export default class Renderer {
 
       this.Transition && await this.Transition.hide(datas);
 
+      this.Transition.wrap.firstElementChild.classList.add('view-asleep');
+
       // Resolve Promise
       resolve();
     });
