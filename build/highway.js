@@ -5728,7 +5728,8 @@ function (_Emitter) {
       console.log('SLEEP', this.asleep); //this.asleep.view is a link to the element in the page
 
       console.log(this.asleep.renderer);
-      console.log(this.asleep.renderer.goToSleep);
+      var sleeper = new this.asleep.renderer();
+      console.log(sleeper);
     }
     /**
      * Attach `click` event on links.
