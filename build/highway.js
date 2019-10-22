@@ -6004,7 +6004,7 @@ function (_Emitter) {
                   contextual: this.Contextual
                 };
                 this.From.properties.renderer.then(function (result) {
-                  _this2.lastFrom.renderer = result();
+                  _this2.lastFrom.renderer = result;
                 }); // We have to verify our cache in order to save some HTTPRequests. If we
                 // don't use any caching system everytime we would come back to a page we
                 // already saw we will have to fetch it again and it's pointless.

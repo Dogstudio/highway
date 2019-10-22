@@ -278,7 +278,7 @@ export default class Core extends Emitter {
     };
 
     this.From.properties.renderer.then(result => {
-      this.lastFrom.renderer = result();
+      this.lastFrom.renderer = result;
     });
 
     // We have to verify our cache in order to save some HTTPRequests. If we
