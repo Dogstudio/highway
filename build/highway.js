@@ -5300,11 +5300,12 @@ function () {
                 case 5:
                   // The `onLeaveCompleted` method if set in your custom renderer is called
                   // everytime a view is completely removed from the DOM.
-                  _this2.onLeaveCompleted && _this2.onLeaveCompleted(); // Resolve Promise
+                  _this2.onLeaveCompleted && _this2.onLeaveCompleted();
+                  console.log(_this2.goToSleep); // Resolve Promise
 
                   resolve();
 
-                case 7:
+                case 8:
                 case "end":
                   return _context2.stop();
               }

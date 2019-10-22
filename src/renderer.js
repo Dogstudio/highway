@@ -96,6 +96,8 @@ export default class Renderer {
       // everytime a view is completely removed from the DOM.
       this.onLeaveCompleted && this.onLeaveCompleted();
 
+      console.log(this.goToSleep);
+
       // Resolve Promise
       resolve();
     });
