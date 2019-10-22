@@ -82,6 +82,7 @@ export default class Core extends Emitter {
     this.asleep = this.lastFrom;
     console.log('SLEEP', this.asleep);
     //this.asleep.view is a link to the element in the page
+    this.asleep.renderer.goToSleep();
   }
 
   /**
