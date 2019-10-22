@@ -6254,7 +6254,8 @@ function () {
           from.removeAttribute('data-transition-in', _this2.name);
           console.log(_this2);
           console.log(_this2.out);
-          console.log(_this2.goToSleep); // Call the transition attached to the view.
+          console.log(_this2.goToSleep);
+          _this2.goToSleep && _this2.goToSleep(); // Call the transition attached to the view.
 
           _this2.out && _this2.out({
             from: from,
