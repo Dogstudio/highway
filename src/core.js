@@ -238,6 +238,8 @@ export default class Core extends Emitter {
   async beforeFetch() {
     console.log('beforeFetch');
 
+    const urlBeforeHistoryPush = this.location.href;
+
     this.emit('BEFORE_HISTORY', {
       from: {
         page: this.From.properties.page,
@@ -250,7 +252,7 @@ export default class Core extends Emitter {
     console.log('from', this.From);
     console.log('to', this.To);
     console.log(this.trigger);
-    console.log('compare', this.location.href, this.asleep.href);
+    console.log('compare', urlBeforeHistoryPush, this.asleep.href);
 
     let goToSleep = false;
 
@@ -271,7 +273,7 @@ export default class Core extends Emitter {
       ) {
         console.log('click triggered sleep');
         goToSleep = true;
-        this.sleep(this.location.href, this.From.properties.page, this.From.properties.view, this.From);
+        this.sleep(urlBeforeHistoryPush, this.From.properties.page, this.From.properties.view, this.From);
       }
     }
 
