@@ -5766,7 +5766,7 @@ function (_Emitter) {
     value: function sleep() {
       console.log('GO THE FUCK TO SLEEP'); // this.asleep = this.lastFrom;
       // console.log('SLEEP', this.asleep);
-      //this.asleep.view is a link to the element in the page
+      // this.asleep.view is a link to the element in the page
       // console.log(this.asleep.renderer);
       // const sleeper = new this.asleep.renderer(this.From.properties);
       // console.log(sleeper.goToSleep());
@@ -6004,7 +6004,7 @@ function (_Emitter) {
       var _beforeFetch = core_asyncToGenerator(
       /*#__PURE__*/
       regeneratorRuntime.mark(function _callee2() {
-        var datas, results;
+        var datas, goToSleep, results;
         return regeneratorRuntime.wrap(function _callee2$(_context2) {
           while (1) {
             switch (_context2.prev = _context2.next) {
@@ -6040,70 +6040,75 @@ function (_Emitter) {
                   contextual: this.Contextual
                 };
                 console.log('from', this.From);
+                console.log(this.trigger);
+                goToSleep = false;
 
                 if (this.From.onSleep) {
-                  console.log('check on the goto sleep do something differerent');
+                  if (this.trigger === 'popstate' && window.App.popState.transition === 'pageToOverlay' || this.trigger !== 'script' && window.lastTransition === 'pageToOverlay') {
+                    console.log('click triggered sleep');
+                    goToSleep = true;
+                  }
                 } // We have to verify our cache in order to save some HTTPRequests. If we
                 // don't use any caching system everytime we would come back to a page we
                 // already saw we will have to fetch it again and it's pointless.
 
 
                 if (!this.cache.has(this.location.href)) {
-                  _context2.next = 20;
+                  _context2.next = 22;
                   break;
                 }
 
                 // We wait until the view is hidden.
                 console.log('We wait until the view is hidden.');
 
-                if (!this.From.onSleep) {
-                  _context2.next = 15;
+                if (!goToSleep) {
+                  _context2.next = 17;
                   break;
                 }
 
-                _context2.next = 13;
+                _context2.next = 15;
                 return this.From.sleep(datas);
 
-              case 13:
-                _context2.next = 17;
-                break;
-
               case 15:
-                _context2.next = 17;
-                return this.From.hide(datas);
+                _context2.next = 19;
+                break;
 
               case 17:
+                _context2.next = 19;
+                return this.From.hide(datas);
+
+              case 19:
                 // Get Properties
                 this.properties = this.cache.get(this.location.href);
-                _context2.next = 33;
+                _context2.next = 35;
                 break;
 
-              case 20:
+              case 22:
                 // We wait till all our Promises are resolved.
                 console.log('We wait till all our Promises are resolved.');
                 results = null;
 
-                if (!this.From.onSleep) {
-                  _context2.next = 28;
+                if (!goToSleep) {
+                  _context2.next = 30;
                   break;
                 }
 
-                _context2.next = 25;
+                _context2.next = 27;
                 return Promise.all([this.fetch(), this.From.sleep(datas)]);
 
-              case 25:
+              case 27:
                 results = _context2.sent;
-                _context2.next = 31;
+                _context2.next = 33;
                 break;
 
-              case 28:
-                _context2.next = 30;
+              case 30:
+                _context2.next = 32;
                 return Promise.all([this.fetch(), this.From.hide(datas)]);
 
-              case 30:
+              case 32:
                 results = _context2.sent;
 
-              case 31:
+              case 33:
                 // Now everything went fine we can extract the properties of the view we
                 // successfully fetched and keep going.
                 this.properties = this.Helpers.getProperties(results[0]); // We cache our result
@@ -6111,10 +6116,10 @@ function (_Emitter) {
 
                 this.cache.set(this.location.href, this.properties);
 
-              case 33:
+              case 35:
                 this.afterFetch();
 
-              case 34:
+              case 36:
               case "end":
                 return _context2.stop();
             }

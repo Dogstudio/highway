@@ -51,7 +51,7 @@ export default class Core extends Emitter {
     this.asleep = {
       page: null,
       view: null,
-      renderer: null,
+      renderer: null
     };
 
     // Events variables.
@@ -77,7 +77,7 @@ export default class Core extends Emitter {
     console.log('GO THE FUCK TO SLEEP');
     // this.asleep = this.lastFrom;
     // console.log('SLEEP', this.asleep);
-    //this.asleep.view is a link to the element in the page
+    // this.asleep.view is a link to the element in the page
     // console.log(this.asleep.renderer);
     // const sleeper = new this.asleep.renderer(this.From.properties);
     // console.log(sleeper.goToSleep());
@@ -270,9 +270,18 @@ export default class Core extends Emitter {
     };
 
     console.log('from', this.From);
-    if (this.From.onSleep) {
+    console.log(this.trigger);
 
-      console.log('check on the goto sleep do something differerent');
+    let goToSleep = false;
+
+    if (this.From.onSleep) {
+      if (
+        this.trigger === 'popstate' && window.App.popState.transition === 'pageToOverlay' ||
+          this.trigger !== 'script' && window.lastTransition === 'pageToOverlay'
+      ) {
+        console.log('click triggered sleep');
+        goToSleep = true;
+      }
     }
 
     // We have to verify our cache in order to save some HTTPRequests. If we
@@ -282,7 +291,7 @@ export default class Core extends Emitter {
       // We wait until the view is hidden.
       console.log('We wait until the view is hidden.');
 
-      if (this.From.onSleep) {
+      if (goToSleep) {
         await this.From.sleep(datas);
       } else {
         await this.From.hide(datas);
@@ -296,7 +305,7 @@ export default class Core extends Emitter {
       console.log('We wait till all our Promises are resolved.');
       let results = null;
 
-      if (this.From.onSleep) {
+      if (goToSleep) {
         results = await Promise.all([
           this.fetch(),
           this.From.sleep(datas)
