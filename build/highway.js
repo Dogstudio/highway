@@ -6175,6 +6175,7 @@ function (_Emitter) {
               case 0:
                 console.log('^_^ awaken sleeping page');
                 this.To = this.asleep.renderer;
+                this.asleep.view.classList.remove('view-asleep');
                 this.emit('NAVIGATE_IN', {
                   to: {
                     page: this.To.properties.page,
@@ -6185,13 +6186,13 @@ function (_Emitter) {
                 }); // We wait for the view transition to be over before resetting some variables
                 // and reattaching the events to all the new elligible links in our DOM.
 
-                _context3.next = 5;
+                _context3.next = 6;
                 return this.To.show({
                   trigger: this.trigger,
                   contextual: this.Contextual
                 });
 
-              case 5:
+              case 6:
                 this.popping = false;
                 this.running = false; // Detach Event on Links
 
@@ -6224,7 +6225,7 @@ function (_Emitter) {
                   renderer: null
                 };
 
-              case 14:
+              case 15:
               case "end":
                 return _context3.stop();
             }
