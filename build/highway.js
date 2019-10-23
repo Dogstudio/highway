@@ -6175,7 +6175,9 @@ function (_Emitter) {
               case 0:
                 console.log('^_^ awaken sleeping page');
                 this.To = this.asleep.renderer;
-                this.asleep.view.classList.remove('view-asleep');
+                console.log('first child', this.To.Transition.wrap.firstElementChild);
+                console.log('last child', this.To.Transition.wrap.lastElementChild);
+                this.To.Transition.wrap.firstElementChild.classList.remove('view-asleep');
                 this.emit('NAVIGATE_IN', {
                   to: {
                     page: this.To.properties.page,
@@ -6186,13 +6188,13 @@ function (_Emitter) {
                 }); // We wait for the view transition to be over before resetting some variables
                 // and reattaching the events to all the new elligible links in our DOM.
 
-                _context3.next = 6;
+                _context3.next = 8;
                 return this.To.show({
                   trigger: this.trigger,
                   contextual: this.Contextual
                 });
 
-              case 6:
+              case 8:
                 this.popping = false;
                 this.running = false; // Detach Event on Links
 
@@ -6225,7 +6227,7 @@ function (_Emitter) {
                   renderer: null
                 };
 
-              case 15:
+              case 17:
               case "end":
                 return _context3.stop();
             }
