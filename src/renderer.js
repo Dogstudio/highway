@@ -134,7 +134,7 @@ export default class Renderer {
   awaken(datas) {
     return new Promise(async resolve => {
 
-      console.log('renderer show', datas);
+      console.log('awaken renderer', datas);
 
       // Update DOM.
       this.update();

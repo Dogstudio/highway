@@ -352,7 +352,7 @@ export default class Core extends Emitter {
     } else {
 
       await Promise.all([
-        this.From.awaken(datas)
+        this.From.hide(datas)
       ]);
       this.properties = this.asleep.renderer.properties;
       this.awaken();
@@ -381,7 +381,7 @@ export default class Core extends Emitter {
 
     // We wait for the view transition to be over before resetting some variables
     // and reattaching the events to all the new elligible links in our DOM.
-    await this.To.show({
+    await this.To.awaken({
       trigger: this.trigger,
       contextual: this.Contextual
     });

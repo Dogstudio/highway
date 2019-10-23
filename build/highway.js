@@ -5392,7 +5392,7 @@ function () {
             while (1) {
               switch (_context4.prev = _context4.next) {
                 case 0:
-                  console.log('renderer show', datas); // Update DOM.
+                  console.log('awaken renderer', datas); // Update DOM.
 
                   _this4.update(); // The transition is set in your custom renderer with a getter called
                   // `transition` that should return the transition object you want to
@@ -6205,7 +6205,7 @@ function (_Emitter) {
 
               case 37:
                 _context2.next = 39;
-                return Promise.all([this.From.awaken(datas)]);
+                return Promise.all([this.From.hide(datas)]);
 
               case 39:
                 this.properties = this.asleep.renderer.properties;
@@ -6254,7 +6254,7 @@ function (_Emitter) {
                 // and reattaching the events to all the new elligible links in our DOM.
 
                 _context3.next = 5;
-                return this.To.show({
+                return this.To.awaken({
                   trigger: this.trigger,
                   contextual: this.Contextual
                 });
