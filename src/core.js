@@ -256,11 +256,15 @@ export default class Core extends Emitter {
     // console.log('compare', urlBeforeHistoryPush, this.asleep.href);
 
     let goToSleep = false;
-
+    let fetchPage = true;
     // console.log('window.App.popState.transition', window.App.popState);
     // console.log('window.lastTransition', window.lastTransition);
 
 
+    if (urlBeforeHistoryPush === this.asleep.href) {
+      console.log('DONT FETCH ITS ALSEEP IN THE PAGE');
+      fetchPage = false;
+    }
     if (this.From.onSleep) {
       if (
         this.trigger === 'popstate' && window.App.popState.transition === 'pageToOverlay' ||
@@ -300,55 +304,125 @@ export default class Core extends Emitter {
     };
 
 
-    if (urlBeforeHistoryPush === this.asleep.href) {
-      console.log('DONT FETCH ITS ALSEEP IN THE PAGE');
-    }
 
 
-    // We have to verify our cache in order to save some HTTPRequests. If we
-    // don't use any caching system everytime we would come back to a page we
-    // already saw we will have to fetch it again and it's pointless.
-    if (this.cache.has(this.location.href)) {
-      // We wait until the view is hidden.
-      // console.log('We wait until the view is hidden.');
 
-      if (goToSleep) {
-        await this.From.sleep(datas);
+    if (fetchPage) {
+      // We have to verify our cache in order to save some HTTPRequests. If we
+      // don't use any caching system everytime we would come back to a page we
+      // already saw we will have to fetch it again and it's pointless.
+      if (this.cache.has(this.location.href)) {
+        // We wait until the view is hidden.
+        // console.log('We wait until the view is hidden.');
+
+        if (goToSleep) {
+          await this.From.sleep(datas);
+        } else {
+          await this.From.hide(datas);
+        }
+
+        // Get Properties
+        this.properties = this.cache.get(this.location.href);
+
       } else {
-        await this.From.hide(datas);
+        // We wait till all our Promises are resolved.
+        // console.log('We wait till all our Promises are resolved.');
+        let results = null;
+
+        if (goToSleep) {
+          results = await Promise.all([
+            this.fetch(),
+            this.From.sleep(datas)
+          ]);
+        } else {
+          results = await Promise.all([
+            this.fetch(),
+            this.From.hide(datas)
+          ]);
+        }
+
+        // Now everything went fine we can extract the properties of the view we
+        // successfully fetched and keep going.
+        this.properties = this.Helpers.getProperties(results[0]);
+
+        // We cache our result
+        // eslint-disable-next-line
+        this.cache.set(this.location.href, this.properties);
+
       }
 
-      // Get Properties
-      this.properties = this.cache.get(this.location.href);
+      this.afterFetch(goToSleep);
 
     } else {
-      // We wait till all our Promises are resolved.
-      // console.log('We wait till all our Promises are resolved.');
-      let results = null;
 
-      if (goToSleep) {
-        results = await Promise.all([
-          this.fetch(),
-          this.From.sleep(datas)
-        ]);
-      } else {
-        results = await Promise.all([
-          this.fetch(),
-          this.From.hide(datas)
-        ]);
-      }
-
-      // Now everything went fine we can extract the properties of the view we
-      // successfully fetched and keep going.
-      this.properties = this.Helpers.getProperties(results[0]);
-
-      // We cache our result
-      // eslint-disable-next-line
-      this.cache.set(this.location.href, this.properties);
+      this.awaken();
 
     }
+  }
 
-    this.afterFetch(goToSleep);
+  /**
+   * Awaken sleeping page
+   */
+  async awaken() {
+    console.log('^_^ awaken sleeping page');
+    this.To = this.asleep.renderer;
+
+    this.emit('NAVIGATE_IN', {
+      to: {
+        page: this.To.properties.page,
+        view: this.To.wrap.lastElementChild
+      },
+      trigger: this.trigger,
+      location: this.location
+    });
+
+    // We wait for the view transition to be over before resetting some variables
+    // and reattaching the events to all the new elligible links in our DOM.
+    await this.To.show({
+      trigger: this.trigger,
+      contextual: this.Contextual
+    });
+
+    this.popping = false;
+    this.running = false;
+
+
+
+    // Detach Event on Links
+    this.detach(this.links);
+
+    // Get all elligible links.
+    this.links = document.querySelectorAll('a:not([target]):not([data-router-disabled])');
+
+    // Attach Event on Links
+    this.attach(this.links);
+
+    // Finally we emit a last event to create a hook for developers who want to
+    // make stuff when the navigation has ended.
+    this.emit('NAVIGATE_END', {
+      to: {
+        page: this.To.properties.page,
+        view: this.To.wrap.lastElementChild
+      },
+      from: {
+        page: this.From.properties.page,
+        view: this.From.properties.view
+      },
+      trigger: this.trigger,
+      location: this.location
+    });
+
+    // Last but not least we swap the From and To renderers for future navigations.
+    this.From = this.To;
+
+    // Reset Trigger
+    this.trigger = null;
+
+    this.asleep = {
+      page: null,
+      view: null,
+      renderer: null
+    };
   }
 
   /**

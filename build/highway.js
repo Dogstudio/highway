@@ -6013,7 +6013,7 @@ function (_Emitter) {
       var _beforeFetch = core_asyncToGenerator(
       /*#__PURE__*/
       regeneratorRuntime.mark(function _callee2() {
-        var urlBeforeHistoryPush, goToSleep, datas, results;
+        var urlBeforeHistoryPush, goToSleep, fetchPage, datas, results;
         return regeneratorRuntime.wrap(function _callee2$(_context2) {
           while (1) {
             switch (_context2.prev = _context2.next) {
@@ -6033,8 +6033,14 @@ function (_Emitter) {
                 // console.log(this.trigger);
                 // console.log('compare', urlBeforeHistoryPush, this.asleep.href);
 
-                goToSleep = false; // console.log('window.App.popState.transition', window.App.popState);
+                goToSleep = false;
+                fetchPage = true; // console.log('window.App.popState.transition', window.App.popState);
                 // console.log('window.lastTransition', window.lastTransition);
+
+                if (urlBeforeHistoryPush === this.asleep.href) {
+                  console.log('DONT FETCH ITS ALSEEP IN THE PAGE');
+                  fetchPage = false;
+                }
 
                 if (this.From.onSleep) {
                   if (this.trigger === 'popstate' && window.App.popState.transition === 'pageToOverlay' || this.trigger !== 'script' && window.lastTransition === 'pageToOverlay') {
@@ -6066,66 +6072,64 @@ function (_Emitter) {
                   contextual: this.Contextual
                 };
 
-                if (urlBeforeHistoryPush === this.asleep.href) {
-                  console.log('DONT FETCH ITS ALSEEP IN THE PAGE');
-                } // We have to verify our cache in order to save some HTTPRequests. If we
-                // don't use any caching system everytime we would come back to a page we
-                // already saw we will have to fetch it again and it's pointless.
-
+                if (!fetchPage) {
+                  _context2.next = 37;
+                  break;
+                }
 
                 if (!this.cache.has(this.location.href)) {
-                  _context2.next = 20;
+                  _context2.next = 22;
                   break;
                 }
 
                 if (!goToSleep) {
-                  _context2.next = 15;
+                  _context2.next = 17;
                   break;
                 }
 
-                _context2.next = 13;
+                _context2.next = 15;
                 return this.From.sleep(datas);
 
-              case 13:
-                _context2.next = 17;
-                break;
-
               case 15:
-                _context2.next = 17;
-                return this.From.hide(datas);
+                _context2.next = 19;
+                break;
 
               case 17:
+                _context2.next = 19;
+                return this.From.hide(datas);
+
+              case 19:
                 // Get Properties
                 this.properties = this.cache.get(this.location.href);
-                _context2.next = 32;
+                _context2.next = 34;
                 break;
 
-              case 20:
+              case 22:
                 // We wait till all our Promises are resolved.
                 // console.log('We wait till all our Promises are resolved.');
                 results = null;
 
                 if (!goToSleep) {
-                  _context2.next = 27;
+                  _context2.next = 29;
                   break;
                 }
 
-                _context2.next = 24;
+                _context2.next = 26;
                 return Promise.all([this.fetch(), this.From.sleep(datas)]);
 
-              case 24:
+              case 26:
                 results = _context2.sent;
-                _context2.next = 30;
+                _context2.next = 32;
                 break;
 
-              case 27:
-                _context2.next = 29;
+              case 29:
+                _context2.next = 31;
                 return Promise.all([this.fetch(), this.From.hide(datas)]);
 
-              case 29:
+              case 31:
                 results = _context2.sent;
 
-              case 30:
+              case 32:
                 // Now everything went fine we can extract the properties of the view we
                 // successfully fetched and keep going.
                 this.properties = this.Helpers.getProperties(results[0]); // We cache our result
@@ -6133,10 +6137,15 @@ function (_Emitter) {
 
                 this.cache.set(this.location.href, this.properties);
 
-              case 32:
+              case 34:
                 this.afterFetch(goToSleep);
+                _context2.next = 38;
+                break;
 
-              case 33:
+              case 37:
+                this.awaken();
+
+              case 38:
               case "end":
                 return _context2.stop();
             }
@@ -6151,6 +6160,85 @@ function (_Emitter) {
       return beforeFetch;
     }()
     /**
+     * Awaken sleeping page
+     */
+
+  }, {
+    key: "awaken",
+    value: function () {
+      var _awaken = core_asyncToGenerator(
+      /*#__PURE__*/
+      regeneratorRuntime.mark(function _callee3() {
+        return regeneratorRuntime.wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+                console.log('^_^ awaken sleeping page');
+                this.To = this.asleep.renderer;
+                this.emit('NAVIGATE_IN', {
+                  to: {
+                    page: this.To.properties.page,
+                    view: this.To.wrap.lastElementChild
+                  },
+                  trigger: this.trigger,
+                  location: this.location
+                }); // We wait for the view transition to be over before resetting some variables
+                // and reattaching the events to all the new elligible links in our DOM.
+
+                _context3.next = 5;
+                return this.To.show({
+                  trigger: this.trigger,
+                  contextual: this.Contextual
+                });
+
+              case 5:
+                this.popping = false;
+                this.running = false; // Detach Event on Links
+
+                this.detach(this.links); // Get all elligible links.
+
+                this.links = document.querySelectorAll('a:not([target]):not([data-router-disabled])'); // Attach Event on Links
+
+                this.attach(this.links); // Finally we emit a last event to create a hook for developers who want to
+                // make stuff when the navigation has ended.
+
+                this.emit('NAVIGATE_END', {
+                  to: {
+                    page: this.To.properties.page,
+                    view: this.To.wrap.lastElementChild
+                  },
+                  from: {
+                    page: this.From.properties.page,
+                    view: this.From.properties.view
+                  },
+                  trigger: this.trigger,
+                  location: this.location
+                }); // Last but not least we swap the From and To renderers for future navigations.
+
+                this.From = this.To; // Reset Trigger
+
+                this.trigger = null;
+                this.asleep = {
+                  page: null,
+                  view: null,
+                  renderer: null
+                };
+
+              case 14:
+              case "end":
+                return _context3.stop();
+            }
+          }
+        }, _callee3, this);
+      }));
+
+      function awaken() {
+        return _awaken.apply(this, arguments);
+      }
+
+      return awaken;
+    }()
+    /**
      * Push page in DOM
      *  @param {bool} goToSleep - is a page falling asleep
      */
@@ -6160,17 +6248,17 @@ function (_Emitter) {
     value: function () {
       var _afterFetch = core_asyncToGenerator(
       /*#__PURE__*/
-      regeneratorRuntime.mark(function _callee3(goToSleep) {
+      regeneratorRuntime.mark(function _callee4(goToSleep) {
         var Renderer;
-        return regeneratorRuntime.wrap(function _callee3$(_context3) {
+        return regeneratorRuntime.wrap(function _callee4$(_context4) {
           while (1) {
-            switch (_context3.prev = _context3.next) {
+            switch (_context4.prev = _context4.next) {
               case 0:
-                _context3.next = 2;
+                _context4.next = 2;
                 return this.properties.renderer;
 
               case 2:
-                Renderer = _context3.sent;
+                Renderer = _context4.sent;
                 this.To = new Renderer(this.properties);
                 this.To.add(goToSleep); // We then emit a now event right before the view is shown to create a hook
                 // for developers who want to make stuff before the view is visible.
@@ -6185,7 +6273,7 @@ function (_Emitter) {
                 }); // We wait for the view transition to be over before resetting some variables
                 // and reattaching the events to all the new elligible links in our DOM.
 
-                _context3.next = 8;
+                _context4.next = 8;
                 return this.To.show({
                   trigger: this.trigger,
                   contextual: this.Contextual
@@ -6221,10 +6309,10 @@ function (_Emitter) {
 
               case 16:
               case "end":
-                return _context3.stop();
+                return _context4.stop();
             }
           }
-        }, _callee3, this);
+        }, _callee4, this);
       }));
 
       function afterFetch(_x) {
