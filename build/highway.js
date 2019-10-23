@@ -5774,8 +5774,6 @@ function (_Emitter) {
         view: view,
         renderer: renderer
       };
-      console.log(this.asleep);
-      view.parentNode.appendChild(view);
     }
     /**
      * Attach `click` event on links.
@@ -6126,9 +6124,14 @@ function (_Emitter) {
                 this.cache.set(this.location.href, this.properties);
 
               case 31:
+                if (goToSleep) {
+                  console.log(this.From.properties.view.parentNode.innerHTML);
+                  this.From.properties.view.parentNode.appendChild(this.From.properties.view);
+                }
+
                 this.afterFetch();
 
-              case 32:
+              case 33:
               case "end":
                 return _context2.stop();
             }

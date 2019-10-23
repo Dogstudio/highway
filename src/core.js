@@ -84,9 +84,6 @@ export default class Core extends Emitter {
       view,
       renderer
     };
-    console.log(this.asleep);
-
-    view.parentNode.appendChild(view);
   }
 
   /**
@@ -344,6 +341,11 @@ export default class Core extends Emitter {
       // eslint-disable-next-line
       this.cache.set(this.location.href, this.properties);
 
+    }
+
+    if (goToSleep) {
+      console.log(this.From.properties.view.parentNode.innerHTML);
+      this.From.properties.view.parentNode.appendChild(this.From.properties.view);
     }
 
     this.afterFetch();
