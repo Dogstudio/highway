@@ -6202,8 +6202,8 @@ function (_Emitter) {
               case 5:
                 this.popping = false;
                 this.running = false;
-                console.log(this.To.Transition.wrap.lastElementChild.classList); // this.To.Transition.wrap.lastElementChild.classList.remove('view-asleep');
-
+                console.log(this.To.Transition.wrap.lastElementChild.classList);
+                this.To.Transition.wrap.lastElementChild.classList.remove('view-asleep');
                 console.log(this.To.Transition.wrap.lastElementChild.classList); // Detach Event on Links
 
                 this.detach(this.links); // Get all elligible links.
@@ -6235,7 +6235,7 @@ function (_Emitter) {
                   renderer: null
                 };
 
-              case 16:
+              case 17:
               case "end":
                 return _context3.stop();
             }
