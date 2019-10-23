@@ -6174,10 +6174,12 @@ function (_Emitter) {
             switch (_context3.prev = _context3.next) {
               case 0:
                 console.log('^_^ awaken sleeping page');
-                this.To = this.asleep.renderer;
-                console.log('first child', this.To.Transition.wrap.firstElementChild);
-                console.log('last child', this.To.Transition.wrap.lastElementChild);
+                this.To = this.asleep.renderer; // console.log('first child', this.To.Transition.wrap.firstElementChild);
+                // console.log('last child', this.To.Transition.wrap.lastElementChild);
+
+                console.log(this.To.Transition.wrap.lastElementChild.classList);
                 this.To.Transition.wrap.lastElementChild.classList.remove('view-asleep');
+                console.log(this.To.Transition.wrap.lastElementChild.classList);
                 this.emit('NAVIGATE_IN', {
                   to: {
                     page: this.To.properties.page,
