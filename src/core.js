@@ -71,16 +71,19 @@ export default class Core extends Emitter {
 
   /**
    * Sleep .
-   *
+   * @arg {string} href — href of sleeping page
+   * @arg {object} page — the actual page
+   * @arg {object} view — the view of the page
+   * @arg {object} renderer — the renderer of the page
    */
-  sleep() {
-    console.log('GO THE FUCK TO SLEEP');
-    // this.asleep = this.lastFrom;
-    // console.log('SLEEP', this.asleep);
-    // this.asleep.view is a link to the element in the page
-    // console.log(this.asleep.renderer);
-    // const sleeper = new this.asleep.renderer(this.From.properties);
-    // console.log(sleeper.goToSleep());
+  sleep(href, page, view, renderer) {
+    console.log('Store SLEEPING PAGE');
+    this.asleep = {
+      href,
+      page,
+      view,
+      renderer
+    };
   }
 
   /**
@@ -270,7 +273,9 @@ export default class Core extends Emitter {
     };
 
     console.log('from', this.From);
+    console.log('to', this.To);
     console.log(this.trigger);
+    console.log('compare', this.location.href, this.asleep.href);
 
     let goToSleep = false;
 
@@ -281,6 +286,7 @@ export default class Core extends Emitter {
       ) {
         console.log('click triggered sleep');
         goToSleep = true;
+        this.sleep(this.location.href, this.From.properties.page, this.From.properties.view, this.From);
       }
     }
 

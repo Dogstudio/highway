@@ -2,11 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="50fdb22d-dc16-451e-9f33-0c07222efa17" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/jsLinters/eslint.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/highway.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/highway.min.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/highway.min.js.gz" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/core.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/core.js" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -29,8 +24,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/core.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="218">
-              <caret line="286" column="30" selection-start-line="286" selection-start-column="30" selection-end-line="286" selection-end-column="30" />
+            <state relative-caret-position="180">
+              <caret line="275" lean-forward="true" selection-start-line="275" selection-end-line="275" />
             </state>
           </provider>
         </entry>
@@ -180,12 +175,12 @@
       <workItem from="1567599570204" duration="297000" />
       <workItem from="1567599883091" duration="6000" />
       <workItem from="1571730561867" duration="17920000" />
-      <workItem from="1571815978157" duration="1067000" />
+      <workItem from="1571815978157" duration="1761000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="19290000" />
+    <option name="totallyTimeSpent" value="19984000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="1736" y="26" width="1111" height="743" extended-state="0" />
@@ -258,8 +253,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/core.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="218">
-          <caret line="286" column="30" selection-start-line="286" selection-start-column="30" selection-end-line="286" selection-end-column="30" />
+        <state relative-caret-position="180">
+          <caret line="275" lean-forward="true" selection-start-line="275" selection-end-line="275" />
         </state>
       </provider>
     </entry>
