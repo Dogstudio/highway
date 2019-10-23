@@ -379,6 +379,10 @@ export default class Core extends Emitter {
       location: this.location
     });
 
+    console.log(this.To.Transition.wrap.lastElementChild.classList);
+    this.To.Transition.wrap.lastElementChild.classList.remove('view-asleep');
+    console.log(this.To.Transition.wrap.lastElementChild.classList);
+
     // We wait for the view transition to be over before resetting some variables
     // and reattaching the events to all the new elligible links in our DOM.
     await this.To.awaken({
@@ -389,9 +393,7 @@ export default class Core extends Emitter {
     this.popping = false;
     this.running = false;
 
-    console.log(this.To.Transition.wrap.lastElementChild.classList);
-    this.To.Transition.wrap.lastElementChild.classList.remove('view-asleep');
-    console.log(this.To.Transition.wrap.lastElementChild.classList);
+
 
     // Detach Event on Links
     this.detach(this.links);

@@ -6250,21 +6250,21 @@ function (_Emitter) {
                   },
                   trigger: this.trigger,
                   location: this.location
-                }); // We wait for the view transition to be over before resetting some variables
+                });
+                console.log(this.To.Transition.wrap.lastElementChild.classList);
+                this.To.Transition.wrap.lastElementChild.classList.remove('view-asleep');
+                console.log(this.To.Transition.wrap.lastElementChild.classList); // We wait for the view transition to be over before resetting some variables
                 // and reattaching the events to all the new elligible links in our DOM.
 
-                _context3.next = 5;
+                _context3.next = 8;
                 return this.To.awaken({
                   trigger: this.trigger,
                   contextual: this.Contextual
                 });
 
-              case 5:
+              case 8:
                 this.popping = false;
-                this.running = false;
-                console.log(this.To.Transition.wrap.lastElementChild.classList);
-                this.To.Transition.wrap.lastElementChild.classList.remove('view-asleep');
-                console.log(this.To.Transition.wrap.lastElementChild.classList); // Detach Event on Links
+                this.running = false; // Detach Event on Links
 
                 this.detach(this.links); // Get all elligible links.
 
