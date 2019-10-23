@@ -369,9 +369,6 @@ export default class Core extends Emitter {
 
     // console.log('first child', this.To.Transition.wrap.firstElementChild);
     // console.log('last child', this.To.Transition.wrap.lastElementChild);
-    console.log(this.To.Transition.wrap.lastElementChild.classList);
-    this.To.Transition.wrap.lastElementChild.classList.remove('view-asleep');
-    console.log(this.To.Transition.wrap.lastElementChild.classList);
 
     this.emit('NAVIGATE_IN', {
       to: {
@@ -392,7 +389,9 @@ export default class Core extends Emitter {
     this.popping = false;
     this.running = false;
 
-
+    console.log(this.To.Transition.wrap.lastElementChild.classList);
+    this.To.Transition.wrap.lastElementChild.classList.remove('view-asleep');
+    console.log(this.To.Transition.wrap.lastElementChild.classList);
 
     // Detach Event on Links
     this.detach(this.links);

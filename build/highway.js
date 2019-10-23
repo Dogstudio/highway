@@ -6177,9 +6177,6 @@ function (_Emitter) {
                 this.To = this.asleep.renderer; // console.log('first child', this.To.Transition.wrap.firstElementChild);
                 // console.log('last child', this.To.Transition.wrap.lastElementChild);
 
-                console.log(this.To.Transition.wrap.lastElementChild.classList);
-                this.To.Transition.wrap.lastElementChild.classList.remove('view-asleep');
-                console.log(this.To.Transition.wrap.lastElementChild.classList);
                 this.emit('NAVIGATE_IN', {
                   to: {
                     page: this.To.properties.page,
@@ -6190,15 +6187,18 @@ function (_Emitter) {
                 }); // We wait for the view transition to be over before resetting some variables
                 // and reattaching the events to all the new elligible links in our DOM.
 
-                _context3.next = 8;
+                _context3.next = 5;
                 return this.To.show({
                   trigger: this.trigger,
                   contextual: this.Contextual
                 });
 
-              case 8:
+              case 5:
                 this.popping = false;
-                this.running = false; // Detach Event on Links
+                this.running = false;
+                console.log(this.To.Transition.wrap.lastElementChild.classList);
+                this.To.Transition.wrap.lastElementChild.classList.remove('view-asleep');
+                console.log(this.To.Transition.wrap.lastElementChild.classList); // Detach Event on Links
 
                 this.detach(this.links); // Get all elligible links.
 
