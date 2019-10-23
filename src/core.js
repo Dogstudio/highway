@@ -246,7 +246,7 @@ export default class Core extends Emitter {
     let goToSleep = false;
 
     console.log('this.trigger', this.trigger);
-    console.log('window.App.popState.transition', window.App.popState.transition);
+    console.log('window.App.popState.transition', window.App.popState);
     console.log('window.lastTransition', window.lastTransition);
 
     if (this.From.onSleep) {
