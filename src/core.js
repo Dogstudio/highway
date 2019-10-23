@@ -358,11 +358,6 @@ export default class Core extends Emitter {
     this.To = new Renderer(this.properties);
     this.To.add();
 
-    if (goToSleep) {
-      console.log(this.From.properties.view.parentNode.innerHTML);
-      this.From.properties.view.parentNode.appendChild(this.From.properties.view);
-    }
-
     // We then emit a now event right before the view is shown to create a hook
     // for developers who want to make stuff before the view is visible.
     this.emit('NAVIGATE_IN', {
@@ -383,6 +378,11 @@ export default class Core extends Emitter {
 
     this.popping = false;
     this.running = false;
+
+    if (goToSleep) {
+      console.log(this.From.properties.view.parentNode.innerHTML);
+      this.From.properties.view.parentNode.appendChild(this.From.properties.view);
+    }
 
     // Detach Event on Links
     this.detach(this.links);

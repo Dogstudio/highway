@@ -6162,14 +6162,8 @@ function (_Emitter) {
               case 2:
                 Renderer = _context3.sent;
                 this.To = new Renderer(this.properties);
-                this.To.add();
-
-                if (goToSleep) {
-                  console.log(this.From.properties.view.parentNode.innerHTML);
-                  this.From.properties.view.parentNode.appendChild(this.From.properties.view);
-                } // We then emit a now event right before the view is shown to create a hook
+                this.To.add(); // We then emit a now event right before the view is shown to create a hook
                 // for developers who want to make stuff before the view is visible.
-
 
                 this.emit('NAVIGATE_IN', {
                   to: {
@@ -6181,15 +6175,21 @@ function (_Emitter) {
                 }); // We wait for the view transition to be over before resetting some variables
                 // and reattaching the events to all the new elligible links in our DOM.
 
-                _context3.next = 9;
+                _context3.next = 8;
                 return this.To.show({
                   trigger: this.trigger,
                   contextual: this.Contextual
                 });
 
-              case 9:
+              case 8:
                 this.popping = false;
-                this.running = false; // Detach Event on Links
+                this.running = false;
+
+                if (goToSleep) {
+                  console.log(this.From.properties.view.parentNode.innerHTML);
+                  this.From.properties.view.parentNode.appendChild(this.From.properties.view);
+                } // Detach Event on Links
+
 
                 this.detach(this.links); // Get all elligible links.
 
