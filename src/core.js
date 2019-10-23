@@ -343,24 +343,25 @@ export default class Core extends Emitter {
 
     }
 
-    if (goToSleep) {
-      console.log(this.From.properties.view.parentNode.innerHTML);
-      this.From.properties.view.parentNode.appendChild(this.From.properties.view);
-    }
-
-    this.afterFetch();
+    this.afterFetch(goToSleep);
   }
 
   /**
    * Push page in DOM
+   *  @param {bool} goToSleep - is a page falling asleep
    */
-  async afterFetch() {
+  async afterFetch(goToSleep) {
     // We are calling the renderer attached to the view we just fetched and we
     // are adding the [data-router-view] in our DOM.
     const Renderer = await this.properties.renderer;
 
     this.To = new Renderer(this.properties);
     this.To.add();
+
+    if (goToSleep) {
+      console.log(this.From.properties.view.parentNode.innerHTML);
+      this.From.properties.view.parentNode.appendChild(this.From.properties.view);
+    }
 
     // We then emit a now event right before the view is shown to create a hook
     // for developers who want to make stuff before the view is visible.

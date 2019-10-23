@@ -6124,14 +6124,9 @@ function (_Emitter) {
                 this.cache.set(this.location.href, this.properties);
 
               case 31:
-                if (goToSleep) {
-                  console.log(this.From.properties.view.parentNode.innerHTML);
-                  this.From.properties.view.parentNode.appendChild(this.From.properties.view);
-                }
+                this.afterFetch(goToSleep);
 
-                this.afterFetch();
-
-              case 33:
+              case 32:
               case "end":
                 return _context2.stop();
             }
@@ -6147,6 +6142,7 @@ function (_Emitter) {
     }()
     /**
      * Push page in DOM
+     *  @param {bool} goToSleep - is a page falling asleep
      */
 
   }, {
@@ -6154,7 +6150,7 @@ function (_Emitter) {
     value: function () {
       var _afterFetch = core_asyncToGenerator(
       /*#__PURE__*/
-      regeneratorRuntime.mark(function _callee3() {
+      regeneratorRuntime.mark(function _callee3(goToSleep) {
         var Renderer;
         return regeneratorRuntime.wrap(function _callee3$(_context3) {
           while (1) {
@@ -6166,8 +6162,14 @@ function (_Emitter) {
               case 2:
                 Renderer = _context3.sent;
                 this.To = new Renderer(this.properties);
-                this.To.add(); // We then emit a now event right before the view is shown to create a hook
+                this.To.add();
+
+                if (goToSleep) {
+                  console.log(this.From.properties.view.parentNode.innerHTML);
+                  this.From.properties.view.parentNode.appendChild(this.From.properties.view);
+                } // We then emit a now event right before the view is shown to create a hook
                 // for developers who want to make stuff before the view is visible.
+
 
                 this.emit('NAVIGATE_IN', {
                   to: {
@@ -6179,13 +6181,13 @@ function (_Emitter) {
                 }); // We wait for the view transition to be over before resetting some variables
                 // and reattaching the events to all the new elligible links in our DOM.
 
-                _context3.next = 8;
+                _context3.next = 9;
                 return this.To.show({
                   trigger: this.trigger,
                   contextual: this.Contextual
                 });
 
-              case 8:
+              case 9:
                 this.popping = false;
                 this.running = false; // Detach Event on Links
 
@@ -6213,7 +6215,7 @@ function (_Emitter) {
 
                 this.trigger = null;
 
-              case 16:
+              case 17:
               case "end":
                 return _context3.stop();
             }
@@ -6221,7 +6223,7 @@ function (_Emitter) {
         }, _callee3, this);
       }));
 
-      function afterFetch() {
+      function afterFetch(_x) {
         return _afterFetch.apply(this, arguments);
       }
 
