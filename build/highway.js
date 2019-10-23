@@ -5226,7 +5226,8 @@ function () {
             while (1) {
               switch (_context.prev = _context.next) {
                 case 0:
-                  // Update DOM.
+                  console.log('renderer show', datas); // Update DOM.
+
                   _this.update(); // The `onEnter` method if set is called everytime the view is appended
                   // to the DOM. This let you do some crazy stuffs at this right moment.
 
@@ -5238,14 +5239,14 @@ function () {
                   _context.t0 = _this.Transition;
 
                   if (!_context.t0) {
-                    _context.next = 6;
+                    _context.next = 7;
                     break;
                   }
 
-                  _context.next = 6;
+                  _context.next = 7;
                   return _this.Transition.show(datas);
 
-                case 6:
+                case 7:
                   // The `onEnterCompleted` method if set in your custom renderer is called
                   // everytime a transition is over if set. Otherwise it's called right after
                   // the `onEnter` method.
@@ -5253,7 +5254,7 @@ function () {
 
                   resolve();
 
-                case 8:
+                case 9:
                 case "end":
                   return _context.stop();
               }

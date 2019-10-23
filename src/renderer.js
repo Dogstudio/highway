@@ -61,6 +61,9 @@ export default class Renderer {
    */
   show(datas) {
     return new Promise(async resolve => {
+
+      console.log('renderer show', datas);
+
       // Update DOM.
       this.update();
 
