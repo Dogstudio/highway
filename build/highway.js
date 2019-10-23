@@ -6177,7 +6177,7 @@ function (_Emitter) {
                 this.To = this.asleep.renderer;
                 console.log('first child', this.To.Transition.wrap.firstElementChild);
                 console.log('last child', this.To.Transition.wrap.lastElementChild);
-                this.To.Transition.wrap.firstElementChild.classList.remove('view-asleep');
+                this.To.Transition.wrap.lastElementChild.classList.remove('view-asleep');
                 this.emit('NAVIGATE_IN', {
                   to: {
                     page: this.To.properties.page,
