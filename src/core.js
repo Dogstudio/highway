@@ -238,6 +238,24 @@ export default class Core extends Emitter {
   async beforeFetch() {
     console.log('beforeFetch');
 
+    console.log('from', this.From);
+    console.log('to', this.To);
+    console.log(this.trigger);
+    console.log('compare', this.location.href, this.asleep.href);
+
+    let goToSleep = false;
+
+    if (this.From.onSleep) {
+      if (
+        this.trigger === 'popstate' && window.App.popState.transition === 'pageToOverlay' ||
+          this.trigger !== 'script' && window.lastTransition === 'pageToOverlay'
+      ) {
+        console.log('click triggered sleep');
+        goToSleep = true;
+        this.sleep(this.location.href, this.From.properties.page, this.From.properties.view, this.From);
+      }
+    }
+
     this.emit('BEFORE_HISTORY', {
       from: {
         page: this.From.properties.page,
@@ -272,23 +290,6 @@ export default class Core extends Emitter {
       contextual: this.Contextual
     };
 
-    console.log('from', this.From);
-    console.log('to', this.To);
-    console.log(this.trigger);
-    console.log('compare', this.location.href, this.asleep.href);
-
-    let goToSleep = false;
-
-    if (this.From.onSleep) {
-      if (
-        this.trigger === 'popstate' && window.App.popState.transition === 'pageToOverlay' ||
-          this.trigger !== 'script' && window.lastTransition === 'pageToOverlay'
-      ) {
-        console.log('click triggered sleep');
-        goToSleep = true;
-        this.sleep(this.location.href, this.From.properties.page, this.From.properties.view, this.From);
-      }
-    }
 
     // We have to verify our cache in order to save some HTTPRequests. If we
     // don't use any caching system everytime we would come back to a page we

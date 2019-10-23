@@ -6008,12 +6008,26 @@ function (_Emitter) {
       var _beforeFetch = core_asyncToGenerator(
       /*#__PURE__*/
       regeneratorRuntime.mark(function _callee2() {
-        var datas, goToSleep, results;
+        var goToSleep, datas, results;
         return regeneratorRuntime.wrap(function _callee2$(_context2) {
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
                 console.log('beforeFetch');
+                console.log('from', this.From);
+                console.log('to', this.To);
+                console.log(this.trigger);
+                console.log('compare', this.location.href, this.asleep.href);
+                goToSleep = false;
+
+                if (this.From.onSleep) {
+                  if (this.trigger === 'popstate' && window.App.popState.transition === 'pageToOverlay' || this.trigger !== 'script' && window.lastTransition === 'pageToOverlay') {
+                    console.log('click triggered sleep');
+                    goToSleep = true;
+                    this.sleep(this.location.href, this.From.properties.page, this.From.properties.view, this.From);
+                  }
+                }
+
                 this.emit('BEFORE_HISTORY', {
                   from: {
                     page: this.From.properties.page,
@@ -6042,23 +6056,9 @@ function (_Emitter) {
                 datas = {
                   trigger: this.trigger,
                   contextual: this.Contextual
-                };
-                console.log('from', this.From);
-                console.log('to', this.To);
-                console.log(this.trigger);
-                console.log('compare', this.location.href, this.asleep.href);
-                goToSleep = false;
-
-                if (this.From.onSleep) {
-                  if (this.trigger === 'popstate' && window.App.popState.transition === 'pageToOverlay' || this.trigger !== 'script' && window.lastTransition === 'pageToOverlay') {
-                    console.log('click triggered sleep');
-                    goToSleep = true;
-                    this.sleep(this.location.href, this.From.properties.page, this.From.properties.view, this.From);
-                  }
-                } // We have to verify our cache in order to save some HTTPRequests. If we
+                }; // We have to verify our cache in order to save some HTTPRequests. If we
                 // don't use any caching system everytime we would come back to a page we
                 // already saw we will have to fetch it again and it's pointless.
-
 
                 if (!this.cache.has(this.location.href)) {
                   _context2.next = 24;
