@@ -236,10 +236,10 @@ export default class Core extends Emitter {
    * Do some tests before HTTP requests to optimize pipeline.
    */
   async beforeFetch() {
-    console.log('beforeFetch');
+    // console.log('beforeFetch');
 
     const urlBeforeHistoryPush = window.location.href;
-    console.log('urlBeforeHistoryPush', urlBeforeHistoryPush);
+    // console.log('urlBeforeHistoryPush', urlBeforeHistoryPush);
 
     this.emit('BEFORE_HISTORY', {
       from: {
@@ -250,29 +250,23 @@ export default class Core extends Emitter {
       location: this.location
     });
 
-    console.log('from', this.From);
-    console.log('to', this.To);
-    console.log(this.trigger);
-    console.log('compare', urlBeforeHistoryPush, this.asleep.href);
+    // console.log('from', this.From);
+    // console.log('to', this.To);
+    // console.log(this.trigger);
+    // console.log('compare', urlBeforeHistoryPush, this.asleep.href);
 
     let goToSleep = false;
 
-    console.log('window.App.popState.transition', window.App.popState);
-    console.log('window.lastTransition', window.lastTransition);
+    // console.log('window.App.popState.transition', window.App.popState);
+    // console.log('window.lastTransition', window.lastTransition);
 
-    // first time check
-    if (!window.App.popState && !window.lastTransition) {
-      if (this.trigger !== 'popstate' && this.trigger !== 'script') {
-        console.log('first time?');
-      }
-    }
 
     if (this.From.onSleep) {
       if (
         this.trigger === 'popstate' && window.App.popState.transition === 'pageToOverlay' ||
           this.trigger !== 'script' && window.lastTransition === 'pageToOverlay'
       ) {
-        console.log('click triggered sleep');
+        // console.log('click triggered sleep');
         goToSleep = true;
         this.sleep(urlBeforeHistoryPush, this.From.properties.page, this.From.properties.view, this.From);
       }
@@ -311,7 +305,7 @@ export default class Core extends Emitter {
     // already saw we will have to fetch it again and it's pointless.
     if (this.cache.has(this.location.href)) {
       // We wait until the view is hidden.
-      console.log('We wait until the view is hidden.');
+      // console.log('We wait until the view is hidden.');
 
       if (goToSleep) {
         await this.From.sleep(datas);
@@ -324,7 +318,7 @@ export default class Core extends Emitter {
 
     } else {
       // We wait till all our Promises are resolved.
-      console.log('We wait till all our Promises are resolved.');
+      // console.log('We wait till all our Promises are resolved.');
       let results = null;
 
       if (goToSleep) {
