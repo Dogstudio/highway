@@ -239,6 +239,7 @@ export default class Core extends Emitter {
     console.log('beforeFetch');
 
     const urlBeforeHistoryPush = this.location.href;
+    console.log('urlBeforeHistoryPush', urlBeforeHistoryPush);
 
     this.emit('BEFORE_HISTORY', {
       from: {
