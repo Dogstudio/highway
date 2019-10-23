@@ -379,10 +379,7 @@ export default class Core extends Emitter {
     this.popping = false;
     this.running = false;
 
-    if (goToSleep) {
-      console.log(this.From.properties.view.parentNode.innerHTML);
-      this.From.properties.view.parentNode.appendChild(this.From.properties.view);
-    }
+
 
     // Detach Event on Links
     this.detach(this.links);
@@ -407,6 +404,11 @@ export default class Core extends Emitter {
       trigger: this.trigger,
       location: this.location
     });
+
+    if (goToSleep) {
+      console.log(this.From.properties.view.parentNode.innerHTML);
+      this.From.properties.view.parentNode.appendChild(this.From.properties.view);
+    }
 
     // Last but not least we swap the From and To renderers for future navigations.
     this.From = this.To;
