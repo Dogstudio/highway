@@ -238,7 +238,7 @@ export default class Core extends Emitter {
   async beforeFetch() {
     console.log('beforeFetch');
 
-    const urlBeforeHistoryPush = this.location.href;
+    const urlBeforeHistoryPush = window.location.href;
     console.log('urlBeforeHistoryPush', urlBeforeHistoryPush);
 
     this.emit('BEFORE_HISTORY', {

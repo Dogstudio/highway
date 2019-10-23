@@ -6014,7 +6014,7 @@ function (_Emitter) {
             switch (_context2.prev = _context2.next) {
               case 0:
                 console.log('beforeFetch');
-                urlBeforeHistoryPush = this.location.href;
+                urlBeforeHistoryPush = window.location.href;
                 console.log('urlBeforeHistoryPush', urlBeforeHistoryPush);
                 this.emit('BEFORE_HISTORY', {
                   from: {
