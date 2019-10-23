@@ -5767,13 +5767,14 @@ function (_Emitter) {
   core_createClass(Core, [{
     key: "sleep",
     value: function sleep(href, page, view, renderer) {
-      console.log('Store SLEEPING PAGE', href);
+      console.log('Store SLEEPING PAGE');
       this.asleep = {
         href: href,
         page: page,
         view: view,
         renderer: renderer
       };
+      console.log(this.asleep);
     }
     /**
      * Attach `click` event on links.

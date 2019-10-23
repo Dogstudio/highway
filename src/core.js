@@ -77,13 +77,14 @@ export default class Core extends Emitter {
    * @arg {object} renderer — the renderer of the page
    */
   sleep(href, page, view, renderer) {
-    console.log('Store SLEEPING PAGE', href);
+    console.log('Store SLEEPING PAGE');
     this.asleep = {
       href,
       page,
       view,
       renderer
     };
+    console.log(this.asleep);
   }
 
   /**
