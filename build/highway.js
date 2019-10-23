@@ -5767,7 +5767,7 @@ function (_Emitter) {
   core_createClass(Core, [{
     key: "sleep",
     value: function sleep(href, page, view, renderer) {
-      console.log('Store SLEEPING PAGE');
+      console.log('Store SLEEPING PAGE', href);
       this.asleep = {
         href: href,
         page: page,
