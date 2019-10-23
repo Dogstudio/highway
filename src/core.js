@@ -238,6 +238,15 @@ export default class Core extends Emitter {
   async beforeFetch() {
     console.log('beforeFetch');
 
+    this.emit('BEFORE_HISTORY', {
+      from: {
+        page: this.From.properties.page,
+        view: this.From.properties.view
+      },
+      trigger: this.trigger,
+      location: this.location
+    });
+
     console.log('from', this.From);
     console.log('to', this.To);
     console.log(this.trigger);
@@ -245,9 +254,15 @@ export default class Core extends Emitter {
 
     let goToSleep = false;
 
-    console.log('this.trigger', this.trigger);
     console.log('window.App.popState.transition', window.App.popState);
     console.log('window.lastTransition', window.lastTransition);
+
+    // first time check
+    if (!window.App.popState && !window.lastTransition) {
+      if (this.trigger !== 'popstate' && this.trigger !== 'script') {
+        console.log('first time?');
+      }
+    }
 
     if (this.From.onSleep) {
       if (
@@ -260,14 +275,7 @@ export default class Core extends Emitter {
       }
     }
 
-    this.emit('BEFORE_HISTORY', {
-      from: {
-        page: this.From.properties.page,
-        view: this.From.properties.view
-      },
-      trigger: this.trigger,
-      location: this.location
-    });
+
 
     // Push State
     this.pushState();

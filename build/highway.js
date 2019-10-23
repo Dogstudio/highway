@@ -6014,23 +6014,6 @@ function (_Emitter) {
             switch (_context2.prev = _context2.next) {
               case 0:
                 console.log('beforeFetch');
-                console.log('from', this.From);
-                console.log('to', this.To);
-                console.log(this.trigger);
-                console.log('compare', this.location.href, this.asleep.href);
-                goToSleep = false;
-                console.log('this.trigger', this.trigger);
-                console.log('window.App.popState.transition', window.App.popState);
-                console.log('window.lastTransition', window.lastTransition);
-
-                if (this.From.onSleep) {
-                  if (this.trigger === 'popstate' && window.App.popState.transition === 'pageToOverlay' || this.trigger !== 'script' && window.lastTransition === 'pageToOverlay') {
-                    console.log('click triggered sleep');
-                    goToSleep = true;
-                    this.sleep(this.location.href, this.From.properties.page, this.From.properties.view, this.From);
-                  }
-                }
-
                 this.emit('BEFORE_HISTORY', {
                   from: {
                     page: this.From.properties.page,
@@ -6038,7 +6021,29 @@ function (_Emitter) {
                   },
                   trigger: this.trigger,
                   location: this.location
-                }); // Push State
+                });
+                console.log('from', this.From);
+                console.log('to', this.To);
+                console.log(this.trigger);
+                console.log('compare', this.location.href, this.asleep.href);
+                goToSleep = false;
+                console.log('window.App.popState.transition', window.App.popState);
+                console.log('window.lastTransition', window.lastTransition); // first time check
+
+                if (!window.App.popState && !window.lastTransition) {
+                  if (this.trigger !== 'popstate' && this.trigger !== 'script') {
+                    console.log('first time?');
+                  }
+                }
+
+                if (this.From.onSleep) {
+                  if (this.trigger === 'popstate' && window.App.popState.transition === 'pageToOverlay' || this.trigger !== 'script' && window.lastTransition === 'pageToOverlay') {
+                    console.log('click triggered sleep');
+                    goToSleep = true;
+                    this.sleep(this.location.href, this.From.properties.page, this.From.properties.view, this.From);
+                  }
+                } // Push State
+
 
                 this.pushState(); // We lock the navigation to avoid multiples clicks that could overload the
                 // navigation process meaning that if the a navigation is running the user
