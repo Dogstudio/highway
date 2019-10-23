@@ -356,7 +356,7 @@ export default class Core extends Emitter {
     const Renderer = await this.properties.renderer;
 
     this.To = new Renderer(this.properties);
-    this.To.add();
+    this.To.add(goToSleep);
 
     // We then emit a now event right before the view is shown to create a hook
     // for developers who want to make stuff before the view is visible.
@@ -404,11 +404,6 @@ export default class Core extends Emitter {
       trigger: this.trigger,
       location: this.location
     });
-
-    if (goToSleep) {
-      console.log(this.From.properties.view.parentNode.innerHTML);
-      this.From.properties.view.parentNode.appendChild(this.From.properties.view);
-    }
 
     // Last but not least we swap the From and To renderers for future navigations.
     this.From = this.To;

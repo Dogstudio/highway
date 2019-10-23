@@ -5180,13 +5180,18 @@ function () {
     }
     /**
      * Add view in DOM, then remove previous view
+     *  @param {bool} goToSleep - is a page falling asleep
      */
 
   }, {
     key: "add",
-    value: function add() {
+    value: function add(goToSleep) {
       // We setup the DOM for our [data-router-view]
-      this.wrap.insertAdjacentHTML('beforeend', this.properties.view.outerHTML);
+      if (goToSleep) {
+        this.wrap.insertAdjacentHTML('afterbegin', this.properties.view.outerHTML);
+      } else {
+        this.wrap.insertAdjacentHTML('beforeend', this.properties.view.outerHTML);
+      }
     }
     /**
      * Update document informations
@@ -6162,7 +6167,7 @@ function (_Emitter) {
               case 2:
                 Renderer = _context3.sent;
                 this.To = new Renderer(this.properties);
-                this.To.add(); // We then emit a now event right before the view is shown to create a hook
+                this.To.add(goToSleep); // We then emit a now event right before the view is shown to create a hook
                 // for developers who want to make stuff before the view is visible.
 
                 this.emit('NAVIGATE_IN', {
@@ -6183,13 +6188,7 @@ function (_Emitter) {
 
               case 8:
                 this.popping = false;
-                this.running = false;
-
-                if (goToSleep) {
-                  console.log(this.From.properties.view.parentNode.innerHTML);
-                  this.From.properties.view.parentNode.appendChild(this.From.properties.view);
-                } // Detach Event on Links
-
+                this.running = false; // Detach Event on Links
 
                 this.detach(this.links); // Get all elligible links.
 
@@ -6215,7 +6214,7 @@ function (_Emitter) {
 
                 this.trigger = null;
 
-              case 17:
+              case 16:
               case "end":
                 return _context3.stop();
             }

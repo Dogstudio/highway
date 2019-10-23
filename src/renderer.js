@@ -33,10 +33,15 @@ export default class Renderer {
 
   /**
    * Add view in DOM, then remove previous view
+   *  @param {bool} goToSleep - is a page falling asleep
    */
-  add() {
+  add(goToSleep) {
     // We setup the DOM for our [data-router-view]
-    this.wrap.insertAdjacentHTML('beforeend', this.properties.view.outerHTML);
+    if (goToSleep) {
+      this.wrap.insertAdjacentHTML('afterbegin', this.properties.view.outerHTML);
+    } else {
+      this.wrap.insertAdjacentHTML('beforeend', this.properties.view.outerHTML);
+    }
   }
 
   /**
