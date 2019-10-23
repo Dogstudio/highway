@@ -5370,6 +5370,66 @@ function () {
         };
       }());
     }
+    /**
+     * Add the view in DOM and play an `in` transition if one is defined.
+     *
+     * @param {object} datas - Set of datas
+     * @return {object} Promise
+     */
+
+  }, {
+    key: "awaken",
+    value: function awaken(datas) {
+      var _this4 = this;
+
+      return new Promise(
+      /*#__PURE__*/
+      function () {
+        var _ref4 = _asyncToGenerator(
+        /*#__PURE__*/
+        regeneratorRuntime.mark(function _callee4(resolve) {
+          return regeneratorRuntime.wrap(function _callee4$(_context4) {
+            while (1) {
+              switch (_context4.prev = _context4.next) {
+                case 0:
+                  console.log('renderer show', datas); // Update DOM.
+
+                  _this4.update(); // The transition is set in your custom renderer with a getter called
+                  // `transition` that should return the transition object you want to
+                  // apply to you view. We call the `in` step of this one right now!
+
+
+                  _context4.t0 = _this4.Transition;
+
+                  if (!_context4.t0) {
+                    _context4.next = 6;
+                    break;
+                  }
+
+                  _context4.next = 6;
+                  return _this4.Transition.show(datas);
+
+                case 6:
+                  // The `onEnterCompleted` method if set in your custom renderer is called
+                  // everytime a transition is over if set. Otherwise it's called right after
+                  // the `onEnter` method.
+                  _this4.onAwaken && _this4.onAwaken(); // We resolve the Promise.
+
+                  resolve();
+
+                case 8:
+                case "end":
+                  return _context4.stop();
+              }
+            }
+          }, _callee4);
+        }));
+
+        return function (_x4) {
+          return _ref4.apply(this, arguments);
+        };
+      }());
+    }
   }]);
 
   return Renderer;
@@ -6145,7 +6205,7 @@ function (_Emitter) {
 
               case 37:
                 _context2.next = 39;
-                return Promise.all([this.From.hide(datas)]);
+                return Promise.all([this.From.awaken(datas)]);
 
               case 39:
                 this.properties = this.asleep.renderer.properties;

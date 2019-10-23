@@ -277,7 +277,6 @@ export default class Core extends Emitter {
     }
 
 
-
     // Push State
     this.pushState();
 
@@ -302,9 +301,6 @@ export default class Core extends Emitter {
       trigger: this.trigger,
       contextual: this.Contextual
     };
-
-
-
 
 
     if (fetchPage) {
@@ -356,7 +352,7 @@ export default class Core extends Emitter {
     } else {
 
       await Promise.all([
-        this.From.hide(datas)
+        this.From.awaken(datas)
       ]);
       this.properties = this.asleep.renderer.properties;
       this.awaken();
@@ -466,7 +462,6 @@ export default class Core extends Emitter {
 
     this.popping = false;
     this.running = false;
-
 
 
     // Detach Event on Links

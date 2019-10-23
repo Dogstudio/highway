@@ -124,4 +124,33 @@ export default class Renderer {
       resolve();
     });
   }
+
+  /**
+   * Add the view in DOM and play an `in` transition if one is defined.
+   *
+   * @param {object} datas - Set of datas
+   * @return {object} Promise
+   */
+  awaken(datas) {
+    return new Promise(async resolve => {
+
+      console.log('renderer show', datas);
+
+      // Update DOM.
+      this.update();
+
+      // The transition is set in your custom renderer with a getter called
+      // `transition` that should return the transition object you want to
+      // apply to you view. We call the `in` step of this one right now!
+      this.Transition && await this.Transition.show(datas);
+
+      // The `onEnterCompleted` method if set in your custom renderer is called
+      // everytime a transition is over if set. Otherwise it's called right after
+      // the `onEnter` method.
+      this.onAwaken && this.onAwaken();
+
+      // We resolve the Promise.
+      resolve();
+    });
+  }
 }
