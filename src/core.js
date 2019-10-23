@@ -367,7 +367,9 @@ export default class Core extends Emitter {
     console.log('^_^ awaken sleeping page');
     this.To = this.asleep.renderer;
 
-    this.asleep.view.classList.remove('view-asleep');
+    console.log('first child', this.To.Transition.wrap.firstElementChild);
+    console.log('last child', this.To.Transition.wrap.lastElementChild);
+    this.To.Transition.wrap.firstElementChild.classList.remove('view-asleep');
 
     this.emit('NAVIGATE_IN', {
       to: {

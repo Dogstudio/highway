@@ -24,8 +24,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/core.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="207">
-              <caret line="369" column="20" selection-start-line="369" selection-start-column="20" selection-end-line="369" selection-end-column="20" />
+            <state relative-caret-position="222">
+              <caret line="370" column="30" selection-start-line="370" selection-start-column="30" selection-end-line="370" selection-end-column="30" />
             </state>
           </provider>
         </entry>
@@ -33,8 +33,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/renderer.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="273">
-              <caret line="117" column="74" lean-forward="true" selection-start-line="117" selection-start-column="5" selection-end-line="117" selection-end-column="74" />
+            <state relative-caret-position="392">
+              <caret line="117" column="44" lean-forward="true" selection-start-line="117" selection-start-column="22" selection-end-line="117" selection-end-column="44" />
             </state>
           </provider>
         </entry>
@@ -102,8 +102,8 @@
     <auto-save>true</auto-save>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="1478" />
-    <option name="y" value="15" />
+    <option name="x" value="1475" />
+    <option name="y" value="-18" />
     <option name="width" value="1111" />
     <option name="height" value="743" />
   </component>
@@ -176,12 +176,12 @@
       <workItem from="1567599570204" duration="297000" />
       <workItem from="1567599883091" duration="6000" />
       <workItem from="1571730561867" duration="17920000" />
-      <workItem from="1571815978157" duration="10036000" />
+      <workItem from="1571815978157" duration="10824000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="28259000" />
+    <option name="totallyTimeSpent" value="29047000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="1478" y="15" width="1111" height="743" extended-state="0" />
@@ -202,7 +202,7 @@
       <window_info anchor="bottom" id="Version Control" order="8" />
       <window_info anchor="bottom" id="Database Changes" order="9" />
       <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="11" visible="true" weight="0.1827957" />
+      <window_info anchor="bottom" id="Terminal" order="11" weight="0.1827957" />
       <window_info anchor="right" id="Commander" order="0" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -247,15 +247,15 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/renderer.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="273">
-          <caret line="117" column="74" lean-forward="true" selection-start-line="117" selection-start-column="5" selection-end-line="117" selection-end-column="74" />
+        <state relative-caret-position="392">
+          <caret line="117" column="44" lean-forward="true" selection-start-line="117" selection-start-column="22" selection-end-line="117" selection-end-column="44" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/core.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="207">
-          <caret line="369" column="20" selection-start-line="369" selection-start-column="20" selection-end-line="369" selection-end-column="20" />
+        <state relative-caret-position="222">
+          <caret line="370" column="30" selection-start-line="370" selection-start-column="30" selection-end-line="370" selection-end-column="30" />
         </state>
       </provider>
     </entry>
