@@ -85,6 +85,8 @@ export default class Core extends Emitter {
       renderer
     };
     console.log(this.asleep);
+
+    view.parentNode.appendChild(view);
   }
 
   /**

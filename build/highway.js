@@ -5775,6 +5775,7 @@ function (_Emitter) {
         renderer: renderer
       };
       console.log(this.asleep);
+      view.parentNode.appendChild(view);
     }
     /**
      * Attach `click` event on links.
