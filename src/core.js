@@ -394,7 +394,7 @@ export default class Core extends Emitter {
     this.running = false;
 
     console.log(this.To.Transition.wrap.lastElementChild.classList);
-    this.To.Transition.wrap.lastElementChild.classList.remove('view-asleep');
+    // this.To.Transition.wrap.lastElementChild.classList.remove('view-asleep');
     console.log(this.To.Transition.wrap.lastElementChild.classList);
 
     // Detach Event on Links
