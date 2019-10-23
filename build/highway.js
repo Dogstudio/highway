@@ -6140,13 +6140,18 @@ function (_Emitter) {
 
               case 34:
                 this.afterFetch(goToSleep);
-                _context2.next = 38;
+                _context2.next = 41;
                 break;
 
               case 37:
+                _context2.next = 39;
+                return Promise.all([this.From.hide(datas)]);
+
+              case 39:
+                this.properties = this.asleep.renderer.properties;
                 this.awaken();
 
-              case 38:
+              case 41:
               case "end":
                 return _context2.stop();
             }

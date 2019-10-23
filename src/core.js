@@ -355,6 +355,10 @@ export default class Core extends Emitter {
 
     } else {
 
+      await Promise.all([
+        this.From.hide(datas)
+      ]);
+      this.properties = this.asleep.renderer.properties;
       this.awaken();
 
     }
