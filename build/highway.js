@@ -6019,6 +6019,9 @@ function (_Emitter) {
                 console.log(this.trigger);
                 console.log('compare', this.location.href, this.asleep.href);
                 goToSleep = false;
+                console.log('this.trigger', this.trigger);
+                console.log('window.App.popState.transition', window.App.popState.transition);
+                console.log('window.lastTransition', window.lastTransition);
 
                 if (this.From.onSleep) {
                   if (this.trigger === 'popstate' && window.App.popState.transition === 'pageToOverlay' || this.trigger !== 'script' && window.lastTransition === 'pageToOverlay') {
@@ -6061,7 +6064,7 @@ function (_Emitter) {
                 // already saw we will have to fetch it again and it's pointless.
 
                 if (!this.cache.has(this.location.href)) {
-                  _context2.next = 24;
+                  _context2.next = 27;
                   break;
                 }
 
@@ -6069,53 +6072,53 @@ function (_Emitter) {
                 console.log('We wait until the view is hidden.');
 
                 if (!goToSleep) {
-                  _context2.next = 19;
+                  _context2.next = 22;
                   break;
                 }
 
-                _context2.next = 17;
+                _context2.next = 20;
                 return this.From.sleep(datas);
 
-              case 17:
-                _context2.next = 21;
+              case 20:
+                _context2.next = 24;
                 break;
 
-              case 19:
-                _context2.next = 21;
+              case 22:
+                _context2.next = 24;
                 return this.From.hide(datas);
 
-              case 21:
+              case 24:
                 // Get Properties
                 this.properties = this.cache.get(this.location.href);
-                _context2.next = 37;
+                _context2.next = 40;
                 break;
 
-              case 24:
+              case 27:
                 // We wait till all our Promises are resolved.
                 console.log('We wait till all our Promises are resolved.');
                 results = null;
 
                 if (!goToSleep) {
-                  _context2.next = 32;
+                  _context2.next = 35;
                   break;
                 }
 
-                _context2.next = 29;
+                _context2.next = 32;
                 return Promise.all([this.fetch(), this.From.sleep(datas)]);
 
-              case 29:
+              case 32:
                 results = _context2.sent;
-                _context2.next = 35;
+                _context2.next = 38;
                 break;
 
-              case 32:
-                _context2.next = 34;
+              case 35:
+                _context2.next = 37;
                 return Promise.all([this.fetch(), this.From.hide(datas)]);
 
-              case 34:
+              case 37:
                 results = _context2.sent;
 
-              case 35:
+              case 38:
                 // Now everything went fine we can extract the properties of the view we
                 // successfully fetched and keep going.
                 this.properties = this.Helpers.getProperties(results[0]); // We cache our result
@@ -6123,10 +6126,10 @@ function (_Emitter) {
 
                 this.cache.set(this.location.href, this.properties);
 
-              case 37:
+              case 40:
                 this.afterFetch();
 
-              case 38:
+              case 41:
               case "end":
                 return _context2.stop();
             }
