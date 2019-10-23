@@ -18,8 +18,6 @@ export default class Renderer {
 
     // We get our transition we will use later to show/hide our view.
     this.Transition = properties.transition ? new properties.transition.class(this.wrap, properties.transition.name) : null;
-
-    console.log(this);
   }
 
   /**
@@ -61,8 +59,6 @@ export default class Renderer {
    */
   show(datas) {
     return new Promise(async resolve => {
-
-      console.log('renderer show', datas);
 
       // Update DOM.
       this.update();
@@ -113,7 +109,7 @@ export default class Renderer {
 
   sleep(datas) {
     return new Promise(async resolve => {
-      console.log('RENDERER SLEEEEEEEEP');
+
       this.onSleep && this.onSleep();
 
       this.Transition && await this.Transition.hide(datas);
@@ -133,8 +129,6 @@ export default class Renderer {
    */
   awaken(datas) {
     return new Promise(async resolve => {
-
-      console.log('awaken renderer', datas);
 
       // Update DOM.
       this.update();

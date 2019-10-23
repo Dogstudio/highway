@@ -5164,7 +5164,6 @@ function () {
     this.properties = properties; // We get our transition we will use later to show/hide our view.
 
     this.Transition = properties.transition ? new properties.transition.class(this.wrap, properties.transition.name) : null;
-    console.log(this);
   }
   /**
    * Renderer initialization.
@@ -5226,8 +5225,7 @@ function () {
             while (1) {
               switch (_context.prev = _context.next) {
                 case 0:
-                  console.log('renderer show', datas); // Update DOM.
-
+                  // Update DOM.
                   _this.update(); // The `onEnter` method if set is called everytime the view is appended
                   // to the DOM. This let you do some crazy stuffs at this right moment.
 
@@ -5239,14 +5237,14 @@ function () {
                   _context.t0 = _this.Transition;
 
                   if (!_context.t0) {
-                    _context.next = 7;
+                    _context.next = 6;
                     break;
                   }
 
-                  _context.next = 7;
+                  _context.next = 6;
                   return _this.Transition.show(datas);
 
-                case 7:
+                case 6:
                   // The `onEnterCompleted` method if set in your custom renderer is called
                   // everytime a transition is over if set. Otherwise it's called right after
                   // the `onEnter` method.
@@ -5254,7 +5252,7 @@ function () {
 
                   resolve();
 
-                case 9:
+                case 8:
                 case "end":
                   return _context.stop();
               }
@@ -5339,25 +5337,24 @@ function () {
             while (1) {
               switch (_context3.prev = _context3.next) {
                 case 0:
-                  console.log('RENDERER SLEEEEEEEEP');
                   _this3.onSleep && _this3.onSleep();
                   _context3.t0 = _this3.Transition;
 
                   if (!_context3.t0) {
-                    _context3.next = 6;
+                    _context3.next = 5;
                     break;
                   }
 
-                  _context3.next = 6;
+                  _context3.next = 5;
                   return _this3.Transition.hide(datas);
 
-                case 6:
+                case 5:
                   _this3.Transition.wrap.firstElementChild.classList.add('view-asleep'); // Resolve Promise
 
 
                   resolve();
 
-                case 8:
+                case 7:
                 case "end":
                   return _context3.stop();
               }
@@ -5392,8 +5389,7 @@ function () {
             while (1) {
               switch (_context4.prev = _context4.next) {
                 case 0:
-                  console.log('awaken renderer', datas); // Update DOM.
-
+                  // Update DOM.
                   _this4.update(); // The transition is set in your custom renderer with a getter called
                   // `transition` that should return the transition object you want to
                   // apply to you view. We call the `in` step of this one right now!
@@ -5402,14 +5398,14 @@ function () {
                   _context4.t0 = _this4.Transition;
 
                   if (!_context4.t0) {
-                    _context4.next = 6;
+                    _context4.next = 5;
                     break;
                   }
 
-                  _context4.next = 6;
+                  _context4.next = 5;
                   return _this4.Transition.show(datas);
 
-                case 6:
+                case 5:
                   // The `onEnterCompleted` method if set in your custom renderer is called
                   // everytime a transition is over if set. Otherwise it's called right after
                   // the `onEnter` method.
@@ -5417,7 +5413,7 @@ function () {
 
                   resolve();
 
-                case 8:
+                case 7:
                 case "end":
                   return _context4.stop();
               }
@@ -5833,7 +5829,6 @@ function (_Emitter) {
   core_createClass(Core, [{
     key: "sleep",
     value: function sleep(href, page, view, renderer) {
-      console.log('Store SLEEPING PAGE');
       this.asleep = {
         href: href,
         page: page,
@@ -5963,7 +5958,6 @@ function (_Emitter) {
           this.location = location; // Now all our conditions are passed we can update our location and do
           // what we need to do before fetching it.
 
-          console.log('redirect fetching');
           this.beforeFetch();
         }
       }
@@ -5988,7 +5982,6 @@ function (_Emitter) {
         this.location = location; // If everything is fine we can save our location and do what we need to
         // do before fetching it.
 
-        console.log('popstate fetching');
         this.beforeFetch();
       } else {
         // Update Location
@@ -6079,9 +6072,7 @@ function (_Emitter) {
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
-                // console.log('beforeFetch');
-                urlBeforeHistoryPush = window.location.href; // console.log('urlBeforeHistoryPush', urlBeforeHistoryPush);
-
+                urlBeforeHistoryPush = window.location.href;
                 this.emit('BEFORE_HISTORY', {
                   from: {
                     page: this.From.properties.page,
@@ -6089,23 +6080,16 @@ function (_Emitter) {
                   },
                   trigger: this.trigger,
                   location: this.location
-                }); // console.log('from', this.From);
-                // console.log('to', this.To);
-                // console.log(this.trigger);
-                // console.log('compare', urlBeforeHistoryPush, this.asleep.href);
-
+                });
                 goToSleep = false;
-                fetchPage = true; // console.log('window.App.popState.transition', window.App.popState);
-                // console.log('window.lastTransition', window.lastTransition);
+                fetchPage = true;
 
                 if (urlBeforeHistoryPush === this.asleep.href) {
-                  console.log('DONT FETCH ITS ALSEEP IN THE PAGE');
                   fetchPage = false;
                 }
 
                 if (this.From.onSleep) {
                   if (this.trigger === 'popstate' && window.App.popState.transition === 'pageToOverlay' || this.trigger !== 'script' && window.lastTransition === 'pageToOverlay') {
-                    // console.log('click triggered sleep');
                     goToSleep = true;
                     this.sleep(urlBeforeHistoryPush, this.From.properties.page, this.From.properties.view, this.From);
                   }
@@ -6167,7 +6151,6 @@ function (_Emitter) {
 
               case 22:
                 // We wait till all our Promises are resolved.
-                // console.log('We wait till all our Promises are resolved.');
                 results = null;
 
                 if (!goToSleep) {
@@ -6239,10 +6222,7 @@ function (_Emitter) {
           while (1) {
             switch (_context3.prev = _context3.next) {
               case 0:
-                console.log('^_^ awaken sleeping page');
-                this.To = this.asleep.renderer; // console.log('first child', this.To.Transition.wrap.firstElementChild);
-                // console.log('last child', this.To.Transition.wrap.lastElementChild);
-
+                this.To = this.asleep.renderer;
                 this.emit('NAVIGATE_IN', {
                   to: {
                     page: this.To.properties.page,
@@ -6251,18 +6231,16 @@ function (_Emitter) {
                   trigger: this.trigger,
                   location: this.location
                 });
-                console.log(this.To.Transition.wrap.lastElementChild.classList);
-                this.To.Transition.wrap.lastElementChild.classList.remove('view-asleep');
-                console.log(this.To.Transition.wrap.lastElementChild.classList); // We wait for the view transition to be over before resetting some variables
+                this.To.Transition.wrap.lastElementChild.classList.remove('view-asleep'); // We wait for the view transition to be over before resetting some variables
                 // and reattaching the events to all the new elligible links in our DOM.
 
-                _context3.next = 8;
+                _context3.next = 5;
                 return this.To.awaken({
                   trigger: this.trigger,
                   contextual: this.Contextual
                 });
 
-              case 8:
+              case 5:
                 this.popping = false;
                 this.running = false; // Detach Event on Links
 
@@ -6295,7 +6273,7 @@ function (_Emitter) {
                   renderer: null
                 };
 
-              case 17:
+              case 14:
               case "end":
                 return _context3.stop();
             }

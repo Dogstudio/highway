@@ -77,7 +77,6 @@ export default class Core extends Emitter {
    * @arg {object} renderer — the renderer of the page
    */
   sleep(href, page, view, renderer) {
-    console.log('Store SLEEPING PAGE');
     this.asleep = {
       href,
       page,
@@ -163,7 +162,6 @@ export default class Core extends Emitter {
 
         // Now all our conditions are passed we can update our location and do
         // what we need to do before fetching it.
-        console.log('redirect fetching');
         this.beforeFetch();
 
       }
@@ -191,7 +189,6 @@ export default class Core extends Emitter {
 
       // If everything is fine we can save our location and do what we need to
       // do before fetching it.
-      console.log('popstate fetching');
       this.beforeFetch();
 
     } else {
@@ -236,10 +233,7 @@ export default class Core extends Emitter {
    * Do some tests before HTTP requests to optimize pipeline.
    */
   async beforeFetch() {
-    // console.log('beforeFetch');
-
     const urlBeforeHistoryPush = window.location.href;
-    // console.log('urlBeforeHistoryPush', urlBeforeHistoryPush);
 
     this.emit('BEFORE_HISTORY', {
       from: {
@@ -250,27 +244,18 @@ export default class Core extends Emitter {
       location: this.location
     });
 
-    // console.log('from', this.From);
-    // console.log('to', this.To);
-    // console.log(this.trigger);
-    // console.log('compare', urlBeforeHistoryPush, this.asleep.href);
-
     let goToSleep = false;
     let fetchPage = true;
-    // console.log('window.App.popState.transition', window.App.popState);
-    // console.log('window.lastTransition', window.lastTransition);
-
 
     if (urlBeforeHistoryPush === this.asleep.href) {
-      console.log('DONT FETCH ITS ALSEEP IN THE PAGE');
       fetchPage = false;
     }
+
     if (this.From.onSleep) {
       if (
         this.trigger === 'popstate' && window.App.popState.transition === 'pageToOverlay' ||
           this.trigger !== 'script' && window.lastTransition === 'pageToOverlay'
       ) {
-        // console.log('click triggered sleep');
         goToSleep = true;
         this.sleep(urlBeforeHistoryPush, this.From.properties.page, this.From.properties.view, this.From);
       }
@@ -309,7 +294,6 @@ export default class Core extends Emitter {
       // already saw we will have to fetch it again and it's pointless.
       if (this.cache.has(this.location.href)) {
         // We wait until the view is hidden.
-        // console.log('We wait until the view is hidden.');
 
         if (goToSleep) {
           await this.From.sleep(datas);
@@ -322,7 +306,6 @@ export default class Core extends Emitter {
 
       } else {
         // We wait till all our Promises are resolved.
-        // console.log('We wait till all our Promises are resolved.');
         let results = null;
 
         if (goToSleep) {
@@ -364,11 +347,7 @@ export default class Core extends Emitter {
    * Awaken sleeping page
    */
   async awaken() {
-    console.log('^_^ awaken sleeping page');
     this.To = this.asleep.renderer;
-
-    // console.log('first child', this.To.Transition.wrap.firstElementChild);
-    // console.log('last child', this.To.Transition.wrap.lastElementChild);
 
     this.emit('NAVIGATE_IN', {
       to: {
@@ -379,9 +358,7 @@ export default class Core extends Emitter {
       location: this.location
     });
 
-    console.log(this.To.Transition.wrap.lastElementChild.classList);
     this.To.Transition.wrap.lastElementChild.classList.remove('view-asleep');
-    console.log(this.To.Transition.wrap.lastElementChild.classList);
 
     // We wait for the view transition to be over before resetting some variables
     // and reattaching the events to all the new elligible links in our DOM.
