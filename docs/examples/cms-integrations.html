@@ -38,3 +38,15 @@ H.on('NAVIGATE_END', ({ to, from, trigger, location }) => {
   H.detach(adminBarLinks);
 });</code>
 </pre>
+
+<p>Anoter possibility is to only init Highway when the admin bar is not existing (thus the user not being an admin) in the DOM</p>
+
+<pre>
+<code class="js">const adminBar = document.querySelector('#wpadminbar');
+
+if (!adminBar) {
+  const H = new Highway.Core();
+  // ...
+}
+</code>
+</pre>
