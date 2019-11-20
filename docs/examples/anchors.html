@@ -26,10 +26,10 @@ next_label: URL Parameters
 &lt;!-- Link to other pages but with an anchor will trigger the transition --&gt;
 &lt;a href="path/to/page#anchor"&gt;&lt;/a&gt;
 </code>
-<a href="{{ site.url }}index.html?parameter=foo" class="button button--full">Try me</a>
+<a href="{{ site.url }}/index.html?parameter=foo" class="button button--full">Try me</a>
 </pre>
 
-<p>However for links to other pages with an anchor the scroll to the right content on the page needs to be handled programmatically in Javascript using Highway <a href="{{ site.url }}api.html#events">events</a>. The <code>NAVIGATE_END</code> event fits perfectly for this kind of behavior.</p>
+<p>However for links to other pages with an anchor the scroll to the right content on the page needs to be handled programmatically in Javascript using Highway <a href="{{ site.url }}/api.html#events">events</a>. The <code>NAVIGATE_END</code> event fits perfectly for this kind of behavior.</p>
 <pre>
 <code class="js">// File: main.js
 const H = new Highway.Core();
