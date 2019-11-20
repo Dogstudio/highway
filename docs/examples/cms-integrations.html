@@ -6,7 +6,7 @@ next_url: cms-integrations.html
 next_label: Tutorials
 ---
 
-<h1>Wordpress admin bar</h1>
+<h1>Wordpress Admin bar</h1>
 <p>In order to have a working admin bar on the wordpress websites that uses Highway, you will have to:</p>
 <ul>
   <li>Remove Highway's listeners on Wordpress admin bar links</li>
@@ -25,17 +25,16 @@ H.detach(adminBarLinks);
 
 // On page transition:
 H.on('NAVIGATE_END', ({ to, from, trigger, location }) => {
-    // Query admin bar links, and new page's admin bar links
-    const adminBarLinks = document.querySelectorAll('#wpadminbar a');
-    const newAdminBarLinks = to.page.body.querySelectorAll('#wpadminbar a');
+  // Query admin bar links, and new page's admin bar links
+  const adminBarLinks = document.querySelectorAll('#wpadminbar a');
+  const newAdminBarLinks = to.page.body.querySelectorAll('#wpadminbar a');
 
-    // Replace every admin bar link's href value with new value
-    for (let i = 0; i < newAdminBarLinks.length; i++) {
-      adminBarLinks[i].href = newAdminBarLinks[i].href;
-    }
+  // Replace every admin bar link's href value with new value
+  for (let i = 0; i < newAdminBarLinks.length; i++) {
+    adminBarLinks[i].href = newAdminBarLinks[i].href;
+  }
 
-    // Detach admin bar links from Highway transitions
-    window.H.detach(adminBarLinks);
-  });
-}</code>
+  // Detach admin bar links from Highway transitions
+  H.detach(adminBarLinks);
+});</code>
 </pre>
