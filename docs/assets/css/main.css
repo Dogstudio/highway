@@ -114,7 +114,8 @@ h6 {
 }
 
 /** Structure **/
-.github-banner {
+.github-banner,
+.github-banner img {
   z-index: 999;
 }
 
