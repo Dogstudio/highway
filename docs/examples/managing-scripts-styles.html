@@ -11,6 +11,7 @@ next_label: Tutorials
 <p>Here are two functions that will allow you to make sure that your new page will have all necessary scripts & styles ( as if it was a real page load ). Those two functions should be called in Highway's Core <code>NAVIGATE_END</code> event, do not forget to pass the <code>to</code> value</p>
 
 <p>Managing scripts function:</p>
+<p>You can prevent the reloading of some scripts by adding the <code>data-no-reload</code> attribute to the desired script</p>
 
 <pre>
 <code class="js">manageScripts(to) {
@@ -80,6 +81,7 @@ next_label: Tutorials
 </pre>
 
 <p>Managing styles function:</p>
+<p>You can prevent the reloading of some styles by adding the <code>data-no-reload</code> attribute to the desired styles</p>
 
 <pre>
 <code class="js">manageStyles(to) {
