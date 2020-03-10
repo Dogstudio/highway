@@ -55,6 +55,9 @@ export default class Core extends Emitter {
     // are triggered by the user.
     window.addEventListener('popstate', this.popState.bind(this));
 
+    // Fix the page jerking.
+    if ('scrollRestoration' in window.history) window.history.scrollRestoration = 'manual';
+
     // Get all elligible links.
     this.links = document.querySelectorAll('a:not([target]):not([data-router-disabled])');
 
