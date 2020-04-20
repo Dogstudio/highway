@@ -48,9 +48,9 @@ Older browsers or versions can be supported by Highway by combining it with **po
 #### 2.2.x
 
 - :tada: Add new websites in the *Hall of Fame*
-- :art: Update browser support in documentation
-- :sparkles: Add [Polyfills](https://highway.js.org/examples/polyfills.html) example to documentation
+- :tada: Add [Polyfills](https://highway.js.org/examples/polyfills.html) example to documentation
 - :sparkles: Reduce bundle size significantly with [microbundle](https://github.com/developit/microbundle)
+- :art: Update browser support in documentation
 - :bug: Fix Slack URL
 
 #### 2.1.x
