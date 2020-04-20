@@ -7,10 +7,19 @@ next_label: Tutorials
 ---
 
 <h1>Polyfills</h1>
-<p>Highways takes advantage of several modern JavaScript features including <a href="" target="_blank">fetch</a> and <a href="" target="_blank">promises</a>. These features are not polyfilled out of the box, so if you need to support Internet Explorer 11 or old versions of Safari, you will need to include polyfills. Below is the recommended approach:</p>
+<p>Highways takes advantage of several modern JavaScript features including the <a href="https://caniuse.com/#feat=fetch" target="_blank">Fetch API</a>, <a href="https://caniuse.com/#feat=promises" target="_blank">Promises</a> and <a href="https://caniuse.com/#feat=mdn-javascript_builtins_map_map">Maps</a>. These features aren't polyfilled out of the box because the library has to be <b>lightweight</b> and doesn't need to support more than the recent major versions of modern browsers. So, to support older browsers or versions, <b>polyfills are required</b>. Below is the recommended approach to include them using <a href="https://polyfill.io/v3/">polyfill.io</a>:</p>
 <pre>
-<code class="html">{{ '<!-- Include the following script tag before using Highway -->' | escape }}
+<code class="html">{{ '<!-- Include the following script tag before include the script using Highway -->' | escape }}
 {{ '<script src="https://polyfill.io/v3/polyfill.min.js?features=fetch%2CPromise"></script>' | escape }}
 </code>
 </pre>
+<p><b>Note:</b> Polyfill.io isn't maintained by the team developing Highway. The script can be customized to support more features when needed but be aware that issues have to be reported to the Polyfill.io team. All issues related to this tool and reported in Highway's repository will be <b>closed immediately</b>.</p>
+<p>Once the polyfills are configured, Highway should be working on <b>most of the browsers and versions</b>. However, be aware that the <b>oldest browsers or versions</b> might still be unsupported. So, be reasonable before opening an issue...</p>
+<ul class="browsers">
+  <li>✅ Chrome</li>
+  <li>✅ Firefox</li>
+  <li>✅ Edge</li>
+  <li>✅ Safari</li>
+  <li>✅ Internet Explorer</li>
+</ul>
 
