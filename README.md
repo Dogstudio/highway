@@ -3,7 +3,7 @@
 [![npm](https://img.shields.io/npm/v/@dogstudio/highway.svg)](https://www.npmjs.com/package/@dogstudio/highway)
 [![npm](https://img.shields.io/npm/dt/@dogstudio/highway.svg)](https://www.npmjs.com/package/@dogstudio/highway)
 [![GitHub issues](https://img.shields.io/github/issues-raw/Dogstudio/highway.svg)](https://github.com/Dogstudio/highway/issues)
-![bundlephobia](https://img.shields.io/bundlephobia/minzip/@dogstudio/highway/2.2.0?label=bundle%20size)
+[![bundlephobia](https://img.shields.io/bundlephobia/minzip/@dogstudio/highway/2.2.0?label=bundle%20size)](https://bundlephobia.com/result?p=@dogstudio/highway@2.2.0)
 ![NpmLicense](https://img.shields.io/npm/l/@dogstudio/highway.svg)
 
 
