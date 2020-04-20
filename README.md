@@ -27,7 +27,7 @@
 - Edge
 - Safari 10.1+
 
-### With polyfills ([see example]())
+### With polyfills ([see example](https://highway.js.org/examples/polyfills.html))
 - Internet Explorer 11
 - Older versions of Safari
 
