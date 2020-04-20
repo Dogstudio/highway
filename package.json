@@ -5,8 +5,9 @@
   "description": "Highway helps you manage your page transitions",
   "source": "src/highway.js",
   "main": "build/highway.js",
+  "umd:main": "build/highway.min.js",
   "module": "build/highway.module.js",
-  "unpkg": "build/highway.umd.js",
+  "unpkg": "build/highway.min.js",
   "files": [
     "src",
     "build"
