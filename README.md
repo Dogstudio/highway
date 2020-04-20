@@ -10,26 +10,33 @@
 
 **Highway** is a *lightweight*, *robust*, *modern* and *flexible* library that will let us create **AJAX navigations** with beautiful **transitions** on our websites. It's been a while we were trying to build this kind of library to fits our needs at [**Dogstudio**](https://www.dogstudio.co) and we now finally released it!
 
-<p align="center"><a href="https://join.slack.com/t/highway-lib/shared_invite/enQtNDcxMzY5MDc0NDE3LWQyMWMwZjhiNDUxOWVkM2Y0MTkxMTY5ZTU3ZjRmNjU2ZTI3YjAwNGQ2ZTZlYTcyNTBhYWEzMGQyZGFlODY0MjY"target="_blank"><img src="https://i.imgur.com/4nWCfju.png" alt="Banner" /></a></p>
+<p align="center"><a href="https://join.slack.com/t/highway-lib/shared_invite/zt-60jkz5kh-defbgkYYTclu609sUAEN3Q"target="_blank"><img src="https://i.imgur.com/4nWCfju.png" alt="Banner" /></a></p>
 
 ## Table of Content
 
 - [**Guide**](https://dogstudio.github.io/highway/)
-- [**Support**](https://github.com/Dogstudio/highway#support)
+- [**Support**](https://github.com/Dogstudio/highway#browser-support)
 - [**Roadmap**](https://github.com/Dogstudio/highway#roadmap)
 - [**Releases**](https://github.com/Dogstudio/highway#releases)
 - [**License**](https://github.com/Dogstudio/highway#license)
 
-## Support
+## Browser Support
+
+Highway is supported by **all recent major versions** of the following modern browsers.
 
 - Google Chrome
 - Firefox
 - Edge
-- Safari 10.1+
+- Safari
 
-### With polyfills ([see example](https://highway.js.org/examples/polyfills.html))
+### With polyfills
+Older browsers or versions can be supported by Highway by combining it with **polyfills**. Please follow [**this example**](https://highway.js.org/examples/polyfills.html) to have more information. Once the polyfills are configured, Highway should be working on **most of the browsers and versions**. However, be aware that the **oldest browsers or versions** might still be unsupported. So, be reasonable before opening an issue...</p>
+
+- Google Chrome
+- Firefox
+- Edge
+- Safari
 - Internet Explorer 11
-- Older versions of Safari
 
 ## Roadmap
 
@@ -38,15 +45,23 @@
 - [ ] More Demos
 
 ## Releases
+#### 2.2.x
+
+- :tada: Add new websites in the *Hall of Fame*
+- :art: Update browser support in documentation
+- :sparkles: Add [Polyfills](https://highway.js.org/examples/polyfills.html) example to documentation
+- :sparkles: Reduce bundle size significantly with [microbundle](https://github.com/developit/microbundle)
+- :bug: Fix Slack URL
+
 #### 2.1.x
 
 - :lock: Update dependencies for security purposes
 - :tada: Add `trigger` information in transitions and events
 - :tada: Add contextual transitions
 - :tada: Add overlapping transitions
-- :sparkles: Add [Prefetch](https://dogstudio.github.io/highway/examples/prefetch.html) example to documentation
+- :sparkles: Add [Prefetch](https://highway.js.org/examples/prefetch.html) example to documentation
 - :sparkles: Improve transitions and events parameters for destructuring
-- :sparkles: Improve [documentation website](https://dogstudio.github.io/highway/)
+- :sparkles: Improve [documentation website](https://highway.js.org)
 - :sparkles: Improve `Core.redirect(href, transition)` method
 - :sparkles: Improve `Core.attach(links)` method
 - :sparkles: Improve `Core.detach(links)` method
@@ -55,7 +70,7 @@
 
 #### 2.0.x
 
-- :tada: Add [documentation website](https://dogstudio.github.io/highway/)
+- :tada: Add [documentation website](https://highway.js.org)
 - :tada: Add `Core.redirect(href)` method
 - :tada: Add dynamic import for renderers
 - :art: Update informations sent with events
@@ -116,6 +131,7 @@
 - [Anthodpnt](https://twitter.com/Anthodpnt)
 - [ThaoD5](https://twitter.com/ThaoD5)
 - [joshkirk-zero](https://twitter.com/joshgkirk)
+- [mike_wagz](https://twitter.com/mike_wagz)
 
 ## License
 
