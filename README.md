@@ -25,8 +25,11 @@
 - Google Chrome
 - Firefox
 - Edge
-- Safari 6.2+
-- Internet Explorer 11 (+ [**whatwg-fetch**](https://github.com/github/fetch))
+- Safari 10.1+
+
+### With polyfills ([see example]())
+- Internet Explorer 11
+- Older versions of Safari
 
 ## Roadmap
 

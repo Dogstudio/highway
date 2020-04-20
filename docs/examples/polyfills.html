@@ -1,0 +1,16 @@
+---
+slug: examples
+title: Highway - Examples | Polyfills
+layout: default
+next_url: tutorials.html
+next_label: Tutorials
+---
+
+<h1>Polyfills</h1>
+<p>Highways takes advantage of several modern JavaScript features including <a href="" target="_blank">fetch</a> and <a href="" target="_blank">promises</a>. These features are not polyfilled out of the box, so if you need to support Internet Explorer 11 or old versions of Safari, you will need to include polyfills. Below is the recommended approach:</p>
+<pre>
+<code class="html">{{ '<!-- Include the following script tag before using Highway -->' | escape }}
+{{ '<script src="https://polyfill.io/v3/polyfill.min.js?features=fetch%2CPromise"></script>' | escape }}
+</code>
+</pre>
+
