@@ -1,0 +1,52 @@
+---
+slug: examples
+title: Highway - Examples | CMS integrations
+layout: default
+next_url: examples/managing-scripts-styles.html
+next_label: Managing scripts & styles
+---
+
+<h1 id="wordpress-bar">Wordpress Admin bar</h1>
+<p>In order to have a working admin bar on the wordpress websites that uses Highway, you will have to:</p>
+<ul>
+  <li>Remove Highway's listeners on Wordpress admin bar links</li>
+  <li>Replace every admin bar link's href value on page change</li>
+</ul>
+<p>Here is an exemple of how it is possible to achieve this :</p>
+
+<pre>
+<code class="js">// File: main.js
+const H = new Highway.Core();
+
+// On load:
+// Query admin bar links and detach them from Highway transitions
+const adminBarLinks = document.querySelectorAll('#wpadminbar a');
+H.detach(adminBarLinks);
+
+// On page transition:
+H.on('NAVIGATE_END', ({ to, from, trigger, location }) => {
+  // Query admin bar links, and new page's admin bar links
+  const adminBarLinks = document.querySelectorAll('#wpadminbar a');
+  const newAdminBarLinks = to.page.body.querySelectorAll('#wpadminbar a');
+
+  // Replace every admin bar link's href value with new value
+  for (let i = 0; i < newAdminBarLinks.length; i++) {
+    adminBarLinks[i].href = newAdminBarLinks[i].href;
+  }
+
+  // Detach admin bar links from Highway transitions
+  H.detach(adminBarLinks);
+});</code>
+</pre>
+
+<p>Anoter possibility is to only init Highway when the admin bar is not existing (thus the user not being an admin) in the DOM</p>
+
+<pre>
+<code class="js">const adminBar = document.querySelector('#wpadminbar');
+
+if (!adminBar) {
+  const H = new Highway.Core();
+  // ...
+}
+</code>
+</pre>

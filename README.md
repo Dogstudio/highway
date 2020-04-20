@@ -25,8 +25,11 @@
 - Google Chrome
 - Firefox
 - Edge
-- Safari 6.2+
-- Internet Explorer 10+ (+ [**whatwg-fetch**](https://github.com/github/fetch))
+- Safari 10.1+
+
+### With polyfills ([see example](https://highway.js.org/examples/polyfills.html))
+- Internet Explorer 11
+- Older versions of Safari
 
 ## Roadmap
 

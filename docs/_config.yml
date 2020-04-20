@@ -1,7 +1,6 @@
-url: https://highway.js.org/
+url: https://highway.js.org
 title: Highway
 description: Highway helps you manage your page transitions
-
 exclude:
   - package.json
   - webpack.config.js
