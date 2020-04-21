@@ -47,8 +47,7 @@ module.exports = {
   },
   resolve: {
     alias: {
-      'highway': 'build/highway.js',
-      'gsap': 'gsap/TweenMax.js'
+      'highway': 'build/highway.js'
     },
     modules: ['.', 'node_modules'],
     extensions: ['.js']

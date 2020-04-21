@@ -2,7 +2,7 @@
 import Highway from 'highway';
 
 // GSAP
-import Tween from 'gsap';
+import { TweenMax } from 'gsap';
 
 // Basic
 class Basic extends Highway.Transition {
@@ -14,7 +14,7 @@ class Basic extends Highway.Transition {
     from.remove();
 
     // Animation
-    Tween.set(to, { opacity: 1 });
+    TweenMax.set(to, { opacity: 1 });
 
     // Done
     done();
@@ -22,7 +22,7 @@ class Basic extends Highway.Transition {
 
   out({ from, done }) {
     // Animation
-    Tween.set(from, { opacity: 0 });
+    TweenMax.set(from, { opacity: 0 });
 
     // Done
     done();

@@ -2,7 +2,7 @@
 import Highway from 'highway';
 
 // GSAP
-import Tween from 'gsap';
+import { TweenMax } from 'gsap';
 
 // Fade
 class Overlap extends Highway.Transition {
@@ -11,7 +11,7 @@ class Overlap extends Highway.Transition {
     window.scrollTo(0, 0);
 
     // Animation
-    Tween.fromTo(to, 0.5,
+    TweenMax.fromTo(to, 0.5,
       { opacity: 0 },
       {
         opacity: 1,
@@ -20,7 +20,7 @@ class Overlap extends Highway.Transition {
     );
 
     // Animation
-    Tween.fromTo(from, 0.5,
+    TweenMax.fromTo(from, 0.5,
       { opacity: 1 },
       {
         opacity: 0,

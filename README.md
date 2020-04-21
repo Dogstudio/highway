@@ -48,6 +48,7 @@ Older browsers or versions can be supported by Highway by combining it with **po
 ## Releases
 #### 2.2.x
 
+- :lock: Update dependencies for security purposes
 - :tada: Add new websites in the *Hall of Fame*
 - :tada: Add [Polyfills](https://highway.js.org/examples/polyfills.html) example to documentation
 - :sparkles: Reduce bundle size significantly with [microbundle](https://github.com/developit/microbundle)
