@@ -133,6 +133,18 @@ Older browsers or versions can be supported by Highway by combining it with **po
 ## Contributors
 
 
+<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
+<!-- prettier-ignore-start -->
+<!-- markdownlint-disable -->
+<table>
+  <tr>
+    <td align="center"><a href="https://twitter.com/Anthodpnt"><img src="https://avatars3.githubusercontent.com/u/6245705?v=4" width="100px;" alt=""/><br /><sub><b>Anthony Du Pont</b></sub></a><br /><a href="#question-Anthodpnt" title="Answering Questions">💬</a> <a href="https://github.com/Dogstudio/highway/commits?author=Anthodpnt" title="Code">💻</a> <a href="https://github.com/Dogstudio/highway/commits?author=Anthodpnt" title="Documentation">📖</a> <a href="#ideas-Anthodpnt" title="Ideas, Planning, & Feedback">🤔</a> <a href="#maintenance-Anthodpnt" title="Maintenance">🚧</a> <a href="#projectManagement-Anthodpnt" title="Project Management">📆</a> <a href="https://github.com/Dogstudio/highway/pulls?q=is%3Apr+reviewed-by%3AAnthodpnt" title="Reviewed Pull Requests">👀</a></td>
+  </tr>
+</table>
+
+<!-- markdownlint-enable -->
+<!-- prettier-ignore-end -->
+<!-- ALL-CONTRIBUTORS-LIST:END -->
 ## License
 
 See the [**LICENSE**](https://github.com/Dogstudio/highway/blob/master/LICENSE) file for license rights and limitations (MIT).

@@ -21,43 +21,8 @@
         "doc",
         "ideas",
         "maintenance",
+        "projectManagement",
         "review"
-      ]
-    },
-    {
-      "login": "ThaoD5",
-      "name": "ThaoD5",
-      "avatar_url": "https://avatars3.githubusercontent.com/u/10233610?v=4",
-      "profile": "https://github.com/ThaoD5",
-      "contributions": [
-        "question",
-        "code",
-        "doc",
-        "ideas",
-        "maintenance",
-        "review"
-      ]
-    },
-    {
-      "login": "joshgkirk",
-      "name": "Josh Kirk",
-      "avatar_url": "https://avatars1.githubusercontent.com/u/28448851?v=4",
-      "profile": "https://twitter.com/joshgkirk",
-      "contributions": [
-        "code",
-        "doc",
-        "ideas",
-        "maintenance"
-      ]
-    },
-    {
-      "login": "mikehwagz",
-      "name": "Mike Wagz",
-      "avatar_url": "https://avatars2.githubusercontent.com/u/12376535?v=4",
-      "profile": "https://selfaware.studio",
-      "contributions": [
-        "doc",
-        "infra"
       ]
     }
   ],
