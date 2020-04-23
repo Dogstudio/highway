@@ -69,7 +69,17 @@
       "contributions": [
         "bug"
       ]
+    },
+    {
+      "login": "davidelanfranchi",
+      "name": "Davide Lanfranchi",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/13507672?v=4",
+      "profile": "http://davidelanfranchi.com",
+      "contributions": [
+        "content"
+      ]
     }
   ],
-  "contributorsPerLine": 7
+  "contributorsPerLine": 7,
+  "skipCi": true
 }
