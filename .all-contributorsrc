@@ -1,0 +1,29 @@
+{
+  "projectName": "highway",
+  "projectOwner": "Dogstudio",
+  "repoType": "github",
+  "repoHost": "https://github.com",
+  "files": [
+    "README.md"
+  ],
+  "imageSize": 100,
+  "commit": true,
+  "commitConvention": "gitmoji",
+  "contributors": [
+    {
+      "login": "Anthodpnt",
+      "name": "Anthony Du Pont",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/6245705?v=4",
+      "profile": "https://twitter.com/Anthodpnt",
+      "contributions": [
+        "question",
+        "code",
+        "doc",
+        "ideas",
+        "maintenance",
+        "review"
+      ]
+    }
+  ],
+  "contributorsPerLine": 7
+}

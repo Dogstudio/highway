@@ -132,36 +132,6 @@ Older browsers or versions can be supported by Highway by combining it with **po
 
 ## Contributors
 
-<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
-<table>
-  <tr>
-    <td align="center">
-      <a href="https://twitter.com/Anthodpnt">
-        <img src="https://avatars3.githubusercontent.com/u/6245705?v=4" width="100px;" alt=""/><br />
-        <sub><b>Anthony Du Pont</b></sub>
-      </a>
-    </td>
-    <td align="center">
-      <a href="https://twitter.com/ThaoD5">
-        <img src="https://avatars3.githubusercontent.com/u/10233610?v=4" width="100px;" alt=""/><br />
-        <sub><b>ThaoD5</b></sub>
-      </a>
-    </td>
-    <td align="center">
-      <a href="https://twitter.com/joshgkirk">
-        <img src="https://avatars1.githubusercontent.com/u/28448851?v=4" width="100px;" alt=""/><br />
-        <sub><b>Josh Kirk</b></sub>
-      </a>
-    </td>
-    <td align="center">
-      <a href="https://twitter.com/mike_wagz">
-        <img src="https://avatars2.githubusercontent.com/u/12376535?v=4" width="100px;" alt=""/><br />
-        <sub><b>Mike Wagz</b></sub>
-      </a>
-    </td>
-  </tr>
-</table>
-<!-- ALL-CONTRIBUTORS-LIST:END -->
 
 ## License
 
