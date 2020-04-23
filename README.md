@@ -139,6 +139,7 @@ Older browsers or versions can be supported by Highway by combining it with **po
 <table>
   <tr>
     <td align="center"><a href="https://antho.ninja/"><img src="https://avatars3.githubusercontent.com/u/6245705?v=4" width="100px;" alt=""/><br /><sub><b>Anthony Du Pont</b></sub></a><br /><a href="https://github.com/Dogstudio/highway/commits?author=Anthodpnt" title="Code">💻</a> <a href="https://github.com/Dogstudio/highway/commits?author=Anthodpnt" title="Documentation">📖</a></td>
+    <td align="center"><a href="https://github.com/ThaoD5"><img src="https://avatars3.githubusercontent.com/u/10233610?v=4" width="100px;" alt=""/><br /><sub><b>ThaoD5</b></sub></a><br /><a href="https://github.com/Dogstudio/highway/commits?author=ThaoD5" title="Code">💻</a> <a href="https://github.com/Dogstudio/highway/commits?author=ThaoD5" title="Documentation">📖</a></td>
   </tr>
 </table>
 
