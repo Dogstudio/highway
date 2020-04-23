@@ -132,25 +132,42 @@ Older browsers or versions can be supported by Highway by combining it with **po
 
 ## Contributors
 
-- [Anthodpnt](https://twitter.com/Anthodpnt)
-<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
-<!-- prettier-ignore-start -->
-<!-- markdownlint-disable -->
 <table>
   <tr>
-    <td align="center"><a href="https://antho.ninja/"><img src="https://avatars3.githubusercontent.com/u/6245705?v=4" width="100px;" alt=""/><br /><sub><b>Anthony Du Pont</b></sub></a><br /><a href="https://github.com/Dogstudio/highway/commits?author=Anthodpnt" title="Code">💻</a> <a href="https://github.com/Dogstudio/highway/commits?author=Anthodpnt" title="Documentation">📖</a></td>
-    <td align="center"><a href="https://github.com/ThaoD5"><img src="https://avatars3.githubusercontent.com/u/10233610?v=4" width="100px;" alt=""/><br /><sub><b>ThaoD5</b></sub></a><br /><a href="https://github.com/Dogstudio/highway/commits?author=ThaoD5" title="Code">💻</a> <a href="https://github.com/Dogstudio/highway/commits?author=ThaoD5" title="Documentation">📖</a></td>
-    <td align="center"><a href="https://twitter.com/joshgkirk"><img src="https://avatars1.githubusercontent.com/u/28448851?v=4" width="100px;" alt=""/><br /><sub><b>Josh Kirk</b></sub></a><br /><a href="https://github.com/Dogstudio/highway/commits?author=joshgkirk" title="Code">💻</a> <a href="https://github.com/Dogstudio/highway/commits?author=joshgkirk" title="Documentation">📖</a></td>
-    <td align="center"><a href="https://selfaware.studio"><img src="https://avatars2.githubusercontent.com/u/12376535?v=4" width="100px;" alt=""/><br /><sub><b>Mike Wagz</b></sub></a><br /><a href="https://github.com/Dogstudio/highway/commits?author=mikehwagz" title="Documentation">📖</a> <a href="#platform-mikehwagz" title="Packaging/porting to new platform">📦</a></td>
+    <td align="center">
+      <a href="https://antho.ninja/">
+        <img src="https://avatars3.githubusercontent.com/u/6245705?v=4" width="100px;" alt=""/><br />
+        <sub><b>Anthony Du Pont</b></sub>
+      </a><br />
+      <a href="https://github.com/Dogstudio/highway/commits?author=Anthodpnt" title="Code">💻</a>
+      <a href="https://github.com/Dogstudio/highway/commits?author=Anthodpnt" title="Documentation">📖</a>
+    </td>
+    <td align="center">
+      <a href="https://github.com/ThaoD5">
+        <img src="https://avatars3.githubusercontent.com/u/10233610?v=4" width="100px;" alt=""/><br />
+        <sub><b>ThaoD5</b></sub>
+      </a><br />
+      <a href="https://github.com/Dogstudio/highway/commits?author=ThaoD5" title="Code">💻</a>
+      <a href="https://github.com/Dogstudio/highway/commits?author=ThaoD5" title="Documentation">📖</a>
+    </td>
+    <td align="center">
+      <a href="https://twitter.com/joshgkirk">
+        <img src="https://avatars1.githubusercontent.com/u/28448851?v=4" width="100px;" alt=""/><br />
+        <sub><b>Josh Kirk</b></sub>
+      </a><br />
+      <a href="https://github.com/Dogstudio/highway/commits?author=joshgkirk" title="Code">💻</a>
+      <a href="https://github.com/Dogstudio/highway/commits?author=joshgkirk" title="Documentation">📖</a>
+    </td>
+    <td align="center">
+      <a href="https://selfaware.studio">
+        <img src="https://avatars2.githubusercontent.com/u/12376535?v=4" width="100px;" alt=""/><br />
+        <sub><b>Mike Wagz</b></sub>
+      </a><br />
+      <a href="https://github.com/Dogstudio/highway/commits?author=mikehwagz" title="Documentation">📖</a>
+      <a href="#platform-mikehwagz" title="Packaging/porting to new platform">📦</a>
+    </td>
   </tr>
 </table>
-
-<!-- markdownlint-enable -->
-<!-- prettier-ignore-end -->
-<!-- ALL-CONTRIBUTORS-LIST:END -->
-- [ThaoD5](https://twitter.com/ThaoD5)
-- [joshkirk-zero](https://twitter.com/joshgkirk)
-- [mike_wagz](https://twitter.com/mike_wagz)
 
 ## License
 

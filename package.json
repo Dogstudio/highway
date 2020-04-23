@@ -38,7 +38,9 @@
     "clean": "rm -rf build/highway.*",
     "build": "microbundle --external none",
     "watch": "microbundle watch --external none",
-    "lint": "eslint src"
+    "lint": "eslint src",
+    "contributors:add": "all-contributors add",
+    "contributors:generate": "all-contributors generate"
   },
   "repository": {
     "type": "git",
@@ -56,6 +58,7 @@
     "url": "https://github.com/Dogstudio/highway/issues"
   },
   "devDependencies": {
+    "all-contributors-cli": "^6.14.2",
     "eslint": "^6.8.0",
     "microbundle": "^0.11.0"
   },
