@@ -1,6 +1,6 @@
 ## Highway
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-8-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-9-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 [![npm](https://img.shields.io/npm/v/@dogstudio/highway.svg)](https://www.npmjs.com/package/@dogstudio/highway)
@@ -151,6 +151,7 @@ Older browsers or versions can be supported by Highway by combining it with **po
   </tr>
   <tr>
     <td align="center"><a href="http://www.quentinneyraud.fr"><img src="https://avatars2.githubusercontent.com/u/9378568?v=4" width="100px;" alt=""/><br /><sub><b>Quentin Neyraud</b></sub></a><br /><a href="https://github.com/Dogstudio/highway/issues?q=author%3Aquentinneyraud" title="Bug reports">🐛</a></td>
+    <td align="center"><a href="https://sleepy.im"><img src="https://avatars0.githubusercontent.com/u/5907357?v=4" width="100px;" alt=""/><br /><sub><b>Harvey Zack</b></sub></a><br /><a href="https://github.com/Dogstudio/highway/commits?author=zhw2590582" title="Code">💻</a></td>
   </tr>
 </table>
 
