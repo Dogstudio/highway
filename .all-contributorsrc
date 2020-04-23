@@ -78,6 +78,15 @@
       "contributions": [
         "content"
       ]
+    },
+    {
+      "login": "fabioquarantini",
+      "name": "Fabio Quarantini",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/425733?v=4",
+      "profile": "http://www.fabioquarantini.com",
+      "contributions": [
+        "bug"
+      ]
     }
   ],
   "contributorsPerLine": 7,

@@ -1,6 +1,6 @@
 ## Highway
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-6-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-7-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 [![npm](https://img.shields.io/npm/v/@dogstudio/highway.svg)](https://www.npmjs.com/package/@dogstudio/highway)
@@ -147,6 +147,7 @@ Older browsers or versions can be supported by Highway by combining it with **po
     <td align="center"><a href="https://selfaware.studio"><img src="https://avatars2.githubusercontent.com/u/12376535?v=4" width="100px;" alt=""/><br /><sub><b>Mike Wagz</b></sub></a><br /><a href="https://github.com/Dogstudio/highway/commits?author=mikehwagz" title="Documentation">📖</a> <a href="#infra-mikehwagz" title="Infrastructure (Hosting, Build-Tools, etc)">🚇</a></td>
     <td align="center"><a href="https://twitter.com/suyashpurwar06"><img src="https://avatars1.githubusercontent.com/u/33785844?v=4" width="100px;" alt=""/><br /><sub><b>Suyash Purwar</b></sub></a><br /><a href="https://github.com/Dogstudio/highway/issues?q=author%3ASuyash-Purwar" title="Bug reports">🐛</a></td>
     <td align="center"><a href="http://davidelanfranchi.com"><img src="https://avatars1.githubusercontent.com/u/13507672?v=4" width="100px;" alt=""/><br /><sub><b>Davide Lanfranchi</b></sub></a><br /><a href="#content-davidelanfranchi" title="Content">🖋</a></td>
+    <td align="center"><a href="http://www.fabioquarantini.com"><img src="https://avatars3.githubusercontent.com/u/425733?v=4" width="100px;" alt=""/><br /><sub><b>Fabio Quarantini</b></sub></a><br /><a href="https://github.com/Dogstudio/highway/issues?q=author%3Afabioquarantini" title="Bug reports">🐛</a></td>
   </tr>
 </table>
 
