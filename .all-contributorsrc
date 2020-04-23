@@ -39,6 +39,16 @@
         "code",
         "doc"
       ]
+    },
+    {
+      "login": "mikehwagz",
+      "name": "Mike Wagz",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/12376535?v=4",
+      "profile": "https://selfaware.studio",
+      "contributions": [
+        "doc",
+        "platform"
+      ]
     }
   ],
   "contributorsPerLine": 7
