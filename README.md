@@ -139,12 +139,14 @@ Older browsers or versions can be supported by Highway by combining it with **po
 <table>
   <tr>
     <td align="center"><a href="https://twitter.com/Anthodpnt"><img src="https://avatars3.githubusercontent.com/u/6245705?v=4" width="100px;" alt=""/><br /><sub><b>Anthony Du Pont</b></sub></a><br /><a href="#question-Anthodpnt" title="Answering Questions">💬</a> <a href="https://github.com/Dogstudio/highway/commits?author=Anthodpnt" title="Code">💻</a> <a href="https://github.com/Dogstudio/highway/commits?author=Anthodpnt" title="Documentation">📖</a> <a href="#ideas-Anthodpnt" title="Ideas, Planning, & Feedback">🤔</a> <a href="#maintenance-Anthodpnt" title="Maintenance">🚧</a> <a href="#projectManagement-Anthodpnt" title="Project Management">📆</a> <a href="https://github.com/Dogstudio/highway/pulls?q=is%3Apr+reviewed-by%3AAnthodpnt" title="Reviewed Pull Requests">👀</a></td>
+    <td align="center"><a href="https://github.com/ThaoD5"><img src="https://avatars3.githubusercontent.com/u/10233610?v=4" width="100px;" alt=""/><br /><sub><b>ThaoD5</b></sub></a><br /><a href="#question-ThaoD5" title="Answering Questions">💬</a> <a href="https://github.com/Dogstudio/highway/commits?author=ThaoD5" title="Code">💻</a> <a href="https://github.com/Dogstudio/highway/commits?author=ThaoD5" title="Documentation">📖</a> <a href="#ideas-ThaoD5" title="Ideas, Planning, & Feedback">🤔</a> <a href="#maintenance-ThaoD5" title="Maintenance">🚧</a> <a href="https://github.com/Dogstudio/highway/pulls?q=is%3Apr+reviewed-by%3AThaoD5" title="Reviewed Pull Requests">👀</a></td>
   </tr>
 </table>
 
 <!-- markdownlint-enable -->
 <!-- prettier-ignore-end -->
 <!-- ALL-CONTRIBUTORS-LIST:END -->
+
 ## License
 
 See the [**LICENSE**](https://github.com/Dogstudio/highway/blob/master/LICENSE) file for license rights and limitations (MIT).
