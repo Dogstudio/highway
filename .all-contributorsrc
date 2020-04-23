@@ -1,0 +1,24 @@
+{
+  "files": [
+    "README.md"
+  ],
+  "imageSize": 100,
+  "commit": false,
+  "contributors": [
+    {
+      "login": "Suyash-Purwar",
+      "name": "Suyash Purwar",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/33785844?v=4",
+      "profile": "https://twitter.com/suyashpurwar06",
+      "contributions": [
+        "bug"
+      ]
+    }
+  ],
+  "contributorsPerLine": 7,
+  "projectName": "highway",
+  "projectOwner": "Dogstudio",
+  "repoType": "github",
+  "repoHost": "https://github.com",
+  "skipCi": true
+}
