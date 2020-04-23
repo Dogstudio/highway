@@ -1,4 +1,7 @@
 ## Highway
+<!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
+[![All Contributors](https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat-square)](#contributors-)
+<!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 [![npm](https://img.shields.io/npm/v/@dogstudio/highway.svg)](https://www.npmjs.com/package/@dogstudio/highway)
 [![npm](https://img.shields.io/npm/dt/@dogstudio/highway.svg)](https://www.npmjs.com/package/@dogstudio/highway)
@@ -133,6 +136,17 @@ Older browsers or versions can be supported by Highway by combining it with **po
 ## Contributors
 
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
+<!-- prettier-ignore-start -->
+<!-- markdownlint-disable -->
+<table>
+  <tr>
+    <td align="center"><a href="https://twitter.com/suyashpurwar06"><img src="https://avatars1.githubusercontent.com/u/33785844?v=4" width="100px;" alt=""/><br /><sub><b>Suyash Purwar</b></sub></a><br /><a href="https://github.com/Dogstudio/highway/issues?q=author%3ASuyash-Purwar" title="Bug reports">🐛</a></td>
+  </tr>
+</table>
+
+<!-- markdownlint-enable -->
+<!-- prettier-ignore-end -->
+<!-- ALL-CONTRIBUTORS-LIST:END -->
 <table>
   <tr>
     <td align="center">
