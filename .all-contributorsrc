@@ -38,6 +38,18 @@
         "maintenance",
         "review"
       ]
+    },
+    {
+      "login": "joshgkirk",
+      "name": "Josh Kirk",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/28448851?v=4",
+      "profile": "https://twitter.com/joshgkirk",
+      "contributions": [
+        "code",
+        "doc",
+        "ideas",
+        "maintenance"
+      ]
     }
   ],
   "contributorsPerLine": 7
