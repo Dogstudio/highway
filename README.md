@@ -135,46 +135,22 @@ Older browsers or versions can be supported by Highway by combining it with **po
 
 ## Contributors
 
+
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
 <!-- prettier-ignore-start -->
 <!-- markdownlint-disable -->
 <table>
   <tr>
+    <td align="center"><a href="https://twitter.com/Anthodpnt"><img src="https://avatars3.githubusercontent.com/u/6245705?v=4" width="100px;" alt=""/><br /><sub><b>Anthony Du Pont</b></sub></a><br /><a href="#question-Anthodpnt" title="Answering Questions">💬</a> <a href="https://github.com/Dogstudio/highway/commits?author=Anthodpnt" title="Code">💻</a> <a href="https://github.com/Dogstudio/highway/commits?author=Anthodpnt" title="Documentation">📖</a> <a href="#ideas-Anthodpnt" title="Ideas, Planning, & Feedback">🤔</a> <a href="#maintenance-Anthodpnt" title="Maintenance">🚧</a> <a href="https://github.com/Dogstudio/highway/pulls?q=is%3Apr+reviewed-by%3AAnthodpnt" title="Reviewed Pull Requests">👀</a></td>
+    <td align="center"><a href="https://github.com/ThaoD5"><img src="https://avatars3.githubusercontent.com/u/10233610?v=4" width="100px;" alt=""/><br /><sub><b>ThaoD5</b></sub></a><br /><a href="#question-ThaoD5" title="Answering Questions">💬</a> <a href="https://github.com/Dogstudio/highway/commits?author=ThaoD5" title="Code">💻</a> <a href="https://github.com/Dogstudio/highway/commits?author=ThaoD5" title="Documentation">📖</a> <a href="#ideas-ThaoD5" title="Ideas, Planning, & Feedback">🤔</a> <a href="#maintenance-ThaoD5" title="Maintenance">🚧</a> <a href="https://github.com/Dogstudio/highway/pulls?q=is%3Apr+reviewed-by%3AThaoD5" title="Reviewed Pull Requests">👀</a></td>
+    <td align="center"><a href="https://twitter.com/joshgkirk"><img src="https://avatars1.githubusercontent.com/u/28448851?v=4" width="100px;" alt=""/><br /><sub><b>Josh Kirk</b></sub></a><br /><a href="https://github.com/Dogstudio/highway/commits?author=joshgkirk" title="Code">💻</a> <a href="https://github.com/Dogstudio/highway/commits?author=joshgkirk" title="Documentation">📖</a> <a href="#maintenance-joshgkirk" title="Maintenance">🚧</a></td>
+    <td align="center"><a href="https://selfaware.studio"><img src="https://avatars2.githubusercontent.com/u/12376535?v=4" width="100px;" alt=""/><br /><sub><b>Mike Wagz</b></sub></a><br /><a href="https://github.com/Dogstudio/highway/commits?author=mikehwagz" title="Documentation">📖</a> <a href="#infra-mikehwagz" title="Infrastructure (Hosting, Build-Tools, etc)">🚇</a></td>
     <td align="center"><a href="https://twitter.com/suyashpurwar06"><img src="https://avatars1.githubusercontent.com/u/33785844?v=4" width="100px;" alt=""/><br /><sub><b>Suyash Purwar</b></sub></a><br /><a href="https://github.com/Dogstudio/highway/issues?q=author%3ASuyash-Purwar" title="Bug reports">🐛</a></td>
   </tr>
 </table>
 
 <!-- markdownlint-enable -->
 <!-- prettier-ignore-end -->
-<!-- ALL-CONTRIBUTORS-LIST:END -->
-<table>
-  <tr>
-    <td align="center">
-      <a href="https://twitter.com/Anthodpnt">
-        <img src="https://avatars3.githubusercontent.com/u/6245705?v=4" width="100px;" alt=""/><br />
-        <sub><b>Anthony Du Pont</b></sub>
-      </a>
-    </td>
-    <td align="center">
-      <a href="https://twitter.com/ThaoD5">
-        <img src="https://avatars3.githubusercontent.com/u/10233610?v=4" width="100px;" alt=""/><br />
-        <sub><b>ThaoD5</b></sub>
-      </a>
-    </td>
-    <td align="center">
-      <a href="https://twitter.com/joshgkirk">
-        <img src="https://avatars1.githubusercontent.com/u/28448851?v=4" width="100px;" alt=""/><br />
-        <sub><b>Josh Kirk</b></sub>
-      </a>
-    </td>
-    <td align="center">
-      <a href="https://twitter.com/mike_wagz">
-        <img src="https://avatars2.githubusercontent.com/u/12376535?v=4" width="100px;" alt=""/><br />
-        <sub><b>Mike Wagz</b></sub>
-      </a>
-    </td>
-  </tr>
-</table>
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 
 ## License

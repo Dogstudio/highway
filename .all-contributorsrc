@@ -1,10 +1,66 @@
 {
+  "projectName": "highway",
+  "projectOwner": "Dogstudio",
+  "repoType": "github",
+  "repoHost": "https://github.com",
   "files": [
     "README.md"
   ],
   "imageSize": 100,
-  "commit": false,
+  "commit": true,
+  "commitConvention": "gitmoji",
   "contributors": [
+    {
+      "login": "Anthodpnt",
+      "name": "Anthony Du Pont",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/6245705?v=4",
+      "profile": "https://twitter.com/Anthodpnt",
+      "contributions": [
+        "question",
+        "code",
+        "doc",
+        "ideas",
+        "maintenance",
+        "projectManagement",
+        "review"
+      ]
+    },
+    {
+      "login": "ThaoD5",
+      "name": "ThaoD5",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/10233610?v=4",
+      "profile": "https://github.com/ThaoD5",
+      "contributions": [
+        "question",
+        "code",
+        "doc",
+        "ideas",
+        "maintenance",
+        "review"
+      ]
+    },
+    {
+      "login": "joshgkirk",
+      "name": "Josh Kirk",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/28448851?v=4",
+      "profile": "https://twitter.com/joshgkirk",
+      "contributions": [
+        "code",
+        "doc",
+        "ideas",
+        "maintenance"
+      ]
+    },
+    {
+      "login": "mikehwagz",
+      "name": "Mike Wagz",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/12376535?v=4",
+      "profile": "https://selfaware.studio",
+      "contributions": [
+        "doc",
+        "infra"
+      ]
+    },
     {
       "login": "Suyash-Purwar",
       "name": "Suyash Purwar",
@@ -15,10 +71,5 @@
       ]
     }
   ],
-  "contributorsPerLine": 7,
-  "projectName": "highway",
-  "projectOwner": "Dogstudio",
-  "repoType": "github",
-  "repoHost": "https://github.com",
-  "skipCi": true
+  "contributorsPerLine": 7
 }
