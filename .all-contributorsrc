@@ -105,6 +105,16 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "deJong",
+      "name": "Stijn de Jong",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/1932851?v=4",
+      "profile": "https://stuur.men",
+      "contributions": [
+        "code",
+        "bug"
+      ]
     }
   ],
   "contributorsPerLine": 7,
