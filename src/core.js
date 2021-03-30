@@ -126,7 +126,7 @@ export default class Core extends Emitter {
       this.Contextual = false;
 
       if (contextual) {
-        this.Contextual = this.Transitions['contextual'][contextual].prototype;
+        this.Contextual = this.Transitions[contextual].prototype;
         this.Contextual.name = contextual;
       }
 
