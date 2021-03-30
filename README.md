@@ -54,6 +54,7 @@ Older browsers or versions can be supported by Highway by combining it with **po
 - :art: Update browser support in README.md
 - :bug: Fix Slack URL in documentation
 - :bug: Fix Slack URL in README.md
+- :bug: Fix [#77](https://github.com/Dogstudio/Highway/issues/77)
 
 #### 2.1.x
 
