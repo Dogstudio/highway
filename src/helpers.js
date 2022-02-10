@@ -47,6 +47,18 @@ export default class Helpers {
   }
 
   /**
+   * Get scheme of an URL
+   *
+   * @arg    {string} url — URL to match
+   * @return {string} Scheme of URL or `null`
+   * @static
+   */
+  getScheme(url) {
+    const match = url.match(/^[^:]+(?=:\/\/)/);
+    return match ? match[0] : null;
+  }
+
+  /**
    * Get anchor in an URL
    *
    * @arg    {string} url — URL to match
@@ -210,7 +222,8 @@ export default class Helpers {
       anchor: this.getAnchor(url),
       origin: this.getOrigin(url),
       params: this.getParams(url),
-      pathname: this.getPathname(url)
+      pathname: this.getPathname(url),
+      scheme: this.getScheme(url)
     };
   }
 }
