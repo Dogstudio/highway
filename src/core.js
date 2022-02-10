@@ -130,8 +130,8 @@ export default class Core extends Emitter {
         this.Contextual.name = contextual;
       }
 
-      if (location.origin !== this.location.origin || location.anchor && location.pathname === this.location.pathname) {
-        // We redirect when origins are differents or when there is an anchor.
+      if (location.origin !== this.location.origin || location.scheme !== this.location.scheme || location.anchor && location.pathname === this.location.pathname) {
+        // We redirect when origins are differents, when schemes are different, or when there is an anchor.
         window.location.href = href;
 
       } else {
