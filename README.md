@@ -5,6 +5,15 @@
 [![bundlephobia](https://img.shields.io/bundlephobia/minzip/@dogstudio/highway?label=bundle%20size)](https://bundlephobia.com/result?p=@dogstudio/highway)
 ![NpmLicense](https://img.shields.io/npm/l/@dogstudio/highway.svg)
 
+---
+
+<p align="center">⚠️ ⚠️ ⚠️</p>
+<p align="center">This repository is <b>no longer maintained</b>.<br /> The <code>v2.2.1</code> release will be the <b>last one</b> and <b>no more updates</b> will be done on Highway from now on.</p>
+<p align="center">Thanks to all the contributors, maintainers and to the community that motivated us to make Highway one of the best transition manager so far. Highway and its Slack will <b>remain available</b>. As long as the community keeps enjoying the library in its current state, there is <b>no reasons</b> for us to archive the repository. </p>
+<p align="center">⚠️ ⚠️ ⚠️</p>
+
+---
+
 <p align="center"><img src="https://i.imgur.com/SNk3YwV.png" alt="Banner" /></p>
 
 **Highway** is a *lightweight* (**2.5ko** compressed & gzipped), *robust*, *modern* and *flexible* library that will let us create **AJAX navigations** with beautiful **transitions** on our websites. It's been a while we were trying to build this kind of library to fits our needs at [**Dogstudio**](https://www.dogstudio.co) and we now finally released it!
